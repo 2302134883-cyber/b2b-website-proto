@@ -66,6 +66,8 @@
   md-outlined-card:hover { --md-outlined-card-outline-color: #ddd6fe; }
   md-outlined-select, md-outlined-text-field { width: 100%; }
   md-menu { --md-menu-container-color: #fff; }
+  md-dialog { --md-dialog-container-color: #fff; --md-dialog-container-shape: 20px; }
+  md-dialog [slot="content"] { min-width: 300px; }
 
 
   /* ---- 轮播 ---- */
@@ -405,16 +407,7 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
       </div></md-outlined-card>
       <md-outlined-card><div class="pad !p-6">
         <p class="text-[13px] font-semibold mb-4" data-i18n="step.3">③ 获取方案和报价</p>
-        <div id="leadBox">
-          <md-outlined-text-field id="leadEmail" type="email" label="工作邮箱" data-i18n-label="dlg.email" class="w-full"></md-outlined-text-field>
-          <p id="leadEmailErr" class="text-[12px] mt-1" style="color:#b3261e;display:none" data-i18n="dlg.email.error">请输入有效的工作邮箱</p>
-          <md-filled-button id="leadSubmit" class="mt-4" style="width:100%" data-i18n="plan.cta">获取方案和报价</md-filled-button>
-        </div>
-        <div id="leadDone" style="display:none" class="text-center py-4">
-          <p class="text-[14px] font-semibold" data-i18n="dlg.success.title">✓ 已收到您的需求</p>
-          <p class="text-[12px] text-[var(--sub)] mt-2 leading-6" data-i18n="dlg.success.desc">方案和报价将在 1 个工作日内发送至您的邮箱</p>
-          <p class="text-[12px] mt-3"><a href="#" style="color:var(--ink)" data-i18n="dlg.success.cs">急需？联系在线客服 →</a></p>
-        </div>
+        <md-filled-button id="cta-plan" style="width:100%" data-i18n="plan.cta">获取方案和报价</md-filled-button>
       </div></md-outlined-card>
     </div>
     <p class="mt-8 text-center text-[12px] text-[var(--faint)]" data-i18n="pricing.note">一客一价 · 方案与报价按您的选择定制，留下邮箱即可获取</p>
@@ -617,14 +610,44 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
   <md-fab lowered onclick="scrollTo({top:0,behavior:'smooth'})"><span slot="icon">↑</span></md-fab>
 </div>
 
-<!-- ============ 留资（③ 卡片内邮箱提交） ============ -->
+<!-- ============ 留资小框（点「获取方案和报价」弹出，仅邮箱） ============ -->
+<md-dialog id="leadDialog">
+  <div slot="headline" data-i18n="plan.cta">获取方案和报价</div>
+  <div slot="content">
+    <div id="leadForm">
+      <md-outlined-text-field id="leadEmail" type="email" label="工作邮箱" data-i18n-label="dlg.email" class="w-full"></md-outlined-text-field>
+      <p id="leadEmailErr" class="text-[12px] mt-1" style="color:#b3261e;display:none" data-i18n="dlg.email.error">请输入有效的工作邮箱</p>
+    </div>
+    <div id="leadDone" style="display:none" class="text-center py-4">
+      <p class="text-[14px] font-semibold" data-i18n="dlg.success.title">✓ 已收到您的需求</p>
+      <p class="text-[12px] text-[var(--sub)] mt-2 leading-6" data-i18n="dlg.success.desc">方案和报价将在 1 个工作日内发送至您的邮箱</p>
+      <p class="text-[12px] mt-3"><a href="#" style="color:var(--ink)" data-i18n="dlg.success.cs">急需？联系在线客服 →</a></p>
+    </div>
+  </div>
+  <div slot="actions" id="leadActions">
+    <md-text-button id="leadCancel" data-i18n="dlg.cancel">取消</md-text-button>
+    <md-filled-button id="leadSubmit" data-i18n="plan.cta">获取方案和报价</md-filled-button>
+  </div>
+  <div slot="actions" id="leadDoneActions" style="display:none">
+    <md-filled-button id="leadClose" data-i18n="dlg.done">完成</md-filled-button>
+  </div>
+</md-dialog>
 <script>
 (function () {
+  const dlg = document.getElementById('leadDialog');
+  if (!dlg) return;
+  const formEl = document.getElementById('leadForm');
+  const doneEl = document.getElementById('leadDone');
+  const actForm = document.getElementById('leadActions');
+  const actDone = document.getElementById('leadDoneActions');
   const emailEl = document.getElementById('leadEmail');
-  if (!emailEl) return;
   const errEl = document.getElementById('leadEmailErr');
-  const box = document.getElementById('leadBox');
-  const done = document.getElementById('leadDone');
+
+  function showForm() {
+    formEl.style.display = ''; doneEl.style.display = 'none';
+    actForm.style.display = ''; actDone.style.display = 'none';
+    errEl.style.display = 'none';
+  }
   function submit() {
     const v = emailEl.value.trim();
     const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
@@ -638,8 +661,12 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
       size: document.getElementById('q-size').value,
       email: v,
     });
-    box.style.display = 'none'; done.style.display = '';
+    formEl.style.display = 'none'; doneEl.style.display = '';
+    actForm.style.display = 'none'; actDone.style.display = '';
   }
+  document.getElementById('cta-plan').addEventListener('click', () => { showForm(); dlg.show(); });
+  document.getElementById('leadCancel').addEventListener('click', () => dlg.close());
+  document.getElementById('leadClose').addEventListener('click', () => dlg.close());
   document.getElementById('leadSubmit').addEventListener('click', submit);
   emailEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
 })();
