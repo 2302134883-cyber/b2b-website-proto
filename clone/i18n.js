@@ -11,7 +11,7 @@
     'zh-CN': {
       'meta.title': 'B2B 数智化解决方案',
       'nav.product': '产品', 'nav.solution': '解决方案', 'nav.about': '关于我们',
-      'nav.pricing': '价格', 'nav.lang': '🌐 语言', 'nav.login': '登陆',
+      'nav.pricing': '价格', 'nav.lang': '语言', 'nav.login': '登陆',
       'cta.get': '获取方案',
       'menu.product.1': '子分类 1', 'menu.product.2': '子分类 2', 'menu.product.3': '子分类 3', 'menu.product.4': '子分类 4',
       'menu.solution.1': '行业 1', 'menu.solution.2': '行业 2', 'menu.solution.3': '行业 3', 'menu.solution.4': '行业 4',
@@ -69,7 +69,7 @@
     'en': {
       'meta.title': 'B2B Digital Intelligence Solutions',
       'nav.product': 'Products', 'nav.solution': 'Solutions', 'nav.about': 'About',
-      'nav.pricing': 'Pricing', 'nav.lang': '🌐 Language', 'nav.login': 'Log in',
+      'nav.pricing': 'Pricing', 'nav.lang': 'Language', 'nav.login': 'Log in',
       'cta.get': 'Get a proposal',
       'menu.product.1': 'Category 1', 'menu.product.2': 'Category 2', 'menu.product.3': 'Category 3', 'menu.product.4': 'Category 4',
       'menu.solution.1': 'Industry 1', 'menu.solution.2': 'Industry 2', 'menu.solution.3': 'Industry 3', 'menu.solution.4': 'Industry 4',
@@ -127,7 +127,7 @@
     'ja': {
       'meta.title': 'B2B デジタル・インテリジェンス・ソリューション',
       'nav.product': '製品', 'nav.solution': 'ソリューション', 'nav.about': '会社概要',
-      'nav.pricing': '料金', 'nav.lang': '🌐 言語', 'nav.login': 'ログイン',
+      'nav.pricing': '料金', 'nav.lang': '言語', 'nav.login': 'ログイン',
       'cta.get': '提案を依頼',
       'menu.product.1': 'カテゴリー 1', 'menu.product.2': 'カテゴリー 2', 'menu.product.3': 'カテゴリー 3', 'menu.product.4': 'カテゴリー 4',
       'menu.solution.1': '業界 1', 'menu.solution.2': '業界 2', 'menu.solution.3': '業界 3', 'menu.solution.4': '業界 4',
@@ -185,7 +185,7 @@
     'ko': {
       'meta.title': 'B2B 디지털 인텔리전스 솔루션',
       'nav.product': '제품', 'nav.solution': '솔루션', 'nav.about': '회사 소개',
-      'nav.pricing': '가격', 'nav.lang': '🌐 언어', 'nav.login': '로그인',
+      'nav.pricing': '가격', 'nav.lang': '언어', 'nav.login': '로그인',
       'cta.get': '제안 받기',
       'menu.product.1': '카테고리 1', 'menu.product.2': '카테고리 2', 'menu.product.3': '카테고리 3', 'menu.product.4': '카테고리 4',
       'menu.solution.1': '업계 1', 'menu.solution.2': '업계 2', 'menu.solution.3': '업계 3', 'menu.solution.4': '업계 4',
@@ -243,7 +243,7 @@
     'es': {
       'meta.title': 'Soluciones de digitalización B2B',
       'nav.product': 'Productos', 'nav.solution': 'Soluciones', 'nav.about': 'Nosotros',
-      'nav.pricing': 'Precios', 'nav.lang': '🌐 Idioma', 'nav.login': 'Iniciar sesión',
+      'nav.pricing': 'Precios', 'nav.lang': 'Idioma', 'nav.login': 'Iniciar sesión',
       'cta.get': 'Solicitar propuesta',
       'menu.product.1': 'Categoría 1', 'menu.product.2': 'Categoría 2', 'menu.product.3': 'Categoría 3', 'menu.product.4': 'Categoría 4',
       'menu.solution.1': 'Sector 1', 'menu.solution.2': 'Sector 2', 'menu.solution.3': 'Sector 3', 'menu.solution.4': 'Sector 4',
@@ -301,7 +301,7 @@
     'fr': {
       'meta.title': 'Solutions de digitalisation B2B',
       'nav.product': 'Produits', 'nav.solution': 'Solutions', 'nav.about': 'À propos',
-      'nav.pricing': 'Tarifs', 'nav.lang': '🌐 Langue', 'nav.login': 'Se connecter',
+      'nav.pricing': 'Tarifs', 'nav.lang': 'Langue', 'nav.login': 'Se connecter',
       'cta.get': 'Obtenir une proposition',
       'menu.product.1': 'Catégorie 1', 'menu.product.2': 'Catégorie 2', 'menu.product.3': 'Catégorie 3', 'menu.product.4': 'Catégorie 4',
       'menu.solution.1': 'Secteur 1', 'menu.solution.2': 'Secteur 2', 'menu.solution.3': 'Secteur 3', 'menu.solution.4': 'Secteur 4',
@@ -359,7 +359,7 @@
     'de': {
       'meta.title': 'B2B-Digitalisierungslösungen',
       'nav.product': 'Produkte', 'nav.solution': 'Lösungen', 'nav.about': 'Über uns',
-      'nav.pricing': 'Preise', 'nav.lang': '🌐 Sprache', 'nav.login': 'Anmelden',
+      'nav.pricing': 'Preise', 'nav.lang': 'Sprache', 'nav.login': 'Anmelden',
       'cta.get': 'Angebot anfordern',
       'menu.product.1': 'Kategorie 1', 'menu.product.2': 'Kategorie 2', 'menu.product.3': 'Kategorie 3', 'menu.product.4': 'Kategorie 4',
       'menu.solution.1': 'Branche 1', 'menu.solution.2': 'Branche 2', 'menu.solution.3': 'Branche 3', 'menu.solution.4': 'Branche 4',
@@ -417,7 +417,7 @@
     'ru': {
       'meta.title': 'Цифровые решения для B2B',
       'nav.product': 'Продукты', 'nav.solution': 'Решения', 'nav.about': 'О нас',
-      'nav.pricing': 'Цены', 'nav.lang': '🌐 Язык', 'nav.login': 'Войти',
+      'nav.pricing': 'Цены', 'nav.lang': 'Язык', 'nav.login': 'Войти',
       'cta.get': 'Получить предложение',
       'menu.product.1': 'Категория 1', 'menu.product.2': 'Категория 2', 'menu.product.3': 'Категория 3', 'menu.product.4': 'Категория 4',
       'menu.solution.1': 'Отрасль 1', 'menu.solution.2': 'Отрасль 2', 'menu.solution.3': 'Отрасль 3', 'menu.solution.4': 'Отрасль 4',
