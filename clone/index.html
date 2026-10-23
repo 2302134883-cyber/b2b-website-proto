@@ -7,26 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-<script type="importmap">
-{
-  "imports": {
-    "@material/web/": "./vendor/@material/web/",
-    "lit": "./vendor/lit/index.js",
-    "lit/": "./vendor/lit/",
-    "lit-html": "./vendor/lit-html/lit-html.js",
-    "lit-html/": "./vendor/lit-html/",
-    "lit-element": "./vendor/lit-element/index.js",
-    "lit-element/": "./vendor/lit-element/",
-    "@lit/context": "./vendor/@lit/context/index.js",
-    "@lit/reactive-element": "./vendor/@lit/reactive-element/reactive-element.js",
-    "@lit-labs/ssr-dom-shim": "./vendor/@lit-labs/ssr-dom-shim/index.js",
-    "@lit/": "./vendor/@lit/",
-    "@lit-labs/": "./vendor/@lit-labs/",
-    "tslib": "./vendor/tslib/tslib.es6.mjs"
-  }
-}
-</script>
-<script type="module">import '@material/web/all.js';</script>
+<script src="./vendor/material-bundle.js" defer></script>
+<!-- 说明：已打包为经典脚本，file:// 直接打开也能加载 Material 组件 -->
 <style>
   /* ============ Gemini Neural Expressive × Material 3 令牌 ============ */
   :root {
@@ -91,13 +73,19 @@
   .car-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; }
 
   .f-btn { font-size: 11px; --md-outlined-icon-button-outline-color: var(--line-2); }
+  #orbWrap:hover { transform: scale(1.02); }
+  #heroOrb:focus, #heroOrb:focus-visible { outline: none; }
+  #heroContent md-filled-button, #heroContent md-outlined-button, #heroContent md-icon-button, #heroContent #dots button { pointer-events: auto; }
+
+  /* ---- 安全网：菜单组件未升级完成前整体隐藏（防裸内容漏出） ---- */
+  md-menu:not(:defined) { display: none; }
 </style>
 </head>
 <body>
 
 <!-- ============ 顶部导航 ============ -->
 <header class="h-16 bg-white/95 backdrop-blur flex items-center px-10 sticky top-0 z-50 border-b border-[var(--line)]">
-  <div class="w-[136px] h-9 rounded-full border border-[var(--line-2)] flex items-center justify-center text-[13px] text-[var(--faint)] font-semibold tracking-wide">商标 / LOGO</div>
+  <img src="assets/logo-shopex.png" alt="ShopeX" class="h-8 w-auto" onerror="this.outerHTML='<span class=&quot;text-[15px] font-bold tracking-wide&quot;>ShopeX</span>'">
   <nav class="ml-12 flex items-center gap-2">
     <span class="relative">
       <md-text-button id="m-product" trailing-icon>产品</md-text-button>
@@ -146,7 +134,7 @@
     <md-filled-button>获取方案</md-filled-button>
   </div>
 </header>
-<script type="module">
+<script>
   document.querySelectorAll('md-menu').forEach((menu) => {
     const btn = document.getElementById(menu.getAttribute('anchor'));
     btn?.addEventListener('click', () => { menu.open = !menu.open; });
@@ -155,15 +143,17 @@
 
 <!-- ============ HERO 轮播 ============ -->
 <section class="relative overflow-hidden">
-  <svg class="orb absolute pointer-events-none" style="width:560px;height:560px;right:-120px;top:-60px;opacity:.85" viewBox="0 0 200 200">
+  <div id="orbWrap" style="position:absolute;width:560px;height:560px;right:-120px;top:-60px;z-index:5;transition:transform .25s ease;">
+  <svg id="heroOrb" class="orb" style="width:100%;height:100%;opacity:.85;cursor:pointer" viewBox="0 0 200 200" role="button" tabindex="0" aria-pressed="false" aria-label="切换品牌 X 形态">
     <defs><radialGradient id="orbHero" cx="38%" cy="32%" r="75%">
       <stop offset="0%" stop-color="#a8c8fa"/><stop offset="42%" stop-color="#d3c6f8"/>
       <stop offset="72%" stop-color="#f3d4ec"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
     </radialGradient></defs>
-    <circle cx="100" cy="100" r="98" fill="url(#orbHero)"/>
+    <path id="orbPath" fill="url(#orbHero)" d=""/>
   </svg>
+  </div>
 
-  <div class="max-w-[1200px] mx-auto px-6 py-32 relative z-10">
+  <div class="max-w-[1200px] mx-auto px-6 py-32 relative z-10" style="pointer-events:none" id="heroContent">
 
     <div class="slide on" data-slide>
       <div>
@@ -196,7 +186,7 @@
     </div>
   </div>
 </section>
-<script type="module">
+<script>
   const slides = document.querySelectorAll('[data-slide]');
   const dotsBox = document.getElementById('dots');
   let cur = 0, timer;
@@ -216,6 +206,61 @@
   document.getElementById('prev').onclick = () => go(cur - 1);
   document.getElementById('next').onclick = () => go(cur + 1);
   restart();
+</script>
+
+
+<script type="module">
+  // ---- Hero orb ⇄ 品牌 X 形变（往返切换） ----
+  const CIRCLE=[[[144,176.21],[139.43,178.67],[134.72,180.86],[129.89,182.77],[124.96,184.39],[119.94,185.71],[114.85,186.74],[109.71,187.46],[104.54,187.88],[99.35,188],[94.16,187.81],[89,187.31],[83.87,186.51],[78.79,185.41],[73.8,184.01],[68.89,182.32],[64.09,180.34],[59.41,178.08],[54.88,175.55],[50.5,172.76],[46.3,169.72],[42.28,166.43],[38.47,162.91],[34.86,159.17],[31.49,155.23],[28.35,151.09],[25.46,146.78],[22.84,142.3],[20.47,137.68],[18.39,132.93],[16.59,128.06],[15.08,123.09],[13.87,118.04],[12.96,112.93],[12.34,107.78],[12.04,102.6],[12.04,97.4],[12.34,92.22],[12.96,87.07],[13.87,81.96],[15.08,76.91],[16.59,71.94],[18.39,67.07],[20.47,62.32],[22.84,57.7],[25.46,53.22],[28.35,48.91],[31.49,44.77],[34.86,40.83],[38.47,37.09],[42.28,33.57],[46.3,30.28],[50.5,27.24],[54.88,24.45],[59.41,21.92],[64.09,19.66],[68.89,17.68],[73.8,15.99],[78.79,14.59],[83.87,13.49],[89,12.69],[94.16,12.19],[99.35,12],[104.54,12.12],[109.71,12.54],[114.85,13.26],[119.94,14.29],[124.96,15.61],[129.89,17.23],[134.72,19.14],[139.43,21.33],[144,23.79]],[[15,77.22],[19.54,64.36],[26.01,52.36],[34.26,41.5],[44.09,32.04],[55.26,24.22],[67.51,18.22],[80.54,14.18],[94.03,12.2],[107.67,12.33],[121.12,14.57],[134.07,18.86],[146.2,25.1],[157.22,33.14],[166.86,42.78],[174.9,53.8],[181.14,65.93],[185.43,78.88],[187.67,92.33],[187.8,105.97],[185.82,119.46],[181.78,132.49],[175.78,144.74],[167.96,155.91],[158.5,165.74],[147.64,173.99],[135.64,180.46],[122.78,185]],[[122.78,15],[135.64,19.54],[147.64,26.01],[158.5,34.26],[167.96,44.09],[175.78,55.26],[181.78,67.51],[185.82,80.54],[187.8,94.03],[187.67,107.67],[185.43,121.12],[181.14,134.07],[174.9,146.2],[166.86,157.22],[157.22,166.86],[146.2,174.9],[134.07,181.14],[121.12,185.43],[107.67,187.67],[94.03,187.8],[80.54,185.82],[67.51,181.78],[55.26,175.78],[44.09,167.96],[34.26,158.5],[26.01,147.64],[19.54,135.64],[15,122.78]]];
+const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31],[56.44,35.85],[60.98,40.38],[65.51,44.92],[70.05,49.46],[72.24,54.97],[76.32,59.69],[80.86,64.23],[85.39,68.77],[89.93,73.3],[92.07,78.84],[96.2,83.54],[100.74,88.08],[105.28,92.61],[109.81,97.15],[111.9,102.7],[107.71,107.39],[103.17,111.92],[98.63,116.46],[96.03,121.8],[92.36,126.7],[87.83,131.23],[83.29,135.77],[78.75,140.31],[74.21,144.84],[72.24,150.44],[67.94,155.08],[63.41,159.62],[58.87,164.15],[54.33,168.69],[52.42,174.31],[48.06,178.93],[43.53,183.46],[38.99,188],[36.56,187.45],[36.56,181.04],[36.56,174.62],[36.56,168.2],[37.19,162.05],[40.52,157.01],[43.46,151.81],[47.99,147.28],[52.53,142.74],[57.07,138.2],[61.6,133.66],[64.31,128.37],[67.87,123.43],[72.41,118.89],[76.95,114.35],[81.49,109.82],[86.02,105.28],[85.65,100.74],[83.92,95.04],[79.38,90.51],[74.84,85.97],[70.31,81.43],[65.77,76.9],[61.23,72.36],[59.5,66.66],[54.96,62.12],[50.42,57.59],[45.89,53.05],[41.35,48.51],[39.62,42.81],[36.56,37.67],[36.56,31.25],[36.56,24.83],[36.56,18.42]],[[139.65,39.76],[144.67,39.76],[149.69,39.76],[154.71,39.76],[159.74,39.76],[163.44,41.07],[161.77,45.4],[158.22,48.95],[154.67,52.5],[151.12,56.05],[147.56,59.6],[144.01,63.15],[143.27,67.86],[139.72,71.41],[136.17,74.96],[132.62,78.51],[129.07,82.06],[125.52,81.13],[121.97,77.58],[118.42,74.03],[115.86,70.07],[117.6,65.77],[121.15,62.22],[124.7,58.67],[128.25,55.12],[131.72,51.53],[132.55,46.86],[136.1,43.31]],[[127.76,119.06],[131.31,122.61],[134.86,126.16],[135.69,130.84],[139.15,134.42],[142.7,137.97],[146.25,141.52],[149.8,145.07],[153.36,148.62],[156.91,152.17],[159.48,156.13],[161.2,160.44],[161.59,162.68],[156.57,162.68],[151.55,162.68],[146.53,162.68],[141.5,162.68],[137.41,160.44],[133.86,156.89],[130.31,153.33],[127.76,149.37],[126.01,145.07],[122.46,141.52],[118.91,137.97],[116.36,134.42],[119.83,130.84],[120.66,126.16],[124.21,122.61]]];
+  const orbSvg = document.getElementById('heroOrb');
+  const orbPath = document.getElementById('orbPath');
+  const toD = (P) => P.map(sub => 'M' + sub.map(p => p.join(',')).join('L') + 'Z').join('');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let isX = false, anim = null;
+
+  function setShape(P) { orbPath.setAttribute('d', toD(P)); }
+  function tween(from, to, done) {
+    if (reduced) { setShape(to); done(); return; }
+    if (anim) cancelAnimationFrame(anim);
+    const t0 = performance.now(), DUR = 700;
+    const step = (now) => {
+      const t = Math.min(1, (now - t0) / DUR);
+      // easeInOutCubic + 轻微回弹
+      let p = t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+      p += 0.07 * Math.sin(t * Math.PI * 2) * Math.sin(t * Math.PI);
+      setShape(from.map((fs, j) => fs.map((f, i) => [f[0] + (to[j][i][0] - f[0]) * p, f[1] + (to[j][i][1] - f[1]) * p])));
+      if (t < 1) anim = requestAnimationFrame(step);
+      else { setShape(to); done(); }
+    };
+    anim = requestAnimationFrame(step);
+  }
+  function toggle() {
+    isX = !isX;
+    orbSvg.setAttribute('aria-pressed', String(isX));
+    if (isX) {
+      // 读出当前旋转角 → 停动画 → 平滑归零（否则 X 会歪在随机角度）
+      const m = getComputedStyle(orbSvg).transform;
+      orbSvg.style.animation = 'none';
+      orbSvg.style.transition = 'none';
+      orbSvg.style.transform = m === 'none' ? 'rotate(0deg)' : m;
+      requestAnimationFrame(() => {
+        orbSvg.style.transition = 'transform .7s cubic-bezier(.4,0,.2,1)';
+        orbSvg.style.transform = 'rotate(0deg)';
+      });
+    } else {
+      orbSvg.style.transition = 'none';
+      orbSvg.style.transform = '';
+      orbSvg.style.animation = '';   // 恢复 CSS 慢转
+    }
+    const from = isX ? CIRCLE : XSHAPE, to = isX ? XSHAPE : CIRCLE;
+    tween(from, to, () => {});
+  }
+  orbSvg.addEventListener('click', toggle);
+  orbSvg.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+  });
+  setShape(CIRCLE);
 </script>
 
 <svg width="0" height="0" style="position:absolute">
@@ -454,7 +499,7 @@
 <footer class="pt-16 pb-8 text-[var(--sub)] bg-white border-t border-[var(--line)]">
   <div class="max-w-[1200px] mx-auto px-6 grid grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-8 text-[14px]">
     <div>
-      <div class="w-[128px] h-8 rounded-full border border-[var(--line-2)] flex items-center justify-center text-[12px] text-[var(--faint)] font-semibold">商标 / LOGO</div>
+      <img src="assets/logo-shopex.png" alt="ShopeX" class="h-7 w-auto" onerror="this.outerHTML='<span class=&quot;text-[14px] font-bold tracking-wide&quot;>ShopeX</span>'">
       <p class="mt-4 text-[13px] text-[var(--faint)] leading-6">公司一句话简介 / 品牌主张<br>（可复用 hero slogan）</p>
     </div>
     <div><h4 class="text-[var(--ink)] font-semibold mb-4">产品</h4><div class="ph-bar w-4/5 mb-3"></div><div class="ph-bar w-4/5 mb-3"></div><div class="ph-bar w-4/5"></div></div>
