@@ -27,5 +27,9 @@ cd clone && python3 -m http.server 4174
 ## 技术栈
 
 - 单文件 `clone/index.html` + Tailwind CDN
-- `@material/web@2.5.0`（菜单/chips/表单/slider/list/fab），importmap 引用 `vendor/`
-- importmap 注意：裸包名 `@lit/context`、`@lit/reactive-element`、`@lit-labs/ssr-dom-shim` 需精确映射
+- `@material/web@2.5.0`（菜单/chips/表单/slider/list/fab），`setup-vendor.sh` 用 esbuild 打包为经典脚本 `vendor/material-bundle.js`，file:// 也能加载
+
+## 多语言（i18n）
+
+- 词典驱动：`clone/i18n.js` 内置 8 种语言（zh-CN / en / ja / ko / es / fr / de / ru），导航「🌐 语言」菜单点击即切换，选择存入 localStorage，首次访问按浏览器语言猜测
+- 给新文案加翻译：HTML 元素标 `data-i18n="key"`（文本）、`data-i18n-label`（组件 label 属性）、`data-i18n-html`（含标签的富文本）、`data-i18n-aria`（aria-label），然后在 i18n.js 的 8 个词典里各加一条同名 key
