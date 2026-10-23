@@ -1,9 +1,11 @@
-/* ============ 技术栈环形图（谷歌生态图线框风） ============
+/* ============ 技术栈环形图（谷歌生态图线框风 · 立体透视版） ============
  * 用法：页面放 <div id="techRing"></div> + <div id="techList"></div>，
  *       引入本文件（defer，需在 i18n.js 之后）。
  * 依赖：i18n.js 的 data-i18n 机制与 __i18nApply 钩子（含 'i18n:applied' 事件）。
  * 词典 key：tech.1~6（名称）、tech.d.1~6（说明）、tech.core（中心）。
- * 交互：双轨反向缓转；悬停节点暂停并联动底部说明；prefers-reduced-motion 静态。
+ * 立体：轨道面透视倾斜，节点按 sin 深度缩放/淡出/虚化，后排穿过中心圆徽后方。
+ * 动态：双轨反向缓转 + 节点浮动呼吸 + 入场 stagger + 核心脉冲环 + 彗星光点沿轨运行。
+ * 无障碍：prefers-reduced-motion 时静态呈现。
  */
 (function () {
   'use strict';
@@ -31,19 +33,42 @@
 
   const STYLE = `
     .tr-stage{position:relative;width:100%;max-width:460px;aspect-ratio:23/20;margin:0 auto;user-select:none}
-    .tr-ring{position:absolute;left:50%;top:53%;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none}
+    /* 地面柔光，托住整个装置 */
+    .tr-floor{position:absolute;left:50%;top:56%;width:94%;height:60%;transform:translate(-50%,-50%);
+      background:radial-gradient(50% 50% at 50% 50%,rgba(109,94,240,.08),transparent 70%);
+      filter:blur(12px);pointer-events:none;z-index:1}
+    /* 轨道线：远端略淡，制造光照透视 */
+    .tr-ring{position:absolute;left:50%;top:53%;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;z-index:2;
+      -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.45),#000 58%);
+              mask-image:linear-gradient(180deg,rgba(0,0,0,.45),#000 58%)}
     .tr-ring.r2{width:87%;aspect-ratio:400/172;border:1px dashed var(--line-2,#e2e5ea)}
     .tr-ring.r1{width:57.5%;aspect-ratio:400/172;border:1px solid var(--line,#eceef2)}
+    /* 中心脉冲环 */
+    .tr-pulse{position:absolute;left:50%;top:53%;width:128px;height:128px;border-radius:50%;
+      border:1.5px solid rgba(109,94,240,.45);opacity:0;transform:translate(-50%,-50%);
+      animation:tr-pulse 3.8s ease-out infinite;z-index:45;pointer-events:none}
+    .tr-pulse + .tr-pulse{animation-delay:1.9s}
+    @keyframes tr-pulse{
+      0%{transform:translate(-50%,-50%) scale(.62);opacity:.5}
+      78%{opacity:0}
+      100%{transform:translate(-50%,-50%) scale(1.62);opacity:0}
+    }
+    /* 彗星光点（沿轨运行） */
+    .tr-comet{position:absolute;left:0;top:0;width:8px;height:8px;border-radius:50%;background:#8b7cf0;
+      box-shadow:0 0 12px 3px rgba(139,124,240,.55);z-index:12;pointer-events:none;will-change:transform,opacity}
+    .tr-comet.b{background:#c4b5fd;box-shadow:0 0 9px 2px rgba(196,181,253,.6)}
+    /* 中心圆徽 */
     .tr-core{
       position:absolute;left:50%;top:53%;transform:translate(-50%,-50%);
       width:104px;height:104px;border-radius:50%;
       background:#fff;border:1px solid var(--line,#eceef2);
-      box-shadow:0 4px 16px -6px rgba(17,24,39,.10),0 0 0 6px var(--wash,#fafbfc);
+      box-shadow:0 4px 16px -6px rgba(17,24,39,.10),0 12px 28px -12px rgba(109,94,240,.18),0 0 0 6px var(--wash,#fafbfc);
       display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
       text-decoration:none;color:var(--ink,#111827);z-index:50;
     }
     .tr-core .tr-ci{color:#6d5ef0}
     .tr-core .tr-cl{font-size:12px;font-weight:600;line-height:1.25;text-align:center;max-width:104px}
+    /* 环绕节点 */
     .tr-node{
       position:absolute;left:0;top:0;z-index:10;
       display:flex;flex-direction:column;align-items:center;gap:5px;
@@ -57,9 +82,11 @@
       transition:border-color .2s,box-shadow .2s;
     }
     .tr-lb{font-size:12px;color:var(--sub,#6b7280);text-align:center;max-width:80px;line-height:1.3;transition:color .2s}
-    .tr-node:hover .tr-dot,.tr-node:focus-visible .tr-dot{border-color:#6d5ef0;box-shadow:0 4px 14px -2px rgba(109,94,240,.30);outline:none}
+    .tr-node:hover .tr-dot,.tr-node:focus-visible .tr-dot{
+      border-color:#6d5ef0;box-shadow:0 6px 18px -4px rgba(109,94,240,.38);outline:none}
     .tr-node:hover .tr-lb{color:var(--ink,#111827)}
-    .tr-mini{position:absolute;width:6px;height:6px;border-radius:50%;background:#c4b5fd;left:0;top:0;z-index:5;will-change:transform}
+    .tr-mini{position:absolute;width:6px;height:6px;border-radius:50%;background:#c4b5fd;left:0;top:0;z-index:5;
+      box-shadow:0 0 8px 1px rgba(196,181,253,.55);will-change:transform}
     .tr-cap{position:absolute;left:50%;bottom:0;transform:translateX(-50%);font-size:12.5px;color:var(--faint,#9ca3af);text-align:center;max-width:92%;pointer-events:none}
     .tr-cap b{color:var(--ink,#111827);font-weight:600}
     /* 右侧清单（M3 卡片行） */
@@ -68,7 +95,10 @@
     .tr-item .tr-ic{flex:0 0 36px;height:36px;border-radius:10px;background:#f1edfd;color:#4c3fd6;display:grid;place-items:center}
     .tr-item b{display:block;font-size:14px;font-weight:600;color:var(--ink,#111827)}
     .tr-item .tr-desc{display:block;margin-top:2px;font-size:13px;color:var(--sub,#6b7280)}
-    @media (prefers-reduced-motion: reduce){ .tr-stage *{animation:none!important;transition:none!important} }
+    @media (prefers-reduced-motion: reduce){
+      .tr-stage *{animation:none!important;transition:none!important}
+      .tr-pulse{opacity:.25;transform:translate(-50%,-50%) scale(1)}
+    }
   `;
 
   function build() {
@@ -83,8 +113,10 @@
     stage = document.createElement('div');
     stage.className = 'tr-stage';
     stage.innerHTML = [
+      '<div class="tr-floor"></div>',
       '<div class="tr-ring r2"></div>',
       '<div class="tr-ring r1"></div>',
+      '<div class="tr-pulse"></div><div class="tr-pulse"></div>',
       '<a class="tr-core" href="#">',
       `  <span class="tr-ci">${svg(ICONS.hub, 26)}</span>`,
       '  <span class="tr-cl" data-i18n="tech.core">ShopeX 技术中台</span>',
@@ -103,8 +135,8 @@
       const n = document.createElement('a');
       n.className = 'tr-node'; n.href = '#';
       n.innerHTML = `<span class="tr-dot">${svg(ICONS[it.icon], 22)}</span><span class="tr-lb" data-i18n="${it.key}"></span>`;
-      n.addEventListener('pointerenter', () => { paused++; n.style.zIndex = 60; setCap(it.key, it.dkey); });
-      n.addEventListener('pointerleave', () => { paused = Math.max(0, paused - 1); n.style.zIndex = ''; setCap(curKey, curDKey); });
+      n.addEventListener('pointerenter', () => { paused++; n._liftT = 1; n.style.zIndex = 200; setCap(it.key, it.dkey); });
+      n.addEventListener('pointerleave', () => { paused = Math.max(0, paused - 1); n._liftT = 0; n.style.zIndex = ''; setCap(curKey, curDKey); });
       stage.appendChild(n);
       return n;
     });
@@ -112,6 +144,12 @@
       const m = document.createElement('i');
       m.className = 'tr-mini'; stage.appendChild(m);
       return m;
+    });
+    comets = [0, 1].map((i) => {
+      const c = document.createElement('i');
+      c.className = 'tr-comet' + (i ? ' b' : '');
+      stage.appendChild(c);
+      return c;
     });
 
     if (list) {
@@ -129,15 +167,15 @@
     if (window.__i18nApply) window.__i18nApply(document.documentElement.lang || undefined);
 
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      paint();
+      paint(1e4);            // 静态：入场视为完成
     } else {
       requestAnimationFrame(tick);
     }
   }
 
   /* ---- 动画 ---- */
-  let stage, cap, core, nodes = [], minis = [];
-  let paused = 0, angle = -Math.PI / 2, last = 0;
+  let stage, cap, core, nodes = [], minis = [], comets = [];
+  let paused = 0, angle = -Math.PI / 2, last = 0, born = 0;
   let curKey = 'tech.core', curDKey = null;
 
   function setCap(key, dkey) {
@@ -147,40 +185,66 @@
       ? `<b data-i18n="${key}"></b><span> — </span><span data-i18n="${dkey}"></span>`
       : `<b data-i18n="${key}"></b>`;
     if (window.__i18nApply) window.__i18nApply(document.documentElement.lang || undefined);
-    else {
-      // 兜底：无 i18n 钩子时直接置空（由浏览器显示默认文案的场景很少）
-      cap.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = ''; });
-    }
   }
 
-  function paint() {
+  const easeOut = (k) => 1 - Math.pow(1 - Math.min(1, Math.max(0, k)), 3);
+
+  function paint(tSec) {
     if (!stage || !stage.isConnected) return;
     const w = stage.clientWidth, h = stage.clientHeight;
     if (!w) return;
     const cx = w / 2, cy = h * 0.53;
     const R2 = w * (w >= 460 ? 0.435 : 0.38), ry2 = R2 * 0.43;
     const R1 = w * (w >= 460 ? 0.287 : 0.25), ry1 = R1 * 0.43;
+
     nodes.forEach((n, i) => {
       const a = angle + (i * Math.PI * 2) / nodes.length;
-      const x = cx + Math.cos(a) * R2, y = cy + Math.sin(a) * ry2;
-      const depth = (Math.sin(a) + 1) / 2;
-      n.style.transform = `translate(${x}px,${y}px) translate(-50%,-58%) scale(${(0.9 + 0.12 * depth).toFixed(3)})`;
-      n.style.opacity = (0.7 + 0.3 * depth).toFixed(2);
-      n.style.zIndex = String(10 + Math.round(depth * 30));
+      const depth = (Math.sin(a) + 1) / 2;                 // 0=最远 1=最近
+      const bob = Math.sin(tSec * 1.6 + i * 1.1) * 3 * (0.4 + 0.6 * depth);
+      const x = cx + Math.cos(a) * R2;
+      const y = cy + Math.sin(a) * ry2 + bob;
+
+      if (n._lift == null) n._lift = 0;
+      n._lift += ((n._liftT || 0) - n._lift) * 0.18;       // hover 起浮平滑
+      const lift = n._lift;
+
+      // 入场 stagger：每节点延迟 90ms，500ms 内三次方缓出
+      const bornAt = i * 0.09;
+      const ease = easeOut((tSec - bornAt) / 0.5);
+
+      const scale = (0.72 + 0.4 * depth) * (1 + 0.12 * lift) * (0.55 + 0.45 * ease);
+      n.style.transform =
+        `translate(${x}px, ${y - 6 * lift}px) translate(-50%,-58%) scale(${scale.toFixed(3)})`;
+      n.style.opacity = Math.min(1, (0.32 + 0.68 * depth) * ease + 0.35 * lift).toFixed(3);
+      n.style.zIndex = lift > 0 ? '200' : String(8 + Math.round(depth * 84));
+      n.style.filter = depth < 0.38
+        ? `blur(${((0.38 - depth) * 3.6).toFixed(2)}px)` : '';
     });
+
     minis.forEach((m, i) => {
       const a = -angle * 0.7 + (i * Math.PI * 2) / minis.length + 0.6;
       m.style.transform = `translate(${cx + Math.cos(a) * R1 - 3}px,${cy + Math.sin(a) * ry1 - 3}px)`;
-      m.style.opacity = '0.8';
+      m.style.opacity = '0.85';
+    });
+
+    comets.forEach((c, i) => {
+      const outer = i === 0;
+      const a = (i ? -0.42 : 0.55) * tSec + (i ? 2.4 : 0.4);
+      const R = outer ? R2 : R1, ry = outer ? ry2 : ry1;
+      const depth = (Math.sin(a) + 1) / 2;
+      c.style.transform = `translate(${cx + Math.cos(a) * R - 4}px,${cy + Math.sin(a) * ry - 4}px) scale(${(0.7 + 0.5 * depth).toFixed(2)})`;
+      c.style.opacity = (0.45 + 0.5 * depth).toFixed(2);
+      c.style.zIndex = String(8 + Math.round(depth * 84));
     });
   }
 
   function tick(t) {
     if (!stage || !stage.isConnected) return;
-    if (!last) last = t;
+    if (!last) { last = t; born = t; }
+    const tSec = (t - born) / 1000;
     const dt = (t - last) / 1000; last = t;
     if (!paused) angle += 0.09 * dt;
-    paint();
+    paint(tSec);
     requestAnimationFrame(tick);
   }
 
