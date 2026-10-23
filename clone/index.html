@@ -66,30 +66,7 @@
   md-outlined-card:hover { --md-outlined-card-outline-color: #ddd6fe; }
   md-outlined-select, md-outlined-text-field { width: 100%; }
   md-menu { --md-menu-container-color: #fff; }
-  md-slider { width: 100%; }
 
-  /* ---- 方案卡（③ 选方案） ---- */
-  .plan-opt {
-    border: 1px solid var(--line-2); border-radius: 12px; padding: 14px 16px;
-    cursor: pointer; transition: border-color .2s ease, background .2s ease;
-    position: relative; margin-bottom: 12px; outline: none;
-  }
-  .plan-opt:last-child { margin-bottom: 0; }
-  .plan-opt:hover { border-color: #c4b5fd; }
-  .plan-opt:focus-visible { border-color: var(--ink); }
-  .plan-opt.selected { border-color: var(--ink); border-width: 1.5px; background: var(--wash); }
-  .plan-opt b { font-size: 14px; display: block; }
-  .plan-opt p { font-size: 12px; color: var(--sub); margin-top: 4px; line-height: 1.6; }
-  .plan-opt .tick {
-    position: absolute; top: 12px; right: 12px; width: 18px; height: 18px;
-    border-radius: 50%; border: 1.5px solid var(--line-2);
-    display: grid; place-items: center; font-size: 11px; color: #fff;
-    transition: all .2s ease;
-  }
-  .plan-opt.selected .tick { background: var(--ink); border-color: var(--ink); }
-  .plan-opt.selected .tick::before { content: "✓"; }
-  md-dialog { --md-dialog-container-color: #fff; }
-  md-dialog [slot="content"] { min-width: 320px; }
 
   /* ---- 轮播 ---- */
   .slide { display: none; }
@@ -427,23 +404,20 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
         </md-outlined-select>
       </div></md-outlined-card>
       <md-outlined-card><div class="pad !p-6">
-        <p class="text-[13px] font-semibold mb-4" data-i18n="step.3">③ 选方案</p>
-        <div class="plan-opt selected" data-plan="std" role="button" tabindex="0">
-          <span class="tick"></span>
-          <b data-i18n="plan.std.name">标准版</b>
-          <p data-i18n="plan.std.desc">SaaS 快速上线 · 标准功能 · 适合中小团队</p>
+        <p class="text-[13px] font-semibold mb-4" data-i18n="step.3">③ 获取方案和报价</p>
+        <div id="leadBox">
+          <md-outlined-text-field id="leadEmail" type="email" label="工作邮箱" data-i18n-label="dlg.email" class="w-full"></md-outlined-text-field>
+          <p id="leadEmailErr" class="text-[12px] mt-1" style="color:#b3261e;display:none" data-i18n="dlg.email.error">请输入有效的工作邮箱</p>
+          <md-filled-button id="leadSubmit" class="mt-4" style="width:100%" data-i18n="plan.cta">获取方案和报价</md-filled-button>
         </div>
-        <div class="plan-opt" data-plan="custom" role="button" tabindex="0">
-          <span class="tick"></span>
-          <b data-i18n="plan.custom.name">定制版</b>
-          <p data-i18n="plan.custom.desc">私有化部署 · 定制开发 · 专属服务团队</p>
+        <div id="leadDone" style="display:none" class="text-center py-4">
+          <p class="text-[14px] font-semibold" data-i18n="dlg.success.title">✓ 已收到您的需求</p>
+          <p class="text-[12px] text-[var(--sub)] mt-2 leading-6" data-i18n="dlg.success.desc">方案和报价将在 1 个工作日内发送至您的邮箱</p>
+          <p class="text-[12px] mt-3"><a href="#" style="color:var(--ink)" data-i18n="dlg.success.cs">急需？联系在线客服 →</a></p>
         </div>
       </div></md-outlined-card>
     </div>
-    <div class="mt-10 flex flex-col items-center gap-4">
-      <md-filled-button id="cta-plan" data-i18n="plan.cta">获取方案和报价</md-filled-button>
-      <p class="text-[12px] text-[var(--faint)]" data-i18n="pricing.note">一客一价 · 方案与报价按您的选择定制，留下邮箱即可获取</p>
-    </div>
+    <p class="mt-8 text-center text-[12px] text-[var(--faint)]" data-i18n="pricing.note">一客一价 · 方案与报价按您的选择定制，留下邮箱即可获取</p>
   </div>
 </section>
 
@@ -643,85 +617,15 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
   <md-fab lowered onclick="scrollTo({top:0,behavior:'smooth'})"><span slot="icon">↑</span></md-fab>
 </div>
 
-<!-- ============ 留资弹窗（获取方案和报价） ============ -->
-<md-dialog id="leadDialog">
-  <div slot="headline" data-i18n="plan.cta">获取方案和报价</div>
-  <div slot="content">
-    <div id="leadForm">
-      <p id="leadSummary" class="text-[13px] text-[var(--sub)] leading-6 mb-4"></p>
-      <md-outlined-text-field id="leadEmail" type="email" label="工作邮箱" data-i18n-label="dlg.email" class="w-full"></md-outlined-text-field>
-      <p id="leadEmailErr" class="text-[12px] mt-1" style="color:#b3261e;display:none" data-i18n="dlg.email.error">请输入有效的工作邮箱</p>
-      <md-outlined-text-field id="leadName" label="称呼 / 公司（可选）" data-i18n-label="dlg.name" class="w-full mt-3"></md-outlined-text-field>
-    </div>
-    <div id="leadDone" style="display:none" class="text-center py-6">
-      <p class="text-[15px] font-semibold" data-i18n="dlg.success.title">✓ 已收到您的需求</p>
-      <p class="text-[13px] text-[var(--sub)] mt-3 leading-6" data-i18n="dlg.success.desc">方案和报价将在 1 个工作日内发送至您的邮箱</p>
-      <p class="text-[13px] mt-4"><a href="#" style="color:var(--ink)" data-i18n="dlg.success.cs">急需？联系在线客服 →</a></p>
-    </div>
-  </div>
-  <div slot="actions" id="leadActions">
-    <md-text-button id="leadCancel" data-i18n="dlg.cancel">取消</md-text-button>
-    <md-filled-button id="leadSubmit" data-i18n="plan.cta">获取方案和报价</md-filled-button>
-  </div>
-  <div slot="actions" id="leadDoneActions" style="display:none">
-    <md-filled-button id="leadClose" data-i18n="dlg.done">完成</md-filled-button>
-  </div>
-</md-dialog>
+<!-- ============ 留资（③ 卡片内邮箱提交） ============ -->
 <script>
 (function () {
-  const dlg = document.getElementById('leadDialog');
-  if (!dlg) return;
-  let plan = 'std';
-
-  // 方案单选
-  document.querySelectorAll('.plan-opt').forEach((el) => {
-    const sel = () => {
-      plan = el.dataset.plan;
-      document.querySelectorAll('.plan-opt').forEach((x) => x.classList.toggle('selected', x === el));
-    };
-    el.addEventListener('click', sel);
-    el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sel(); } });
-  });
-
-  // 选择摘要（从 i18n 词典取当前语言的已选值）
-  function selText(selId) {
-    const sel = document.getElementById(selId);
-    const opt = [...sel.querySelectorAll('md-select-option')].find((o) => o.value && o.value === sel.value);
-    const key = opt && opt.querySelector('[data-i18n]');
-    return key ? window.i18n.t(key.getAttribute('data-i18n')) : '—';
-  }
-  function buildSummary() {
-    const chosen = [...document.querySelectorAll('#q-services md-filter-chip')]
-      .filter((c) => c.selected)
-      .map((c) => window.i18n.t(c.getAttribute('data-i18n-label')));
-    const join = window.i18n.lang() === 'zh-CN' ? '、' : ', ';
-    return (window.i18n.t('dlg.summary') || '')
-      .replace('{services}', chosen.length ? chosen.join(join) : '—')
-      .replace('{industry}', selText('q-industry'))
-      .replace('{size}', selText('q-size'))
-      .replace('{plan}', window.i18n.t(plan === 'custom' ? 'plan.custom.name' : 'plan.std.name'));
-  }
-
-  const formEl = document.getElementById('leadForm');
-  const doneEl = document.getElementById('leadDone');
-  const actForm = document.getElementById('leadActions');
-  const actDone = document.getElementById('leadDoneActions');
   const emailEl = document.getElementById('leadEmail');
+  if (!emailEl) return;
   const errEl = document.getElementById('leadEmailErr');
-
-  function showForm() {
-    formEl.style.display = ''; doneEl.style.display = 'none';
-    actForm.style.display = ''; actDone.style.display = 'none';
-    errEl.style.display = 'none';
-  }
-  document.getElementById('cta-plan').addEventListener('click', () => {
-    document.getElementById('leadSummary').textContent = buildSummary();
-    showForm();
-    dlg.show();
-  });
-  document.getElementById('leadCancel').addEventListener('click', () => dlg.close());
-  document.getElementById('leadClose').addEventListener('click', () => dlg.close());
-  document.getElementById('leadSubmit').addEventListener('click', () => {
+  const box = document.getElementById('leadBox');
+  const done = document.getElementById('leadDone');
+  function submit() {
     const v = emailEl.value.trim();
     const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
     emailEl.error = !ok;
@@ -732,11 +636,12 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
       services: [...document.querySelectorAll('#q-services md-filter-chip')].filter((c) => c.selected).map((c) => c.getAttribute('data-i18n-label')),
       industry: document.getElementById('q-industry').value,
       size: document.getElementById('q-size').value,
-      plan, email: v, name: document.getElementById('leadName').value.trim(),
+      email: v,
     });
-    formEl.style.display = 'none'; doneEl.style.display = '';
-    actForm.style.display = 'none'; actDone.style.display = '';
-  });
+    box.style.display = 'none'; done.style.display = '';
+  }
+  document.getElementById('leadSubmit').addEventListener('click', submit);
+  emailEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
 })();
 </script>
 
