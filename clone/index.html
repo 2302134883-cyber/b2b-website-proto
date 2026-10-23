@@ -78,6 +78,99 @@
   #heroOrb:focus, #heroOrb:focus-visible { outline: none; }
   #heroContent md-filled-button, #heroContent md-outlined-button, #heroContent md-icon-button, #heroContent #dots button { pointer-events: auto; }
 
+  /* ============ ARCH 选人式架构（arch- 前缀，独立组件） ============ */
+  .arch-select { margin-top: 48px; transition: opacity .24s ease, transform .24s ease; }
+  .arch-select.bye { opacity: 0; transform: translateY(-8px); pointer-events: none; }
+  .arch-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .arch-role {
+    appearance: none; font: inherit; text-align: left; cursor: pointer; width: 100%;
+    background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px;
+    transition: transform .25s cubic-bezier(.25,1,.5,1), border-color .25s ease;
+  }
+  .arch-role:hover { transform: translateY(-4px); border-color: var(--ink); }
+  .arch-role:focus-visible { outline: none; border-color: var(--ink); box-shadow: 0 0 0 3px rgba(17,24,39,.12); }
+  .arch-who { display: flex; align-items: center; gap: 14px; }
+  .arch-ava { position: relative; width: 56px; height: 56px; flex-shrink: 0; }
+  .arch-ava .orb { width: 56px; height: 56px; }
+  .arch-gly { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink); }
+  .arch-rname { display: block; font-size: 15px; font-weight: 600; }
+  .arch-rtag { display: block; font-size: 12px; color: var(--sub); margin-top: 3px; }
+  .arch-stats { display: grid; gap: 10px; margin-top: 22px; }
+  .arch-stat { display: grid; grid-template-columns: 56px 1fr 34px; align-items: center; gap: 10px; font-size: 11px; color: var(--faint); }
+  .arch-stat .bar { height: 4px; border-radius: 2px; background: #f1f2f5; overflow: hidden; }
+  .arch-stat .bar i { display: block; height: 100%; border-radius: 2px; background: var(--ink); transform-origin: left; }
+  .arch-stat .val { text-align: right; }
+  .arch-hint { margin-top: 28px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: var(--faint); }
+  .arch-hint i { width: 6px; height: 6px; border-radius: 50%; background: var(--ink); animation: archPulse 2.4s ease-in-out infinite; }
+  @keyframes archPulse { 50% { opacity: .2; } }
+
+  .arch-view { margin-top: 40px; }
+  .arch-view[hidden] { display: none; }
+  .arch-view.hi { animation: archIn .32s ease both; }
+  @keyframes archIn { from { opacity: 0; transform: translateY(8px); } }
+  .arch-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .arch-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+  .arch-tab {
+    appearance: none; font: inherit; font-size: 13px; cursor: pointer;
+    padding: 7px 16px; border-radius: 999px; border: 1px solid var(--line-2);
+    background: #fff; color: var(--sub); transition: all .2s ease;
+  }
+  .arch-tab:hover { border-color: var(--ink); color: var(--ink); }
+  .arch-tab.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .arch-back { appearance: none; font: inherit; font-size: 12px; color: var(--sub); background: none; border: none; cursor: pointer; }
+  .arch-back:hover { color: var(--ink); }
+
+  .arch-stage { display: grid; grid-template-columns: 1.9fr 1fr; gap: 24px; align-items: start; }
+  .arch-board { position: relative; border: 1px solid var(--line); border-radius: 16px; padding: 20px 24px 20px 48px; background: #fff; }
+  .arch-spine { position: absolute; left: 30px; top: 30px; bottom: 30px; width: 1px; background: var(--line-2); }
+  .arch-spine i {
+    position: absolute; left: -4px; top: 0; width: 9px; height: 9px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #a8c8fa, #d3c6f8 55%, rgba(255,255,255,0) 80%);
+    animation: archFlow 7s cubic-bezier(.45,0,.55,1) infinite;
+  }
+  @keyframes archFlow {
+    0% { top: 0; opacity: 0; } 10% { opacity: 1; }
+    88% { opacity: 1; } 100% { top: calc(100% - 9px); opacity: 0; }
+  }
+  .arch-layer { display: grid; grid-template-columns: 72px 1fr; gap: 16px; padding: 12px 0; }
+  .arch-layer + .arch-layer { border-top: 1px dashed var(--line); }
+  .arch-lname { font-size: 11px; letter-spacing: .04em; color: var(--faint); padding-top: 7px; }
+  .arch-nodes { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .arch-grp { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-right: 14px; }
+  .arch-gname { font-size: 11px; font-weight: 600; color: var(--ink); }
+  .arch-node {
+    font-size: 12px; padding: 5px 12px; border-radius: 999px;
+    border: 1px solid var(--line-2); background: #fff; color: var(--sub);
+    transition: opacity .3s ease, background .3s ease, color .3s ease, border-color .3s ease;
+  }
+  .arch-view.picked .arch-node { opacity: .22; }
+  .arch-view.picked .arch-node.on { opacity: 1; background: var(--ink); border-color: var(--ink); color: #fff; }
+  .arch-view.picked .arch-gname { opacity: .35; transition: opacity .3s ease; }
+  .arch-view.picked .arch-grp:has(.arch-node.on) .arch-gname { opacity: 1; }
+
+  .arch-panel { border: 1px solid var(--line); border-radius: 16px; padding: 24px; background: var(--wash); position: sticky; top: 80px; }
+  .arch-pane[hidden] { display: none; }
+  .arch-pane .arch-rtag { margin-top: 4px; }
+  .arch-plabel { font-size: 11px; letter-spacing: .04em; color: var(--faint); margin: 20px 0 10px; }
+  .arch-journey { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .arch-journey .stp { font-size: 12px; padding: 5px 12px; border-radius: 999px; background: #fff; border: 1px solid var(--line-2); color: var(--ink); }
+  .arch-journey .arr { font-size: 11px; color: var(--faint); }
+  .arch-chain { font-size: 12px; color: var(--sub); line-height: 1.9; }
+  .arch-chain + .arch-chain { margin-top: 6px; color: var(--faint); }
+
+  @media (max-width: 960px) {
+    .arch-cards { grid-template-columns: 1fr; }
+    .arch-stage { grid-template-columns: 1fr; }
+    .arch-panel { position: static; }
+    .arch-board { padding-left: 40px; }
+    .arch-spine { left: 24px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .arch-spine i, .arch-hint i { animation: none; }
+    .arch-view.hi { animation: none; }
+    .arch-select, .arch-role, .arch-node { transition: none; }
+  }
+
   /* ---- 安全网：菜单组件未升级完成前整体隐藏（防裸内容漏出） ---- */
   md-menu:not(:defined) { display: none; }
   /* ============ Logo 无缝轮播（lm- 前缀，独立组件） ============ */
@@ -475,6 +568,36 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
   </div>
 </section>
 
+<!-- ============ ARCH · 整体架构（选人式交互） ============ -->
+<section id="arch" class="py-24 border-t border-[var(--line)]">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="sec-head">
+      <svg class="node orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
+      <h2 class="text-[32px] font-bold tracking-tight" data-i18n="arch.title">整体架构</h2>
+    </div>
+    <p class="mt-3 text-center text-[14px] text-[var(--sub)]" data-i18n="arch.sub">中台化 B2B 系统 · 选择一个角色，看 TA 眼中的系统</p>
+
+    <!-- 第一幕：选人（游戏式角色卡） -->
+    <div id="archSelect" class="arch-select">
+      <div class="arch-cards" id="archCards"></div>
+      <p class="arch-hint"><i></i><span data-i18n="arch.hint">选择角色进入</span></p>
+    </div>
+
+    <!-- 第二幕：该角色视角下的架构 -->
+    <div id="archView" class="arch-view" hidden>
+      <div class="arch-toolbar">
+        <div class="arch-tabs" id="archTabs"></div>
+        <button id="archBack" class="arch-back" type="button">← <span data-i18n="arch.back">重新选择</span></button>
+      </div>
+      <div class="arch-stage">
+        <div class="arch-board" id="archBoard"><div class="arch-spine" aria-hidden="true"><i></i></div></div>
+        <aside class="arch-panel" id="archPanel"></aside>
+      </div>
+      <p class="mt-6 text-[12px] text-[var(--faint)]" data-i18n="arch.note">说明：节点为中台化 B2B 典型模块占位，接入实际产品线后替换。</p>
+    </div>
+  </div>
+</section>
+
 <!-- ============ 关于我们 ============ -->
 <section class="py-24">
   <div class="max-w-[1200px] mx-auto px-6">
@@ -790,6 +913,171 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
+})();
+</script>
+
+<!-- ============ ARCH 选人式架构（数据驱动：角色 × 五层 × 高亮映射） ============ -->
+<script>
+(function () {
+  /* 业务术语与旅程文案为演示占位（中文），正式内容确认后再入 i18n 词典 */
+  const N = {
+    u_retail:'零售客户', u_channel:'渠道商', u_agent:'代理商', u_vip:'VIP 客户', u_store:'传统门店', u_ent:'企业大客', u_sales:'业务员', u_ops:'运营 / 管理',
+    t_pc:'PC', t_mini:'小程序', t_h5:'H5', t_app:'APP', t_wx:'企微', t_dd:'钉钉', t_api:'Open API',
+    s_order:'订货场景', s_trade:'交易 / 折让', s_fund:'资金 / 结算', s_after:'售后 / 服务', s_org:'组织 / 成员', s_pre:'业务员 · 售前', s_mid:'业务员 · 售中', s_post:'业务员 · 售后',
+    c_order:'订单中心', c_price:'价格中心', c_pay:'支付中心', c_settle:'结算中心',
+    c_stock:'库存中心', c_logi:'物流中心', c_goods:'商品中心',
+    c_cust:'客户中心', c_mkt:'营销中心', c_svc:'售后中心', c_cms:'内容中心', c_group:'集团中心',
+    e_erp:'ERP', e_wms:'WMS', e_tms:'TMS', e_crm:'CRM', e_oa:'OA', e_pos:'POS', e_srm:'SRM', e_drp:'DRP',
+  };
+  const LAYERS = [
+    { i18n:'arch.l1', name:'用户层',     nodes:['u_retail','u_channel','u_agent','u_vip','u_store','u_ent','u_sales','u_ops'] },
+    { i18n:'arch.l2', name:'触点层',     nodes:['t_pc','t_mini','t_h5','t_app','t_wx','t_dd','t_api'] },
+    { i18n:'arch.l3', name:'业务场景层', nodes:['s_order','s_trade','s_fund','s_after','s_org','s_pre','s_mid','s_post'] },
+    { i18n:'arch.l4', name:'中台能力层', groups:[
+      { name:'交易域',     nodes:['c_order','c_price','c_pay','c_settle'] },
+      { name:'履约域',     nodes:['c_stock','c_logi'] },
+      { name:'商品域',     nodes:['c_goods'] },
+      { name:'客户运营域', nodes:['c_cust','c_mkt','c_svc','c_cms'] },
+      { name:'组织域',     nodes:['c_group'] },
+    ]},
+    { i18n:'arch.l5', name:'后台系统层', nodes:['e_erp','e_wms','e_tms','e_crm','e_oa','e_pos','e_srm','e_drp'] },
+  ];
+  const ROLES = [
+    {
+      id:'customer', name:'企业客户', tag:'想省心补货的采购方',
+      centers:7, touch:4, scenes:5,
+      journey:['开户审核','选品 / 批量订货','授信 / 支付','收货','售后 · 对账'],
+      chain:'小程序 / APP → 订货 · 交易 · 资金场景 → 中台（商品 · 价格 · 库存 · 订单 · 支付 · 结算）→ ERP / WMS',
+      note:'核心是「价格中心」的一客一价与「支付中心」的授信额度。',
+      on:['u_retail','u_channel','u_agent','u_vip','u_store','u_ent',
+          't_pc','t_mini','t_h5','t_app',
+          's_order','s_trade','s_fund','s_after','s_org',
+          'c_goods','c_price','c_stock','c_order','c_pay','c_settle','c_logi',
+          'e_erp','e_wms'],
+    },
+    {
+      id:'sales', name:'业务员', tag:'背业绩指标的一线销售',
+      centers:6, touch:3, scenes:4,
+      journey:['线索收集','客户分配','代客下单','折扣 / 订单审批','应收跟进','业绩统计'],
+      chain:'企微 / 钉钉 → 售前 · 售中 · 售后工作台 → 中台（客户 · 营销 · 订单 · 价格 · 结算 · 售后）→ CRM / ERP',
+      note:'核心是「客户中心」的客户池与「订单中心」的代客下单。',
+      on:['u_sales','t_wx','t_dd','t_pc',
+          's_pre','s_mid','s_post','s_org',
+          'c_cust','c_mkt','c_order','c_price','c_settle','c_svc',
+          'e_crm','e_erp'],
+    },
+    {
+      id:'ops', name:'运营 · 管理', tag:'中台的操盘手',
+      centers:13, touch:7, scenes:8,
+      journey:['商品上架','价格策略','营销活动','订单 / 售后审核','数据复盘'],
+      chain:'PC 运营后台 → 管理场景 → 全部 13 个中台中心 → ERP / WMS / TMS / CRM 全量集成',
+      note:'唯一触及所有中心与后台系统的角色——「中台运营中心」因此得名。',
+      on:'ALL',
+    },
+  ];
+  const GLYPHS = {
+    customer:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>',
+    sales:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="2"/><path d="M9 8V6.5A2.5 2.5 0 0 1 11.5 4h1A2.5 2.5 0 0 1 15 6.5V8"/><path d="M4 13.5h16"/></svg>',
+    ops:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10"/><path d="M18 7h2"/><circle cx="16" cy="7" r="2"/><path d="M4 12h4"/><path d="M12 12h8"/><circle cx="10" cy="12" r="2"/><path d="M4 17h9"/><path d="M17 17h3"/><circle cx="15" cy="17" r="2"/></svg>',
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const selectEl = $('archSelect'), viewEl = $('archView');
+  const cards = $('archCards'), tabs = $('archTabs'), board = $('archBoard'), panel = $('archPanel');
+  if (!selectEl || !viewEl || !cards || !tabs || !board || !panel) return;
+
+  const chip = (id) => `<span class="arch-node" data-n="${id}">${N[id]}</span>`;
+  const stat = (key, label, v, max) =>
+    `<span class="arch-stat"><span data-i18n="${key}">${label}</span><span class="bar"><i style="transform:scaleX(${(v / max).toFixed(2)})"></i></span><span class="val">${v}/${max}</span></span>`;
+
+  /* 一次性渲染全部内容（含三个角色面板），之后只做 class / hidden 切换——语言切换由 i18n.js 全量 apply 覆盖 */
+  cards.innerHTML = ROLES.map((r) => `
+    <button class="arch-role" type="button" data-role="${r.id}">
+      <span class="arch-who">
+        <span class="arch-ava">
+          <svg class="orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
+          <span class="arch-gly" aria-hidden="true">${GLYPHS[r.id]}</span>
+        </span>
+        <span>
+          <span class="arch-rname" data-i18n="role.${r.id}.name">${r.name}</span>
+          <span class="arch-rtag" data-i18n="role.${r.id}.tag">${r.tag}</span>
+        </span>
+      </span>
+      <span class="arch-stats">
+        ${stat('arch.stat.centers', '中台中心', r.centers, 13)}
+        ${stat('arch.stat.touch', '触点', r.touch, 7)}
+        ${stat('arch.stat.scene', '场景', r.scenes, 8)}
+      </span>
+    </button>`).join('');
+
+  tabs.innerHTML = ROLES.map((r) =>
+    `<button class="arch-tab" type="button" data-role="${r.id}" aria-pressed="false"><span data-i18n="role.${r.id}.name">${r.name}</span></button>`).join('');
+
+  board.insertAdjacentHTML('beforeend', LAYERS.map((l) => `
+    <div class="arch-layer">
+      <span class="arch-lname" data-i18n="${l.i18n}">${l.name}</span>
+      <div class="arch-nodes">${l.groups
+        ? l.groups.map((g) => `<span class="arch-grp"><span class="arch-gname">${g.name}</span>${g.nodes.map(chip).join('')}</span>`).join('')
+        : l.nodes.map(chip).join('')}</div>
+    </div>`).join(''));
+
+  panel.innerHTML = ROLES.map((r) => `
+    <div class="arch-pane" data-pane="${r.id}" hidden>
+      <span class="arch-rname" data-i18n="role.${r.id}.name">${r.name}</span>
+      <p class="arch-rtag" data-i18n="role.${r.id}.tag">${r.tag}</p>
+      <p class="arch-plabel" data-i18n="arch.journey">角色旅程</p>
+      <div class="arch-journey">${r.journey.map((s, i, a) =>
+        `<span class="stp">${s}</span>${i < a.length - 1 ? '<span class="arr">→</span>' : ''}`).join('')}</div>
+      <p class="arch-plabel" data-i18n="arch.chain">点亮的链路</p>
+      <p class="arch-chain">${r.chain}</p>
+      <p class="arch-chain">${r.note}</p>
+    </div>`).join('');
+
+  const nodes = board.querySelectorAll('.arch-node');
+  const tabEls = [...tabs.querySelectorAll('.arch-tab')];
+  const panes = [...panel.querySelectorAll('.arch-pane')];
+  let switching = false;
+
+  function pick(id, fromCards) {
+    const role = ROLES.find((r) => r.id === id);
+    if (!role) return;
+    tabEls.forEach((t) => {
+      const on = t.dataset.role === id;
+      t.classList.toggle('on', on);
+      t.setAttribute('aria-pressed', String(on));
+    });
+    panes.forEach((p) => { p.hidden = p.dataset.pane !== id; });
+    const all = role.on === 'ALL';
+    const set = all ? null : new Set(role.on);
+    viewEl.classList.add('picked');
+    nodes.forEach((n) => n.classList.toggle('on', all || set.has(n.dataset.n)));
+    if (fromCards && !selectEl.hidden && !switching) {
+      switching = true;
+      selectEl.classList.add('bye');
+      setTimeout(() => {           /* 语义状态立即落定，延时只做 display 收尾 */
+        selectEl.hidden = true;
+        viewEl.hidden = false;
+        viewEl.classList.add('hi');
+        switching = false;
+      }, 240);
+    }
+  }
+
+  cards.addEventListener('click', (e) => {
+    const btn = e.target.closest('.arch-role');
+    if (btn) pick(btn.dataset.role, true);
+  });
+  tabs.addEventListener('click', (e) => {
+    const btn = e.target.closest('.arch-tab');
+    if (btn) pick(btn.dataset.role, false);
+  });
+  $('archBack').addEventListener('click', () => {
+    viewEl.hidden = true;
+    viewEl.classList.remove('hi', 'picked');
+    nodes.forEach((n) => n.classList.remove('on'));
+    selectEl.hidden = false;
+    requestAnimationFrame(() => selectEl.classList.remove('bye'));
+  });
 })();
 </script>
 
