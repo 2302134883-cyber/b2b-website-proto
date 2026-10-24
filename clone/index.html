@@ -9,6 +9,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="./vendor/material-bundle.js" defer></script>
 <script src="./i18n.js" defer></script>
+<script src="./assets/tech-ring.js" defer></script>
 <!-- 说明：已打包为经典脚本，file:// 直接打开也能加载 Material 组件 -->
 <style>
   /* ============ Gemini Neural Expressive × Material 3 令牌 ============ */
@@ -679,21 +680,7 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     </div>
 
     <h3 class="mt-16 mb-6 text-[15px] font-semibold" data-i18n="how.tech">技术栈（圆盘 / 环形）</h3>
-    <div class="flex items-center gap-12">
-      <svg class="orb shrink-0" style="width:192px;height:192px" viewBox="0 0 200 200">
-        <defs><radialGradient id="orbTech" cx="38%" cy="32%" r="75%">
-          <stop offset="0%" stop-color="#a8c8fa"/><stop offset="42%" stop-color="#d3c6f8"/>
-          <stop offset="72%" stop-color="#f3d4ec"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-        </radialGradient></defs>
-        <circle cx="100" cy="100" r="98" fill="url(#orbTech)"/>
-      </svg>
-      <div class="flex-1 space-y-3">
-        <div class="ph h-10 justify-start px-4" data-i18n="tech.1">技术项 / 中间件 1（如：微服务架构）</div>
-        <div class="ph h-10 justify-start px-4" data-i18n="tech.2">技术项 / 中间件 2（如：消息队列）</div>
-        <div class="ph h-10 justify-start px-4" data-i18n="tech.3">技术项 / 中间件 3（如：容器化 K8s）</div>
-        <div class="ph h-10 justify-start px-4" data-i18n="tech.4">技术项 / 中间件 4（如：数据中台）</div>
-      </div>
-    </div>
+    <div id="techRing" class="w-full max-w-[560px] mx-auto"></div>
 
     <h3 class="mt-16 mb-6 text-[15px] font-semibold" data-i18n="how.ai">创造 AI 智能体</h3>
     <md-chip-set>
