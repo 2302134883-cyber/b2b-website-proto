@@ -1,10 +1,11 @@
 /* ============ 技术栈环形图（谷歌生态图线框风 · 立体透视版） ============
- * 用法：页面放 <div id="techRing"></div> + <div id="techList"></div>，
- *       引入本文件（defer，需在 i18n.js 之后）。
+ * 用法：页面放 <div id="techRing"></div>，引入本文件（defer，需在 i18n.js 之后）。
  * 依赖：i18n.js 的 data-i18n 机制与 __i18nApply 钩子（含 'i18n:applied' 事件）。
  * 词典 key：tech.1~6（名称）、tech.d.1~6（说明）、tech.core（中心）。
  * 立体：轨道面透视倾斜，节点按 sin 深度缩放/淡出/虚化，后排穿过中心圆徽后方。
- * 动态：双轨反向缓转 + 节点浮动呼吸 + 入场 stagger + 核心脉冲环 + 彗星光点沿轨运行。
+ * 动态：永不停止的双轨反向旋转（悬停不停转）+ 点击加速（惯性衰减）+ 节点浮动呼吸
+ *       + 入场 stagger + 核心脉冲环 + 彗星光点沿轨运行。
+ * 悬停：气泡卡浮现具体内容（跟随节点），同时全场聚焦降级。
  * 无障碍：prefers-reduced-motion 时静态呈现。
  */
 (function () {
@@ -30,9 +31,12 @@
     { icon: 'cloud', key: 'tech.5', dkey: 'tech.d.5' },
     { icon: 'code',  key: 'tech.6', dkey: 'tech.d.6' }
   ];
+  const BASE_SPEED = 0.09;      // 基础角速度 rad/s
+  const CLICK_BOOST = 0.9;      // 每次点击追加的角速度
+  const BOOST_MAX = 2.8;        // 加速上限
 
   const STYLE = `
-    .tr-stage{position:relative;width:100%;max-width:460px;aspect-ratio:23/20;margin:0 auto;user-select:none}
+    .tr-stage{position:relative;width:100%;max-width:560px;aspect-ratio:23/20;margin:0 auto;user-select:none;cursor:pointer}
     /* 地面柔光，托住整个装置 */
     .tr-floor{position:absolute;left:50%;top:56%;width:94%;height:60%;transform:translate(-50%,-50%);
       background:radial-gradient(50% 50% at 50% 50%,rgba(109,94,240,.08),transparent 70%);
@@ -64,7 +68,7 @@
       background:#fff;border:1px solid var(--line,#eceef2);
       box-shadow:0 4px 16px -6px rgba(17,24,39,.10),0 12px 28px -12px rgba(109,94,240,.18),0 0 0 6px var(--wash,#fafbfc);
       display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
-      text-decoration:none;color:var(--ink,#111827);z-index:50;
+      text-decoration:none;color:var(--ink,#111827);z-index:50;pointer-events:none;
     }
     .tr-core .tr-ci{color:#6d5ef0}
     .tr-core .tr-cl{font-size:12px;font-weight:600;line-height:1.25;text-align:center;max-width:104px}
@@ -86,10 +90,10 @@
       border-color:#6d5ef0;box-shadow:0 6px 18px -4px rgba(109,94,240,.38);outline:none}
     .tr-node:hover .tr-lb{color:var(--ink,#111827)}
     .tr-mini{position:absolute;width:6px;height:6px;border-radius:50%;background:#c4b5fd;left:0;top:0;z-index:5;
-      box-shadow:0 0 8px 1px rgba(196,181,253,.55);will-change:transform}
+      box-shadow:0 0 8px 1px rgba(196,181,253,.55);will-change:transform;pointer-events:none}
     .tr-cap{position:absolute;left:50%;bottom:0;transform:translateX(-50%);font-size:12.5px;color:var(--faint,#9ca3af);text-align:center;max-width:92%;pointer-events:none;transition:opacity .25s}
     .tr-cap b{color:var(--ink,#111827);font-weight:600}
-    /* 悬停气泡卡（形式 1）+ 聚焦降级（形式 3） */
+    /* 悬停气泡卡 + 聚焦降级 */
     .tr-tip{position:absolute;z-index:300;width:224px;padding:12px 14px;border-radius:14px;
       background:rgba(255,255,255,.97);border:1px solid var(--line,#eceef2);
       box-shadow:0 14px 36px -12px rgba(17,24,39,.25),0 0 0 4px rgba(109,94,240,.06);
@@ -97,7 +101,6 @@
       transition:opacity .18s ease,transform .18s ease;pointer-events:none}
     .tr-tip.on{opacity:1;transform:translateY(0) scale(1);
       transition:opacity .24s cubic-bezier(.2,.9,.3,1.15),transform .24s cubic-bezier(.2,.9,.3,1.15)}
-    /* rAF/合成器冻结的环境：跳过过渡直接显形 */
     .tr-tip.tr-instant{transition:none!important}
     .tr-tip .tr-thd{display:flex;align-items:center;gap:9px;margin-bottom:6px}
     .tr-tip .tr-tico{width:30px;height:30px;border-radius:9px;background:#f1edfd;color:#4c3fd6;display:grid;place-items:center;flex:0 0 30px}
@@ -108,12 +111,6 @@
     .tr-tip.flip .tr-tarr{bottom:auto;top:-5.5px;transform:translateX(-50%) rotate(225deg)}
     .tr-stage.tr-spot .tr-ring{opacity:.35}
     .tr-stage.tr-spot .tr-cap{opacity:0}
-    /* 右侧清单（M3 卡片行） */
-    .tr-item{display:flex;align-items:flex-start;gap:14px;padding:13px 16px;background:#fff;border:1px solid var(--line,#eceef2);border-radius:16px;transition:border-color .2s}
-    .tr-item:hover{border-color:#ddd6fe}
-    .tr-item .tr-ic{flex:0 0 36px;height:36px;border-radius:10px;background:#f1edfd;color:#4c3fd6;display:grid;place-items:center}
-    .tr-item b{display:block;font-size:14px;font-weight:600;color:var(--ink,#111827)}
-    .tr-item .tr-desc{display:block;margin-top:2px;font-size:13px;color:var(--sub,#6b7280)}
     @media (prefers-reduced-motion: reduce){
       .tr-stage *{animation:none!important;transition:none!important}
       .tr-pulse{opacity:.25;transform:translate(-50%,-50%) scale(1)}
@@ -122,7 +119,6 @@
 
   function build() {
     const mount = document.getElementById('techRing');
-    const list = document.getElementById('techList');
     if (!mount) return;
 
     const style = document.createElement('style');
@@ -136,30 +132,28 @@
       '<div class="tr-ring r2"></div>',
       '<div class="tr-ring r1"></div>',
       '<div class="tr-pulse"></div><div class="tr-pulse"></div>',
-      '<a class="tr-core" href="#">',
+      '<div class="tr-core">',
       `  <span class="tr-ci">${svg(ICONS.hub, 26)}</span>`,
       '  <span class="tr-cl" data-i18n="tech.core">ShopeX 技术中台</span>',
-      '</a>',
-      '<div class="tr-cap" id="trCap"></div>',
+      '</div>',
+      '<div class="tr-cap"><b data-i18n="tech.core">ShopeX 技术中台</b></div>',
       '<div class="tr-tip" role="tooltip"></div>'
     ].join('');
     mount.appendChild(stage);
 
-    cap = stage.querySelector('#trCap');
+    cap = stage.querySelector('.tr-cap');
     tip = stage.querySelector('.tr-tip');
-    core = stage.querySelector('.tr-core');
-    setCap('tech.core', null);
-    core.addEventListener('pointerenter', () => { paused++; setCap('tech.core', null); });
-    core.addEventListener('pointerleave', () => { paused = Math.max(0, paused - 1); setCap(curKey, curDKey); });
 
     nodes = ITEMS.map((it) => {
       const n = document.createElement('a');
-      n.className = 'tr-node'; n.href = '#';
+      n.className = 'tr-node';
+      n.href = it.href || '#';
       n.innerHTML = `<span class="tr-dot">${svg(ICONS[it.icon], 22)}</span><span class="tr-lb" data-i18n="${it.key}"></span>`;
       n.addEventListener('pointerenter', () => hotNode(n, it));
       n.addEventListener('pointerleave', () => coolNodeSoon(n));
       n.addEventListener('focus', () => hotNode(n, it));
       n.addEventListener('blur', () => coolNodeSoon(n));
+      n.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); boostSpin(); });   // 点击节点也加速（不跳转）
       stage.appendChild(n);
       return n;
     });
@@ -175,23 +169,15 @@
       return c;
     });
 
-    if (list) {
-      list.innerHTML = ITEMS.map((it) => `
-        <div class="tr-item">
-          <span class="tr-ic">${svg(ICONS[it.icon], 20)}</span>
-          <span>
-            <b data-i18n="${it.key}"></b>
-            <span class="tr-desc" data-i18n="${it.dkey}"></span>
-          </span>
-        </div>`).join('');
-    }
-
-    // 渲染晚于 i18n 首次 apply：补一次翻译；语言切换时 apply() 全文档重扫即可覆盖
+    // 点击任意处加速旋转
+    stage.addEventListener('click', () => boostSpin());
+    // 指针移出舞台 → 延迟关闭气泡
+    stage.addEventListener('pointerleave', () => { if (spotNode) coolNodeSoon(spotNode); });
     // 移动端：点空白处关闭气泡
     stage.addEventListener('pointerdown', (e) => {
       if (!e.target.closest('.tr-node') && spotNode) coolNode(spotNode);
     });
-    // 第三重保险：pointermove 直接追踪（覆盖 enter/leave 与 :hover 均不可靠的嵌入式 webview）
+    // pointermove 直接追踪（覆盖 enter/leave 与 :hover 均不可靠的嵌入式 webview）
     stage.addEventListener('pointermove', (e) => {
       const n = e.target.closest('.tr-node');
       if (n && n !== spotNode) {
@@ -211,15 +197,9 @@
     }
   }
 
-  /* ---- 动画 ---- */
-  let stage, cap, core, tip, nodes = [], minis = [], comets = [];
-  let paused = 0, angle = -Math.PI / 2, last = 0, born = 0;
-  let curKey = 'tech.core', curDKey = null, spotNode = null, intervalMode = false;
-
-  /* 悬停：气泡卡（形式 1）+ 聚焦降级（形式 3） */
+  /* ---- 悬停：气泡卡 + 聚焦降级（旋转不停） ---- */
   function hotNode(n, it) {
     clearTimeout(n._coolT);
-    paused++;
     n._liftT = 1;
     spotNode = n;
     stage.classList.add('tr-spot');
@@ -229,15 +209,14 @@
     if (window.__i18nApply) window.__i18nApply(document.documentElement.lang || undefined);
     placeTip(n);
     tip.classList.toggle('tr-instant', intervalMode);
-    setTimeout(() => tip.classList.add('on'), 0);   // rAF 冻结的 webview 里也能浮现
+    setTimeout(() => tip.classList.add('on'), 0);
   }
   function coolNode(n) {
-    paused = Math.max(0, paused - 1);
     n._liftT = 0;
     if (spotNode === n) {
       spotNode = null;
       stage.classList.remove('tr-spot');
-      tip.classList.remove('on');
+      tip.classList.remove('on', 'tr-instant');
     }
   }
   /* 延迟关闭：Chrome 在元素位移后会补发合成 pointerleave，宽限 150ms 防止闪烁 */
@@ -249,87 +228,19 @@
     if (n._x == null) return;
     const w = stage.clientWidth;
     const x = Math.min(Math.max(n._x, 122), w - 122);
-    const flip = n._y < 178;                       // 近顶边自动翻到下方
+    const flip = n._y < 178;
     tip.classList.toggle('flip', flip);
     tip.style.left = (x - 112) + 'px';
     tip.style.top = flip ? (n._y + 56) + 'px'
                          : (n._y - 56 - tip.offsetHeight) + 'px';
   }
 
-  function setCap(key, dkey) {
-    curKey = key; curDKey = dkey;
-    if (!cap) return;
-    cap.innerHTML = dkey
-      ? `<b data-i18n="${key}"></b><span> — </span><span data-i18n="${dkey}"></span>`
-      : `<b data-i18n="${key}"></b>`;
-    if (window.__i18nApply) window.__i18nApply(document.documentElement.lang || undefined);
+  /* ---- 点击加速（惯性衰减） ---- */
+  function boostSpin() {
+    boost = Math.min(boost + CLICK_BOOST, BOOST_MAX);
   }
 
-  const easeOut = (k) => 1 - Math.pow(1 - Math.min(1, Math.max(0, k)), 3);
-
-  function paint(tSec) {
-    if (!stage || !stage.isConnected) return;
-    const w = stage.clientWidth, h = stage.clientHeight;
-    if (!w) return;
-    const cx = w / 2, cy = h * 0.53;
-    const R2 = w * (w >= 460 ? 0.435 : 0.38), ry2 = R2 * 0.43;
-    const R1 = w * (w >= 460 ? 0.287 : 0.25), ry1 = R1 * 0.43;
-
-    nodes.forEach((n, i) => {
-      const a = angle + (i * Math.PI * 2) / nodes.length;
-      const depth = (Math.sin(a) + 1) / 2;                 // 0=最远 1=最近
-      const bob = Math.sin(tSec * 1.6 + i * 1.1) * 3 * (0.4 + 0.6 * depth);
-      const x = cx + Math.cos(a) * R2;
-      const y = cy + Math.sin(a) * ry2 + bob;
-
-      if (n._lift == null) n._lift = 0;
-      n._lift += ((n._liftT || 0) - n._lift) * 0.18;       // hover 起浮平滑
-      const lift = n._lift;
-
-      // 入场 stagger：每节点延迟 90ms，500ms 内三次方缓出
-      const bornAt = i * 0.09;
-      const ease = easeOut((tSec - bornAt) / 0.5);
-
-      const scale = (0.72 + 0.4 * depth) * (1 + 0.12 * lift) * (0.55 + 0.45 * ease);
-      n.style.transform =
-        `translate(${x}px, ${y - 6 * lift}px) translate(-50%,-58%) scale(${scale.toFixed(3)})`;
-      n._x = x; n._y = y;
-      const dim = (spotNode && spotNode !== n) ? 0.25 : 1;
-      n.style.opacity = Math.min(1, (0.32 + 0.68 * depth) * ease * dim + 0.35 * lift).toFixed(3);
-      n.style.zIndex = lift > 0 ? '200' : String(8 + Math.round(depth * 84));
-      n.style.filter = depth < 0.38
-        ? `blur(${((0.38 - depth) * 3.6).toFixed(2)}px)` : '';
-    });
-
-    minis.forEach((m, i) => {
-      const a = -angle * 0.7 + (i * Math.PI * 2) / minis.length + 0.6;
-      m.style.transform = `translate(${cx + Math.cos(a) * R1 - 3}px,${cy + Math.sin(a) * ry1 - 3}px)`;
-      m.style.opacity = spotNode ? '0.3' : '0.85';
-    });
-
-    comets.forEach((c, i) => {
-      const outer = i === 0;
-      const a = (i ? -0.42 : 0.55) * tSec + (i ? 2.4 : 0.4);
-      const R = outer ? R2 : R1, ry = outer ? ry2 : ry1;
-      const depth = (Math.sin(a) + 1) / 2;
-      c.style.transform = `translate(${cx + Math.cos(a) * R - 4}px,${cy + Math.sin(a) * ry - 4}px) scale(${(0.7 + 0.5 * depth).toFixed(2)})`;
-      c.style.opacity = ((0.45 + 0.5 * depth) * (spotNode ? 0.3 : 1)).toFixed(2);
-      c.style.zIndex = String(8 + Math.round(depth * 84));
-    });
-
-    if (spotNode && tip && tip.classList.contains('on')) placeTip(spotNode);   // 气泡跟随浮动节点
-
-    // 悬停状态对账：以浏览器真实 :hover 为准，兼容 rAF 冻结等异常环境（enter/leave 不派发时自愈）
-    const hovered = stage.querySelector('.tr-node:hover');
-    if (hovered && hovered !== spotNode) {
-      const it = ITEMS[nodes.indexOf(hovered)];
-      if (it) hotNode(hovered, it);
-    } else if (!hovered && spotNode) {
-      coolNodeSoon(spotNode);
-    }
-  }
-
-  /* 动画循环：优先 rAF；嵌入式 webview 可能不驱动 rAF，看门狗 300ms 无帧则切 setInterval 兜底 */
+  /* ---- 动画循环：优先 rAF；嵌入式 webview 可能不驱动 rAF，看门狗 300ms 无帧则切 setInterval 兜底 ---- */
   function startLoop() {
     let viaRaf = false, rafFired = false;
     const frame = (t) => { if (!viaRaf) return; tick(t); requestAnimationFrame(frame); };
@@ -350,9 +261,73 @@
     if (!last) { last = t; born = t; }
     const tSec = (t - born) / 1000;
     const dt = Math.min(0.05, (t - last) / 1000); last = t;
-    if (!paused) angle += 0.09 * dt;
+    angle += (BASE_SPEED + boost) * dt;          // 旋转永不停止
+    boost *= Math.exp(-1.15 * dt);               // 点击加速惯性衰减
+    if (boost < 0.005) boost = 0;
     paint(tSec);
   }
+
+  const easeOut = (k) => 1 - Math.pow(1 - Math.min(1, Math.max(0, k)), 3);
+
+  function paint(tSec) {
+    if (!stage || !stage.isConnected) return;
+    const w = stage.clientWidth, h = stage.clientHeight;
+    if (!w) return;
+    const cx = w / 2, cy = h * 0.53;
+    const R2 = w * (w >= 560 ? 0.435 : 0.38), ry2 = R2 * 0.43;
+    const R1 = w * (w >= 560 ? 0.287 : 0.25), ry1 = R1 * 0.43;
+
+    nodes.forEach((n, i) => {
+      const a = angle + (i * Math.PI * 2) / nodes.length;
+      const depth = (Math.sin(a) + 1) / 2;                 // 0=最远 1=最近
+      const bob = Math.sin(tSec * 1.6 + i * 1.1) * 3 * (0.4 + 0.6 * depth);
+      const x = cx + Math.cos(a) * R2;
+      const y = cy + Math.sin(a) * ry2 + bob;
+
+      if (n._lift == null) n._lift = 0;
+      n._lift += ((n._liftT || 0) - n._lift) * 0.18;       // hover 起浮平滑
+      const lift = n._lift;
+
+      const bornAt = i * 0.09;
+      const ease = easeOut((tSec - bornAt) / 0.5);
+
+      const scale = (0.72 + 0.4 * depth) * (1 + 0.12 * lift) * (0.55 + 0.45 * ease);
+      n.style.transform =
+        `translate(${x}px, ${y - 6 * lift}px) translate(-50%,-58%) scale(${scale.toFixed(3)})`;
+      n._x = x; n._y = y;
+      const dim = (spotNode && spotNode !== n) ? 0.25 : 1;
+      n.style.opacity = Math.min(1, (0.32 + 0.68 * depth) * ease * dim + 0.35 * lift).toFixed(3);
+      n.style.zIndex = (lift > 0 || spotNode === n) ? '200' : String(8 + Math.round(depth * 84));
+      n.style.filter = depth < 0.38
+        ? `blur(${((0.38 - depth) * 3.6).toFixed(2)}px)` : '';
+    });
+
+    minis.forEach((m, i) => {
+      const a = -angle * 0.7 + (i * Math.PI * 2) / minis.length + 0.6;
+      m.style.transform = `translate(${cx + Math.cos(a) * R1 - 3}px,${cy + Math.sin(a) * ry1 - 3}px)`;
+      m.style.opacity = spotNode ? '0.3' : '0.85';
+    });
+
+    comets.forEach((c, i) => {
+      const outer = i === 0;
+      const a = (i ? -0.42 : 0.55) * tSec + (i ? 2.4 : 0.4);
+      const R = outer ? R2 : R1, ry = outer ? ry2 : ry1;
+      const depth = (Math.sin(a) + 1) / 2;
+      c.style.transform = `translate(${cx + Math.cos(a) * R - 4}px,${cy + Math.sin(a) * ry - 4}px) scale(${(0.7 + 0.5 * depth).toFixed(2)})`;
+      c.style.opacity = ((0.45 + 0.5 * depth) * (spotNode ? 0.3 : 1)).toFixed(2);
+      c.style.zIndex = String(8 + Math.round(depth * 84));
+    });
+
+    if (spotNode && tip && tip.classList.contains('on')) placeTip(spotNode);   // 气泡跟随节点
+
+    // 指针已离开整个舞台（以浏览器真实 :hover 为准）→ 延迟关闭
+    if (spotNode && !stage.matches(':hover')) coolNodeSoon(spotNode);
+  }
+
+  /* ---- 状态 ---- */
+  let stage, cap, tip, nodes = [], minis = [], comets = [];
+  let angle = -Math.PI / 2, last = 0, born = 0, boost = 0;
+  let spotNode = null, intervalMode = false;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', build);
