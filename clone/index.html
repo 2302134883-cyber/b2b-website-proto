@@ -173,6 +173,16 @@
     .arch-select, .arch-role, .arch-node { transition: none; }
   }
 
+  /* ---- 紫色焦点跟随鼠标（报价三步 + 版本卡），移出区域回默认项 ---- */
+  .q-step.on {
+    --md-outlined-button-outline-color: transparent;
+    --md-outlined-button-label-text-color: #4c3fd6;
+    --md-sys-color-primary: #4c3fd6;
+    background: var(--md-sys-color-secondary-container);
+    border-radius: 999px;
+  }
+  #ver-cards .ver-hot { --md-outlined-card-outline-color: #c4b5fd; }
+
   /* ---- 安全网：菜单组件未升级完成前整体隐藏（防裸内容漏出） ---- */
   md-menu:not(:defined) { display: none; }
   /* ============ Logo 无缝轮播（lm- 前缀，独立组件） ============ */
@@ -446,9 +456,9 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     </div>
 
     <h3 class="mt-16 mb-6 text-[15px] font-semibold" data-i18n="what.products">产品 · 版本分类</h3>
-    <div class="grid grid-cols-3 gap-6">
+    <div class="grid grid-cols-3 gap-6" id="ver-cards">
       <md-outlined-card><div class="pad"><div class="ph-bar w-3/5 mb-6"></div><div class="ph h-[96px]"></div><div class="mt-6 text-center"><md-suggestion-chip label="版本 1（如：基础版）" data-i18n-label="what.v1"></md-suggestion-chip></div></div></md-outlined-card>
-      <md-outlined-card style="--md-outlined-card-outline-color:#c4b5fd"><div class="pad"><div class="ph-bar w-3/5 mb-6"></div><div class="ph h-[96px]"></div><div class="mt-6 text-center"><md-suggestion-chip label="版本 2（如：专业版）" data-i18n-label="what.v2"></md-suggestion-chip></div></div></md-outlined-card>
+      <md-outlined-card class="ver-hot"><div class="pad"><div class="ph-bar w-3/5 mb-6"></div><div class="ph h-[96px]"></div><div class="mt-6 text-center"><md-suggestion-chip label="版本 2（如：专业版）" data-i18n-label="what.v2"></md-suggestion-chip></div></div></md-outlined-card>
       <md-outlined-card><div class="pad"><div class="ph-bar w-3/5 mb-6"></div><div class="ph h-[96px]"></div><div class="mt-6 text-center"><md-suggestion-chip label="版本 3（如：旗舰版）" data-i18n-label="what.v3"></md-suggestion-chip></div></div></md-outlined-card>
     </div>
 
@@ -465,15 +475,16 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     </div>
 
     <h3 class="mt-16 mb-6 text-[15px] font-semibold" data-i18n="what.pricing">价格 · 引导式报价（定制化方案）</h3>
+    <div id="q-flow">
     <div class="flex items-center justify-center gap-4 mb-8">
-      <md-filled-tonal-button data-i18n="step.1">① 选服务</md-filled-tonal-button>
+      <md-outlined-button class="q-step on" data-step="1" data-i18n="step.1">① 选服务</md-outlined-button>
       <span class="w-10 h-px bg-[var(--line-2)]"></span>
-      <md-outlined-button data-i18n="step.2">② 填规模 / 需求</md-outlined-button>
+      <md-outlined-button class="q-step" data-step="2" data-i18n="step.2">② 填规模 / 需求</md-outlined-button>
       <span class="w-10 h-px bg-[var(--line-2)]"></span>
-      <md-outlined-button data-i18n="step.3">③ 出价格区间</md-outlined-button>
+      <md-outlined-button class="q-step" data-step="3" data-i18n="step.3">③ 出价格区间</md-outlined-button>
     </div>
     <div class="grid grid-cols-3 gap-6 items-start">
-      <md-outlined-card><div class="pad !p-6">
+      <md-outlined-card data-step="1"><div class="pad !p-6">
         <p class="text-[13px] font-semibold mb-4" data-i18n="step.1">① 选服务</p>
         <md-chip-set id="q-services">
           <md-filter-chip label="私有化部署" data-i18n-label="svc.deploy.title"></md-filter-chip>
@@ -483,7 +494,7 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
           <md-filter-chip label="运维 / 培训" data-i18n-label="chip.ops"></md-filter-chip>
         </md-chip-set>
       </div></md-outlined-card>
-      <md-outlined-card><div class="pad !p-6">
+      <md-outlined-card data-step="2"><div class="pad !p-6">
         <p class="text-[13px] font-semibold mb-4" data-i18n="step.2">② 填规模 / 需求</p>
         <md-outlined-select label="行业" data-i18n-label="form.industry" class="mb-3" id="q-industry">
           <md-select-option value=""><div slot="headline" data-i18n="form.industry.ph">请选择</div></md-select-option>
@@ -498,10 +509,11 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
           <md-select-option value="s3"><div slot="headline" data-i18n="form.size.s3">1,000 人以上</div></md-select-option>
         </md-outlined-select>
       </div></md-outlined-card>
-      <md-outlined-card><div class="pad !p-6">
+      <md-outlined-card data-step="3"><div class="pad !p-6">
         <p class="text-[13px] font-semibold mb-4" data-i18n="step.3">③ 获取方案和报价</p>
         <md-filled-button id="cta-plan" style="width:100%" data-i18n="plan.cta">获取方案和报价</md-filled-button>
       </div></md-outlined-card>
+    </div>
     </div>
     <p class="mt-8 text-center text-[12px] text-[var(--faint)]" data-i18n="pricing.note">一客一价 · 方案与报价按您的选择定制，留下邮箱即可获取</p>
   </div>
@@ -1145,6 +1157,29 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     selectEl.hidden = false;
     requestAnimationFrame(() => selectEl.classList.remove('bye'));
   });
+})();
+</script>
+
+<!-- ============ 紫色焦点跟随鼠标（报价三步 + 版本卡），移出区域回默认项 ============ -->
+<script>
+(function () {
+  /* 报价三步：悬停步骤按钮或对应卡片 → 紫色移到该步；移出 #q-flow 回 ① */
+  const flow = document.getElementById('q-flow');
+  if (flow) {
+    const steps = [...flow.querySelectorAll('.q-step')];
+    const set = (s) => steps.forEach((t) => t.classList.toggle('on', t.dataset.step === s));
+    flow.querySelectorAll('[data-step]').forEach((z) =>
+      z.addEventListener('mouseenter', () => set(z.dataset.step)));
+    flow.addEventListener('mouseleave', () => set('1'));
+  }
+  /* 版本卡：紫色描边跟随悬停卡片；移出 #ver-cards 回版本 2 */
+  const ver = document.getElementById('ver-cards');
+  if (ver) {
+    const cards = [...ver.querySelectorAll('md-outlined-card')];
+    const set = (i) => cards.forEach((c, j) => c.classList.toggle('ver-hot', i === j));
+    cards.forEach((c, i) => c.addEventListener('mouseenter', () => set(i)));
+    ver.addEventListener('mouseleave', () => set(1));
+  }
 })();
 </script>
 
