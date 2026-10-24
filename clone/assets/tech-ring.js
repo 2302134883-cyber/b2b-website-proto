@@ -87,8 +87,27 @@
     .tr-node:hover .tr-lb{color:var(--ink,#111827)}
     .tr-mini{position:absolute;width:6px;height:6px;border-radius:50%;background:#c4b5fd;left:0;top:0;z-index:5;
       box-shadow:0 0 8px 1px rgba(196,181,253,.55);will-change:transform}
-    .tr-cap{position:absolute;left:50%;bottom:0;transform:translateX(-50%);font-size:12.5px;color:var(--faint,#9ca3af);text-align:center;max-width:92%;pointer-events:none}
+    .tr-cap{position:absolute;left:50%;bottom:0;transform:translateX(-50%);font-size:12.5px;color:var(--faint,#9ca3af);text-align:center;max-width:92%;pointer-events:none;transition:opacity .25s}
     .tr-cap b{color:var(--ink,#111827);font-weight:600}
+    /* 悬停气泡卡（形式 1）+ 聚焦降级（形式 3） */
+    .tr-tip{position:absolute;z-index:300;width:224px;padding:12px 14px;border-radius:14px;
+      background:rgba(255,255,255,.97);border:1px solid var(--line,#eceef2);
+      box-shadow:0 14px 36px -12px rgba(17,24,39,.25),0 0 0 4px rgba(109,94,240,.06);
+      opacity:0;transform:translateY(8px) scale(.96);
+      transition:opacity .18s ease,transform .18s ease;pointer-events:none}
+    .tr-tip.on{opacity:1;transform:translateY(0) scale(1);
+      transition:opacity .24s cubic-bezier(.2,.9,.3,1.15),transform .24s cubic-bezier(.2,.9,.3,1.15)}
+    /* rAF/合成器冻结的环境：跳过过渡直接显形 */
+    .tr-tip.tr-instant{transition:none!important}
+    .tr-tip .tr-thd{display:flex;align-items:center;gap:9px;margin-bottom:6px}
+    .tr-tip .tr-tico{width:30px;height:30px;border-radius:9px;background:#f1edfd;color:#4c3fd6;display:grid;place-items:center;flex:0 0 30px}
+    .tr-tip b{font-size:13px;font-weight:600;color:var(--ink,#111827)}
+    .tr-tip p{margin:0;font-size:12px;line-height:1.55;color:var(--sub,#6b7280)}
+    .tr-tip .tr-tarr{position:absolute;left:50%;bottom:-5.5px;width:10px;height:10px;background:#fff;
+      border-right:1px solid var(--line,#eceef2);border-bottom:1px solid var(--line,#eceef2);transform:translateX(-50%) rotate(45deg)}
+    .tr-tip.flip .tr-tarr{bottom:auto;top:-5.5px;transform:translateX(-50%) rotate(225deg)}
+    .tr-stage.tr-spot .tr-ring{opacity:.35}
+    .tr-stage.tr-spot .tr-cap{opacity:0}
     /* 右侧清单（M3 卡片行） */
     .tr-item{display:flex;align-items:flex-start;gap:14px;padding:13px 16px;background:#fff;border:1px solid var(--line,#eceef2);border-radius:16px;transition:border-color .2s}
     .tr-item:hover{border-color:#ddd6fe}
@@ -121,11 +140,13 @@
       `  <span class="tr-ci">${svg(ICONS.hub, 26)}</span>`,
       '  <span class="tr-cl" data-i18n="tech.core">ShopeX 技术中台</span>',
       '</a>',
-      '<div class="tr-cap" id="trCap"></div>'
+      '<div class="tr-cap" id="trCap"></div>',
+      '<div class="tr-tip" role="tooltip"></div>'
     ].join('');
     mount.appendChild(stage);
 
     cap = stage.querySelector('#trCap');
+    tip = stage.querySelector('.tr-tip');
     core = stage.querySelector('.tr-core');
     setCap('tech.core', null);
     core.addEventListener('pointerenter', () => { paused++; setCap('tech.core', null); });
@@ -135,8 +156,10 @@
       const n = document.createElement('a');
       n.className = 'tr-node'; n.href = '#';
       n.innerHTML = `<span class="tr-dot">${svg(ICONS[it.icon], 22)}</span><span class="tr-lb" data-i18n="${it.key}"></span>`;
-      n.addEventListener('pointerenter', () => { paused++; n._liftT = 1; n.style.zIndex = 200; setCap(it.key, it.dkey); });
-      n.addEventListener('pointerleave', () => { paused = Math.max(0, paused - 1); n._liftT = 0; n.style.zIndex = ''; setCap(curKey, curDKey); });
+      n.addEventListener('pointerenter', () => hotNode(n, it));
+      n.addEventListener('pointerleave', () => coolNodeSoon(n));
+      n.addEventListener('focus', () => hotNode(n, it));
+      n.addEventListener('blur', () => coolNodeSoon(n));
       stage.appendChild(n);
       return n;
     });
@@ -164,19 +187,74 @@
     }
 
     // 渲染晚于 i18n 首次 apply：补一次翻译；语言切换时 apply() 全文档重扫即可覆盖
+    // 移动端：点空白处关闭气泡
+    stage.addEventListener('pointerdown', (e) => {
+      if (!e.target.closest('.tr-node') && spotNode) coolNode(spotNode);
+    });
+    // 第三重保险：pointermove 直接追踪（覆盖 enter/leave 与 :hover 均不可靠的嵌入式 webview）
+    stage.addEventListener('pointermove', (e) => {
+      const n = e.target.closest('.tr-node');
+      if (n && n !== spotNode) {
+        const it = ITEMS[nodes.indexOf(n)];
+        if (it) hotNode(n, it);
+      } else if (!n && spotNode) {
+        coolNodeSoon(spotNode);
+      }
+    });
+
     if (window.__i18nApply) window.__i18nApply(document.documentElement.lang || undefined);
 
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
       paint(1e4);            // 静态：入场视为完成
     } else {
-      requestAnimationFrame(tick);
+      startLoop();
     }
   }
 
   /* ---- 动画 ---- */
-  let stage, cap, core, nodes = [], minis = [], comets = [];
+  let stage, cap, core, tip, nodes = [], minis = [], comets = [];
   let paused = 0, angle = -Math.PI / 2, last = 0, born = 0;
-  let curKey = 'tech.core', curDKey = null;
+  let curKey = 'tech.core', curDKey = null, spotNode = null, intervalMode = false;
+
+  /* 悬停：气泡卡（形式 1）+ 聚焦降级（形式 3） */
+  function hotNode(n, it) {
+    clearTimeout(n._coolT);
+    paused++;
+    n._liftT = 1;
+    spotNode = n;
+    stage.classList.add('tr-spot');
+    tip.innerHTML =
+      `<span class="tr-thd"><span class="tr-tico">${svg(ICONS[it.icon], 18)}</span><b data-i18n="${it.key}"></b></span>` +
+      `<p data-i18n="${it.dkey}"></p><i class="tr-tarr"></i>`;
+    if (window.__i18nApply) window.__i18nApply(document.documentElement.lang || undefined);
+    placeTip(n);
+    tip.classList.toggle('tr-instant', intervalMode);
+    setTimeout(() => tip.classList.add('on'), 0);   // rAF 冻结的 webview 里也能浮现
+  }
+  function coolNode(n) {
+    paused = Math.max(0, paused - 1);
+    n._liftT = 0;
+    if (spotNode === n) {
+      spotNode = null;
+      stage.classList.remove('tr-spot');
+      tip.classList.remove('on');
+    }
+  }
+  /* 延迟关闭：Chrome 在元素位移后会补发合成 pointerleave，宽限 150ms 防止闪烁 */
+  function coolNodeSoon(n) {
+    clearTimeout(n._coolT);
+    n._coolT = setTimeout(() => coolNode(n), 150);
+  }
+  function placeTip(n) {
+    if (n._x == null) return;
+    const w = stage.clientWidth;
+    const x = Math.min(Math.max(n._x, 122), w - 122);
+    const flip = n._y < 178;                       // 近顶边自动翻到下方
+    tip.classList.toggle('flip', flip);
+    tip.style.left = (x - 112) + 'px';
+    tip.style.top = flip ? (n._y + 56) + 'px'
+                         : (n._y - 56 - tip.offsetHeight) + 'px';
+  }
 
   function setCap(key, dkey) {
     curKey = key; curDKey = dkey;
@@ -215,7 +293,9 @@
       const scale = (0.72 + 0.4 * depth) * (1 + 0.12 * lift) * (0.55 + 0.45 * ease);
       n.style.transform =
         `translate(${x}px, ${y - 6 * lift}px) translate(-50%,-58%) scale(${scale.toFixed(3)})`;
-      n.style.opacity = Math.min(1, (0.32 + 0.68 * depth) * ease + 0.35 * lift).toFixed(3);
+      n._x = x; n._y = y;
+      const dim = (spotNode && spotNode !== n) ? 0.25 : 1;
+      n.style.opacity = Math.min(1, (0.32 + 0.68 * depth) * ease * dim + 0.35 * lift).toFixed(3);
       n.style.zIndex = lift > 0 ? '200' : String(8 + Math.round(depth * 84));
       n.style.filter = depth < 0.38
         ? `blur(${((0.38 - depth) * 3.6).toFixed(2)}px)` : '';
@@ -224,7 +304,7 @@
     minis.forEach((m, i) => {
       const a = -angle * 0.7 + (i * Math.PI * 2) / minis.length + 0.6;
       m.style.transform = `translate(${cx + Math.cos(a) * R1 - 3}px,${cy + Math.sin(a) * ry1 - 3}px)`;
-      m.style.opacity = '0.85';
+      m.style.opacity = spotNode ? '0.3' : '0.85';
     });
 
     comets.forEach((c, i) => {
@@ -233,19 +313,45 @@
       const R = outer ? R2 : R1, ry = outer ? ry2 : ry1;
       const depth = (Math.sin(a) + 1) / 2;
       c.style.transform = `translate(${cx + Math.cos(a) * R - 4}px,${cy + Math.sin(a) * ry - 4}px) scale(${(0.7 + 0.5 * depth).toFixed(2)})`;
-      c.style.opacity = (0.45 + 0.5 * depth).toFixed(2);
+      c.style.opacity = ((0.45 + 0.5 * depth) * (spotNode ? 0.3 : 1)).toFixed(2);
       c.style.zIndex = String(8 + Math.round(depth * 84));
     });
+
+    if (spotNode && tip && tip.classList.contains('on')) placeTip(spotNode);   // 气泡跟随浮动节点
+
+    // 悬停状态对账：以浏览器真实 :hover 为准，兼容 rAF 冻结等异常环境（enter/leave 不派发时自愈）
+    const hovered = stage.querySelector('.tr-node:hover');
+    if (hovered && hovered !== spotNode) {
+      const it = ITEMS[nodes.indexOf(hovered)];
+      if (it) hotNode(hovered, it);
+    } else if (!hovered && spotNode) {
+      coolNodeSoon(spotNode);
+    }
+  }
+
+  /* 动画循环：优先 rAF；嵌入式 webview 可能不驱动 rAF，看门狗 300ms 无帧则切 setInterval 兜底 */
+  function startLoop() {
+    let viaRaf = false, rafFired = false;
+    const frame = (t) => { if (!viaRaf) return; tick(t); requestAnimationFrame(frame); };
+    requestAnimationFrame((t) => {
+      rafFired = true; viaRaf = true;
+      tick(t); requestAnimationFrame(frame);
+    });
+    setTimeout(() => {
+      if (rafFired) return;
+      viaRaf = false;
+      intervalMode = true;                       // 冻结环境：禁用过渡，改为直接显形
+      setInterval(() => tick(performance.now()), 33);
+    }, 300);
   }
 
   function tick(t) {
     if (!stage || !stage.isConnected) return;
     if (!last) { last = t; born = t; }
     const tSec = (t - born) / 1000;
-    const dt = (t - last) / 1000; last = t;
+    const dt = Math.min(0.05, (t - last) / 1000); last = t;
     if (!paused) angle += 0.09 * dt;
     paint(tSec);
-    requestAnimationFrame(tick);
   }
 
   if (document.readyState === 'loading') {
