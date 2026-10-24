@@ -485,7 +485,6 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     </div>
     <div class="grid grid-cols-3 gap-6 items-start">
       <md-outlined-card data-step="1"><div class="pad !p-6">
-        <p class="text-[13px] font-semibold mb-4" data-i18n="step.1">① 选服务</p>
         <md-chip-set id="q-services">
           <md-filter-chip label="私有化部署" data-i18n-label="svc.deploy.title"></md-filter-chip>
           <md-filter-chip label="数据安全" data-i18n-label="svc.security.title"></md-filter-chip>
@@ -495,7 +494,6 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
         </md-chip-set>
       </div></md-outlined-card>
       <md-outlined-card data-step="2"><div class="pad !p-6">
-        <p class="text-[13px] font-semibold mb-4" data-i18n="step.2">② 填规模 / 需求</p>
         <md-outlined-select label="行业" data-i18n-label="form.industry" class="mb-3" id="q-industry">
           <md-select-option value=""><div slot="headline" data-i18n="form.industry.ph">请选择</div></md-select-option>
           <md-select-option value="mfg"><div slot="headline" data-i18n="form.industry.mfg">制造业</div></md-select-option>
@@ -510,7 +508,6 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
         </md-outlined-select>
       </div></md-outlined-card>
       <md-outlined-card data-step="3"><div class="pad !p-6">
-        <p class="text-[13px] font-semibold mb-4" data-i18n="step.3">③ 获取方案和报价</p>
         <md-filled-button id="cta-plan" style="width:100%" data-i18n="plan.cta">获取方案和报价</md-filled-button>
       </div></md-outlined-card>
     </div>
@@ -1168,8 +1165,10 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
   if (flow) {
     const steps = [...flow.querySelectorAll('.q-step')];
     const set = (s) => steps.forEach((t) => t.classList.toggle('on', t.dataset.step === s));
-    flow.querySelectorAll('[data-step]').forEach((z) =>
-      z.addEventListener('mouseenter', () => set(z.dataset.step)));
+    flow.querySelectorAll('[data-step]').forEach((z) => {
+      z.addEventListener('mouseenter', () => set(z.dataset.step));
+      z.addEventListener('click', () => set(z.dataset.step));   /* 点下面内容，上面紫色同步 */
+    });
     flow.addEventListener('mouseleave', () => set('1'));
   }
   /* 版本卡：紫色描边跟随悬停卡片；移出 #ver-cards 回版本 2 */
