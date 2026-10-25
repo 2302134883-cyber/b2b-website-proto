@@ -431,8 +431,7 @@
     from { transform: translate3d(-50%, 0, 0); }
     to   { transform: translate3d(0, 0, 0); }
   }
-  .logo-marquee[data-running="false"] .lm-track,
-  .logo-marquee:hover .lm-track { animation-play-state: paused; }
+  .logo-marquee[data-running="false"] .lm-track { animation-play-state: paused; }
   .lm-item:hover .lm-mark { transform: scale(1.1); }
   .lm-item:hover .lm-mark::before { opacity: 0; }
   .lm-item:hover .lm-mark::after { opacity: 1; }
@@ -597,13 +596,52 @@
         return '<li class="lm-item"><span class="lm-mark" style="--lm-src:url(\'' + c.mask + '\')">' +
                '<img src="' + c.file + '" alt="' + c.name + '" loading="lazy" decoding="async" draggable="false"></span></li>';
       }).join('');
-      document.getElementById('lm-track').innerHTML =
+      var track = document.getElementById('lm-track');
+      track.innerHTML =
         '<ul class="lm-list">' + cells + '</ul>' +
         '<ul class="lm-list" aria-hidden="true">' + cells + '</ul>';
 
-      /* 性能守卫：不在视口 / 标签页隐藏 / 减弱动态效果时不播放 */
       var root = document.querySelector('.logo-marquee');
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      /* 悬停平滑加速：短时计时器兼容预览 WebView，只调速率，不改变动画进度。 */
+      var hoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)');
+      var currentRate = 1, targetRate = 1, fromRate = 1;
+      var rateTimer = 0, rateStarted = 0;
+      function applyRate(value) {
+        var animation = track.getAnimations ? track.getAnimations()[0] : null;
+        if (!animation) return;
+        if (animation.updatePlaybackRate) {
+          animation.updatePlaybackRate(value);
+        } else {
+          var time = animation.currentTime;
+          animation.playbackRate = value;
+          animation.currentTime = time;
+        }
+      }
+      function stepRate() {
+        var progress = Math.min((performance.now() - rateStarted) / 600, 1);
+        var eased = 0.5 - Math.cos(progress * Math.PI) / 2;
+        currentRate = progress === 1 ? targetRate : fromRate + (targetRate - fromRate) * eased;
+        applyRate(currentRate);
+        if (progress === 1) {
+          clearInterval(rateTimer);
+          rateTimer = 0;
+        }
+      }
+      function rampRate(next) {
+        if (reduced.matches || !hoverCapable.matches || next === targetRate) return;
+        targetRate = next;
+        fromRate = currentRate;
+        rateStarted = performance.now();
+        if (rateTimer) clearInterval(rateTimer);
+        rateTimer = setInterval(stepRate, 16);
+        stepRate();
+      }
+      root.addEventListener('pointerenter', function () { rampRate(2); });
+      root.addEventListener('pointerleave', function () { rampRate(1); });
+
+      /* 性能守卫：不在视口 / 标签页隐藏 / 减弱动态效果时不播放 */
       function update(visible) { root.dataset.running = String(visible && !document.hidden && !reduced.matches); }
       new IntersectionObserver(function (entries) { update(entries[0].isIntersecting); }, { rootMargin: '80px' }).observe(root);
       document.addEventListener('visibilitychange', function () { update(root.dataset.running === 'true'); });
