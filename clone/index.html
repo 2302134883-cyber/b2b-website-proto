@@ -92,6 +92,22 @@
   .sec-head { display: flex; align-items: center; justify-content: center; gap: 12px; }
   .sec-head .node { width: 20px; height: 20px; flex-shrink: 0; }
 
+  /* ---- 收尾 CTA：细边卡片 + 局部 orb ---- */
+  .final-cta-card {
+    position: relative; overflow: hidden;
+    border: 1px solid var(--line); border-radius: 24px; background: #fff;
+  }
+  .final-cta-orb {
+    position: absolute; width: 192px; height: 192px; right: -72px; bottom: -88px;
+    opacity: .42; pointer-events: none;
+  }
+  .final-cta-button { --md-filled-button-container-height: 48px; }
+  @media (min-width: 768px) {
+    .final-cta-orb {
+      width: 240px; height: 240px; right: -40px; top: 50%; bottom: auto; margin-top: -120px;
+    }
+  }
+
   /* ---- MWC 局部驯化 ---- */
   md-outlined-card { --md-outlined-card-outline-color: var(--line); border-radius: 16px; }
   md-outlined-card .pad { padding: 32px; }
@@ -1219,18 +1235,6 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
   </div>
 </section>
 
-<!-- ============ 收尾 CTA ============ -->
-<section class="py-16 md:py-24">
-  <div class="max-w-[1200px] mx-auto px-6 text-center">
-    <div class="sec-head">
-      <svg class="node orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
-      <h2 class="text-[26px] md:text-[32px] font-bold tracking-tight" data-i18n="cta.final.title">准备好开始了吗</h2>
-    </div>
-    <p class="mt-4 text-[15px] text-[var(--sub)]" data-i18n="cta.final.desc">留下需求，我们将在 1 个工作日内联系你</p>
-    <div class="mt-8"><md-filled-button trailing-icon data-i18n="cta.get">获取方案</md-filled-button></div>
-  </div>
-</section>
-
 <!-- ============ 关于我们 ============ -->
 <section id="sec-about" class="py-16 md:py-24">
   <div class="max-w-[1200px] mx-auto px-6">
@@ -1300,7 +1304,7 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
 </section>
 
 <!-- ============ FAQ ============ -->
-<section id="sec-faq" class="pb-16 md:pb-24">
+<section id="sec-faq" class="pb-12 md:pb-16">
   <div class="max-w-[1200px] mx-auto px-6">
     <h3 class="mt-0 mb-6 text-[15px] font-semibold" data-i18n="how.qa">Q&A · 常见问题</h3>
     <md-outlined-card>
@@ -1362,6 +1366,26 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
       });
     })();
     </script>
+  </div>
+</section>
+
+<!-- ============ 收尾 CTA ============ -->
+<section class="pb-16 md:pb-20" aria-labelledby="finalCtaTitle">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="final-cta-card px-6 py-8 md:px-12 md:py-12">
+      <svg class="orb orb-slow final-cta-orb" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+        <circle cx="100" cy="100" r="98" fill="url(#orbNode)"/>
+      </svg>
+      <div class="relative z-[1] flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between md:gap-12">
+        <div class="max-w-[680px]">
+          <h2 id="finalCtaTitle" class="text-[26px] md:text-[32px] font-bold tracking-tight leading-tight" data-i18n="cta.final.title">准备好开始了吗</h2>
+          <p class="mt-3 text-[14px] md:text-[15px] leading-6 text-[var(--sub)]" data-i18n="cta.final.desc">留下需求，我们将在 1 个工作日内联系你</p>
+        </div>
+        <div class="w-full md:w-auto shrink-0">
+          <md-filled-button class="final-cta-button w-full md:w-auto" trailing-icon data-i18n="cta.get">获取方案</md-filled-button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
