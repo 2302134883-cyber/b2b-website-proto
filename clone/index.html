@@ -340,6 +340,27 @@
     .ag-thread { transition: none; }
   }
 
+  /* ============ FAQ 手风琴（qa- 前缀，独立组件） ============ */
+  .qa-item + .qa-item { border-top: 1px solid var(--line); }
+  .qa-q {
+    appearance: none; font: inherit; width: 100%; text-align: left; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 20px 24px; background: none; border: none; color: var(--ink);
+    font-size: 14px; font-weight: 600; transition: background .2s ease;
+  }
+  .qa-item:first-child .qa-q { border-radius: 16px 16px 0 0; }
+  .qa-item:last-child .qa-q { border-radius: 0 0 16px 16px; }
+  .qa-item.open:last-child .qa-q { border-radius: 0; }
+  .qa-q:hover { background: var(--wash); }
+  .qa-q:focus-visible { outline: none; box-shadow: inset 0 0 0 2px rgba(17,24,39,.18); }
+  .qa-ico { width: 18px; height: 18px; flex-shrink: 0; color: var(--faint); transition: transform .3s cubic-bezier(.25,1,.5,1), color .2s ease; }
+  .qa-item.open .qa-ico { transform: rotate(45deg); color: var(--ink); }
+  .qa-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s cubic-bezier(.4,0,.2,1); }
+  .qa-a > div { overflow: hidden; min-height: 0; }
+  .qa-item.open .qa-a { grid-template-rows: 1fr; }
+  .qa-a p { padding: 0 24px 22px; margin: 0; font-size: 13px; line-height: 1.9; color: var(--sub); }
+  @media (prefers-reduced-motion: reduce) { .qa-a, .qa-ico { transition: none; } }
+
   /* ---- 安全网：菜单组件未升级完成前整体隐藏（防裸内容漏出） ---- */
   md-menu:not(:defined) { display: none; }
   /* ============ Logo 无缝轮播（lm- 前缀，独立组件） ============ */
@@ -1230,16 +1251,64 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
 
     <h3 class="mt-16 mb-6 text-[15px] font-semibold" data-i18n="how.qa">Q&A · 常见问题</h3>
     <md-outlined-card>
-      <md-list>
-        <md-list-item type="button"><div slot="headline" data-i18n="qa.1">问题 1：部署周期多长？</div></md-list-item>
-        <md-divider></md-divider>
-        <md-list-item type="button"><div slot="headline" data-i18n="qa.2">问题 2：如何与现有系统对接？</div></md-list-item>
-        <md-divider></md-divider>
-        <md-list-item type="button"><div slot="headline" data-i18n="qa.3">问题 3：数据安全如何保障？</div></md-list-item>
-        <md-divider></md-divider>
-        <md-list-item type="button"><div slot="headline" data-i18n="qa.4">问题 4：是否支持定制开发？</div></md-list-item>
-      </md-list>
+      <div id="faqList">
+        <div class="qa-item open">
+          <button class="qa-q" aria-expanded="true">
+            <span data-i18n="qa.1">系统能解决错单、漏单、拖单这些订货效率问题吗？</span>
+            <svg class="qa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="qa-a"><div><p data-i18n="qa.a1">能。订货全流程线上化，订单自动流转、状态实时可查，从源头避免错单漏单；价格、政策、库存统一线上管理，渠道窜货与价格战也能有效管控。</p></div></div>
+        </div>
+        <div class="qa-item">
+          <button class="qa-q" aria-expanded="false">
+            <span data-i18n="qa.2">不同等级的经销商，能做到「千客千价」吗？</span>
+            <svg class="qa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="qa-a"><div><p data-i18n="qa.a2">可以。支持一客一价、阶梯定价、等级定价等策略，按客户等级、采购量、区域动态定价，客户登录后看到的就是自己的价格。</p></div></div>
+        </div>
+        <div class="qa-item">
+          <button class="qa-q" aria-expanded="false">
+            <span data-i18n="qa.3">支持账期、赊销这类 B2B 常用的支付方式吗？</span>
+            <svg class="qa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="qa-a"><div><p data-i18n="qa.a3">支持。款到发货（线上支付 / 线下转账）、授信支付（赊账、分期、大额支付）、货到付款全覆盖，满足 B2B 大额与灵活交易需求。</p></div></div>
+        </div>
+        <div class="qa-item">
+          <button class="qa-q" aria-expanded="false">
+            <span data-i18n="qa.4">我们是集团型企业，多公司、多部门的协同采购能管吗？</span>
+            <svg class="qa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="qa-a"><div><p data-i18n="qa.a4">可以。支持一个集团一个独立站点、独立商品池与授信管理，并提供多级多角色审批，打通集团、分公司、子公司、部门间的协同采购。</p></div></div>
+        </div>
+        <div class="qa-item">
+          <button class="qa-q" aria-expanded="false">
+            <span data-i18n="qa.5">能和我们现有的 ERP、SAP 等系统对接吗？</span>
+            <svg class="qa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="qa-a"><div><p data-i18n="qa.a5">完全可以。提供标准化接口，可与 ERP、WMS、SAP、金蝶、用友等系统无缝对接，商品、订单、库存、财务数据实时同步。</p></div></div>
+        </div>
+        <div class="qa-item">
+          <button class="qa-q" aria-expanded="false">
+            <span data-i18n="qa.6">除了订货平台，集采和供应链协同模式也支持吗？</span>
+            <svg class="qa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="qa-a"><div><p data-i18n="qa.a6">支持。三种主流模式均有成熟方案：经销商精细化管理的 B2B(DMS) 订货平台、垂直行业集采 / 批发的 B2B2b 交易平台、整合上下游的 S2B2B 协同平台。</p></div></div>
+        </div>
+      </div>
     </md-outlined-card>
+    <script>
+    (function () {
+      var list = document.getElementById('faqList');
+      if (!list) return;
+      list.querySelectorAll('.qa-q').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var item = btn.parentElement;
+          var open = item.classList.toggle('open');
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      });
+    })();
+    </script>
   </div>
 </section>
 
