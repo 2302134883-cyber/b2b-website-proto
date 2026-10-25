@@ -389,7 +389,7 @@
   }
   .lm-window {
     overflow: hidden;
-    padding: 26px 0 30px;
+    padding: 16px 0 30px;
     mask-image: linear-gradient(90deg, transparent, #000 var(--lm-fade), #000 calc(100% - var(--lm-fade)), transparent);
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--lm-fade), #000 calc(100% - var(--lm-fade)), transparent);
   }
@@ -541,7 +541,7 @@
   </svg>
   </div>
 
-  <div class="max-w-[1200px] mx-auto px-6 py-20 md:py-32 relative z-10" style="pointer-events:none" id="heroContent">
+  <div class="max-w-[1200px] mx-auto px-6 pt-20 pb-10 md:pt-32 md:pb-16 relative z-10" style="pointer-events:none" id="heroContent">
 
     <div class="slide on" data-slide>
       <div>
@@ -969,34 +969,6 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     })();
     </script>
 
-    <div class="sec-head mt-16">
-      <svg class="node orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
-      <h3 class="text-[15px] font-semibold" data-i18n="why.certs">权威的信息安全管理体系认证</h3>
-    </div>
-    <p class="mt-2 mb-8 text-center text-[13px] text-[var(--sub)]" data-i18n="cert.desc">已通过 BSI 英国标准协会 ISO27001 & 27018 认证，并持有公安部等保三级、CISSP 国际安全专业认证。</p>
-    <div class="flex justify-between gap-6 flex-wrap" id="certRow">
-      <div class="cert-card"><img src="assets/certs/iso27001.png" alt="ISO 27001" loading="lazy" decoding="async"><span>ISO 27001</span></div>
-      <div class="cert-card"><img src="assets/certs/iso27018.png" alt="ISO 27018" loading="lazy" decoding="async"><span>ISO 27018</span></div>
-      <div class="cert-card"><img src="assets/certs/iso9001.png" alt="ISO 9001" loading="lazy" decoding="async"><span>ISO 9001</span></div>
-      <div class="cert-card"><img src="assets/certs/mlps3.png" alt="DJCP" loading="lazy" decoding="async"><span data-i18n="cert.mlps">等保三级</span></div>
-      <div class="cert-card"><img src="assets/certs/cissp.png" alt="CISSP" loading="lazy" decoding="async"><span>CISSP</span></div>
-      <div class="cert-card"><img src="assets/certs/csia.png" alt="CSIA" loading="lazy" decoding="async"><span>CSIA</span></div>
-    </div>
-    <script>
-    (function () {
-      var row = document.getElementById('certRow');
-      if (!row) return;
-      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-      if (reduced.matches) { row.classList.add('certs-done'); return; }
-      new IntersectionObserver(function (entries, obs) {
-        if (!entries[0].isIntersecting) return;
-        obs.disconnect();
-        row.classList.add('certs-in');
-        var last = row.lastElementChild;
-        last.addEventListener('animationend', function () { row.classList.add('certs-done'); }, { once: true });
-      }, { threshold: 0.3 }).observe(row);
-    })();
-    </script>
   </div>
 </section>
 
@@ -1027,45 +999,6 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
       </div>
       <p class="mt-6 text-[12px] text-[var(--faint)]" data-i18n="arch.note">说明：节点为中台化 B2B 典型模块占位，接入实际产品线后替换。</p>
     </div>
-  </div>
-</section>
-
-<!-- ============ 关于我们 ============ -->
-<section id="sec-about" class="py-16 md:py-24">
-  <div class="max-w-[1200px] mx-auto px-6">
-    <div class="sec-head">
-      <svg class="node orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
-      <h2 class="text-[26px] md:text-[32px] font-bold tracking-tight" data-i18n="nav.about">关于我们</h2>
-    </div>
-
-    <div class="mt-16 ph h-[288px] flex-col gap-4">
-      <md-fab><span slot="icon" style="font-size:20px">▶</span></md-fab>
-      <span data-i18n="about.video">视频占位 · 约 30s</span>
-    </div>
-    <p class="mt-4 text-[12px] text-[var(--faint)]" data-i18n="about.script">脚本结构（30s 分段）：0–8s 公益（价值观） → 8–16s 团队（真人） → 16–24s 地点（实拍） → 24–30s 奖项（背书）</p>
-    <div class="mt-4">
-      <md-chip-set>
-        <md-assist-chip label="公益" data-i18n-label="menu.about.charity"></md-assist-chip>
-        <md-assist-chip label="团队" data-i18n-label="menu.about.team"></md-assist-chip>
-        <md-assist-chip label="地点" data-i18n-label="menu.about.locations"></md-assist-chip>
-        <md-assist-chip label="奖项" data-i18n-label="menu.about.awards"></md-assist-chip>
-      </md-chip-set>
-    </div>
-
-    <h3 class="mt-10 md:mt-16 mb-6 text-[15px] font-semibold" data-i18n="about.address">地址</h3>
-    <div id="journeyBox" class="w-full h-[440px] md:h-[600px] relative select-none">
-      <canvas id="journeyCanvas" class="w-full h-full block cursor-pointer"></canvas>
-      <div id="journeySteps" class="absolute left-1/2 -translate-x-1/2 bottom-1 flex items-center gap-2"></div>
-      <div class="absolute right-10 top-1/2 -translate-y-1/2 text-right pointer-events-none hidden md:block">
-        <p class="text-[10px] tracking-[0.28em] text-[var(--faint)] font-medium" data-i18n="addr.label">ADDRESS · 地址</p>
-        <p class="mt-3 text-[16px] font-semibold leading-6" data-i18n="addr.building">新漕河泾国际商务中心B座</p>
-        <p class="text-[13px] text-[var(--ink)] mt-0.5" data-i18n="addr.floor">9 层</p>
-        <div class="my-3 ml-auto w-8 h-px bg-[var(--line-2)]"></div>
-        <p class="text-[12px] text-[var(--sub)] leading-5" data-i18n-html="addr.city">上海市徐汇区<br>桂平路 391 号（近漕宝路）</p>
-      </div>
-    </div>
-    <p class="mt-2 text-[12px] text-[var(--faint)] text-center" data-i18n="journey.hint">自动巡游中 · 点击画面推进一级 · 地球上可拖拽旋转</p>
-    <p class="mt-2 text-[12px] text-[var(--sub)] text-center md:hidden" data-i18n="addr.city.oneline">上海市徐汇区桂平路 391 号 · 新漕河泾国际商务中心B座 9 层</p>
   </div>
 </section>
 
@@ -1283,20 +1216,93 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
       else init();
     })();
     </script>
+  </div>
+</section>
 
-    <!-- ============ 收尾 CTA ============ -->
-    <section class="py-16 md:py-24">
-      <div class="max-w-[1200px] mx-auto px-6 text-center">
-        <div class="sec-head">
-          <svg class="node orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
-          <h2 class="text-[26px] md:text-[32px] font-bold tracking-tight" data-i18n="cta.final.title">准备好开始了吗</h2>
-        </div>
-        <p class="mt-4 text-[15px] text-[var(--sub)]" data-i18n="cta.final.desc">留下需求，我们将在 1 个工作日内联系你</p>
-        <div class="mt-8"><md-filled-button trailing-icon data-i18n="cta.get">获取方案</md-filled-button></div>
+<!-- ============ 关于我们 ============ -->
+<section id="sec-about" class="py-16 md:py-24">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="sec-head">
+      <svg class="node orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
+      <h2 class="text-[26px] md:text-[32px] font-bold tracking-tight" data-i18n="nav.about">关于我们</h2>
+    </div>
+
+    <div class="mt-16 ph h-[288px] flex-col gap-4">
+      <md-fab><span slot="icon" style="font-size:20px">▶</span></md-fab>
+      <span data-i18n="about.video">视频占位 · 约 30s</span>
+    </div>
+    <p class="mt-4 text-[12px] text-[var(--faint)]" data-i18n="about.script">脚本结构（30s 分段）：0–8s 公益（价值观） → 8–16s 团队（真人） → 16–24s 地点（实拍） → 24–30s 奖项（背书）</p>
+    <div class="mt-4">
+      <md-chip-set>
+        <md-assist-chip label="公益" data-i18n-label="menu.about.charity"></md-assist-chip>
+        <md-assist-chip label="团队" data-i18n-label="menu.about.team"></md-assist-chip>
+        <md-assist-chip label="地点" data-i18n-label="menu.about.locations"></md-assist-chip>
+        <md-assist-chip label="奖项" data-i18n-label="menu.about.awards"></md-assist-chip>
+      </md-chip-set>
+    </div>
+
+    <h3 class="mt-10 md:mt-16 mb-6 text-[15px] font-semibold" data-i18n="about.address">地址</h3>
+    <div id="journeyBox" class="w-full h-[440px] md:h-[600px] relative select-none">
+      <canvas id="journeyCanvas" class="w-full h-full block cursor-pointer"></canvas>
+      <div id="journeySteps" class="absolute left-1/2 -translate-x-1/2 bottom-1 flex items-center gap-2"></div>
+      <div class="absolute right-10 top-1/2 -translate-y-1/2 text-right pointer-events-none hidden md:block">
+        <p class="text-[10px] tracking-[0.28em] text-[var(--faint)] font-medium" data-i18n="addr.label">ADDRESS · 地址</p>
+        <p class="mt-3 text-[16px] font-semibold leading-6" data-i18n="addr.building">新漕河泾国际商务中心B座</p>
+        <p class="text-[13px] text-[var(--ink)] mt-0.5" data-i18n="addr.floor">9 层</p>
+        <div class="my-3 ml-auto w-8 h-px bg-[var(--line-2)]"></div>
+        <p class="text-[12px] text-[var(--sub)] leading-5" data-i18n-html="addr.city">上海市徐汇区<br>桂平路 391 号（近漕宝路）</p>
       </div>
-    </section>
+    </div>
+    <p class="mt-2 text-[12px] text-[var(--faint)] text-center" data-i18n="journey.hint">自动巡游中 · 点击画面推进一级 · 地球上可拖拽旋转</p>
+    <p class="mt-2 text-[12px] text-[var(--sub)] text-center md:hidden" data-i18n="addr.city.oneline">上海市徐汇区桂平路 391 号 · 新漕河泾国际商务中心B座 9 层</p>
 
-    <h3 class="mt-10 md:mt-16 mb-6 text-[15px] font-semibold" data-i18n="how.qa">Q&A · 常见问题</h3>
+    <div class="sec-head mt-16">
+      <svg class="node orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
+      <h3 class="text-[15px] font-semibold" data-i18n="why.certs">权威的信息安全管理体系认证</h3>
+    </div>
+    <p class="mt-2 mb-8 text-center text-[13px] text-[var(--sub)]" data-i18n="cert.desc">已通过 BSI 英国标准协会 ISO27001 & 27018 认证，并持有公安部等保三级、CISSP 国际安全专业认证。</p>
+    <div class="flex justify-between gap-6 flex-wrap" id="certRow">
+      <div class="cert-card"><img src="assets/certs/iso27001.png" alt="ISO 27001" loading="lazy" decoding="async"><span>ISO 27001</span></div>
+      <div class="cert-card"><img src="assets/certs/iso27018.png" alt="ISO 27018" loading="lazy" decoding="async"><span>ISO 27018</span></div>
+      <div class="cert-card"><img src="assets/certs/iso9001.png" alt="ISO 9001" loading="lazy" decoding="async"><span>ISO 9001</span></div>
+      <div class="cert-card"><img src="assets/certs/mlps3.png" alt="DJCP" loading="lazy" decoding="async"><span data-i18n="cert.mlps">等保三级</span></div>
+      <div class="cert-card"><img src="assets/certs/cissp.png" alt="CISSP" loading="lazy" decoding="async"><span>CISSP</span></div>
+      <div class="cert-card"><img src="assets/certs/csia.png" alt="CSIA" loading="lazy" decoding="async"><span>CSIA</span></div>
+    </div>
+    <script>
+    (function () {
+      var row = document.getElementById('certRow');
+      if (!row) return;
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (reduced.matches) { row.classList.add('certs-done'); return; }
+      new IntersectionObserver(function (entries, obs) {
+        if (!entries[0].isIntersecting) return;
+        obs.disconnect();
+        row.classList.add('certs-in');
+        var last = row.lastElementChild;
+        last.addEventListener('animationend', function () { row.classList.add('certs-done'); }, { once: true });
+      }, { threshold: 0.3 }).observe(row);
+    })();
+    </script>
+  </div>
+</section>
+
+<!-- ============ 收尾 CTA ============ -->
+<section class="py-16 md:py-24">
+  <div class="max-w-[1200px] mx-auto px-6 text-center">
+    <div class="sec-head">
+      <svg class="node orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
+      <h2 class="text-[26px] md:text-[32px] font-bold tracking-tight" data-i18n="cta.final.title">准备好开始了吗</h2>
+    </div>
+    <p class="mt-4 text-[15px] text-[var(--sub)]" data-i18n="cta.final.desc">留下需求，我们将在 1 个工作日内联系你</p>
+    <div class="mt-8"><md-filled-button trailing-icon data-i18n="cta.get">获取方案</md-filled-button></div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="sec-faq" class="pb-16 md:pb-24">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <h3 class="mt-0 mb-6 text-[15px] font-semibold" data-i18n="how.qa">Q&A · 常见问题</h3>
     <md-outlined-card>
       <div id="faqList">
         <div class="qa-item open">
