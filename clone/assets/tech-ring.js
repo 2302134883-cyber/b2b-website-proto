@@ -3,11 +3,12 @@
  * 依赖：i18n.js 的 data-i18n 机制与 __i18nApply 钩子（含 'i18n:applied' 事件）。
  * 词典 key：tech.1~6（名称）、tech.d.1~6（说明）、tech.core（中心名）、tech.core.d（中心说明）。
  * 立体：轨道面透视倾斜，节点按 sin 深度缩放/淡出/虚化，后排穿过中心圆徽后方。
- * 动态：永不停止的双轨反向旋转（悬停不停转）+ 点击加速（惯性衰减）+ 节点浮动呼吸
+ * 动态：永不停止的双轨反向旋转 + 点击空白加速（惯性衰减）+ 节点浮动呼吸
  *       + 入场 stagger + 核心脉冲环 + 彗星光点沿轨运行。
- * 交互：点击节点 → 选中并在环下方详情面板显示对应内容（再次点中心圆徽恢复默认）；
- *       悬停 → 仅名称高亮（轻提示），旋转不停。
- * 无障碍：prefers-reduced-motion 时静态呈现。
+ * 交互：点击节点 → 环静止，节点下方浮现一行紫色说明（前置小圆点）；
+ *       再点同节点收起恢复旋转；点其他节点切换；点旁边空白收起并加速；
+ *       点中心圆徽 → 静止并显示中心介绍，再点恢复。
+ * 悬停：仅名称高亮（轻提示）。i18n 8 语言；prefers-reduced-motion 静态。
  */
 (function () {
   'use strict';
@@ -33,7 +34,7 @@
     { icon: 'code',  key: 'tech.6', dkey: 'tech.d.6' }
   ];
   const BASE_SPEED = 0.09;      // 基础角速度 rad/s
-  const CLICK_BOOST = 0.9;      // 每次点击追加的角速度
+  const CLICK_BOOST = 0.9;      // 每次点击空白追加的角速度
   const BOOST_MAX = 2.8;        // 加速上限
 
   const STYLE = `
@@ -62,7 +63,7 @@
     .tr-comet{position:absolute;left:0;top:0;width:8px;height:8px;border-radius:50%;background:#8b7cf0;
       box-shadow:0 0 12px 3px rgba(139,124,240,.55);z-index:12;pointer-events:none;will-change:transform,opacity}
     .tr-comet.b{background:#c4b5fd;box-shadow:0 0 9px 2px rgba(196,181,253,.6)}
-    /* 中心圆徽（点击恢复默认介绍） */
+    /* 中心圆徽（点击显示中心介绍） */
     .tr-core{
       position:absolute;left:50%;top:53%;transform:translate(-50%,-50%);
       width:104px;height:104px;border-radius:50%;
@@ -71,6 +72,8 @@
       display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
       text-decoration:none;color:var(--ink,#111827);z-index:50;cursor:pointer;
     }
+    .tr-core.tr-sel{border-color:#c9c2f7;
+      box-shadow:0 4px 16px -6px rgba(17,24,39,.10),0 12px 28px -12px rgba(109,94,240,.28),0 0 0 6px #f1edfd}
     .tr-core .tr-ci{color:#6d5ef0}
     .tr-core .tr-cl{font-size:12px;font-weight:600;line-height:1.25;text-align:center;max-width:104px}
     /* 环绕节点 */
@@ -90,26 +93,29 @@
     .tr-node:hover .tr-dot,.tr-node:focus-visible .tr-dot,.tr-node.tr-hl .tr-dot{
       border-color:#8b7cf0;outline:none}
     .tr-node:hover .tr-lb,.tr-node.tr-hl .tr-lb{color:var(--ink,#111827)}
-    /* 选中态（点击后锁定，随环旋转保持高亮） */
+    /* 选中态（点击后环静止 + 高亮锁定） */
     .tr-node.tr-sel .tr-dot{
       border-color:#6d5ef0;
       box-shadow:0 6px 18px -4px rgba(109,94,240,.38),0 0 0 4px rgba(109,94,240,.10)}
     .tr-node.tr-sel .tr-lb{color:#4c3fd6;font-weight:700}
     .tr-mini{position:absolute;width:6px;height:6px;border-radius:50%;background:#c4b5fd;left:0;top:0;z-index:5;
       box-shadow:0 0 8px 1px rgba(196,181,253,.55);will-change:transform;pointer-events:none}
-    /* 环下方固定详情面板（点击节点切换内容） */
-    .tr-panel{position:relative;width:100%;max-width:430px;margin:16px auto 0;min-height:70px;
-      background:var(--wash,#fafbfc);border:1px solid var(--line,#eceef2);border-radius:14px;
-      padding:14px 20px;text-align:center}
-    .tr-panel b{display:block;font-size:14px;font-weight:600;color:var(--ink,#111827)}
-    .tr-panel .tr-pdesc{display:block;margin-top:3px;font-size:13px;color:var(--sub,#6b7280);line-height:1.55}
-    .tr-panel.tr-swap b,.tr-panel.tr-swap .tr-pdesc{animation:tr-swap .35s ease both}
-    .tr-panel.tr-swap .tr-pdesc{animation-delay:.05s}
-    @keyframes tr-swap{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+    /* 选中节点下方浮现的紫色说明行（前置小圆点） */
+    .tr-desc{
+      position:absolute;z-index:300;transform:translateX(-50%) translateY(5px);
+      display:inline-flex;align-items:center;gap:7px;max-width:260px;
+      font-size:12.5px;font-weight:500;color:#6d5ef0;white-space:nowrap;
+      text-shadow:0 1px 6px rgba(255,255,255,.9);
+      opacity:0;pointer-events:none;
+      transition:opacity .22s ease,transform .22s ease;
+    }
+    .tr-desc.on{opacity:1;transform:translateX(-50%) translateY(0)}
+    .tr-desc i{width:5px;height:5px;border-radius:50%;background:#6d5ef0;flex:0 0 5px;
+      box-shadow:0 0 6px 1px rgba(109,94,240,.45)}
+    .tr-desc.tr-instant{transition:none!important}
     @media (prefers-reduced-motion: reduce){
       .tr-stage *{animation:none!important;transition:none!important}
       .tr-pulse{opacity:.25;transform:translate(-50%,-50%) scale(1)}
-      .tr-panel.tr-swap b,.tr-panel.tr-swap .tr-pdesc{animation:none!important}
     }
   `;
 
@@ -131,15 +137,14 @@
       '<div class="tr-core" role="button" tabindex="0" title="ShopeX 技术中台">',
       `  <span class="tr-ci">${svg(ICONS.hub, 26)}</span>`,
       '  <span class="tr-cl" data-i18n="tech.core">ShopeX 技术中台</span>',
-      '</div>'
+      '</div>',
+      '<div class="tr-desc" role="status"><i></i><span></span></div>'
     ].join('');
     mount.appendChild(stage);
 
     core = stage.querySelector('.tr-core');
-    panel = document.createElement('div');
-    panel.className = 'tr-panel';
-    mount.appendChild(panel);
-    setPanel('tech.core', 'tech.core.d');       // 默认：中心介绍
+    desc = stage.querySelector('.tr-desc');
+    descText = desc.querySelector('span:last-child');
 
     nodes = ITEMS.map((it) => {
       const n = document.createElement('a');
@@ -152,8 +157,7 @@
       n.addEventListener('blur', () => unhoverNode(n));
       n.addEventListener('click', (e) => {
         e.preventDefault(); e.stopPropagation();
-        boostSpin();
-        selectNode(n, it);
+        (sel && sel.n === n) ? deselect() : selectNode(n, it);
       });
       stage.appendChild(n);
       return n;
@@ -170,14 +174,22 @@
       return c;
     });
 
-    // 点击中心圆徽 → 恢复默认介绍
-    core.addEventListener('click', (e) => { e.stopPropagation(); selectCore(); });
-    core.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectCore(); } });
+    // 点击中心圆徽 → 静止显示中心介绍（再点恢复）
+    core.addEventListener('click', (e) => {
+      e.stopPropagation();
+      (sel && sel.core) ? deselect() : selectCore();
+    });
+    core.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); (sel && sel.core) ? deselect() : selectCore(); }
+    });
 
-    // 点击加速旋转
-    stage.addEventListener('click', () => boostSpin());
+    // 点击旁边空白：有选中则收起恢复旋转，否则加速
+    stage.addEventListener('click', (e) => {
+      if (e.target.closest('.tr-node') || e.target.closest('.tr-core')) return;
+      if (sel) deselect(); else boostSpin();
+    });
 
-    // 悬停名称高亮（轻提示；描述只在详情面板展示）
+    // 悬停名称高亮（轻提示）
     stage.addEventListener('pointermove', (e) => {
       const n = e.target.closest('.tr-node');
       if (n && n !== hlNode) { unhoverNode(hlNode); hlNode = n; n.classList.add('tr-hl'); }
@@ -189,7 +201,6 @@
 
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
       paint(1e4);            // 静态：入场视为完成
-      // 后台标签加载时可能零布局导致首绘为空：尺寸/可见性变化后补绘
       const repaint = () => { if (stage.clientWidth > 0) paint(1e4); };
       if ('ResizeObserver' in window) new ResizeObserver(repaint).observe(stage);
       document.addEventListener('visibilitychange', repaint);
@@ -198,31 +209,35 @@
     }
   }
 
-  /* ---- 选中与详情面板 ---- */
-  let selectedNode = null;
-
-  function setPanel(key, dkey) {
-    if (!panel) return;
-    panel.innerHTML = `<b data-i18n="${key}"></b><span class="tr-pdesc" data-i18n="${dkey}"></span>`;
-    panel.classList.remove('tr-swap');
-    void panel.offsetWidth;                     // 重启动画
-    panel.classList.add('tr-swap');
-    if (window.__i18nApply) window.__i18nApply(document.documentElement.lang || undefined);
-  }
-
+  /* ---- 选中：环静止 + 节点下方浮现紫色说明行 ---- */
   function selectNode(n, it) {
-    if (selectedNode === n) return;
-    if (selectedNode) selectedNode.classList.remove('tr-sel');
-    selectedNode = n;
+    clearSelClass();
+    sel = { n, it };
     n.classList.add('tr-sel');
-    setPanel(it.key, it.dkey);
+    showDesc(it.dkey, n);
   }
   function selectCore() {
-    if (selectedNode) {
-      selectedNode.classList.remove('tr-sel');
-      selectedNode = null;
-    }
-    setPanel('tech.core', 'tech.core.d');
+    clearSelClass();
+    sel = { core: true };
+    core.classList.add('tr-sel');
+    showDesc('tech.core.d', core);
+  }
+  function deselect() {
+    clearSelClass();
+    sel = null;
+    desc.classList.remove('on', 'tr-instant');
+  }
+  function clearSelClass() {
+    if (sel && sel.n) sel.n.classList.remove('tr-sel');
+    if (sel && sel.core) core.classList.remove('tr-sel');
+  }
+  function showDesc(dkey, anchorEl) {
+    descText.setAttribute('data-i18n', dkey);
+    descText.textContent = '';
+    if (window.__i18nApply) window.__i18nApply(document.documentElement.lang || undefined);
+    placeDesc(anchorEl);
+    desc.classList.toggle('tr-instant', intervalMode);
+    desc.classList.add('on');
   }
 
   /* ---- 悬停名称高亮（轻提示） ---- */
@@ -246,6 +261,7 @@
     setTimeout(() => {
       if (rafFired) return;
       viaRaf = false;
+      intervalMode = true;
       setInterval(() => tick(performance.now()), 33);
     }, 300);
   }
@@ -253,12 +269,14 @@
   function tick(t) {
     if (!stage || !stage.isConnected) return;
     if (!last) { last = t; born = t; }
-    const tSec = (t - born) / 1000;
     const dt = Math.min(0.05, (t - last) / 1000); last = t;
-    angle += (BASE_SPEED + boost) * dt;          // 旋转永不停止
-    boost *= Math.exp(-1.15 * dt);               // 点击加速惯性衰减
-    if (boost < 0.005) boost = 0;
-    paint(tSec);
+    if (!sel) {                                   // 选中时全场静止
+      animT += dt;
+      angle += (BASE_SPEED + boost) * dt;
+      boost *= Math.exp(-1.15 * dt);
+      if (boost < 0.005) boost = 0;
+    }
+    paint(animT);
   }
 
   const easeOut = (k) => 1 - Math.pow(1 - Math.min(1, Math.max(0, k)), 3);
@@ -310,12 +328,25 @@
       c.style.opacity = (0.45 + 0.5 * depth).toFixed(2);
       c.style.zIndex = String(8 + Math.round(depth * 84));
     });
+
+    if (sel) {   // 静止展示时，说明行跟随锚点（resize 等场景）
+      const anchor = sel.core ? core : sel.n;
+      if (anchor && (anchor._x != null || sel.core)) placeDesc(anchor);
+    }
+  }
+
+  function placeDesc(anchorEl) {
+    const r = anchorEl.getBoundingClientRect();
+    const sr = stage.getBoundingClientRect();
+    const x = r.left + r.width / 2 - sr.left;
+    desc.style.left = Math.min(Math.max(x, 124), stage.clientWidth - 124) + 'px';
+    desc.style.top = (r.bottom - sr.top + 9) + 'px';
   }
 
   /* ---- 状态 ---- */
-  let stage, core, panel, nodes = [], minis = [], comets = [];
-  let angle = -Math.PI / 2, last = 0, born = 0, boost = 0;
-  let intervalMode = false;
+  let stage, core, desc, descText, nodes = [], minis = [], comets = [];
+  let angle = -Math.PI / 2, last = 0, born = 0, boost = 0, animT = 0;
+  let sel = null, intervalMode = false;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', build);
