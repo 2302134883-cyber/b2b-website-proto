@@ -212,6 +212,70 @@
   }
   #ver-cards .ver-hot { --md-outlined-card-outline-color: #c4b5fd; }
 
+  /* ============ CASE 节点链选择器（cc- 前缀，独立组件） ============ */
+  .cc { margin-top: 8px; }
+  .cc-chain { display: flex; align-items: flex-start; }
+  .cc-node {
+    appearance: none; font: inherit; background: none; border: none; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    padding: 2px 10px 0; color: var(--sub); text-align: center; border-radius: 12px;
+    transition: color .25s ease;
+  }
+  .cc-node:focus-visible { outline: none; }
+  .cc-node:focus-visible .cc-dot { box-shadow: 0 0 0 3px rgba(17,24,39,.12); }
+  .cc-dot {
+    position: relative; width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+    border: 1px solid var(--line-2); background: #fff;
+    transition: transform .3s cubic-bezier(.25,1,.5,1), border-color .3s ease;
+  }
+  .cc-dot::before {  /* orb 光晕（与 lm-mark::after 同色系） */
+    content: ""; position: absolute; inset: -16px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(196,181,253,.45), rgba(147,184,248,.18) 58%, transparent 76%);
+    opacity: 0; transition: opacity .35s ease;
+  }
+  .cc-dot i {  /* orb 核心（与 arch-spine 流动点同渐变） */
+    position: absolute; inset: 1px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #a8c8fa, #d3c6f8 55%, rgba(255,255,255,0) 85%);
+    opacity: 0; transform: scale(.3);
+    transition: opacity .3s ease, transform .35s cubic-bezier(.25,1,.5,1);
+  }
+  .cc-node.on { color: var(--ink); }
+  .cc-node.on .cc-dot { border-color: transparent; transform: scale(1.2); }
+  .cc-node.on .cc-dot::before, .cc-node:hover .cc-dot::before { opacity: 1; }
+  .cc-node.on .cc-dot i { opacity: 1; transform: scale(1); }
+  .cc-name { font-size: 14px; font-weight: 600; line-height: 1.3; }
+  .cc-tag { font-size: 11px; color: var(--faint); }
+  .cc-link { position: relative; flex: 1; min-width: 24px; height: 1px; background: var(--line-2); margin-top: 9px; }
+  .cc-link i {  /* 填充段：orb 同色系线性渐变 */
+    position: absolute; inset: -0.5px 0; display: block;
+    background: linear-gradient(90deg, #93b8f8, #c4b5f5, #f0c9e8);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .6s cubic-bezier(.4,0,.2,1);
+  }
+  .cc-link.fill i { transform: scaleX(1); }
+
+  .cc-stage { margin-top: 40px; }
+  .cc-pane { display: none; grid-template-columns: 1.3fr .7fr; gap: 56px; align-items: start; }
+  .cc-pane.on { display: grid; animation: archIn .32s ease both; }
+  .cc-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .cc-block { margin-top: 28px; }
+  .cc-label { font-size: 11px; letter-spacing: .04em; color: var(--faint); margin-bottom: 10px; }
+  .cc-mode { font-size: 15px; font-weight: 600; border-left: 2px solid #c4b5f5; padding-left: 14px; }
+  .cc-desc { font-size: 13px; color: var(--sub); line-height: 1.9; }
+  .cc-stat { border: 1px solid var(--line); border-radius: 16px; background: var(--wash); padding: 28px; }
+  .cc-num { font-size: 48px; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .cc-suffix { font-size: 24px; font-weight: 700; color: var(--faint); margin-left: 4px; }
+  .cc-statcap { margin-top: 10px; font-size: 12px; color: var(--sub); }
+  @media (max-width: 860px) {
+    .cc-pane, .cc-pane.on { grid-template-columns: 1fr; gap: 28px; }
+    .cc-name { font-size: 12px; }
+    .cc-tag { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cc-dot, .cc-dot i, .cc-dot::before, .cc-link i { transition: none; }
+    .cc-pane.on { animation: none; }
+  }
+
   /* ---- 安全网：菜单组件未升级完成前整体隐藏（防裸内容漏出） ---- */
   md-menu:not(:defined) { display: none; }
   /* ============ Logo 无缝轮播（lm- 前缀，独立组件） ============ */
@@ -595,11 +659,180 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     </div>
 
     <h3 class="mt-16 mb-6 text-[15px] font-semibold" data-i18n="why.cases">案例展示</h3>
-    <div class="grid grid-cols-3 gap-6">
-      <md-outlined-card><div class="ph h-[128px] rounded-none border-0 border-b" data-i18n="case.cover">案例封面图</div><p class="p-6 text-[13px] text-[var(--sub)]" data-i18n="case.desc">客户名称 / 行业 · 一句话成果</p></md-outlined-card>
-      <md-outlined-card><div class="ph h-[128px] rounded-none border-0 border-b" data-i18n="case.cover">案例封面图</div><p class="p-6 text-[13px] text-[var(--sub)]" data-i18n="case.desc">客户名称 / 行业 · 一句话成果</p></md-outlined-card>
-      <md-outlined-card><div class="ph h-[128px] rounded-none border-0 border-b" data-i18n="case.cover">案例封面图</div><p class="p-6 text-[13px] text-[var(--sub)]" data-i18n="case.desc">客户名称 / 行业 · 一句话成果</p></md-outlined-card>
+    <div class="cc" id="caseChain">
+      <div class="cc-chain" role="tablist" data-i18n-aria="case.chain.aria" aria-label="案例切换">
+        <button class="cc-node on" role="tab" aria-selected="true">
+          <span class="cc-dot"><i></i></span>
+          <span class="cc-name" data-i18n="case1.name">公牛集团</span>
+          <span class="cc-tag" data-i18n="case1.tag">民用电工 · 渠道数字化</span>
+        </button>
+        <div class="cc-link" aria-hidden="true"><i></i></div>
+        <button class="cc-node" role="tab" aria-selected="false">
+          <span class="cc-dot"><i></i></span>
+          <span class="cc-name" data-i18n="case2.name">芯智雲城</span>
+          <span class="cc-tag" data-i18n="case2.tag">电子元器件 · S2B2B</span>
+        </button>
+        <div class="cc-link" aria-hidden="true"><i></i></div>
+        <button class="cc-node" role="tab" aria-selected="false">
+          <span class="cc-dot"><i></i></span>
+          <span class="cc-name" data-i18n="case3.name">某电子科技上市公司</span>
+          <span class="cc-tag" data-i18n="case3.tag">智能制造 · 保密客户</span>
+        </button>
+      </div>
+
+      <div class="cc-stage" id="ccStage">
+        <div class="cc-pane on" role="tabpanel">
+          <div>
+            <div class="cc-chips">
+              <span class="arch-node" data-i18n="case1.chip1">渠道订货数字化</span>
+              <span class="arch-node" data-i18n="case1.chip2">经销商协同</span>
+              <span class="arch-node" data-i18n="case1.chip3">全链路数据打通</span>
+            </div>
+            <div class="cc-block">
+              <div class="cc-label" data-i18n="case.label.mode">合作模式</div>
+              <div class="cc-mode" data-i18n="case1.mode">B2B 渠道数字化平台</div>
+            </div>
+            <div class="cc-block">
+              <div class="cc-label" data-i18n="case.label.desc">项目描述</div>
+              <p class="cc-desc" data-i18n="case1.desc">为经销商体系搭建 B2B 订货与协同平台，打通总部与各级渠道的商品、价格、库存与政策链路，实现渠道生意全面在线化。</p>
+            </div>
+          </div>
+          <div class="cc-stat">
+            <div class="cc-label" data-i18n="case.label.hl">项目亮点</div>
+            <div class="cc-num"><span class="cc-statnum" data-value="100">100</span><span class="cc-suffix">%</span></div>
+            <p class="cc-statcap" data-i18n="case1.statcap">核心渠道业务线上化覆盖</p>
+          </div>
+        </div>
+
+        <div class="cc-pane" role="tabpanel">
+          <div>
+            <div class="cc-chips">
+              <span class="arch-node" data-i18n="case2.chip1">电子元器件B2B采购平台</span>
+              <span class="arch-node" data-i18n="case2.chip2">供应链协同管理</span>
+              <span class="arch-node" data-i18n="case2.chip3">智能推荐系统</span>
+            </div>
+            <div class="cc-block">
+              <div class="cc-label" data-i18n="case.label.mode">合作模式</div>
+              <div class="cc-mode" data-i18n="case2.mode">S2B2B 供应链平台</div>
+            </div>
+            <div class="cc-block">
+              <div class="cc-label" data-i18n="case.label.desc">项目描述</div>
+              <p class="cc-desc" data-i18n="case2.desc">打造电子元器件行业 S2B2B 平台，连接上游供应商与下游采购商，实现供应链数字化协同。</p>
+            </div>
+          </div>
+          <div class="cc-stat">
+            <div class="cc-label" data-i18n="case.label.hl">项目亮点</div>
+            <div class="cc-num"><span class="cc-statnum" data-value="10000">10,000</span><span class="cc-suffix">+</span></div>
+            <p class="cc-statcap" data-i18n="case2.statcap">服务企业用户 · 年交易额数十亿</p>
+          </div>
+        </div>
+
+        <div class="cc-pane" role="tabpanel">
+          <div>
+            <div class="cc-chips">
+              <span class="arch-node" data-i18n="case3.chip1">集团集采</span>
+              <span class="arch-node" data-i18n="case3.chip2">供应商全周期管理</span>
+              <span class="arch-node" data-i18n="case3.chip3">多组织协同</span>
+            </div>
+            <div class="cc-block">
+              <div class="cc-label" data-i18n="case.label.mode">合作模式</div>
+              <div class="cc-mode" data-i18n="case3.mode">B2B 集采与供应链协同中台</div>
+            </div>
+            <div class="cc-block">
+              <div class="cc-label" data-i18n="case.label.desc">项目描述</div>
+              <p class="cc-desc" data-i18n="case3.desc">服务集团级集中采购与供应商协同，构建统一的寻源、合同、订单与结算中台，支撑多事业部、多法人的复杂采购场景。</p>
+            </div>
+          </div>
+          <div class="cc-stat">
+            <div class="cc-label" data-i18n="case.label.hl">项目亮点</div>
+            <div class="cc-num"><span class="cc-statnum" data-value="60">60</span><span class="cc-suffix">%</span></div>
+            <p class="cc-statcap" data-i18n="case3.statcap">采购协同效率提升</p>
+          </div>
+        </div>
+      </div>
     </div>
+    <script>
+    (function () {
+      var chain = document.getElementById('caseChain');
+      if (!chain) return;
+      var stage = document.getElementById('ccStage');
+      var nodes = Array.prototype.slice.call(chain.querySelectorAll('.cc-node'));
+      var links = Array.prototype.slice.call(chain.querySelectorAll('.cc-link'));
+      var panes = Array.prototype.slice.call(chain.querySelectorAll('.cc-pane'));
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var cur = 0, timer = null, inView = false, firstIn = false, DUR = 8000;
+
+      function fmt(n) { return n >= 1000 ? n.toLocaleString('en-US') : String(n); }
+      function countUp(pane) {
+        var el = pane.querySelector('.cc-statnum');
+        if (!el) return;
+        var target = parseInt(el.getAttribute('data-value'), 10) || 0;
+        if (reduced) { el.textContent = fmt(target); return; }
+        var t0 = performance.now(), dur = 900;
+        (function tick(t) {
+          var p = Math.min((t - t0) / dur, 1);
+          el.textContent = fmt(Math.round(target * (1 - Math.pow(1 - p, 3))));
+          if (p < 1) requestAnimationFrame(tick);
+        })(t0);
+      }
+
+      function go(i) {
+        cur = (i + nodes.length) % nodes.length;
+        nodes.forEach(function (n, j) {
+          n.classList.toggle('on', j === cur);
+          n.setAttribute('aria-selected', j === cur ? 'true' : 'false');
+        });
+        links.forEach(function (l, j) { l.classList.toggle('fill', j < cur); });
+        panes.forEach(function (p, j) {
+          var on = j === cur;
+          if (on && !p.classList.contains('on')) { p.classList.add('on'); countUp(p); }
+          else if (!on) { p.classList.remove('on'); }
+        });
+        restart();
+      }
+
+      function restart() {
+        clearInterval(timer);
+        if (reduced || !inView) return;
+        timer = setInterval(function () { go(cur + 1); }, DUR);
+      }
+
+      nodes.forEach(function (n, i) {
+        n.addEventListener('click', function () { go(i); });
+      });
+      chain.querySelector('.cc-chain').addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); }
+      });
+      chain.addEventListener('mouseenter', function () { clearInterval(timer); });
+      chain.addEventListener('mouseleave', restart);
+
+      new IntersectionObserver(function (entries) {
+        inView = entries[0].isIntersecting;
+        if (inView && !firstIn) { firstIn = true; countUp(panes[cur]); }
+        if (inView) restart(); else clearInterval(timer);
+      }, { threshold: 0.3 }).observe(chain);
+
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) clearInterval(timer); else restart();
+      });
+
+      /* 锁定舞台高度，切换时页面不跳动 */
+      function syncStageHeight() {
+        var max = 0;
+        panes.forEach(function (p) {
+          p.style.cssText = 'display:grid;visibility:hidden;position:absolute;left:0;right:0;';
+          max = Math.max(max, p.offsetHeight);
+          p.style.cssText = '';
+        });
+        stage.style.minHeight = max + 'px';
+      }
+      var rz;
+      window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(syncStageHeight, 200); });
+      window.addEventListener('load', syncStageHeight);
+      syncStageHeight();
+    })();
+    </script>
 
     <div class="sec-head mt-16">
       <svg class="node orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
