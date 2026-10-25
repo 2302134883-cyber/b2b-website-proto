@@ -31,6 +31,7 @@
    - merge 输出 `Already up to date` 但任务分支明明有新 commit → 检查是不是合到了错误的分支（`git branch --show-current` 必须是 `main`）。
    - 任务改动是在主目录直接 commit 的（违反第 1 条）→ 先 `git checkout main && git merge <那个分支>` 补救，再把主目录切回 main。
    - 合并后用户说页面上看不到效果 → 确认 `git log main` 里有该 commit、`origin/main` 已推送，并提醒用户硬刷新浏览器（Cmd+Shift+R）排除缓存。
+   - **路径必须是真的仓库**：动手前先 `pwd` 确认在 `~/Projects/b2b-website-proto*` 下。历史上发生过在对话目录的仓库副本（`.../dialogues/<日期>/<id>/b2b-website-proto`）里改了一整天还"合并"了，真仓库一个字没动——对话目录里的副本一律只读，不作修改。
 
 4. **预览端口管理**：主目录固定用 `4174`；worktree 演示用独立端口（如 4175+），并在回复里写清楚本次演示的 URL。**删除 worktree 前必须先杀掉它的预览服务**，否则僵尸进程会继续吐出旧快照，用户会以为"合并没生效"：
    ```bash
