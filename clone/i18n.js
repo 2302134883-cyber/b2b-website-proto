@@ -81,6 +81,12 @@
       'how.qa': 'Q&A · 常见问题',
       'qa.1': '问题 1：部署周期多长？', 'qa.2': '问题 2：如何与现有系统对接？',
       'qa.3': '问题 3：数据安全如何保障？', 'qa.4': '问题 4：是否支持定制开发？',
+
+      'ds.title': '数据同源 · 一次改价的差别', 'ds.sub': '同一个操作，同一秒开始——两种系统形态。',
+      'ds.play': '▶ 模拟一次改价', 'ds.running': '⏳ 演示中……', 'ds.syncing': '同步中…',
+      'ds.a.st1': '传统方式：同步中，逐个生效', 'ds.a.st2': '✗ 已生效，但比我们晚了 2 秒',
+      'ds.b.st1': '我们的系统：同一瞬间，全部生效', 'ds.b.st2': '✓ 已全部生效（同一瞬间）',
+      'ds.done.tip': '每一次，都是我们先到',
       'footer.slogan': '公司一句话简介 / 品牌主张<br>（可复用 hero slogan）',
       'footer.support': '支持 / 联系',
       'footer.copy': '© 2025 公司名称 · 京ICP备XXXXXXXX号 · 公安备案号',
@@ -172,6 +178,12 @@
       'how.qa': 'Q&A · FAQ',
       'qa.1': 'Q1: How long does deployment take?', 'qa.2': 'Q2: How does it integrate with existing systems?',
       'qa.3': 'Q3: How is data security ensured?', 'qa.4': 'Q4: Is custom development supported?',
+
+      'ds.title': 'Data parity · one price change apart', 'ds.sub': 'Same action, same second — two system shapes.',
+      'ds.play': '▶ Simulate a price change', 'ds.running': '⏳ Demo running…', 'ds.syncing': 'Syncing…',
+      'ds.a.st1': 'Legacy: syncing… applying one by one', 'ds.a.st2': '✗ Applied, but 2+ seconds behind us',
+      'ds.b.st1': 'Ours: all update in the same instant', 'ds.b.st2': '✓ All updated (same instant)',
+      'ds.done.tip': 'Every time, we land first',
       'footer.slogan': 'One-line company intro / brand statement<br>(reuse the hero slogan)',
       'footer.support': 'Support / Contact',
       'footer.copy': '© 2025 Company Name · ICP License XXXXXXXX · PSB Filing',
@@ -263,6 +275,12 @@
       'how.qa': 'Q&A · よくある質問',
       'qa.1': 'Q1：デプロイ期間はどのくらい？', 'qa.2': 'Q2：既存システムとの連携方法は？',
       'qa.3': 'Q3：データセキュリティはどう担保する？', 'qa.4': 'Q4：カスタム開発は可能？',
+
+      'ds.title': 'データ同一ソース · 価格変更1回の違い', 'ds.sub': '同じ操作、同じ秒から — 2つのシステム形態。',
+      'ds.play': '▶ 価格変更をシミュレート', 'ds.running': '⏳ デモ実行中…', 'ds.syncing': '同期中…',
+      'ds.a.st1': '従来方式：同期中… 順次反映', 'ds.a.st2': '✗ 反映完了、ただし2秒以上遅延',
+      'ds.b.st1': '我々の方式：同じ瞬間にすべて反映', 'ds.b.st2': '✓ すべて反映完了（同じ瞬間）',
+      'ds.done.tip': '毎回、まず我々が反映されます',
       'footer.slogan': '会社紹介一文 / ブランドメッセージ<br>（Hero のスローガンを再利用可）',
       'footer.support': 'サポート / 連絡',
       'footer.copy': '© 2025 会社名 · ICP 登録 XXXXXXXX · 公安登録',
@@ -354,6 +372,12 @@
       'how.qa': 'Q&A · 자주 묻는 질문',
       'qa.1': 'Q1: 배포 기간은 얼마나 걸리나요?', 'qa.2': 'Q2: 기존 시스템과 어떻게 연동하나요?',
       'qa.3': 'Q3: 데이터 보안은 어떻게 보장하나요?', 'qa.4': 'Q4: 맞춤 개발을 지원하나요?',
+
+      'ds.title': '데이터 동일 소스 · 가격 변경 1회의 차이', 'ds.sub': '같은 작업, 같은 초 — 두 가지 시스템 형태.',
+      'ds.play': '▶ 가격 변경 시뮬레이션', 'ds.running': '⏳ 데모 실행 중…', 'ds.syncing': '동기화 중…',
+      'ds.a.st1': '기존 방식：동기화 중… 순차 적용', 'ds.a.st2': '✗ 반영 완료, 단 2초 이상 지연',
+      'ds.b.st1': '우리 방식：같은 순간 모두 반영', 'ds.b.st2': '✓ 모두 반영 완료（같은 순간）',
+      'ds.done.tip': '매번, 우리가 먼저 반영됩니다',
       'footer.slogan': '한 줄 회사 소개 / 브랜드 슬로건<br>(Hero 슬로건 재사용 가능)',
       'footer.support': '지원 / 연락',
       'footer.copy': '© 2025 회사명 · ICP 등록 XXXXXXXX · 공안 등록',
@@ -445,6 +469,12 @@
       'how.qa': 'P&R · Preguntas frecuentes',
       'qa.1': 'P1: ¿Cuánto tarda el despliegue?', 'qa.2': 'P2: ¿Cómo se integra con los sistemas existentes?',
       'qa.3': 'P3: ¿Cómo se garantiza la seguridad de los datos?', 'qa.4': 'P4: ¿Se admite desarrollo a medida?',
+
+      'ds.title': 'Paridad de datos · la diferencia en un cambio de precio', 'ds.sub': 'La misma operación, en el mismo segundo — dos formas de sistema.',
+      'ds.play': '▶ Simular un cambio de precio', 'ds.running': '⏳ Demo en curso…', 'ds.syncing': 'Sincronizando…',
+      'ds.a.st1': 'Tradicional: sincronizando… se aplica uno a uno', 'ds.a.st2': '✗ Aplicado, pero 2 segundos después que nosotros',
+      'ds.b.st1': 'Nuestro sistema: todo se actualiza a la vez', 'ds.b.st2': '✓ Todo actualizado (al mismo tiempo)',
+      'ds.done.tip': 'Cada vez, nosotros llegamos primero',
       'footer.slogan': 'Descripción breve / eslogan de marca<br>(reutiliza el eslogan del hero)',
       'footer.support': 'Soporte / Contacto',
       'footer.copy': '© 2025 Nombre de la empresa · Licencia ICP XXXXXXXX · Registro PSB',
@@ -536,6 +566,12 @@
       'how.qa': 'Q&R · FAQ',
       'qa.1': 'Q1 : Quelle est la durée de déploiement ?', 'qa.2': 'Q2 : Comment s’intègre-t-il aux systèmes existants ?',
       'qa.3': 'Q3 : Comment la sécurité des données est-elle garantie ?', 'qa.4': 'Q4 : Le développement sur mesure est-il possible ?',
+
+      'ds.title': 'Parité des données · la différence en un changement de prix', 'ds.sub': 'La même opération, la même seconde — deux formes de système.',
+      'ds.play': '▶ Simuler un changement de prix', 'ds.running': '⏳ Démo en cours…', 'ds.syncing': 'Synchronisation…',
+      'ds.a.st1': 'Classique : synchronisation… application une par une', 'ds.a.st2': '✗ Appliqué, mais 2 secondes après nous',
+      'ds.b.st1': 'Notre système : tout se met à jour au même instant', 'ds.b.st2': '✓ Tout est à jour (au même instant)',
+      'ds.done.tip': 'Chaque fois, nous arrivons en premier',
       'footer.slogan': 'Présentation en une phrase / slogan de marque<br>(réutilisable depuis le hero)',
       'footer.support': 'Support / Contact',
       'footer.copy': '© 2025 Nom de l’entreprise · Licence ICP XXXXXXXX · Enregistrement PSB',
@@ -627,6 +663,12 @@
       'how.qa': 'F&A · Häufige Fragen',
       'qa.1': 'F1: Wie lange dauert die Bereitstellung?', 'qa.2': 'F2: Wie erfolgt die Anbindung an bestehende Systeme?',
       'qa.3': 'F3: Wie wird Datensicherheit gewährleistet?', 'qa.4': 'F4: Wird Individualentwicklung unterstützt?',
+
+      'ds.title': 'Datenparität · der Unterschied bei einer Preisänderung', 'ds.sub': 'Dieselbe Operation, dieselbe Sekunde — zwei Systemformen.',
+      'ds.play': '▶ Preisänderung simulieren', 'ds.running': '⏳ Demo läuft…', 'ds.syncing': 'Synchronisierung…',
+      'ds.a.st1': 'Klassisch: Synchronisierung… wird nacheinander wirksam', 'ds.a.st2': '✗ Wirksam, aber 2+ Sekunden nach uns',
+      'ds.b.st1': 'Unser System: alles aktualisiert sich im selben Moment', 'ds.b.st2': '✓ Alles aktualisiert (im selben Moment)',
+      'ds.done.tip': 'Jedes Mal sind wir zuerst aktuell',
       'footer.slogan': 'Einzeilige Firmenbeschreibung / Markenclaim<br>(Hero-Slogan wiederverwendbar)',
       'footer.support': 'Support / Kontakt',
       'footer.copy': '© 2025 Firmenname · ICP-Lizenz XXXXXXXX · PSB-Registrierung',
@@ -718,6 +760,12 @@
       'how.qa': 'Вопросы и ответы · Частые вопросы',
       'qa.1': 'В1: Сколько занимает развёртывание?', 'qa.2': 'В2: Как происходит интеграция с существующими системами?',
       'qa.3': 'В3: Как обеспечивается безопасность данных?', 'qa.4': 'В4: Возможна ли заказная разработка?',
+
+      'ds.title': 'Единый источник данных · разница в одно изменение цены', 'ds.sub': 'Одна операция, одна секунда — две формы системы.',
+      'ds.play': '▶ Смоделировать изменение цены', 'ds.running': '⏳ Идёт демонстрация…', 'ds.syncing': 'Синхронизация…',
+      'ds.a.st1': 'Классика: синхронизация… обновление по очереди', 'ds.a.st2': '✗ Применено, но на 2+ секунды позже нас',
+      'ds.b.st1': 'Наша система: всё обновляется в один миг', 'ds.b.st2': '✓ Всё обновлено (в тот же миг)',
+      'ds.done.tip': 'Каждый раз мы приходим первыми',
       'footer.slogan': 'Краткое описание компании / слоган<br>(можно повторить слоган из hero)',
       'footer.support': 'Поддержка / Контакты',
       'footer.copy': '© 2025 Название компании · Лицензия ICP XXXXXXXX · Регистрация PSB',
@@ -737,6 +785,7 @@
     },
   };
 
+  window.__I18N_DICTS = DICT;
   const STORAGE_KEY = 'site-lang';
   let current = 'zh-CN';
 
