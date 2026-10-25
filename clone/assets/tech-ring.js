@@ -100,18 +100,16 @@
     .tr-node.tr-sel .tr-lb{color:#4c3fd6;font-weight:700}
     .tr-mini{position:absolute;width:6px;height:6px;border-radius:50%;background:#c4b5fd;left:0;top:0;z-index:5;
       box-shadow:0 0 8px 1px rgba(196,181,253,.55);will-change:transform;pointer-events:none}
-    /* 选中节点下方浮现的紫色说明行（前置小圆点） */
+    /* 选中节点下方浮现的紫色说明行（纯紫字） */
     .tr-desc{
       position:absolute;z-index:300;transform:translateX(-50%) translateY(5px);
-      display:inline-flex;align-items:center;gap:7px;max-width:260px;
+      display:inline-block;max-width:260px;
       font-size:12.5px;font-weight:500;color:#6d5ef0;white-space:nowrap;
       text-shadow:0 1px 6px rgba(255,255,255,.9);
       opacity:0;pointer-events:none;
       transition:opacity .22s ease,transform .22s ease;
     }
     .tr-desc.on{opacity:1;transform:translateX(-50%) translateY(0)}
-    .tr-desc i{width:5px;height:5px;border-radius:50%;background:#6d5ef0;flex:0 0 5px;
-      box-shadow:0 0 6px 1px rgba(109,94,240,.45)}
     .tr-desc.tr-instant{transition:none!important}
     @media (prefers-reduced-motion: reduce){
       .tr-stage *{animation:none!important;transition:none!important}
@@ -138,13 +136,13 @@
       `  <span class="tr-ci">${svg(ICONS.hub, 26)}</span>`,
       '  <span class="tr-cl" data-i18n="tech.core">ShopeX 技术中台</span>',
       '</div>',
-      '<div class="tr-desc" role="status"><i></i><span></span></div>'
+      '<div class="tr-desc" role="status"><span></span></div>'
     ].join('');
     mount.appendChild(stage);
 
     core = stage.querySelector('.tr-core');
     desc = stage.querySelector('.tr-desc');
-    descText = desc.querySelector('span:last-child');
+    descText = desc.querySelector('span');
 
     nodes = ITEMS.map((it) => {
       const n = document.createElement('a');
@@ -270,12 +268,13 @@
     if (!stage || !stage.isConnected) return;
     if (!last) { last = t; born = t; }
     const dt = Math.min(0.05, (t - last) / 1000); last = t;
-    if (!sel) {                                   // 选中时全场静止
-      animT += dt;
-      angle += (BASE_SPEED + boost) * dt;
-      boost *= Math.exp(-1.15 * dt);
-      if (boost < 0.005) boost = 0;
-    }
+    // 慢速档：选中时时间流速平滑降到 15%（微动不停滞），松开平滑回全速
+    const target = sel ? 0.15 : 1;
+    timeScale += (target - timeScale) * Math.min(1, dt * 3);
+    animT += dt * timeScale;
+    angle += (BASE_SPEED + boost) * dt * timeScale;
+    boost *= Math.exp(-1.15 * dt);
+    if (boost < 0.005) boost = 0;
     paint(animT);
   }
 
@@ -345,7 +344,7 @@
 
   /* ---- 状态 ---- */
   let stage, core, desc, descText, nodes = [], minis = [], comets = [];
-  let angle = -Math.PI / 2, last = 0, born = 0, boost = 0, animT = 0;
+  let angle = -Math.PI / 2, last = 0, born = 0, boost = 0, animT = 0, timeScale = 1;
   let sel = null, intervalMode = false;
 
   if (document.readyState === 'loading') {
