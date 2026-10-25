@@ -1560,7 +1560,8 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     ctx.globalAlpha = 1;
   }
 
-  function frame(now) {
+  let lastTick = performance.now();
+  function draw(now) {
     if (!dragging) {
       velY += (GLOBE_CFG.rotationSpeed - velY) * GLOBE_CFG.inertiaReturn;  // 惯性回稳
       rotY += velY;
@@ -1579,10 +1580,18 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     ctx.strokeStyle = GLOBE_CFG.lineColor; ctx.lineWidth = 1.25; ctx.stroke();
     CONTINENTS.forEach(c => strokeSpherePath(c, { width: 1.25 }));
     drawMarker(now);
-
+  }
+  function frame(now) {
+    lastTick = performance.now();
+    draw(now);
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
+  /* rAF 冻结环境（内嵌 webview / 后台标签页）看门狗：超 400ms 无帧则由定时器直接补绘 */
+  setInterval(() => {
+    const now = performance.now();
+    if (now - lastTick > 400) { lastTick = now; draw(now); }
+  }, 200);
 })();
 </script>
 
