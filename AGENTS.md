@@ -32,7 +32,14 @@
    - 任务改动是在主目录直接 commit 的（违反第 1 条）→ 先 `git checkout main && git merge <那个分支>` 补救，再把主目录切回 main。
    - 合并后用户说页面上看不到效果 → 确认 `git log main` 里有该 commit、`origin/main` 已推送，并提醒用户硬刷新浏览器（Cmd+Shift+R）排除缓存。
 
-4. **vendor/** 不入库，重建用 `bash setup-vendor.sh`。
+4. **预览端口管理**：主目录固定用 `4174`；worktree 演示用独立端口（如 4175+），并在回复里写清楚本次演示的 URL。**删除 worktree 前必须先杀掉它的预览服务**，否则僵尸进程会继续吐出旧快照，用户会以为"合并没生效"：
+   ```bash
+   lsof -nP -iTCP:<端口> -sTCP:LISTEN   # 找到 PID
+   kill <PID>
+   ```
+   拿不准用户在看哪个页面时，先 `lsof -nP -iTCP -sTCP:LISTEN | grep http.server` 列出所有预览服务及其目录（`lsof -a -p <PID> -d cwd`），确认用户打开的端口指向哪里。
+
+5. **vendor/** 不入库，重建用 `bash setup-vendor.sh`。
 
 ## 仓库结构
 
