@@ -1,8 +1,8 @@
 /* ============ 数据同源 · 拼接式 vs 一套底座 ============
  * 挂载点：<div id="dataSource"></div>
  * 引入顺序：i18n.js → tech-ring.js → data-source.js（均 defer）
- * 交互：两侧同时开始；传统三端逐个生效，同源四端同一帧生效。
- * 关键：价格始终可见，状态与价格分离，完成后保留改价前后对照。
+ * 交互：首次进入视口自动播放一次；传统三端逐个生效，同源四端同一帧生效。
+ * 关键：初始静止，离开再回来不重播；按钮可手动重播，改价前后对照持续保留。
  */
 (function () {
   'use strict';
@@ -347,11 +347,25 @@
     renderDynamicText();
   });
 
+  function armScrollPlay() {
+    /* 初始保持静止；仅首次进入对比区域时自动播放，离开后回来不重播。 */
+    if (!('IntersectionObserver' in window)) return;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.2) return;
+        observer.disconnect();
+        if (!hasRun) play();
+      });
+    }, { threshold: [0, 0.2] });
+    observer.observe(refs.grid);
+  }
+
   function init() {
     var host = document.getElementById('dataSource');
     if (!host) return;
     build(host);
     refs.play.addEventListener('click', play);
+    armScrollPlay();
   }
 
   /* defer 脚本按序执行，DOM 已就绪 */
