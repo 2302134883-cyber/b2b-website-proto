@@ -12,6 +12,7 @@
 <script src="./i18n.js" defer></script>
 <script src="./assets/tech-ring.js" defer></script>
 <script src="./assets/data-source.js" defer></script>
+<script src="./assets/journey.js" defer></script>
 <!-- 说明：已打包为经典脚本，file:// 直接打开也能加载 Material 组件 -->
 <style>
   /* ============ Gemini Neural Expressive × Material 3 令牌 ============ */
@@ -1052,38 +1053,19 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     </div>
 
     <h3 class="mt-10 md:mt-16 mb-6 text-[15px] font-semibold" data-i18n="about.address">地址</h3>
-    <div class="grid grid-cols-1 md:grid-cols-[1fr_72px_1fr] gap-6 items-center">
-      <md-outlined-card><div class="pad !p-6">
-        <p class="text-[13px] font-semibold mb-4" data-i18n="globe.title">① 全球视角</p>
-        <div id="globeBox" class="w-full h-[400px]">
-          <canvas id="globeCanvas" class="w-full h-full block cursor-grab"></canvas>
-        </div>
-        <p class="mt-2 text-[12px] text-[var(--faint)]" data-i18n="globe.note">定位点：中国上海 · 3D 地球，可拖拽旋转</p>
-      </div></md-outlined-card>
-      <div class="flex flex-col items-center gap-2">
-        <svg viewBox="0 0 72 72" width="48" height="48" class="rotate-90 md:rotate-0">
-          <line x1="4" y1="36" x2="26" y2="36" stroke="#c4b5fd" stroke-width="2"/><polygon points="26,36 18,30 18,42" fill="#c4b5fd"/>
-          <line x1="46" y1="36" x2="68" y2="36" stroke="#c4b5fd" stroke-width="2"/><polygon points="46,36 54,30 54,42" fill="#c4b5fd"/>
-          <circle cx="36" cy="36" r="10" fill="none" stroke="#c4b5fd" stroke-width="2"/><line x1="43" y1="43" x2="50" y2="50" stroke="#c4b5fd" stroke-width="2"/>
-        </svg>
-        <md-assist-chip label="放大 / 缩小" data-i18n-label="zoom.chip"></md-assist-chip>
+    <div id="journeyBox" class="w-full h-[440px] md:h-[600px] relative select-none">
+      <canvas id="journeyCanvas" class="w-full h-full block cursor-pointer"></canvas>
+      <div id="journeySteps" class="absolute left-1/2 -translate-x-1/2 bottom-1 flex items-center gap-2"></div>
+      <div class="absolute right-10 top-1/2 -translate-y-1/2 text-right pointer-events-none hidden md:block">
+        <p class="text-[10px] tracking-[0.28em] text-[var(--faint)] font-medium" data-i18n="addr.label">ADDRESS · 地址</p>
+        <p class="mt-3 text-[16px] font-semibold leading-6" data-i18n="addr.building">新漕河泾国际商务中心B座</p>
+        <p class="text-[13px] text-[var(--ink)] mt-0.5" data-i18n="addr.floor">9 层</p>
+        <div class="my-3 ml-auto w-8 h-px bg-[var(--line-2)]"></div>
+        <p class="text-[12px] text-[var(--sub)] leading-5" data-i18n-html="addr.city">上海市徐汇区<br>桂平路 391 号（近漕宝路）</p>
       </div>
-      <md-outlined-card><div class="pad !p-6">
-        <p class="text-[13px] font-semibold mb-4" data-i18n="street.title">② 具体到街道（缩放）</p>
-        <svg viewBox="0 0 360 200" class="w-full h-auto bg-[var(--wash)] border border-[var(--line)] rounded-xl">
-          <line x1="0" y1="40" x2="360" y2="40" stroke="#eceef2" stroke-width="2"/><line x1="0" y1="80" x2="360" y2="80" stroke="#eceef2" stroke-width="2"/>
-          <line x1="0" y1="120" x2="360" y2="120" stroke="#eceef2" stroke-width="2"/><line x1="0" y1="160" x2="360" y2="160" stroke="#eceef2" stroke-width="2"/>
-          <line x1="60" y1="0" x2="60" y2="200" stroke="#eceef2" stroke-width="2"/><line x1="120" y1="0" x2="120" y2="200" stroke="#eceef2" stroke-width="2"/>
-          <line x1="180" y1="0" x2="180" y2="200" stroke="#eceef2" stroke-width="2"/><line x1="240" y1="0" x2="240" y2="200" stroke="#eceef2" stroke-width="2"/>
-          <line x1="300" y1="0" x2="300" y2="200" stroke="#eceef2" stroke-width="2"/>
-          <line x1="0" y1="100" x2="360" y2="100" stroke="#e2e5ea" stroke-width="3"/><line x1="200" y1="0" x2="200" y2="200" stroke="#e2e5ea" stroke-width="3"/>
-          <rect x="150" y="55" width="100" height="70" fill="none" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="5 4"/>
-          <circle cx="200" cy="90" r="6" fill="#8b7cf0"/>
-          <text x="200" y="38" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600" data-i18n="street.label">XX 路 · 具体到街道</text>
-        </svg>
-        <p class="mt-2 text-[12px] text-[var(--faint)]" data-i18n="street.note">具体到街道（实拍 / 地图详情）</p>
-      </div></md-outlined-card>
     </div>
+    <p class="mt-2 text-[12px] text-[var(--faint)] text-center" data-i18n="journey.hint">自动巡游中 · 点击画面推进一级 · 地球上可拖拽旋转</p>
+    <p class="mt-2 text-[12px] text-[var(--sub)] text-center md:hidden" data-i18n="addr.city.oneline">上海市徐汇区桂平路 391 号 · 新漕河泾国际商务中心B座 9 层</p>
   </div>
 </section>
 
@@ -1463,202 +1445,7 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
 })();
 </script>
 
-<!-- ============ 3D 地球（全球视角卡片） ============ -->
-<script>
-(function () {
-  /* ---- 可调参数 ---- */
-  const GLOBE_CFG = {
-    rotationSpeed  : 0.0035,                 // 自动旋转速度（弧度/帧）
-    inertiaReturn  : 0.02,                   // 拖拽惯性回稳系数
-    gridStep       : 30,                     // 经纬线间隔（度）
-    sampleStep     : 3,                      // 线条采样精度（度）
-    lineColor      : '#5f6368',              // 前景线条（灰黑）
-    backColor      : '#e8eaed',              // 背面网格线（极浅灰）
-    globeScale     : 0.46,                   // 球半径 = min(容器宽, 高) × 此值
-    tilt           : 0.35,                   // 初始倾角
-    markerOrb      : ['#93b8f8', '#c4b5f5', '#f0c9e8'], // 上海光点：orb 弥散渐变（与页面 orb 同色系）
-  };
 
-  /* ---- 抽象大洲轮廓 [经度, 纬度] ---- */
-  const CONTINENTS_LL = [
-    [[-165,62],[-150,60],[-140,60],[-135,57],[-130,52],[-125,45],[-120,37],[-115,30],[-110,25],[-105,22],[-97,18],[-95,15],[-88,13],[-83,9],[-79,8],[-83,11],[-90,15],[-95,19],[-97,24],[-93,29],[-88,30],[-83,28],[-81,25],[-80,30],[-76,34],[-72,40],[-68,44],[-62,47],[-60,52],[-64,58],[-70,60],[-78,62],[-85,66],[-92,68],[-100,70],[-110,70],[-120,70],[-130,70],[-140,70],[-150,71],[-158,71],[-165,68],[-168,65],[-165,62]],
-    [[-58,64],[-50,62],[-44,60],[-40,62],[-32,68],[-22,70],[-20,75],[-30,80],[-45,82],[-55,80],[-58,75],[-55,70],[-58,64]],
-    [[-79,8],[-75,11],[-70,12],[-63,11],[-55,7],[-51,4],[-49,0],[-44,-3],[-38,-5],[-35,-8],[-39,-14],[-40,-21],[-46,-26],[-52,-32],[-57,-37],[-62,-41],[-65,-45],[-68,-50],[-71,-54],[-74,-52],[-73,-45],[-73,-38],[-71,-30],[-70,-22],[-73,-16],[-77,-10],[-80,-5],[-81,0],[-80,4],[-79,8]],
-    [[-17,15],[-16,20],[-13,26],[-9,31],[-5,35],[0,36],[9,37],[11,34],[15,33],[20,33],[25,32],[30,31],[33,28],[34,23],[37,18],[41,14],[43,11],[47,11],[51,11],[49,6],[46,2],[42,-2],[40,-7],[39,-12],[36,-17],[35,-22],[33,-27],[30,-31],[26,-34],[21,-35],[18,-33],[15,-28],[13,-22],[12,-16],[13,-10],[12,-4],[9,-1],[6,4],[1,6],[-5,5],[-10,6],[-14,9],[-17,13],[-17,15]],
-    [[-9,37],[-9,43],[-3,44],[-2,48],[-5,49],[-1,51],[3,53],[7,55],[8,58],[12,56],[18,56],[21,60],[18,64],[16,68],[22,70],[30,71],[40,68],[50,69],[60,69],[68,72],[78,72],[88,74],[98,76],[108,77],[118,74],[128,72],[138,72],[148,71],[158,70],[168,69],[178,66],[178,63],[170,60],[162,58],[156,52],[150,59],[143,59],[140,54],[136,48],[132,43],[128,39],[124,38],[120,36],[121,31],[124,26],[119,23],[113,22],[109,17],[108,12],[105,9],[101,7],[98,11],[95,16],[91,22],[87,21],[83,18],[80,13],[77,8],[74,13],[71,20],[67,24],[61,25],[56,26],[52,27],[49,30],[45,31],[41,34],[37,36],[32,36],[27,37],[23,38],[19,41],[15,41],[12,44],[8,44],[4,43],[0,39],[-4,37],[-9,37]],
-    [[-5,50],[-3,53],[-5,57],[-2,58],[-1,54],[-1,51],[-5,50]],
-    [[130,31],[133,34],[137,35],[140,36],[141,39],[141,42],[143,43],[141,45],[140,41],[139,37],[136,35],[132,33],[130,31]],
-    [[131,-1],[136,-2],[141,-3],[146,-6],[150,-9],[147,-9],[142,-8],[137,-7],[132,-4],[131,-1]],
-    [[44,-16],[47,-14],[50,-15],[49,-19],[46,-24],[44,-25],[43,-21],[44,-16]],
-    [[113,-22],[113,-28],[115,-33],[119,-35],[124,-33],[129,-32],[134,-33],[137,-35],[140,-38],[145,-38],[149,-37],[151,-34],[153,-29],[153,-25],[150,-22],[146,-19],[143,-15],[142,-11],[138,-12],[135,-12],[132,-11],[129,-13],[125,-15],[121,-17],[117,-20],[113,-22]],
-    (() => { const a = []; for (let lon = -180; lon <= 180; lon += 10)
-      a.push([lon, -74 - 4 * Math.sin(lon * 3 * Math.PI / 180)]); return a; })(),
-  ];
-
-  const SHANGHAI = { lat: 31.23, lon: 121.47 };
-  const rad = d => d * Math.PI / 180;
-  const latLonToVec = (lat, lon) => {
-    const la = rad(lat), lo = rad(lon);
-    return [Math.cos(la) * Math.sin(lo), Math.sin(la), Math.cos(la) * Math.cos(lo)];
-  };
-  function rotate(v, ry, rx) {
-    const [x, y, z] = v;
-    const x1 =  x * Math.cos(ry) + z * Math.sin(ry);
-    const z1 = -x * Math.sin(ry) + z * Math.cos(ry);
-    const y2 =  y * Math.cos(rx) - z1 * Math.sin(rx);
-    const z2 =  y * Math.sin(rx) + z1 * Math.cos(rx);
-    return [x1, y2, z2];
-  }
-  function hexA(hex, a) {
-    const n = parseInt(hex.slice(1), 16);
-    return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
-  }
-
-  const box = document.getElementById('globeBox');
-  const canvas = document.getElementById('globeCanvas');
-  if (!box || !canvas) return;
-  const ctx = canvas.getContext('2d');
-  let W, H, CX, CY, R;
-
-  function resize() {
-    const dpr = window.devicePixelRatio || 1;
-    W = box.clientWidth; H = box.clientHeight;
-    canvas.width = W * dpr; canvas.height = H * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    CX = W / 2; CY = H / 2;
-    R = Math.min(W, H) * GLOBE_CFG.globeScale;
-  }
-  new ResizeObserver(resize).observe(box);
-  resize();
-
-  let rotY = -rad(SHANGHAI.lon);   // 初始朝向：上海正对观察者
-  let rotX = GLOBE_CFG.tilt;
-  let velY = GLOBE_CFG.rotationSpeed;
-  let dragging = false, lastX = 0, lastY = 0;
-
-  canvas.addEventListener('pointerdown', e => {
-    dragging = true; lastX = e.clientX; lastY = e.clientY;
-    canvas.setPointerCapture(e.pointerId);
-    canvas.style.cursor = 'grabbing';
-  });
-  canvas.addEventListener('pointermove', e => {
-    if (!dragging) return;
-    const dx = e.clientX - lastX, dy = e.clientY - lastY;
-    rotY += dx * 0.006;
-    velY = dx * 0.006;
-    rotX += dy * 0.006;
-    rotX = Math.max(-1.2, Math.min(1.2, rotX));
-    lastX = e.clientX; lastY = e.clientY;
-  });
-  const endDrag = () => { dragging = false; canvas.style.cursor = 'grab'; };
-  canvas.addEventListener('pointerup', endDrag);
-  canvas.addEventListener('pointercancel', endDrag);
-
-  function buildGraticule() {
-    const lines = [], s = GLOBE_CFG.gridStep, st = GLOBE_CFG.sampleStep;
-    for (let lon = 0; lon < 360; lon += s) {
-      const line = [];
-      for (let lat = -90; lat <= 90; lat += st) line.push([lat, lon]);
-      lines.push(line);
-    }
-    for (let lat = -60; lat <= 60; lat += s) {
-      const line = [];
-      for (let lon = 0; lon <= 360; lon += st) line.push([lat, lon]);
-      lines.push(line);
-    }
-    return lines;
-  }
-  const GRATICULE = buildGraticule();
-  const CONTINENTS = CONTINENTS_LL.map(poly => poly.map(([lon, lat]) => [lat, lon]));
-
-  function strokeSpherePath(samples, { width, back = false }) {
-    const pts = samples.map(([lat, lon]) => {
-      const [x, y, z] = rotate(latLonToVec(lat, lon), rotY, rotX);
-      return { sx: CX + R * x, sy: CY - R * y, z };
-    });
-    for (let pass = 0; pass < 2; pass++) {
-      const isBack = pass === 1;
-      if (isBack && !back) continue;
-      ctx.strokeStyle = isBack ? GLOBE_CFG.backColor : GLOBE_CFG.lineColor;
-      ctx.lineWidth = width;
-      ctx.beginPath();
-      for (let i = 0; i < pts.length - 1; i++) {
-        const a = pts[i], b = pts[i + 1];
-        const visible = isBack ? (a.z < 0 && b.z < 0) : (a.z > 0 && b.z > 0);
-        if (visible) { ctx.moveTo(a.sx, a.sy); ctx.lineTo(b.sx, b.sy); }
-      }
-      ctx.stroke();
-    }
-  }
-
-  const shVec = latLonToVec(SHANGHAI.lat, SHANGHAI.lon);
-  function drawMarker(now) {
-    const [x, y, z] = rotate(shVec, rotY, rotX);
-    if (z <= 0.02) return;
-    const sx = CX + R * x, sy = CY - R * y;
-    const [o1, o2, o3] = GLOBE_CFG.markerOrb;
-    const breathe = 0.85 + 0.15 * Math.sin(now / 700);          // 呼吸缩放
-    const twinkle = 0.8 + 0.2 * Math.sin(now / 700 + 0.9);      // 闪动
-
-    // 弥散扩散环 ×2（柔边环带，没有清晰的轮廓线）
-    for (const offset of [0, 0.5]) {
-      const t = ((now / 2600) + offset) % 1;
-      const rr = 14 + t * 30;
-      const ring = ctx.createRadialGradient(sx, sy, rr * 0.55, sx, sy, rr);
-      ring.addColorStop(0,   hexA(o2, 0));
-      ring.addColorStop(0.7, hexA(o2, (1 - t) * 0.4));
-      ring.addColorStop(1,   hexA(o2, 0));
-      ctx.fillStyle = ring;
-      ctx.beginPath(); ctx.arc(sx, sy, rr, 0, Math.PI * 2); ctx.fill();
-    }
-
-    // 弥散光点本体（orb 风格：无硬边、无描边，与页面 orb 同质感）
-    const r = 16 * breathe;
-    const orb = ctx.createRadialGradient(sx, sy, 0, sx, sy, r);
-    orb.addColorStop(0,    hexA(o1, 1));
-    orb.addColorStop(0.45, hexA(o2, 0.55));
-    orb.addColorStop(0.78, hexA(o3, 0.25));
-    orb.addColorStop(1,    'rgba(255,255,255,0)');
-    ctx.globalAlpha = twinkle;
-    ctx.fillStyle = orb;
-    ctx.beginPath(); ctx.arc(sx, sy, r, 0, Math.PI * 2); ctx.fill();
-    ctx.globalAlpha = 1;
-  }
-
-  let lastTick = performance.now();
-  function draw(now) {
-    if (!dragging) {
-      velY += (GLOBE_CFG.rotationSpeed - velY) * GLOBE_CFG.inertiaReturn;  // 惯性回稳
-      rotY += velY;
-    }
-    ctx.clearRect(0, 0, W, H);
-    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-
-    ctx.beginPath();                                                       // 底部淡投影
-    ctx.ellipse(CX, CY + R * 1.12, R * 0.72, R * 0.1, 0, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(0,0,0,0.05)';
-    ctx.fill();
-
-    GRATICULE.forEach(l => strokeSpherePath(l, { width: 0.75, back: true }));
-    ctx.beginPath();
-    ctx.arc(CX, CY, R, 0, Math.PI * 2);
-    ctx.strokeStyle = GLOBE_CFG.lineColor; ctx.lineWidth = 1.25; ctx.stroke();
-    CONTINENTS.forEach(c => strokeSpherePath(c, { width: 1.25 }));
-    drawMarker(now);
-  }
-  function frame(now) {
-    lastTick = performance.now();
-    draw(now);
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-  /* rAF 冻结环境（内嵌 webview / 后台标签页）看门狗：超 400ms 无帧则由定时器直接补绘 */
-  setInterval(() => {
-    const now = performance.now();
-    if (now - lastTick > 400) { lastTick = now; draw(now); }
-  }, 200);
-})();
-</script>
 
 <!-- ============ ARCH 选人式架构（数据驱动：角色 × 五层 × 高亮映射） ============ -->
 <script>

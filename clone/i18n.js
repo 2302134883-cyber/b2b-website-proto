@@ -127,6 +127,11 @@
       'footer.links': '隐私政策 | 服务条款 | 网站地图',
       'float.cs': '客服', 'float.mail': '邮箱',
       'orb.aria': '切换品牌 X 形态',
+      'journey.step.1': '全球', 'journey.step.2': '中国', 'journey.step.3': '上海', 'journey.step.4': '楼',
+      'journey.hint': '自动巡游中 · 点击画面推进一级 · 地球上可拖拽旋转',
+      'addr.label': 'ADDRESS · 地址', 'addr.building': '新漕河泾国际商务中心B座', 'addr.floor': '9 层',
+      'addr.city': '上海市徐汇区<br>桂平路 391 号（近漕宝路）',
+      'addr.city.oneline': '上海市徐汇区桂平路 391 号 · 新漕河泾国际商务中心B座 9 层',
       'nav.menu': '导航菜单',
       'cta.final.title': '准备好开始了吗', 'cta.final.desc': '留下需求，我们将在 1 个工作日内联系你',
       'hero.prev': '上一页', 'hero.next': '下一页',
@@ -258,6 +263,11 @@
       'footer.links': 'Privacy Policy | Terms of Service | Sitemap',
       'float.cs': 'Support', 'float.mail': 'Email',
       'orb.aria': 'Toggle the brand X shape',
+      'journey.step.1': 'Globe', 'journey.step.2': 'China', 'journey.step.3': 'Shanghai', 'journey.step.4': 'Building',
+      'journey.hint': 'Auto-touring · Click the canvas to jump one level · Drag to rotate the globe',
+      'addr.label': 'ADDRESS', 'addr.building': 'Xin Caohejing Intl. Business Center, Tower B', 'addr.floor': '9F',
+      'addr.city': '391 Guiping Rd (near Caobao Rd)<br>Xuhui District, Shanghai',
+      'addr.city.oneline': '391 Guiping Rd, Xuhui, Shanghai · Xin Caohejing Intl. Business Center Tower B, 9F',
       'nav.menu': 'Navigation menu',
       'cta.final.title': 'Ready to get started?', 'cta.final.desc': 'Leave your requirements — we will reach out within 1 business day',
       'hero.prev': 'Previous slide', 'hero.next': 'Next slide',
@@ -389,6 +399,11 @@
       'footer.links': 'プライバシーポリシー | 利用規約 | サイトマップ',
       'float.cs': 'サポート', 'float.mail': 'メール',
       'orb.aria': 'ブランド X 形状を切り替え',
+      'journey.step.1': '地球', 'journey.step.2': '中国', 'journey.step.3': '上海', 'journey.step.4': 'ビル',
+      'journey.hint': '自動巡回中 · 画面クリックで一段階進む · 地球はドラッグで回転',
+      'addr.label': 'ADDRESS · 住所', 'addr.building': '新漕河涇国際商務中心 B棟', 'addr.floor': '9 階',
+      'addr.city': '上海市徐汇区<br>桂平路 391 号（漕宝路近く）',
+      'addr.city.oneline': '上海市徐汇区桂平路 391 号 · 新漕河涇国際商務中心 B棟 9 階',
       'nav.menu': 'ナビゲーションメニュー',
       'cta.final.title': '始める準備はできましたか', 'cta.final.desc': 'ご要件をお聞かせください。1 営業日以内にご連絡します',
       'hero.prev': '前へ', 'hero.next': '次へ',
@@ -520,6 +535,11 @@
       'footer.links': '개인정보처리방침 | 서비스 약관 | 사이트맵',
       'float.cs': '고객센터', 'float.mail': '이메일',
       'orb.aria': '브랜드 X 형태 전환',
+      'journey.step.1': '지구', 'journey.step.2': '중국', 'journey.step.3': '상하이', 'journey.step.4': '건물',
+      'journey.hint': '자동 순환 중 · 화면 클릭 시 한 단계 이동 · 지구는 드래그로 회전',
+      'addr.label': 'ADDRESS · 주소', 'addr.building': '신차오허징 국제비즈니스센터 B동', 'addr.floor': '9층',
+      'addr.city': '상하이시 쉬후이구<br>구이핑루 391호(차오바오루 인근)',
+      'addr.city.oneline': '상하이시 쉬후이구 구이핑루 391호 · 신차오허징 국제비즈니스센터 B동 9층',
       'nav.menu': '탐색 메뉴',
       'cta.final.title': '시작할 준비가 되셨나요', 'cta.final.desc': '요구 사항을 남겨 주시면 1 영업일 이내에 연락드립니다',
       'hero.prev': '이전', 'hero.next': '다음',
@@ -651,6 +671,11 @@
       'footer.links': 'Política de privacidad | Términos de servicio | Mapa del sitio',
       'float.cs': 'Soporte', 'float.mail': 'Correo',
       'orb.aria': 'Cambiar a la forma X de la marca',
+      'journey.step.1': 'Globo', 'journey.step.2': 'China', 'journey.step.3': 'Shanghái', 'journey.step.4': 'Edificio',
+      'journey.hint': 'Recorrido automático · Haz clic para avanzar un nivel · Arrastra para girar el globo',
+      'addr.label': 'ADDRESS · Dirección', 'addr.building': 'Centro de Negocios Intl. Xin Caohejing, Torre B', 'addr.floor': '9.ª planta',
+      'addr.city': 'Calle Guiping 391 (cerca de Caobao)<br>Distrito Xuhui, Shanghái',
+      'addr.city.oneline': 'Calle Guiping 391, Xuhui, Shanghái · Centro de Negocios Intl. Xin Caohejing, Torre B, 9.ª planta',
       'nav.menu': 'Menú de navegación',
       'cta.final.title': '¿Listo para empezar?', 'cta.final.desc': 'Déjanos tus requisitos y te contactaremos en 1 día laborable',
       'hero.prev': 'Anterior', 'hero.next': 'Siguiente',
@@ -782,6 +807,11 @@
       'footer.links': 'Politique de confidentialité | Conditions d’utilisation | Plan du site',
       'float.cs': 'Support', 'float.mail': 'E-mail',
       'orb.aria': 'Basculer vers la forme X de la marque',
+      'journey.step.1': 'Globe', 'journey.step.2': 'Chine', 'journey.step.3': 'Shanghai', 'journey.step.4': 'Bâtiment',
+      'journey.hint': 'Visite automatique · Cliquez pour avancer d’un niveau · Faites pivoter le globe',
+      'addr.label': 'ADDRESS · Adresse', 'addr.building': 'Centre d’affaires intl. Xin Caohejing, Tour B', 'addr.floor': '9e étage',
+      'addr.city': '391 rue Guiping (près de Caobao)<br>District de Xuhui, Shanghai',
+      'addr.city.oneline': '391 rue Guiping, Xuhui, Shanghai · Centre d’affaires intl. Xin Caohejing, Tour B, 9e étage',
       'nav.menu': 'Menu de navigation',
       'cta.final.title': 'Prêt à commencer ?', 'cta.final.desc': 'Laissez vos besoins, nous vous contactons sous 1 jour ouvré',
       'hero.prev': 'Précédent', 'hero.next': 'Suivant',
@@ -913,6 +943,11 @@
       'footer.links': 'Datenschutz | Nutzungsbedingungen | Sitemap',
       'float.cs': 'Support', 'float.mail': 'E-Mail',
       'orb.aria': 'Marken-X-Form umschalten',
+      'journey.step.1': 'Globus', 'journey.step.2': 'China', 'journey.step.3': 'Shanghai', 'journey.step.4': 'Gebäude',
+      'journey.hint': 'Automatische Tour · Klicken für die nächste Stufe · Globus per Ziehen drehen',
+      'addr.label': 'ADDRESS · Adresse', 'addr.building': 'Xin Caohejing Intl. Business Center, Turm B', 'addr.floor': '9. Etage',
+      'addr.city': 'Guiping Rd. 391 (nahe Caobao Rd.)<br>Bezirk Xuhui, Shanghai',
+      'addr.city.oneline': 'Guiping Rd. 391, Xuhui, Shanghai · Xin Caohejing Intl. Business Center, Turm B, 9. Etage',
       'nav.menu': 'Navigationsmenü',
       'cta.final.title': 'Bereit loszulegen?', 'cta.final.desc': 'Hinterlassen Sie Ihre Anforderungen — wir melden uns innerhalb eines Werktags',
       'hero.prev': 'Zurück', 'hero.next': 'Weiter',
@@ -1044,6 +1079,11 @@
       'footer.links': 'Политика конфиденциальности | Условия использования | Карта сайта',
       'float.cs': 'Поддержка', 'float.mail': 'Почта',
       'orb.aria': 'Переключить форму бренда X',
+      'journey.step.1': 'Глобус', 'journey.step.2': 'Китай', 'journey.step.3': 'Шанхай', 'journey.step.4': 'Здание',
+      'journey.hint': 'Автотур · Клик по холсту — следующий уровень · Глобус вращается перетаскиванием',
+      'addr.label': 'ADDRESS · Адрес', 'addr.building': 'Международный бизнес-центр Синь Цаохэцзин, корпус B', 'addr.floor': '9 этаж',
+      'addr.city': 'ул. Гуйпин, 391 (рядом с Цаобао)<br>р-н Сюйхуэй, Шанхай',
+      'addr.city.oneline': 'ул. Гуйпин, 391, Сюйхуэй, Шанхай · БЦ Синь Цаохэцзин, корпус B, 9 этаж',
       'nav.menu': 'Меню навигации',
       'cta.final.title': 'Готовы начать?', 'cta.final.desc': 'Оставьте заявку — мы свяжемся с вами в течение 1 рабочего дня',
       'hero.prev': 'Назад', 'hero.next': 'Вперёд',
@@ -1092,6 +1132,13 @@
     document.dispatchEvent(new CustomEvent('i18n:applied', { detail: { lang } }));
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* file:// 隐私模式等场景忽略 */ }
   }
+
+  /* 供 canvas 组件（journey.js 等）按当前语言取词条 */
+  window.__i18nT = (key) => {
+    const lang = document.documentElement.lang || 'zh-CN';
+    const t = DICT[lang] || DICT['zh-CN'];
+    return t[key] != null ? t[key] : (DICT['zh-CN'][key] != null ? DICT['zh-CN'][key] : undefined);
+  };
 
   function detect() {
     let saved = null;
