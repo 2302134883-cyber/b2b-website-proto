@@ -1102,6 +1102,12 @@
     },
   };
 
+  /* 经营模式组件自带 8 语言词条，在首次 apply 前合并并覆盖旧版三模式 FAQ。 */
+  const businessModeDicts = window.__BUSINESS_MODE_I18N || {};
+  Object.keys(businessModeDicts).forEach((lang) => {
+    if (DICT[lang]) Object.assign(DICT[lang], businessModeDicts[lang]);
+  });
+
   window.__I18N_DICTS = DICT;
   const STORAGE_KEY = 'site-lang';
   let current = 'zh-CN';
