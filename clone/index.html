@@ -620,7 +620,7 @@
         }
       }
       function stepRate() {
-        var progress = Math.min((performance.now() - rateStarted) / 360, 1);
+        var progress = Math.min((performance.now() - rateStarted) / 600, 1);
         var eased = 0.5 - Math.cos(progress * Math.PI) / 2;
         currentRate = progress === 1 ? targetRate : fromRate + (targetRate - fromRate) * eased;
         applyRate(currentRate);
