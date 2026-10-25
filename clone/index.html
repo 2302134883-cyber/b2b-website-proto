@@ -276,6 +276,70 @@
     .cc-pane.on { animation: none; }
   }
 
+  /* ============ AI 智能体 orb 演示（ag- 前缀，独立组件） ============ */
+  .ag-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 24px; align-items: stretch; }
+  .ag-stage {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+    padding: 32px 16px;
+  }
+  .ag-orbzone {
+    position: relative; width: 200px; height: 200px; display: grid; place-items: center;
+    cursor: pointer; border-radius: 50%;
+  }
+  .ag-orbzone:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(17,24,39,.12); }
+  .ag-orb { width: 180px; height: 180px; }
+  .ag-ring {
+    position: absolute; width: 180px; height: 180px; border-radius: 50%;
+    border: 1px solid #c4b5f5; opacity: 0; pointer-events: none;
+  }
+  #aiAgent[data-state="think"] .ag-ring { animation: agRipple 1.3s cubic-bezier(.22,.8,.36,1) infinite; }
+  @keyframes agRipple { from { transform: scale(.92); opacity: .8; } to { transform: scale(1.5); opacity: 0; } }
+  .ag-breathe { animation: agBreath 4.5s ease-in-out infinite; will-change: transform; }
+  @keyframes agBreath { 0%,100% { transform: scale(1); } 50% { transform: scale(1.045); } }
+  #aiAgent[data-state="think"] .ag-breathe { animation-duration: 1.4s; }
+  .ag-orbzone.poke .ag-breathe { animation: agPoke .5s cubic-bezier(.25,1,.5,1); }
+  @keyframes agPoke { 0% { transform: scale(1); } 35% { transform: scale(1.12, .88); } 70% { transform: scale(.96, 1.04); } 100% { transform: scale(1); } }
+  .ag-status { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--faint); }
+  .ag-status i { width: 6px; height: 6px; border-radius: 50%; background: var(--faint); flex-shrink: 0; transition: background .3s; }
+  #aiAgent[data-state="listen"] .ag-status i { background: #93b8f8; animation: archPulse 2s ease-in-out infinite; }
+  #aiAgent[data-state="think"] .ag-status i { background: #c4b5f5; animation: archPulse 1s ease-in-out infinite; }
+  #aiAgent[data-state="done"] .ag-status i { background: var(--ink); }
+
+  .ag-chat { border: 1px solid var(--line); border-radius: 16px; padding: 24px; background: #fff; }
+  .ag-scenes { display: flex; gap: 8px; flex-wrap: wrap; }
+  .ag-thread {
+    margin-top: 16px; min-height: 190px; max-height: 300px; overflow-y: auto;
+    display: flex; flex-direction: column; gap: 12px;
+    border-radius: 12px; background: var(--wash); padding: 16px;
+    transition: opacity .2s ease;
+  }
+  .ag-thread.fading { opacity: 0; }
+  .ag-empty { margin: auto; font-size: 12px; color: var(--faint); text-align: center; padding: 24px 8px; }
+  .ag-msg { display: flex; gap: 10px; align-items: flex-start; animation: archIn .32s ease both; }
+  .ag-msg .ag-ava { width: 22px; height: 22px; flex-shrink: 0; margin-top: 2px; }
+  .ag-bubble { max-width: 82%; padding: 10px 14px; font-size: 13px; line-height: 1.8; border-radius: 14px; }
+  .ag-msg.user { justify-content: flex-end; }
+  .ag-msg.user .ag-bubble { background: #f1f2f5; color: var(--ink); border-bottom-right-radius: 4px; }
+  .ag-msg.bot .ag-bubble { background: #fff; border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+  .ag-qs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  .ag-q { cursor: pointer; font: inherit; background: #fff; }
+  .ag-q:hover:not(:disabled) { border-color: var(--ink); color: var(--ink); }
+  .ag-q:disabled { opacity: .4; cursor: default; }
+  .ag-q.hide { display: none; }
+
+  @media (max-width: 860px) {
+    .ag-grid { grid-template-columns: 1fr; }
+    .ag-stage { padding: 16px 0 8px; }
+    .ag-orbzone { width: 150px; height: 150px; }
+    .ag-orb { width: 130px; height: 130px; }
+    .ag-ring { width: 130px; height: 130px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ag-breathe, .ag-ring, #aiAgent .ag-status i { animation: none !important; }
+    .ag-msg { animation: none; }
+    .ag-thread { transition: none; }
+  }
+
   /* ---- 安全网：菜单组件未升级完成前整体隐藏（防裸内容漏出） ---- */
   md-menu:not(:defined) { display: none; }
   /* ============ Logo 无缝轮播（lm- 前缀，独立组件） ============ */
@@ -965,12 +1029,204 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     <div id="techRing" class="w-full max-w-[560px] mx-auto"></div>
 
     <h3 class="mt-16 mb-6 text-[15px] font-semibold" data-i18n="how.ai">创造 AI 智能体</h3>
-    <md-chip-set>
-      <md-assist-chip label="客服机器人" data-i18n-label="ai.bot"></md-assist-chip>
-      <md-assist-chip label="Workflow 智能体" data-i18n-label="ai.workflow"></md-assist-chip>
-      <md-assist-chip label="其他（待定）" data-i18n-label="ai.other"></md-assist-chip>
-    </md-chip-set>
-    <p class="mt-4 text-[12px] text-[var(--faint)]" data-i18n="ai.note">说明：Workflow 搭建只是其中一种方式，还可创造客服机器人等多种智能体，降低使用门槛</p>
+    <div class="ag" id="aiAgent" data-state="idle">
+      <div class="ag-grid">
+        <div class="ag-stage">
+          <div class="ag-orbzone" id="agOrbZone" role="button" tabindex="0" data-i18n-aria="ag.orb.aria" aria-label="智能体演示球">
+            <div class="ag-ring" aria-hidden="true"></div>
+            <div class="ag-follow" id="agFollow">
+              <div class="ag-breathe">
+                <svg class="orb orb-slow ag-orb" viewBox="0 0 200 200" aria-hidden="true">
+                  <defs><radialGradient id="orbAgent" cx="38%" cy="32%" r="75%">
+                    <stop offset="0%" stop-color="#a8c8fa"/><stop offset="42%" stop-color="#d3c6f8"/>
+                    <stop offset="72%" stop-color="#f3d4ec"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+                  </radialGradient></defs>
+                  <circle cx="100" cy="100" r="92" fill="url(#orbAgent)"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="ag-status"><i></i><span id="agStatus" data-i18n="ag.status.idle">待机中 · 点下方问题试试</span></div>
+        </div>
+        <div class="ag-chat">
+          <div class="ag-scenes" role="tablist" data-i18n-aria="ag.scenes.aria" aria-label="场景切换">
+            <button class="arch-tab on" data-scene="1" role="tab" aria-selected="true" data-i18n="ag.scene.1">客服场景</button>
+            <button class="arch-tab" data-scene="2" role="tab" aria-selected="false" data-i18n="ag.scene.2">询报价场景</button>
+            <button class="arch-tab" data-scene="3" role="tab" aria-selected="false" data-i18n="ag.scene.3">工单场景</button>
+          </div>
+          <div class="ag-thread" id="agThread" aria-live="polite">
+            <div class="ag-empty" id="agEmpty" data-i18n="ag.empty">点下方问题，看智能体如何工作</div>
+          </div>
+          <div class="ag-qs">
+            <button class="arch-node ag-q" data-scene="1" data-i18n="ag.q1">我的订单什么时候发货？</button>
+            <button class="arch-node ag-q" data-scene="1" data-i18n="ag.q2">批量采购有优惠吗？</button>
+            <button class="arch-node ag-q hide" data-scene="2" data-i18n="ag.q3">报 2,000 件 X-30 的价格</button>
+            <button class="arch-node ag-q hide" data-scene="2" data-i18n="ag.q4">价格还能再谈吗？</button>
+            <button class="arch-node ag-q hide" data-scene="3" data-i18n="ag.q5">上周的售后工单进展如何？</button>
+            <button class="arch-node ag-q hide" data-scene="3" data-i18n="ag.q6">帮我建一个设备定期巡检工单</button>
+          </div>
+        </div>
+      </div>
+      <p class="mt-4 text-[12px] text-[var(--faint)]" data-i18n="ag.note">演示为模拟数据 · 实际可按您的业务流程定制专属智能体</p>
+    </div>
+    <!-- 答案与状态文案的 i18n 模板源（不可见，供动态内容与 JS 取词） -->
+    <div id="agTpls" hidden aria-hidden="true">
+      <span data-i18n="ag.a1">已为您查询：订单 #A2034 今天 16:00 从苏州仓发出，预计 10 月 28 日送达。需要我把物流单号同步给您吗？</span>
+      <span data-i18n="ag.a2">您当前为 VIP 客户：采购满 500 件享 92 折。已生成阶梯报价单草稿，确认后可直接转正式合同。</span>
+      <span data-i18n="ag.a3">型号 X-30、2,000 件：含税单价 ¥86.5，总价 ¥173,000，交期 14 天。报价单已生成，有效期 7 天，需要发给您审批吗？</span>
+      <span data-i18n="ag.a4">已记录您的目标价并转交销售经理。参考历史成交，¥84.0–85.0 区间较可行，预计 2 小时内正式答复。</span>
+      <span data-i18n="ag.a5">工单 #S118：备件已到货，工程师已预约明日上午上门，已同步通知您的行政联系人。</span>
+      <span data-i18n="ag.a6">已创建：每月第一个周一 9:00 自动派发，覆盖 12 台设备，负责人张工。可在工单中心随时调整。</span>
+      <span data-i18n="ag.status.idle">待机中 · 点下方问题试试</span>
+      <span data-i18n="ag.status.listen">倾听中…</span>
+      <span data-i18n="ag.status.think">思考中…</span>
+      <span data-i18n="ag.status.done">已完成 · 可以继续问</span>
+    </div>
+    <script>
+    (function () {
+      function init() {
+        var root = document.getElementById('aiAgent');
+        if (!root) return;
+        var zone = document.getElementById('agOrbZone');
+        var follow = document.getElementById('agFollow');
+        var statusEl = document.getElementById('agStatus');
+        var thread = document.getElementById('agThread');
+        var emptyEl = document.getElementById('agEmpty');
+        var qBtns = Array.prototype.slice.call(root.querySelectorAll('.ag-q'));
+        var sceneTabs = Array.prototype.slice.call(root.querySelectorAll('.ag-scenes .arch-tab'));
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var state = 'idle', busy = false, streamTimer = null, idleTimer = null;
+
+        function tr(key) {
+          var el = document.querySelector('#agTpls [data-i18n="' + key + '"]') || document.querySelector('[data-i18n="' + key + '"]');
+          return el ? el.textContent : key;
+        }
+        function setState(s) {
+          state = s;
+          root.setAttribute('data-state', s);
+          statusEl.setAttribute('data-i18n', 'ag.status.' + s);
+          statusEl.textContent = tr('ag.status.' + s);
+        }
+
+        /* 戳一戳 */
+        function poke() {
+          if (reduced) return;
+          zone.classList.remove('poke'); void zone.offsetWidth; zone.classList.add('poke');
+        }
+        zone.addEventListener('click', poke);
+        zone.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); poke(); }
+        });
+        zone.querySelector('.ag-breathe').addEventListener('animationend', function (e) {
+          if (e.animationName === 'agPoke') zone.classList.remove('poke');
+        });
+
+        /* 倾听：光标跟随 + 状态提示 */
+        if (!reduced && window.matchMedia('(hover: hover)').matches) {
+          var tx = 0, ty = 0, fx = 0, fy = 0;
+          zone.addEventListener('mousemove', function (e) {
+            var r = zone.getBoundingClientRect();
+            tx = ((e.clientX - r.left) / r.width - .5) * 20;
+            ty = ((e.clientY - r.top) / r.height - .5) * 20;
+          });
+          zone.addEventListener('mouseenter', function () { if (state === 'idle') setState('listen'); });
+          zone.addEventListener('mouseleave', function () { tx = 0; ty = 0; if (state === 'listen') setState('idle'); });
+          (function loop() {
+            fx += (tx - fx) * .08; fy += (ty - fy) * .08;
+            follow.style.transform = 'translate(' + fx.toFixed(1) + 'px,' + fy.toFixed(1) + 'px)';
+            requestAnimationFrame(loop);
+          })();
+        }
+
+        /* 场景切换 */
+        sceneTabs.forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            if (busy || tab.classList.contains('on')) return;
+            sceneTabs.forEach(function (t2) {
+              var on = t2 === tab;
+              t2.classList.toggle('on', on);
+              t2.setAttribute('aria-selected', on ? 'true' : 'false');
+            });
+            qBtns.forEach(function (b) { b.classList.toggle('hide', b.getAttribute('data-scene') !== tab.getAttribute('data-scene')); });
+            if (thread.querySelector('.ag-msg')) {
+              thread.classList.add('fading');
+              setTimeout(function () {
+                thread.querySelectorAll('.ag-msg').forEach(function (m) { m.remove(); });
+                emptyEl.style.display = '';
+                thread.classList.remove('fading');
+              }, reduced ? 0 : 200);
+            }
+            if (state !== 'think') setState('idle');
+          });
+        });
+
+        /* 提问 → 思考 → 流式回答 */
+        function addMsg(kind, text, key) {
+          var m = document.createElement('div');
+          m.className = 'ag-msg ' + kind;
+          m.setAttribute('data-key', key);
+          m.innerHTML = (kind === 'bot'
+            ? '<svg class="ag-ava orb orb-slow" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="92" fill="url(#orbAgent)"/></svg>'
+            : '') + '<div class="ag-bubble"></div>';
+          m.querySelector('.ag-bubble').textContent = text;
+          thread.appendChild(m);
+          var msgs = thread.querySelectorAll('.ag-msg');
+          while (msgs.length > 4) { msgs[0].remove(); msgs = thread.querySelectorAll('.ag-msg'); }
+          thread.scrollTop = thread.scrollHeight;
+          return m.querySelector('.ag-bubble');
+        }
+        function streamText(el, text, done) {
+          if (reduced) { el.textContent = text; if (done) done(); return; }
+          var i = 0;
+          streamTimer = setInterval(function () {
+            i++;
+            el.textContent = text.slice(0, i);
+            thread.scrollTop = thread.scrollHeight;
+            if (i >= text.length) { clearInterval(streamTimer); streamTimer = null; if (done) done(); }
+          }, 24);
+        }
+        function ask(btn) {
+          if (busy) return;
+          busy = true;
+          clearTimeout(idleTimer);
+          qBtns.forEach(function (b) { b.disabled = true; });
+          emptyEl.style.display = 'none';
+          var qKey = btn.getAttribute('data-i18n');
+          addMsg('user', btn.textContent, qKey);
+          setState('think');
+          var aKey = 'ag.a' + qKey.slice(-1);
+          setTimeout(function () {
+            setState('done');
+            var bubble = addMsg('bot', '', aKey);
+            streamText(bubble, tr(aKey), function () {
+              busy = false;
+              qBtns.forEach(function (b) { b.disabled = false; });
+              idleTimer = setTimeout(function () { if (!busy && state === 'done') setState('idle'); }, 2600);
+            });
+          }, reduced ? 200 : 900 + Math.random() * 400);
+        }
+        qBtns.forEach(function (btn) { btn.addEventListener('click', function () { ask(btn); }); });
+
+        /* 语言切换：刷新状态文案 + 已显示对话（打断进行中的流式输出） */
+        document.addEventListener('i18n:applied', function () {
+          statusEl.textContent = tr(statusEl.getAttribute('data-i18n'));
+          if (streamTimer) {
+            clearInterval(streamTimer); streamTimer = null;
+            busy = false;
+            qBtns.forEach(function (b) { b.disabled = false; });
+          }
+          thread.querySelectorAll('.ag-msg').forEach(function (m) {
+            var k = m.getAttribute('data-key');
+            if (k) m.querySelector('.ag-bubble').textContent = tr(k);
+          });
+        });
+
+        setState('idle');
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+      else init();
+    })();
+    </script>
 
     <h3 class="mt-16 mb-6 text-[15px] font-semibold" data-i18n="how.qa">Q&A · 常见问题</h3>
     <md-outlined-card>
