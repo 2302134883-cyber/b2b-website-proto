@@ -828,7 +828,7 @@
       </md-menu>
     </span>
     <span class="hidden md:inline-flex"><md-text-button data-i18n="nav.login">登录</md-text-button></span>
-    <md-filled-button data-i18n="cta.get">获取方案</md-filled-button>
+    <md-filled-button data-lead-open="header" data-i18n="cta.get">获取方案</md-filled-button>
   </div>
 </header>
 <script>
@@ -864,7 +864,7 @@
       <div>
         <h1 class="text-[34px] leading-[1.15] md:text-[56px] md:leading-[1.2] font-extrabold tracking-tight" data-i18n="hero1.title">B2B数智化</h1>
         <p class="mt-6 text-[var(--sub)] text-[16px] leading-7 max-w-[440px]" data-i18n="hero1.desc">渠道业务一句话概述（如：覆盖品牌方、经销商、门店、终端的多级渠道协同）</p>
-        <div class="mt-10"><md-filled-button trailing-icon data-i18n="cta.get">获取方案</md-filled-button></div>
+        <div class="mt-10"><md-filled-button data-lead-open="hero-1" trailing-icon data-i18n="cta.get">获取方案</md-filled-button></div>
       </div>
     </div>
 
@@ -880,7 +880,7 @@
       <div>
         <h1 class="text-[34px] leading-[1.15] md:text-[56px] md:leading-[1.2] font-extrabold tracking-tight" data-i18n="hero3.title">让数据流动</h1>
         <p class="mt-6 text-[var(--sub)] text-[16px] leading-7 max-w-[440px]" data-i18n="hero3.desc">副标题 / 一句话价值主张（一句话解释产品解决什么问题）</p>
-        <div class="mt-10"><md-filled-button trailing-icon data-i18n="cta.get">获取方案</md-filled-button></div>
+        <div class="mt-10"><md-filled-button data-lead-open="hero-3" trailing-icon data-i18n="cta.get">获取方案</md-filled-button></div>
       </div>
     </div>
 
@@ -2002,7 +2002,7 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
           <p class="mt-3 text-[14px] md:text-[15px] leading-6 text-[var(--sub)]" data-i18n="cta.final.desc">留下需求，我们将在 1 个工作日内联系你</p>
         </div>
         <div class="w-full md:w-auto shrink-0">
-          <md-filled-button class="final-cta-button w-full md:w-auto" trailing-icon data-i18n="cta.get">获取方案</md-filled-button>
+          <md-filled-button class="final-cta-button w-full md:w-auto" data-lead-open="final-cta" trailing-icon data-i18n="cta.get">获取方案</md-filled-button>
         </div>
       </div>
     </div>
@@ -2028,12 +2028,12 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
 
 <!-- ============ 浮动 ============ -->
 <div class="fixed right-4 bottom-20 md:right-6 md:bottom-24 z-40 scale-90 md:scale-100 origin-bottom-right flex flex-col gap-3 items-center">
-  <md-outlined-icon-button class="f-btn" aria-label="客服" data-i18n-aria="float.cs"><svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:currentColor" aria-hidden="true"><path d="M12 3a9 9 0 0 0-9 9v7a3 3 0 0 0 3 3h3v-8H5v-2a7 7 0 0 1 14 0v2h-4v8h3a3 3 0 0 0 3-3v-7a9 9 0 0 0-9-9z"/></svg></md-outlined-icon-button>
-  <md-outlined-icon-button class="f-btn" aria-label="邮箱" data-i18n-aria="float.mail"><svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6a2 2 0 0 0 2 2h16a2 2 0 0 0-2-2z"/></svg></md-outlined-icon-button>
+  <md-outlined-icon-button class="f-btn" data-lead-open="support" aria-label="客服" data-i18n-aria="float.cs"><svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:currentColor" aria-hidden="true"><path d="M12 3a9 9 0 0 0-9 9v7a3 3 0 0 0 3 3h3v-8H5v-2a7 7 0 0 1 14 0v2h-4v8h3a3 3 0 0 0 3-3v-7a9 9 0 0 0-9-9z"/></svg></md-outlined-icon-button>
+  <md-outlined-icon-button class="f-btn" data-lead-open="email" aria-label="邮箱" data-i18n-aria="float.mail"><svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6a2 2 0 0 0 2 2h16a2 2 0 0 0-2-2z"/></svg></md-outlined-icon-button>
   <md-fab lowered aria-label="回到顶部" data-i18n-aria="float.top" onclick="scrollTo({top:0,behavior:'smooth'})"><svg slot="icon" viewBox="0 0 24 24" style="width:20px;height:20px;fill:currentColor" aria-hidden="true"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.59 5.58L20 12l-8-8-8 8z"/></svg></md-fab>
 </div>
 
-<!-- ============ 留资小框（点「获取方案和报价」弹出，仅邮箱） ============ -->
+<!-- ============ 留资小框（所有转化入口共用，仅邮箱） ============ -->
 <md-dialog id="leadDialog">
   <div slot="headline" data-i18n="plan.cta">获取方案和报价</div>
   <div slot="content">
@@ -2071,6 +2071,7 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     formEl.style.display = ''; doneEl.style.display = 'none';
     actForm.style.display = ''; actDone.style.display = 'none';
     errEl.style.display = 'none';
+    emailEl.error = false;
   }
   function submit() {
     const v = emailEl.value.trim();
@@ -2094,10 +2095,14 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     window.__selectedBusinessMode = mode || null;
     showForm();
     dlg.show();
+    requestAnimationFrame(() => emailEl.focus({ preventScroll: true }));
   }
   window.__openLeadDialog = function (mode) {
     openLead('', mode);
   };
+  document.querySelectorAll('[data-lead-open]').forEach((button) => {
+    button.addEventListener('click', () => openLead());
+  });
   document.getElementById('cta-plan').addEventListener('click', () => openLead());
   document.querySelectorAll('[data-lead-industry]').forEach((button) => {
     button.addEventListener('click', () => openLead(button.getAttribute('data-lead-industry')));
