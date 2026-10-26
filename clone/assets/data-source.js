@@ -1,219 +1,371 @@
 /* ============ 数据同源 · 拼接式 vs 一套底座 ============
  * 挂载点：<div id="dataSource"></div>
  * 引入顺序：i18n.js → tech-ring.js → data-source.js（均 defer）
- * 依赖：i18n.js 的 window.__I18N_DICTS + data-i18n 属性翻译
- * 交互：点击「模拟一次改价」→ 左列延迟逐个生效（拼接式），右列同时全变（一套底座）
+ * 交互：首次进入视口自动播放一次；传统三端逐个生效，同源四端同一帧生效。
+ * 关键：初始静止，离开再回来不重播；按钮可手动重播，改价前后对照持续保留。
  */
 (function () {
   'use strict';
 
-  var PURPLE = '#6d5ef0';
-  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var lang = document.documentElement.lang || 'zh-CN';
   var cur = 86;
+  var activeFrom = 86;
+  var activeTo = 92;
   var playing = false;
+  var hasRun = false;
+  var refs = { leftCards: [], rightCards: [] };
 
-  function t(key) {
-    var dicts = window.__I18N_DICTS || {};
-    var d = dicts[lang] || dicts['zh-CN'] || {};
-    return d[key] != null ? d[key] : key;
-  }
+  var STATE_KEYS = {
+    idle: 'ds.idle',
+    wait: 'ds.wait',
+    syncing: 'ds.syncing',
+    done: 'ds.applied'
+  };
 
-  var lang = 'zh-CN';
-  document.addEventListener('i18n:applied', function (e) {
-    if (e.detail && e.detail.lang) lang = e.detail.lang;
-  });
-
-  function el(tag, cls, text) {
-    var e = document.createElement(tag);
-    if (cls) e.className = cls;
-    if (text != null) e.textContent = text;
-    return e;
-  }
-
-  /* ---- CSS ---- */
-  var CSS = [
-    '.dsc{margin-top:8px;font-family:inherit}',
-    '.dsc-grid{display:grid;grid-template-columns:1fr 40px 1fr;gap:0 10px;align-items:stretch}',
-    '.dsc-vs{align-self:center;justify-self:center;width:36px;height:36px;border-radius:50%;',
-    '  border:1px solid #e2e5ea;color:#8a94a6;font-size:10px;font-weight:700;',
-    '  display:flex;align-items:center;justify-content:center}',
-    '.dsc-col{border:1px solid #e2e5ea;border-radius:14px;',
-    '  padding:16px 16px 14px;display:flex;flex-direction:column;background:#fff}',
-    '.dsc-col-tag{display:block;font-size:10px;font-weight:700;letter-spacing:.12em;',
-    '  color:#6d5ef0;margin-bottom:14px;text-transform:uppercase}',
-    '.dsc-note{margin-top:12px;font-size:10.5px;color:#8a94a6;line-height:1.6}',
-    /* 拼图块 */
-    '.dsc-ledger{display:flex;flex-direction:column;gap:14px;flex:1}',
-    '.dsc-pz{position:relative;border:1px solid #d5d9e6;border-radius:10px;',
-    '  padding:12px 12px 10px;background:#fff;transition:transform .3s ease,box-shadow .3s ease}',
-    '.dsc-pz .nm{display:block;font-size:12.5px;font-weight:700;color:#1c2333}',
-    '.dsc-pz .cp{display:inline-block;margin-top:5px;font-size:9.5px;color:#8a94a6}',
-    '.dsc-pz .prc{display:inline-block;margin-top:6px;font-size:13px;font-weight:800;',
-    '  color:#1c2333;font-variant-numeric:tabular-nums;padding:2px 8px;border-radius:6px;',
-    '  transition:color .3s}',
-    /* 咬口 */
-    '.dsc-pz.tab-r::after{content:"";position:absolute;right:-11px;top:50%;',
-    '  transform:translateY(-50%);width:22px;height:22px;border-radius:50%;',
-    '  background:#fff;border:1px solid #d5d9e6;border-left-color:#fff}',
-    '.dsc-pz.tab-l::before{content:"";position:absolute;left:-11px;top:50%;',
-    '  transform:translateY(-50%);width:22px;height:22px;border-radius:50%;',
-    '  background:#fff;border:1px solid #d5d9e6;border-right-color:#fff}',
-    /* 圆柱基座 */
-    '.dsc-cyl-wrap{position:relative;width:100%;max-width:320px;margin:8px auto 0}',
-    '.dsc-cyl-top{height:46px;border-radius:50%;',
-    '  background:linear-gradient(180deg,#fff 0%,#f0f2ff 100%);',
-    '  border:1.5px solid rgba(109,94,240,.35)}',
-    '.dsc-cyl-body{height:44px;margin-top:-22px;',
-    '  background:linear-gradient(90deg,rgba(109,94,240,.14) 0%,#fff 28% 72%,rgba(109,94,240,.14) 100%);',
-    '  border-left:1.5px solid rgba(109,94,240,.25);border-right:1.5px solid rgba(109,94,240,.25)}',
-    '.dsc-cyl-btm{height:40px;margin-top:-22px;border-radius:50%;',
-    '  background:linear-gradient(180deg,#f0f2ff,color-mix(in srgb,#6d5ef0 20%,#fff));',
-    '  border:1.5px solid rgba(109,94,240,.3);box-shadow:0 10px 20px -12px rgba(109,94,240,.3)}',
-    '.dsc-cyl-label{text-align:center;font-size:13px;font-weight:800;color:#1c2333;margin:-8px 0 4px}',
-    '.dsc-cyl-mods{display:grid;grid-template-columns:repeat(3,1fr);gap:4px 6px;padding:0 14px}',
-    '.dsc-cyl-mods span{font-size:9px;font-weight:600;color:#5b6472;text-align:center}',
-    /* 端牌 */
-    '.dsc-floats{display:flex;flex-direction:column;gap:14px;flex:1}',
-    '.dsc-float{position:relative;border:1px solid #d5d9e6;border-radius:10px;',
-    '  padding:12px 12px 10px;background:#fff;transition:transform .3s ease,box-shadow .3s ease}',
-    '.dsc-float .nm{display:block;font-size:12.5px;font-weight:700;color:#1c2333}',
-    '.dsc-float .cp{display:inline-block;margin-top:5px;font-size:9.5px;color:#8a94a6}',
-    '.dsc-float .prc{display:inline-block;margin-top:6px;font-size:13px;font-weight:800;',
-    '  color:#6d5ef0;font-variant-numeric:tabular-nums;padding:2px 8px;border-radius:6px}',
-    /* 演示状态 */
-    '.dsc-pz.waiting .prc,.dsc-float.waiting .prc{color:#e5484d;font-size:10.5px}',
-    '.dsc-pz.done .prc,.dsc-float.done .prc{color:#6d5ef0;font-weight:800}',
-    '.dsc-flash{animation:dsc-flash .8s ease}',
-    '@keyframes dsc-flash{0%{background:rgba(109,94,240,.15)}100%{background:transparent}}',
-    /* 播放按钮 */
-    '.dsc-play{display:inline-flex;align-items:center;gap:6px;border-radius:999px;',
-    '  padding:11px 26px;font-size:13px;font-weight:700;cursor:pointer;border:0;',
-    '  background:#1c2333;color:#fff;font-variant-numeric:tabular-nums;',
-    '  transition:transform .15s,opacity .2s}',
-    '.dsc-play:hover{transform:translateY(-1px)}',
-    '.dsc-play:disabled{opacity:.5;cursor:default;transform:none}'
-  ].join('\n');
-
-  /* ---- 数据 ---- */
   var SYSTEMS = [
     { name: '商城系统', copy: '独立数据拷贝' },
     { name: '后台管理系统', copy: '独立数据拷贝' },
     { name: '财务系统', copy: '独立数据拷贝' }
   ];
-  var MODULES = [
-    '主数据', '规则引擎', '状态机', '身份权限', '配置中心', '审计日志'
-  ];
+  var VIEWS = ['ds.view.shop', 'ds.view.workbench', 'ds.view.mobile', 'ds.view.ai'];
+  var MODULES = ['主数据', '规则引擎', '状态机', '身份权限', '配置中心', '审计日志'];
 
-  /* ---- DOM 构建 ---- */
-  function build(host) {
-    var st = document.createElement('style');
-    st.textContent = CSS;
-    document.head.appendChild(st);
-
-    var grid = el('div', 'dsc-grid');
-
-    /* 左列：拼接式 */
-    var colL = el('div', 'dsc-col');
-    colL.id = 'dsLeft';
-    colL.appendChild(el('div', 'dsc-col-tag', t('ds.tag.a')));
-    var ledger = el('div', 'dsc-ledger');
-    SYSTEMS.forEach(function (s) {
-      var pz = el('div', 'dsc-pz');
-      pz.appendChild(el('span', 'nm', s.name));
-      pz.appendChild(el('span', 'cp', s.copy));
-      pz.appendChild(el('span', 'prc', '¥86'));
-      ledger.appendChild(pz);
-    });
-    colL.appendChild(ledger);
-    colL.appendChild(el('div', 'dsc-note', t('ds.left.foot')));
-    grid.appendChild(colL);
-
-    /* 中间 VS */
-    grid.appendChild(el('div', 'dsc-vs', 'VS'));
-
-    /* 右列：一套底座（圆柱） */
-    var colR = el('div', 'dsc-col');
-    colR.id = 'dsRight';
-    colR.appendChild(el('div', 'dsc-col-tag', t('ds.tag.b')));
-    var cylWrap = el('div', 'dsc-cyl-wrap');
-    cylWrap.appendChild(el('div', 'dsc-cyl-top'));
-    cylWrap.appendChild(el('div', 'dsc-cyl-body'));
-    cylWrap.appendChild(el('div', 'dsc-cyl-btm'));
-    cylWrap.appendChild(el('div', 'dsc-cyl-label', t('ds.right.label')));
-    var cylMods = el('div', 'dsc-cyl-mods');
-    MODULES.forEach(function (m) { cylMods.appendChild(el('span', null, m)); });
-    cylWrap.appendChild(cylMods);
-    colR.appendChild(cylWrap);
-    grid.appendChild(colR);
-
-    /* 播放按钮 + 状态行 */
-    var btnRow = el('div', 'dsc-btn-row');
-    var playBtn = el('button', 'dsc-play', t('ds.play'));
-    playBtn.id = 'dsPlay';
-    btnRow.appendChild(playBtn);
-    var stA = el('span', 'dsc-st', t('ds.a.st1'));
-    stA.id = 'dsStA';
-    var stB = el('span', 'dsc-st', t('ds.b.st1'));
-    stB.id = 'dsStB';
-    btnRow.appendChild(stA);
-    btnRow.appendChild(stB);
-    grid.appendChild(btnRow);
-
-    host.appendChild(grid);
+  function t(key) {
+    var dicts = window.__I18N_DICTS || {};
+    var dict = dicts[lang] || dicts['zh-CN'] || {};
+    var fallback = dicts['zh-CN'] || {};
+    return dict[key] != null ? dict[key] : (fallback[key] != null ? fallback[key] : key);
   }
 
-  /* ---- 演示 ---- */
+  function money(value) { return '¥' + value; }
+  function nextPrice(value) { return value === 86 ? 92 : 86; }
+
+  function el(tag, className, text, i18nKey) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text != null) node.textContent = text;
+    if (i18nKey) node.setAttribute('data-i18n', i18nKey);
+    return node;
+  }
+
+  /* ---- CSS：扁平卡片 + 明确状态；不沿用旧原型的 3D 圆柱 ---- */
+  var CSS = [
+    '.dsc{margin-top:8px;font-family:inherit;--ds-accent:var(--md-sys-color-secondary,#6d5ef0);--ds-soft:var(--md-sys-color-secondary-container,#f1edfd)}',
+    '.dsc *{box-sizing:border-box}',
+    '.dsc-controls{margin-bottom:20px;padding:20px;border:1px solid var(--line,#e2e5ea);border-radius:16px;background:var(--wash,#fafbfc);text-align:center}',
+    '.dsc-play{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:11px 24px;border:0;border-radius:999px;background:var(--ink,#111827);color:#fff;font-family:inherit;font-size:13px;font-weight:700;line-height:1.4;cursor:pointer;font-variant-numeric:tabular-nums;transition:transform .18s ease,opacity .18s ease}',
+    '.dsc-play:hover:not(:disabled){transform:translateY(-1px)}',
+    '.dsc-play:focus-visible{outline:2px solid var(--ds-accent);outline-offset:3px}',
+    '.dsc-play:disabled{opacity:.55;cursor:default}',
+    '.dsc-tip{min-height:18px;margin:9px 0 0;color:var(--sub,#6b7280);font-size:11px;line-height:1.6}',
+    '.dsc-progress{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:16px;text-align:left}',
+    '.dsc-progress-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--sub,#6b7280);font-size:10px;line-height:1.4}',
+    '.dsc-progress-count{flex:none;color:var(--ink,#111827);font-weight:700;font-variant-numeric:tabular-nums}',
+    '.dsc-progress-track{height:3px;margin-top:7px;overflow:hidden;border-radius:999px;background:var(--line,#e2e5ea)}',
+    '.dsc-progress-fill{display:block;width:0;height:100%;border-radius:inherit;background:var(--ink,#111827);transition:width .28s ease}',
+    '.dsc-progress-item.ours .dsc-progress-fill{background:var(--ds-accent)}',
+    '.dsc-grid{display:grid;grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr);gap:0 12px;align-items:stretch}',
+    '.dsc-col{display:flex;min-width:0;flex-direction:column;padding:18px;border:1px solid var(--line,#e2e5ea);border-radius:16px;background:#fff}',
+    '.dsc-col-head{min-height:58px;margin-bottom:16px}',
+    '.dsc-col-tag{display:block;color:var(--ink,#111827);font-size:11px;font-weight:700;line-height:1.5;letter-spacing:.03em}',
+    '.dsc-col-status{display:block;margin-top:7px;color:var(--sub,#6b7280);font-size:10.5px;line-height:1.5}',
+    '.dsc-col.ours .dsc-col-status{color:var(--ds-accent)}',
+    '.dsc-vs{align-self:center;justify-self:center;display:flex;width:36px;height:36px;align-items:center;justify-content:center;border:1px solid var(--line,#e2e5ea);border-radius:50%;color:var(--faint,#6e7681);font-size:10px;font-weight:700}',
+    '.dsc-ledger{display:grid;gap:12px}',
+    '.dsc-floats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}',
+    '.dsc-price-card{position:relative;min-width:0;overflow:hidden;padding:14px;border:1px solid var(--line-2,#e2e5ea);border-radius:12px;background:#fff;transition:border-color .25s ease,background .25s ease}',
+    '.dsc-price-card::after{content:"";position:absolute;right:0;bottom:0;left:0;height:2px;background:var(--ds-accent);transform:scaleX(0);transform-origin:left}',
+    '.dsc-price-card.is-syncing::after{animation:dsc-sync-progress .7s linear forwards}',
+    '.dsc-price-card.is-syncing{border-color:var(--ds-accent)}',
+    '.dsc-price-card.is-done{border-color:var(--ds-accent)}',
+    '.dsc-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}',
+    '.dsc-card-copy{min-width:0}',
+    '.dsc-price-card .nm{display:block;color:var(--ink,#111827);font-size:12px;font-weight:700;line-height:1.45}',
+    '.dsc-price-card .cp{display:block;margin-top:3px;color:var(--faint,#6e7681);font-size:10px;line-height:1.4}',
+    '.dsc-state{flex:none;padding:2px 7px;border:1px solid var(--line,#e2e5ea);border-radius:999px;background:var(--wash,#fafbfc);color:var(--sub,#6b7280);font-size:10px;line-height:1.5;white-space:nowrap}',
+    '.dsc-price-card.is-syncing .dsc-state,.dsc-price-card.is-done .dsc-state{border-color:var(--ds-accent);background:var(--ds-soft);color:var(--ds-accent)}',
+    '.dsc-price-row{display:flex;min-height:30px;align-items:baseline;justify-content:space-between;gap:8px;margin-top:12px}',
+    '.dsc-price-card .prc{display:inline-block;color:var(--ink,#111827);font-size:24px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums;transform-origin:left center;white-space:nowrap}',
+    '.dsc-price-card.is-done .prc{color:var(--ds-accent)}',
+    '.dsc-change{color:var(--sub,#6b7280);font-size:10px;line-height:1.4;font-variant-numeric:tabular-nums;white-space:nowrap;visibility:hidden;opacity:0;transition:opacity .2s ease}',
+    '.dsc-change.visible{visibility:visible;opacity:1}',
+    '.dsc-flash{animation:dsc-price-pop 1s ease}',
+    '.dsc-note{margin-top:auto;padding-top:16px;color:var(--sub,#6b7280);font-size:10.5px;line-height:1.7}',
+    '.dsc-links{display:grid;width:50%;height:16px;grid-template-columns:repeat(2,1fr);margin:0 auto}',
+    '.dsc-links i{justify-self:center;width:1px;height:16px;background:var(--line-2,#e2e5ea)}',
+    '.dsc-source{padding:14px;border:1px solid var(--line,#e2e5ea);border-radius:12px;background:var(--wash,#fafbfc);text-align:center;transition:border-color .25s ease,background .25s ease}',
+    '.dsc-source.is-commit{animation:dsc-source-commit 1.1s ease}',
+    '.dsc-source-title{color:var(--ink,#111827);font-size:12px;font-weight:800;line-height:1.5}',
+    '.dsc-cyl-mods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:12px}',
+    '.dsc-cyl-mods span{padding:5px 3px;border:1px solid var(--line,#e2e5ea);border-radius:6px;background:#fff;color:var(--sub,#6b7280);font-size:10px;line-height:1.4}',
+    '@keyframes dsc-sync-progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}',
+    '@keyframes dsc-price-pop{0%{transform:scale(.82)}35%{transform:scale(1.12)}100%{transform:scale(1)}}',
+    '@keyframes dsc-source-commit{0%,100%{background:var(--wash,#fafbfc)}35%{border-color:var(--ds-accent);background:var(--ds-soft)}}',
+    '@media (max-width:860px){.dsc-grid{grid-template-columns:minmax(0,1fr);gap:16px}.dsc-vs{margin:0 auto}.dsc-col-head{min-height:0}.dsc-ledger{grid-template-columns:repeat(3,minmax(0,1fr))}}',
+    '@media (max-width:640px){.dsc-controls{padding:16px 14px}.dsc-progress{gap:14px}.dsc-ledger{grid-template-columns:minmax(0,1fr)}.dsc-col{padding:14px}.dsc-price-card .prc{font-size:22px}}',
+    '@media (max-width:420px){.dsc-progress{grid-template-columns:minmax(0,1fr);gap:12px}.dsc-floats{gap:8px}.dsc-price-card{padding:12px 10px}.dsc-card-top{flex-direction:column;gap:6px}.dsc-state{align-self:flex-start}.dsc-price-row{margin-top:9px}}',
+    '@media (max-width:360px){.dsc-price-row{flex-direction:column;align-items:flex-start;gap:5px}}',
+    '@media (prefers-reduced-motion:reduce){.dsc *,.dsc *::after{animation:none!important;transition:none!important}.dsc-price-card.is-syncing::after{transform:scaleX(1)}}'
+  ].join('\n');
+
+  function flash(node) {
+    if (reduced.matches) return;
+    node.classList.remove('dsc-flash');
+    void node.offsetWidth;
+    node.classList.add('dsc-flash');
+  }
+
+  function buildPriceCard(className, name, copy, nameKey) {
+    var card = el('div', 'dsc-price-card ' + className);
+    card.dataset.state = 'idle';
+
+    var top = el('div', 'dsc-card-top');
+    var copyBox = el('div', 'dsc-card-copy');
+    copyBox.appendChild(el('span', 'nm', name, nameKey));
+    copyBox.appendChild(el('span', 'cp', copy));
+    top.appendChild(copyBox);
+    var state = el('span', 'dsc-state', t(STATE_KEYS.idle));
+    top.appendChild(state);
+    card.appendChild(top);
+
+    var priceRow = el('div', 'dsc-price-row');
+    var price = el('span', 'prc', money(cur));
+    var change = el('span', 'dsc-change');
+    priceRow.appendChild(price);
+    priceRow.appendChild(change);
+    card.appendChild(priceRow);
+
+    return { root: card, price: price, change: change, state: state };
+  }
+
+  function buildProgress(labelKey, side) {
+    var item = el('div', 'dsc-progress-item ' + side);
+    item.setAttribute('aria-hidden', 'true');
+    var meta = el('div', 'dsc-progress-meta');
+    meta.appendChild(el('span', null, t(labelKey), labelKey));
+    var count = el('span', 'dsc-progress-count', '—/' + (side === 'ours' ? '4' : '3'));
+    meta.appendChild(count);
+    item.appendChild(meta);
+    var track = el('div', 'dsc-progress-track');
+    var fill = el('span', 'dsc-progress-fill');
+    track.appendChild(fill);
+    item.appendChild(track);
+    return { root: item, count: count, fill: fill };
+  }
+
+  function build(host) {
+    if (!document.getElementById('dsc-styles')) {
+      var style = el('style');
+      style.id = 'dsc-styles';
+      style.textContent = CSS;
+      document.head.appendChild(style);
+    }
+
+    host.innerHTML = '';
+    refs = { leftCards: [], rightCards: [] };
+    refs.host = host;
+
+    var root = el('div', 'dsc');
+    root.id = 'dsRoot';
+    refs.root = root;
+
+    /* 顶部：统一操作 + 两侧完成进度 */
+    var controls = el('div', 'dsc-controls');
+    var play = el('button', 'dsc-play');
+    play.type = 'button';
+    play.id = 'dsPlay';
+    refs.play = play;
+    controls.appendChild(play);
+    refs.tip = el('p', 'dsc-tip', t('ds.sub'));
+    refs.tip.id = 'dsTip';
+    controls.appendChild(refs.tip);
+
+    var progress = el('div', 'dsc-progress');
+    refs.leftProgress = buildProgress('ds.left.tag', 'legacy');
+    refs.rightProgress = buildProgress('ds.right.tag', 'ours');
+    progress.appendChild(refs.leftProgress.root);
+    progress.appendChild(refs.rightProgress.root);
+    controls.appendChild(progress);
+    root.appendChild(controls);
+
+    var grid = el('div', 'dsc-grid');
+    refs.grid = grid;
+
+    /* 左：三个独立拷贝，逐个传输 */
+    var left = el('article', 'dsc-col legacy');
+    left.id = 'dsLeft';
+    var leftHead = el('div', 'dsc-col-head');
+    leftHead.appendChild(el('div', 'dsc-col-tag', t('ds.tag.a'), 'ds.tag.a'));
+    refs.leftStatus = el('span', 'dsc-col-status', t('ds.idle'));
+    refs.leftStatus.id = 'dsStA';
+    refs.leftStatus.setAttribute('aria-live', 'polite');
+    refs.leftStatus.setAttribute('aria-atomic', 'true');
+    leftHead.appendChild(refs.leftStatus);
+    left.appendChild(leftHead);
+    var ledger = el('div', 'dsc-ledger');
+    SYSTEMS.forEach(function (system) {
+      var card = buildPriceCard('dsc-pz', system.name, system.copy);
+      refs.leftCards.push(card);
+      ledger.appendChild(card.root);
+    });
+    left.appendChild(ledger);
+    left.appendChild(el('div', 'dsc-note', t('ds.left.foot'), 'ds.left.foot'));
+    grid.appendChild(left);
+
+    grid.appendChild(el('div', 'dsc-vs', 'VS'));
+
+    /* 右：四个同源视图 + 一套扁平底座 */
+    var right = el('article', 'dsc-col ours');
+    right.id = 'dsRight';
+    var rightHead = el('div', 'dsc-col-head');
+    rightHead.appendChild(el('div', 'dsc-col-tag', t('ds.tag.b'), 'ds.tag.b'));
+    refs.rightStatus = el('span', 'dsc-col-status', t('ds.idle'));
+    refs.rightStatus.id = 'dsStB';
+    refs.rightStatus.setAttribute('aria-live', 'polite');
+    refs.rightStatus.setAttribute('aria-atomic', 'true');
+    rightHead.appendChild(refs.rightStatus);
+    right.appendChild(rightHead);
+
+    var views = el('div', 'dsc-floats');
+    VIEWS.forEach(function (key) {
+      var card = buildPriceCard('dsc-float', t(key), 'DMS-B2B', key);
+      refs.rightCards.push(card);
+      views.appendChild(card.root);
+    });
+    right.appendChild(views);
+
+    var links = el('div', 'dsc-links');
+    links.setAttribute('aria-hidden', 'true');
+    links.appendChild(el('i'));
+    links.appendChild(el('i'));
+    right.appendChild(links);
+
+    var source = el('div', 'dsc-source');
+    refs.source = source;
+    source.appendChild(el('div', 'dsc-source-title', t('ds.right.label'), 'ds.right.label'));
+    var modules = el('div', 'dsc-cyl-mods');
+    MODULES.forEach(function (module) { modules.appendChild(el('span', null, module)); });
+    source.appendChild(modules);
+    right.appendChild(source);
+    right.appendChild(el('div', 'dsc-note', t('ds.b.st1'), 'ds.b.st1'));
+    grid.appendChild(right);
+
+    root.appendChild(grid);
+    host.appendChild(root);
+    renderDynamicText();
+  }
+
+  function setProgress(progress, value, total) {
+    progress.count.textContent = value + '/' + total;
+    progress.fill.style.width = (value / total * 100) + '%';
+  }
+
+  function setCardState(card, state, from, to) {
+    card.root.dataset.state = state;
+    card.root.classList.toggle('is-syncing', state === 'syncing');
+    card.root.classList.toggle('is-done', state === 'done');
+    card.state.textContent = t(STATE_KEYS[state]);
+
+    if (state === 'done') {
+      card.price.textContent = money(to);
+      card.change.textContent = money(from) + ' → ' + money(to);
+      card.change.classList.add('visible');
+      flash(card.price);
+    } else if (state === 'idle' || state === 'wait') {
+      card.change.classList.remove('visible');
+    }
+  }
+
+  function renderDynamicText() {
+    if (!refs.play) return;
+    var target = playing ? activeTo : nextPrice(cur);
+    var from = playing ? activeFrom : cur;
+    refs.play.disabled = playing;
+    refs.play.textContent = playing
+      ? t('ds.running') + ' ' + money(from) + ' → ' + money(target)
+      : t(hasRun ? 'ds.again.prefix' : 'ds.play') + ': ' + money(cur) + ' → ' + money(nextPrice(cur));
+
+    refs.leftStatus.textContent = hasRun ? t(playing ? 'ds.a.st1' : 'ds.a.st2') : t('ds.idle');
+    refs.rightStatus.textContent = hasRun ? t('ds.b.st2') : t('ds.idle');
+    refs.tip.textContent = t(hasRun && !playing ? 'ds.done.tip' : 'ds.sub');
+
+    refs.leftCards.concat(refs.rightCards).forEach(function (card) {
+      card.state.textContent = t(STATE_KEYS[card.root.dataset.state] || STATE_KEYS.idle);
+    });
+  }
+
   function play() {
-    if (playing) return;
+    if (playing || !refs.play) return;
     playing = true;
-    var to = cur === 86 ? 92 : 86;
-    var from = cur;
-    cur = to;
+    hasRun = true;
+    activeFrom = cur;
+    activeTo = nextPrice(cur);
+    cur = activeTo;
 
-    var btn = document.getElementById('dsPlay');
-    var stA = document.getElementById('dsStA');
-    var stB = document.getElementById('dsStB');
-    var leftPrices = document.querySelectorAll('#dsLeft .dsc-pz .prc');
-    var rightPrices = document.querySelectorAll('#dsRight .dsc-pz .prc');
+    refs.root.dataset.phase = 'running';
+    refs.host.setAttribute('aria-busy', 'true');
+    setProgress(refs.leftProgress, 0, 3);
+    setProgress(refs.rightProgress, 0, 4);
 
-    btn.disabled = true;
-    btn.textContent = t('ds.running');
-    stA.textContent = t('ds.a.st1');
-    stB.textContent = t('ds.b.st1');
+    refs.leftCards.concat(refs.rightCards).forEach(function (card) {
+      card.price.textContent = money(activeFrom);
+      setCardState(card, 'wait', activeFrom, activeTo);
+    });
+    renderDynamicText();
 
-    /* 右列（一套底座）：瞬时全变 */
-    rightPrices.forEach(function (el) { el.textContent = '¥' + to; el.classList.add('dsc-flash'); });
-    setTimeout(function () { rightPrices.forEach(function (el) { el.classList.remove('dsc-flash'); }); }, 900);
+    /* 同源四端：同一帧全部变为目标价，并永久保留本次改价对照。 */
+    refs.rightCards.forEach(function (card) {
+      setCardState(card, 'done', activeFrom, activeTo);
+    });
+    setProgress(refs.rightProgress, 4, 4);
+    refs.source.classList.remove('is-commit');
+    void refs.source.offsetWidth;
+    refs.source.classList.add('is-commit');
 
-    /* 左列（拼接式）：逐个延迟生效 */
-    leftPrices.forEach(function (el, i) {
-      var delay = 500 + i * 800;
-      setTimeout(function () {
-        el.textContent = t('ds.syncing');
-        el.classList.add('waiting');
+    /* 传统三端：保留旧价，用独立状态表示同步，再逐个生效。 */
+    refs.leftCards.forEach(function (card, index) {
+      var delay = 500 + index * 800;
+      window.setTimeout(function () {
+        setCardState(card, 'syncing', activeFrom, activeTo);
       }, delay);
-      setTimeout(function () {
-        el.textContent = '¥' + to;
-        el.classList.remove('waiting');
-        if (i === leftPrices.length - 1) {
-          btn.disabled = false;
-          btn.textContent = t('ds.again') + ': ¥' + to + ' ⇄ ¥' + (to === 92 ? 86 : 92);
-          stA.textContent = t('ds.a.st2');
-          stB.textContent = t('ds.b.st2');
+      window.setTimeout(function () {
+        setCardState(card, 'done', activeFrom, activeTo);
+        setProgress(refs.leftProgress, index + 1, 3);
+        if (index === refs.leftCards.length - 1) {
+          playing = false;
+          refs.root.dataset.phase = 'done';
+          refs.host.setAttribute('aria-busy', 'false');
+          renderDynamicText();
         }
       }, delay + 700);
     });
   }
 
-  /* ---- 初始化 ---- */
+  document.addEventListener('i18n:applied', function (event) {
+    if (event.detail && event.detail.lang) lang = event.detail.lang;
+    renderDynamicText();
+  });
+
+  function armScrollPlay() {
+    /* 初始保持静止；仅首次进入对比区域时自动播放，离开后回来不重播。 */
+    if (!('IntersectionObserver' in window)) return;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.2) return;
+        observer.disconnect();
+        if (!hasRun) play();
+      });
+    }, { threshold: [0, 0.2] });
+    observer.observe(refs.grid);
+  }
+
   function init() {
     var host = document.getElementById('dataSource');
     if (!host) return;
     build(host);
-    var playBtn = document.getElementById('dsPlay');
-    if (playBtn) {
-      playBtn.addEventListener('click', function () { play(); });
-    }
+    refs.play.addEventListener('click', play);
+    armScrollPlay();
   }
 
   /* defer 脚本按序执行，DOM 已就绪 */
