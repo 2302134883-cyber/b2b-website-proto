@@ -233,6 +233,18 @@
     .arch-select, .arch-role, .arch-node { transition: none; }
   }
 
+  /* ---- 报价三步：与下方卡片使用相同的三列轨道和 24px 列间距 ---- */
+  .q-stepper { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
+  .q-step-item { position: relative; min-width: 0; }
+  @media (min-width: 768px) {
+    .q-stepper { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+    .q-step { width: 100%; }
+    .q-step-item:not(:last-child)::after {
+      content: ""; position: absolute; top: 50%; left: 100%; width: 24px; height: 1px;
+      background: var(--line-2); pointer-events: none;
+    }
+  }
+
   /* ---- 紫色焦点跟随鼠标（报价三步），移出区域回默认项 ---- */
   .q-step.on {
     --md-outlined-button-outline-color: transparent;
@@ -999,14 +1011,18 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
 
     <h3 id="what-pricing" class="mt-10 md:mt-16 mb-6 text-[15px] font-semibold" data-i18n="what.pricing">价格 · 引导式报价（定制化方案）</h3>
     <div id="q-flow">
-    <div class="flex flex-wrap items-center justify-center gap-3 md:gap-4 mb-8">
-      <md-outlined-button class="q-step on" data-step="1" data-i18n="step.1">① 选服务</md-outlined-button>
-      <span class="hidden md:block w-10 h-px bg-[var(--line-2)]"></span>
-      <md-outlined-button class="q-step" data-step="2" data-i18n="step.2">② 填规模 / 需求</md-outlined-button>
-      <span class="hidden md:block w-10 h-px bg-[var(--line-2)]"></span>
-      <md-outlined-button class="q-step" data-step="3" data-i18n="step.3">③ 出价格区间</md-outlined-button>
+    <div class="q-stepper mb-8">
+      <div class="q-step-item">
+        <md-outlined-button class="q-step on" data-step="1" data-i18n="step.1">① 选服务</md-outlined-button>
+      </div>
+      <div class="q-step-item">
+        <md-outlined-button class="q-step" data-step="2" data-i18n="step.2">② 填规模 / 需求</md-outlined-button>
+      </div>
+      <div class="q-step-item">
+        <md-outlined-button class="q-step" data-step="3" data-i18n="step.3">③ 出价格区间</md-outlined-button>
+      </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+    <div class="q-step-cards grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
       <md-outlined-card data-step="1"><div class="pad !p-6">
         <md-chip-set id="q-services">
           <md-filter-chip label="私有化部署" data-i18n-label="svc.deploy.title"></md-filter-chip>
