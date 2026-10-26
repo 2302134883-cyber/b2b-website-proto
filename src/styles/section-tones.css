@@ -1,0 +1,24 @@
+/* ============ 大区块底色节奏：只用纯白与中性浅灰 ============
+ * 色彩只留给内部的小框架、组件和 orb，不给整屏底色加色相。
+ */
+:root {
+  --tone-white: #ffffff;
+  --tone-gray: #f4f4f6;
+}
+
+.section-tone {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--tone-white);
+}
+
+.section-tone--white {
+  background-color: var(--tone-white);
+}
+
+.section-tone--gray {
+  background-color: var(--tone-gray);
+  /* 在浅灰底上仍保持正文和辅助文字的可读性。 */
+  --sub: #66666c;
+  --faint: #6a6a70;
+}
