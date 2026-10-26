@@ -276,8 +276,8 @@
   .ind-secondary:hover { border-color: var(--ink); }
   .ind-visual { min-width: 0; margin: 0; }
   .ind-image-wrap { position: relative; overflow: hidden; aspect-ratio: 4 / 3; background: var(--wash); border: 1px solid var(--line); border-radius: 12px; }
-  /* 莫兰迪色调：保留原图色相，仅降低饱和度与对比度并轻微提亮 */
-  .ind-image-wrap img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.58) contrast(.92) brightness(1.04); transition: transform .6s cubic-bezier(.25,1,.5,1); }
+  /* 轻微柔化：贴近原图色彩，仅小幅降低饱和度与对比度 */
+  .ind-image-wrap img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.82) contrast(.96) brightness(1.02); transition: transform .6s cubic-bezier(.25,1,.5,1); }
   .ind-visual:hover .ind-image-wrap img { transform: scale(1.025); }
   .ind-visual figcaption .ind-label { margin-top: 20px; }
   .ind-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }

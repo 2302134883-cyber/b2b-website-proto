@@ -1,6 +1,6 @@
 # 行业场景图片素材
 
-以下图片用于原型演示，原始素材来自 Unsplash，并按 [Unsplash License](https://unsplash.com/license) 使用。页面以低饱和的莫兰迪色调展示，保留原图色相，并导出为 1200 × 900 WebP。
+以下图片用于原型演示，原始素材来自 Unsplash，并按 [Unsplash License](https://unsplash.com/license) 使用。页面贴近原图色彩，仅做轻微柔化处理，并导出为 1200 × 900 WebP。
 
 | 文件 | 场景 | 原始素材 |
 | --- | --- | --- |
