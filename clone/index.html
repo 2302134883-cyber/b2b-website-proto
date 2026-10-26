@@ -458,7 +458,7 @@
   }
   .sec-title { max-width: 100%; margin: 0; font-size: 36px; font-weight: 700; line-height: 1.25; letter-spacing: -.035em; text-wrap: balance; }
   .what-lead { width: 100%; max-width: 680px; margin: 0; color: var(--sub); font-size: 15px; line-height: 1.8; }
-  .what-nav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 32px; }
+  .what-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
   .what-nav-link {
     min-height: 44px; padding: 8px 16px; box-sizing: border-box;
     display: inline-flex; align-items: center; gap: 10px;
@@ -581,8 +581,6 @@
     .what-lead { font-size: 14px; }
     .what-nav { gap: 8px; margin-top: 24px; }
     .what-nav-link { padding: 8px 10px; gap: 6px; font-size: 12px; }
-    .what-nav-link:nth-child(2) { margin-inline: auto; }
-    .what-nav-link:nth-child(3) { margin-left: auto; }
     .what-nav-link svg { display: none; }
     .sec-sub { margin: 40px 0 20px; }
     .sec-sub--first { margin-top: 28px; }
@@ -1527,8 +1525,12 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
       <h2 class="sec-title" data-i18n="why.title">为什么选择我们？</h2>
     </div>
 
+    <nav class="what-nav" data-i18n-aria="what.nav.aria" aria-label="本章内容">
+      <a class="what-nav-link" href="#why-industries"><span data-i18n="why.nav.industries">行业方案</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="what-nav-link" href="#caseStudies"><span data-i18n="why.nav.cases">案例展示</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </nav>
 
-    <div class="sec-sub sec-sub--first">
+    <div class="sec-sub sec-sub--first" id="why-industries">
       <h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">01</span><span class="sec-sub-text" data-i18n="why.industries">行业方案</span></h3>
       <p class="ind-sub" data-i18n="ind.sub">围绕真实业务链路，组合产品、数据与 AI 能力</p>
     </div>
@@ -1983,6 +1985,13 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
       <h2 class="sec-title" data-i18n="how.title">我们如何用技术搭建框架？</h2>
     </div>
 
+    <nav class="what-nav" data-i18n-aria="what.nav.aria" aria-label="本章内容">
+      <a class="what-nav-link" href="#arch"><span data-i18n="how.nav.arch">整体架构</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="what-nav-link" href="#how-tech"><span data-i18n="how.nav.tech">技术栈</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="what-nav-link" href="#how-data"><span data-i18n="how.nav.data">数据同源</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="what-nav-link" href="#how-ai"><span data-i18n="how.nav.ai">AI 智能体</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </nav>
+
     <!-- ARCH · 整体架构（选人式交互），保留 #arch 深链接 -->
     <section id="arch" class="scroll-mt-24" aria-labelledby="arch-title">
       <div class="sec-sub sec-sub--first">
@@ -2019,16 +2028,16 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
       </div>
     </section>
 
-    <div class="sec-sub"><h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">02</span><span class="sec-sub-text" data-i18n="how.tech">技术栈</span></h3></div>
+    <div class="sec-sub" id="how-tech"><h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">02</span><span class="sec-sub-text" data-i18n="how.tech">技术栈</span></h3></div>
     <div id="techRing" class="w-full max-w-[560px] mx-auto"></div>
 
-    <div class="sec-sub">
+    <div class="sec-sub" id="how-data">
       <h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">03</span><span class="sec-sub-text" data-i18n="ds.title">数据同源 · 一次改价的差别</span></h3>
       <p class="mt-3 text-[12px] text-[var(--faint)]" data-i18n="ds.sub">同一个操作，同一秒开始——两种系统形态，一次改价见分晓。</p>
     </div>
     <div id="dataSource" class="w-full max-w-[960px] mx-auto"></div>
 
-    <div class="sec-sub"><h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">04</span><span class="sec-sub-text" data-i18n="how.ai">创造 AI 智能体</span></h3></div>
+    <div class="sec-sub" id="how-ai"><h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">04</span><span class="sec-sub-text" data-i18n="how.ai">创造 AI 智能体</span></h3></div>
     <div class="ag" id="aiAgent" data-state="idle">
       <div class="ag-grid">
         <div class="ag-stage">
@@ -2256,7 +2265,13 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
       <h2 class="sec-title" data-i18n="about.title">如何走进与了解我们？</h2>
     </div>
 
-    <div class="sec-sub sec-sub--first">
+    <nav class="what-nav" data-i18n-aria="what.nav.aria" aria-label="本章内容">
+      <a class="what-nav-link" href="#about-walk"><span data-i18n="about.nav.walk">走进我们</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="what-nav-link" href="#about-address"><span data-i18n="about.nav.address">公司地址</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="what-nav-link" href="#about-certs"><span data-i18n="about.nav.certs">安全认证</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </nav>
+
+    <div class="sec-sub sec-sub--first" id="about-walk">
       <h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">01</span><span class="sec-sub-text" data-i18n="about.walk">走进我们</span></h3>
     </div>
     <div class="ph h-[288px] flex-col gap-4">
@@ -2273,7 +2288,7 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
       </md-chip-set>
     </div>
 
-    <div class="sec-sub"><h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">02</span><span class="sec-sub-text" data-i18n="about.address">地址</span></h3></div>
+    <div class="sec-sub" id="about-address"><h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">02</span><span class="sec-sub-text" data-i18n="about.address">地址</span></h3></div>
     <div id="journeyBox" class="w-full h-[440px] md:h-[600px] relative select-none">
       <canvas id="journeyCanvas" class="w-full h-full block cursor-pointer"></canvas>
       <div id="journeySteps" class="absolute left-1/2 -translate-x-1/2 bottom-1 flex items-center gap-2"></div>
@@ -2288,7 +2303,7 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     <p class="mt-2 text-[12px] text-[var(--faint)] text-center" data-i18n="journey.hint">自动巡游中 · 点击画面推进一级 · 地球上可拖拽旋转</p>
     <p class="mt-2 text-[12px] text-[var(--sub)] text-center md:hidden" data-i18n="addr.city.oneline">上海市徐汇区桂平路 391 号 · 新漕河泾国际商务中心B座 9 层</p>
 
-    <div class="sec-sub">
+    <div class="sec-sub" id="about-certs">
       <h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">03</span><span class="sec-sub-text" data-i18n="why.certs">权威的信息安全管理体系认证</span></h3>
       <p class="mt-3 text-[13px] text-[var(--sub)]" data-i18n="cert.desc">已通过 BSI 英国标准协会 ISO27001 & 27018 认证，并持有公安部等保三级、CISSP 国际安全专业认证。</p>
     </div>
