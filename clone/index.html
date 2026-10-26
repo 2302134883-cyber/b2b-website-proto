@@ -51,7 +51,7 @@
   .orb { display: block; will-change: transform; animation: orbspin 64s linear infinite; }
   .orb-slow { animation-duration: 96s; }
   @keyframes orbspin { to { transform: rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) { .orb { animation: none !important; } }
+  @media (prefers-reduced-motion: reduce) { .orb, .what-title-orb { animation: none !important; } }
 
   /* ---- 占位 ---- */
   .ph {
@@ -244,11 +244,17 @@
 
   /* ============ WHAT · 四种经营模式选择器 ============ */
   .what-head { display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; }
-  .what-title { width: 100%; min-width: 0; display: flex; align-items: center; justify-content: center; gap: 20px; }
-  .what-title-orb { width: 64px; height: 64px; flex: none; }
+  .what-title { width: 100%; min-width: 0; display: flex; align-items: center; justify-content: center; gap: 16px; }
+  /* 外层负责呼吸、内层保留慢转，避免两个 transform 动画互相覆盖。 */
+  .what-title-orb { width: 32px; height: 32px; flex: none; display: block; transform-origin: center; animation: what-orb-breathe 4.8s ease-in-out infinite; will-change: transform, opacity; }
+  .what-title-orb .orb { width: 100%; height: 100%; }
+  @keyframes what-orb-breathe {
+    0%, 100% { transform: scale(.96); opacity: .78; }
+    50% { transform: scale(1.06); opacity: 1; }
+  }
   .what-title h2 { max-width: 100%; margin: 0; font-size: 36px; font-weight: 700; line-height: 1.25; letter-spacing: -.035em; text-wrap: balance; }
   .what-lead { width: 100%; max-width: 680px; margin: 0; color: var(--sub); font-size: 15px; line-height: 1.8; }
-  .what-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
+  .what-nav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 32px; }
   .what-nav-link {
     min-height: 44px; padding: 8px 16px; box-sizing: border-box;
     display: inline-flex; align-items: center; gap: 10px;
@@ -367,12 +373,14 @@
     .mode-panel { min-height: 0; }
   }
   @media (max-width: 767px) {
-    .what-title { flex-direction: column; align-items: center; gap: 12px; }
-    .what-title-orb { width: 48px; height: 48px; }
+    .what-title { flex-direction: row; align-items: center; gap: 10px; }
+    .what-title-orb { width: 28px; height: 28px; }
     .what-title h2 { font-size: 28px; }
     .what-lead { font-size: 14px; }
     .what-nav { gap: 8px; margin-top: 24px; }
     .what-nav-link { padding: 8px 10px; gap: 6px; font-size: 12px; }
+    .what-nav-link:nth-child(2) { margin-inline: auto; }
+    .what-nav-link:nth-child(3) { margin-left: auto; }
     .what-nav-link svg { display: none; }
     .what-block-intro { margin: 48px 0 24px; }
     .what-block-intro--first { margin-top: 32px; }
@@ -935,7 +943,7 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
   <div class="max-w-[1200px] mx-auto px-6">
     <div class="what-head">
       <div class="what-title">
-        <svg class="what-title-orb orb orb-slow" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
+        <span class="what-title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
         <h2 data-i18n="what.title">我们可以为您提供什么？</h2>
       </div>
       <p class="what-lead" data-i18n="what.intro">从经营模式选择，到部署安全与定制报价，一套方案陪您从业务设计走到落地。</p>
