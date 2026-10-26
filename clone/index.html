@@ -1155,45 +1155,40 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
   </div>
 </section>
 
-<!-- ============ ARCH · 整体架构（选人式交互） ============ -->
-<section id="arch" class="py-24 border-t border-[var(--line)]">
+<!-- ============ HOW · 技术框架与整体架构 ============ -->
+<section id="sec-how" class="py-16 md:py-24 border-t border-[var(--line)]">
   <div class="max-w-[1200px] mx-auto px-6">
     <div class="sec-head">
       <svg class="node orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
-      <h2 class="text-[26px] md:text-[32px] font-bold tracking-tight" data-i18n="arch.title">整体架构</h2>
-    </div>
-    <p class="mt-3 text-center text-[14px] text-[var(--sub)]" data-i18n="arch.sub">中台化 B2B 系统 · 选择一个角色，看 TA 眼中的系统</p>
-
-    <!-- 第一幕：选人（游戏式角色卡） -->
-    <div id="archSelect" class="arch-select">
-      <div class="arch-cards" id="archCards"></div>
-      <p class="arch-hint"><i></i><span data-i18n="arch.hint">选择角色进入</span></p>
+      <h2 class="text-[26px] md:text-[32px] font-bold tracking-tight" data-i18n="how.title">我们如何用技术搭建框架？</h2>
     </div>
 
-    <!-- 第二幕：该角色视角下的架构 -->
-    <div id="archView" class="arch-view" hidden>
-      <div class="arch-toolbar">
-        <div class="arch-tabs" id="archTabs"></div>
-        <button id="archBack" class="arch-back" type="button">← <span data-i18n="arch.back">重新选择</span></button>
+    <!-- ARCH · 整体架构（选人式交互），保留 #arch 深链接 -->
+    <section id="arch" class="mt-10 md:mt-16 scroll-mt-24" aria-labelledby="arch-title">
+      <h3 id="arch-title" class="text-[15px] font-semibold" data-i18n="arch.title">整体架构</h3>
+      <p class="mt-2 text-[14px] text-[var(--sub)]" data-i18n="arch.sub">中台化 B2B 系统 · 选择一个角色，看 TA 眼中的系统</p>
+
+      <!-- 第一幕：选人（游戏式角色卡） -->
+      <div id="archSelect" class="arch-select">
+        <div class="arch-cards" id="archCards"></div>
+        <p class="arch-hint"><i></i><span data-i18n="arch.hint">选择角色进入</span></p>
       </div>
-      <div class="arch-stage">
-        <div class="arch-board" id="archBoard"><div class="arch-spine" aria-hidden="true"><i></i></div></div>
-        <aside class="arch-panel" id="archPanel"></aside>
+
+      <!-- 第二幕：该角色视角下的架构 -->
+      <div id="archView" class="arch-view" hidden>
+        <div class="arch-toolbar">
+          <div class="arch-tabs" id="archTabs"></div>
+          <button id="archBack" class="arch-back" type="button">← <span data-i18n="arch.back">重新选择</span></button>
+        </div>
+        <div class="arch-stage">
+          <div class="arch-board" id="archBoard"><div class="arch-spine" aria-hidden="true"><i></i></div></div>
+          <aside class="arch-panel" id="archPanel"></aside>
+        </div>
+        <p class="mt-6 text-[12px] text-[var(--faint)]" data-i18n="arch.note">说明：节点为中台化 B2B 典型模块占位，接入实际产品线后替换。</p>
       </div>
-      <p class="mt-6 text-[12px] text-[var(--faint)]" data-i18n="arch.note">说明：节点为中台化 B2B 典型模块占位，接入实际产品线后替换。</p>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ============ HOW ============ -->
-<section id="sec-how" class="py-16 md:py-24">
-  <div class="max-w-[1200px] mx-auto px-6">
-    <div class="sec-head">
-      <svg class="node orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
-      <h2 class="text-[26px] md:text-[32px] font-bold tracking-tight" data-i18n="how.title">我们如何做到</h2>
-    </div>
-
-    <h3 class="mt-10 md:mt-16 mb-6 text-[15px] font-semibold" data-i18n="how.tech">技术栈（圆盘 / 环形）</h3>
+    <h3 class="mt-16 mb-6 text-[15px] font-semibold" data-i18n="how.tech">技术栈（圆盘 / 环形）</h3>
     <div id="techRing" class="w-full max-w-[560px] mx-auto"></div>
 
     <h3 class="mt-16 mb-2 text-[15px] font-semibold" data-i18n="ds.title">数据同源 · 一次改价的差别</h3>
