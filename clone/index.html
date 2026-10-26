@@ -140,29 +140,27 @@
   .site-brand-fallback { color: var(--ink); font-size: 15px; font-weight: 700; letter-spacing: .04em; }
   .site-desktop-nav { display: flex; align-items: center; gap: 2px; min-width: 0; margin-left: 8px; }
   .site-nav-item, .site-language { position: relative; flex: none; }
-  .site-nav-trigger, .site-nav-link, .site-price-link, .site-language-trigger {
+  .site-nav-trigger, .site-nav-link, .site-login-link, .site-language-trigger {
     appearance: none; min-height: 44px; padding: 0 9px; display: inline-flex; align-items: center; justify-content: center;
     gap: 5px; border: 0; border-radius: 8px; background: transparent; color: var(--sub);
     font: inherit; font-size: 13px; font-weight: 500; line-height: 1.4; white-space: nowrap; cursor: pointer;
     transition: color .18s ease, background .18s ease, box-shadow .18s ease;
   }
-  .site-nav-link, .site-price-link { text-decoration: none; }
-  .site-nav-trigger:hover, .site-nav-link:hover, .site-price-link:hover, .site-language-trigger:hover {
+  .site-nav-link, .site-login-link { text-decoration: none; }
+  .site-nav-trigger:hover, .site-nav-link:hover, .site-login-link:hover, .site-language-trigger:hover {
     color: var(--ink); background: var(--wash);
   }
-  .site-nav-trigger:focus-visible, .site-nav-link:focus-visible, .site-price-link:focus-visible,
+  .site-nav-trigger:focus-visible, .site-nav-link:focus-visible, .site-login-link:focus-visible,
   .site-language-trigger:focus-visible, .site-primary-button:focus-visible, .site-mobile-toggle:focus-visible,
   .site-mobile-group summary:focus-visible, .site-mobile-link:focus-visible, .site-mobile-sublinks a:focus-visible,
   .site-mobile-language select:focus-visible, .site-footer a:focus-visible, .site-footer button:focus-visible {
     outline: 2px solid var(--ink); outline-offset: 3px;
   }
-  .site-nav-trigger.is-active, .site-nav-link.is-active, .site-price-link.is-active {
+  .site-nav-trigger.is-active, .site-nav-link.is-active {
     color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink);
   }
   .site-chevron { width: 15px; height: 15px; flex: none; transition: transform .18s ease; }
   .site-nav-trigger[aria-expanded="true"] .site-chevron { transform: rotate(180deg); }
-  .site-nav-ai-orb { width: 15px; height: 15px; flex: none; }
-  .site-ai-link { color: var(--ink); font-weight: 600; }
   .site-header-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: none; }
   .site-language-trigger { padding-inline: 8px; }
   .site-language-trigger .site-globe { width: 17px; height: 17px; }
@@ -209,8 +207,6 @@
   .site-mobile-link { padding-inline: 4px; }
   .site-mobile-sublinks a { font-size: 13px; }
   .site-mobile-link:hover, .site-mobile-sublinks a:hover { color: var(--ink); background: var(--wash); }
-  .site-mobile-ai { margin: 8px 0; padding-inline: 12px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--wash); color: var(--ink); font-weight: 600; }
-  .site-mobile-price { color: var(--ink); font-weight: 600; }
   .site-mobile-language { margin-top: 12px; padding: 16px 4px 0; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .site-mobile-language label { color: var(--sub); font-size: 13px; }
   .site-mobile-language select {
@@ -228,8 +224,6 @@
   .site-footer-column { min-width: 0; }
   .site-footer-title { margin: 0 0 12px; color: var(--ink); font-size: 13px; font-weight: 600; line-height: 1.5; }
   .site-footer-title span { display: inline-block; }
-  .site-footer-ai-title { display: flex; align-items: center; gap: 7px; }
-  .site-footer-ai-orb { width: 16px; height: 16px; flex: none; }
   .site-footer-column a, .site-footer-action {
     appearance: none; width: 100%; min-height: 40px; padding: 7px 0; display: flex; align-items: center;
     border: 0; background: transparent; color: var(--sub); font: inherit; font-size: 12px; line-height: 1.5;
@@ -246,13 +240,13 @@
   @media (max-width: 1399px) and (min-width: 1200px) {
     .site-header-inner { gap: 12px; padding-inline: 20px; }
     .site-desktop-nav { margin-left: 0; gap: 0; }
-    .site-nav-trigger, .site-nav-link, .site-price-link, .site-language-trigger { padding-inline: 6px; font-size: 12px; }
+    .site-nav-trigger, .site-nav-link, .site-login-link, .site-language-trigger { padding-inline: 6px; font-size: 12px; }
     .site-header-actions { gap: 4px; }
     .site-primary-button { padding-inline: 13px; font-size: 12px; }
   }
   @media (max-width: 1199px) {
     .site-header-inner { padding-inline: 20px; gap: 12px; }
-    .site-desktop-nav, .site-price-link, .site-language { display: none; }
+    .site-desktop-nav, .site-login-link, .site-language { display: none; }
     .site-mobile-toggle { display: inline-flex; }
     .site-mobile-nav { display: block; }
     .site-header-actions { gap: 8px; }
@@ -281,7 +275,7 @@
     .site-footer-links { grid-template-columns: 1fr; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .site-skip-link, .site-nav-trigger, .site-nav-link, .site-price-link, .site-language-trigger,
+    .site-skip-link, .site-nav-trigger, .site-nav-link, .site-login-link, .site-language-trigger,
     .site-primary-button, .site-chevron { transition: none; }
   }
 
@@ -911,9 +905,7 @@
         </md-menu>
       </div>
       <a class="site-nav-link" href="#caseStudies" data-nav-section="cases"><span data-i18n="nav.cases">客户案例</span></a>
-      <a class="site-nav-link site-ai-link" href="#aiAgent" data-nav-section="ai">
-        <svg class="site-nav-ai-orb" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="92" fill="url(#orbNode)"/></svg><span data-i18n="nav.ai">AI 智能体</span>
-      </a>
+      <a class="site-nav-link" href="#aiAgent" data-nav-section="ai"><span data-i18n="nav.ai">AI 智能体</span></a>
       <div class="site-nav-item">
         <button class="site-nav-trigger" id="m-tech" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="mm-tech" data-nav-section="tech">
           <span data-i18n="nav.tech">技术架构</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
@@ -934,9 +926,9 @@
           <md-menu-item data-header-target="#certRow"><div slot="headline" data-i18n="menu.about.certifications">安全认证</div></md-menu-item>
         </md-menu>
       </div>
+      <a class="site-nav-link" href="#what-pricing" data-nav-section="pricing" data-i18n="nav.pricing">价格</a>
     </nav>
     <div class="site-header-actions">
-      <a class="site-price-link" href="#what-pricing" data-nav-section="pricing" data-i18n="nav.pricing">价格</a>
       <div class="site-language">
         <button class="site-language-trigger" id="m-lang" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="mm-lang">
           <svg class="site-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.2 2.4 3.3 5.4 3.3 9s-1.1 6.6-3.3 9c-2.2-2.4-3.3-5.4-3.3-9S9.8 5.4 12 3Z"/></svg>
@@ -953,6 +945,7 @@
           <md-menu-item data-lang="ru"><div slot="headline">Русский</div></md-menu-item>
         </md-menu>
       </div>
+      <button class="site-login-link" type="button" data-i18n="nav.login">登录</button>
       <button class="site-primary-button" type="button" data-open-lead data-i18n-aria="cta.get" aria-label="获取方案">
         <span class="site-cta-label" data-i18n="cta.get">获取方案</span><span class="site-cta-short" data-i18n="cta.short">获取方案</span>
       </button>
@@ -983,9 +976,7 @@
         </div>
       </details>
       <a class="site-mobile-link" href="#caseStudies" data-mobile-link><span data-i18n="nav.cases">客户案例</span></a>
-      <a class="site-mobile-link site-mobile-ai" href="#aiAgent" data-mobile-link>
-        <svg class="site-nav-ai-orb" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="92" fill="url(#orbNode)"/></svg><span data-i18n="nav.ai">AI 智能体</span>
-      </a>
+      <a class="site-mobile-link" href="#aiAgent" data-mobile-link><span data-i18n="nav.ai">AI 智能体</span></a>
       <details class="site-mobile-group">
         <summary><span data-i18n="nav.tech">技术架构</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
         <div class="site-mobile-sublinks">
@@ -1002,7 +993,7 @@
           <a href="#certRow" data-mobile-link data-i18n="menu.about.certifications">安全认证</a>
         </div>
       </details>
-      <a class="site-mobile-link site-mobile-price" href="#what-pricing" data-mobile-link data-i18n="nav.pricing">价格</a>
+      <a class="site-mobile-link" href="#what-pricing" data-mobile-link data-i18n="nav.pricing">价格</a>
       <div class="site-mobile-language">
         <label for="mobileLang" data-i18n="nav.lang">语言</label>
         <select id="mobileLang" aria-label="语言" data-i18n-aria="nav.lang">
@@ -2322,10 +2313,8 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
         <a href="#industrySolutions" data-industry-menu="3" data-i18n="menu.solution.4">快消与零售</a>
         <a href="#caseStudies" data-i18n="nav.cases">客户案例</a>
       </section>
-      <section class="site-footer-column site-footer-ai">
-        <h2 class="site-footer-title site-footer-ai-title">
-          <svg class="site-footer-ai-orb" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="92" fill="url(#orbNode)"/></svg><span data-i18n="nav.ai">AI 智能体</span>
-        </h2>
+      <section class="site-footer-column">
+        <h2 class="site-footer-title" data-i18n="nav.ai">AI 智能体</h2>
         <a href="#aiAgent" data-i18n="footer.ai.overview">AI 智能体总览</a>
         <a href="#aiAgent" data-ai-scene="1" data-i18n="ag.scene.1">客服场景</a>
         <a href="#aiAgent" data-ai-scene="2" data-i18n="ag.scene.2">询报价场景</a>
