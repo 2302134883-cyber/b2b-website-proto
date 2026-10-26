@@ -6,6 +6,7 @@
 <meta name="description" content="B2B 数智化解决方案：渠道协同、私有化部署、数据安全与 AI 智能体，覆盖品牌方、经销商、门店与终端。">
 <title>B2B 数智化解决方案</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" type="image/png" href="assets/logo-shopex.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="./vendor/material-bundle.js" defer></script>
@@ -122,6 +123,166 @@
   md-menu { --md-menu-container-color: #fff; }
   md-dialog { --md-dialog-container-color: #fff; --md-dialog-container-shape: 20px; }
   md-dialog [slot="content"] { min-width: 300px; }
+
+  /* ============ SITE HEADER / FOOTER ============ */
+  .site-skip-link {
+    position: fixed; left: 16px; top: 8px; z-index: 100;
+    padding: 10px 16px; border-radius: 999px; background: var(--ink); color: #fff;
+    font-size: 13px; text-decoration: none; transform: translateY(-180%); transition: transform .18s ease;
+  }
+  .site-skip-link:focus { transform: translateY(0); }
+  .site-header {
+    position: sticky; top: 0; z-index: 50; height: 64px;
+    background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  }
+  .site-header-inner {
+    max-width: 1200px; height: 64px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .site-brand { display: inline-flex; align-items: center; flex: none; text-decoration: none; }
+  .site-brand img { display: block; width: auto; height: 32px; }
+  .site-brand-fallback { color: var(--ink); font-size: 15px; font-weight: 700; letter-spacing: .04em; }
+  .site-desktop-nav { display: flex; align-items: center; gap: 2px; min-width: 0; margin-left: 8px; }
+  .site-nav-item, .site-language { position: relative; flex: none; }
+  .site-nav-trigger, .site-nav-link, .site-login-link, .site-language-trigger {
+    appearance: none; min-height: 44px; padding: 0 9px; display: inline-flex; align-items: center; justify-content: center;
+    gap: 5px; border: 0; border-radius: 8px; background: transparent; color: var(--sub);
+    font: inherit; font-size: 13px; font-weight: 500; line-height: 1.4; white-space: nowrap; cursor: pointer;
+    transition: color .18s ease, background .18s ease, box-shadow .18s ease;
+  }
+  .site-nav-link, .site-login-link { text-decoration: none; }
+  .site-nav-trigger:hover, .site-nav-link:hover, .site-login-link:hover, .site-language-trigger:hover {
+    color: var(--ink); background: var(--wash);
+  }
+  .site-nav-trigger:focus-visible, .site-nav-link:focus-visible, .site-login-link:focus-visible,
+  .site-language-trigger:focus-visible, .site-primary-button:focus-visible, .site-mobile-toggle:focus-visible,
+  .site-mobile-group summary:focus-visible, .site-mobile-link:focus-visible, .site-mobile-sublinks a:focus-visible,
+  .site-mobile-language select:focus-visible, .site-footer a:focus-visible, .site-footer button:focus-visible {
+    outline: 2px solid var(--ink); outline-offset: 3px;
+  }
+  .site-nav-trigger.is-active, .site-nav-link.is-active {
+    color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink);
+  }
+  .site-chevron { width: 15px; height: 15px; flex: none; transition: transform .18s ease; }
+  .site-nav-trigger[aria-expanded="true"] .site-chevron { transform: rotate(180deg); }
+  .site-header-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: none; }
+  .site-language-trigger { padding-inline: 8px; }
+  .site-language-trigger .site-globe { width: 17px; height: 17px; }
+  .site-primary-button {
+    appearance: none; min-height: 40px; padding: 0 17px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    border: 1px solid var(--ink); border-radius: 999px; background: var(--ink); color: #fff;
+    font: inherit; font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer;
+    transition: background .18s ease, transform .18s ease;
+  }
+  .site-cta-short { display: none; }
+  .site-primary-button:hover { background: #2b3442; }
+  .site-primary-button:active { transform: scale(.98); }
+  .site-mobile-toggle {
+    appearance: none; width: 44px; height: 44px; padding: 0; display: none; align-items: center; justify-content: center;
+    border: 1px solid var(--line-2); border-radius: 50%; background: #fff; color: var(--ink); cursor: pointer;
+  }
+  .site-mobile-toggle svg { width: 21px; height: 21px; }
+  .site-mobile-toggle .site-icon-close { display: none; }
+  .site-mobile-toggle[aria-expanded="true"] .site-icon-menu { display: none; }
+  .site-mobile-toggle[aria-expanded="true"] .site-icon-close { display: block; }
+  .site-header md-menu {
+    min-width: 200px; max-width: calc(100vw - 32px);
+    --md-menu-container-color: #fff; --md-menu-container-shape: 12px;
+  }
+  .site-header md-menu-item { min-height: 44px; }
+  .site-mobile-nav {
+    display: none; position: absolute; top: 64px; left: 0; right: 0; max-height: calc(100vh - 64px); overflow-y: auto;
+    background: #fff; border-bottom: 1px solid var(--line);
+  }
+  .site-mobile-nav[hidden] { display: none !important; }
+  .site-mobile-nav-inner { max-width: 720px; margin: 0 auto; padding: 12px 16px 20px; }
+  .site-mobile-group { border-bottom: 1px solid var(--line); }
+  .site-mobile-group summary {
+    min-height: 48px; padding: 8px 4px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    color: var(--ink); font-size: 14px; font-weight: 600; cursor: pointer; list-style: none;
+  }
+  .site-mobile-group summary::-webkit-details-marker { display: none; }
+  .site-mobile-group[open] summary .site-chevron { transform: rotate(180deg); }
+  .site-mobile-sublinks { display: grid; gap: 2px; padding: 0 0 8px 12px; }
+  .site-mobile-link, .site-mobile-sublinks a {
+    min-height: 44px; display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 8px;
+    color: var(--sub); font-size: 14px; line-height: 1.45; text-decoration: none;
+  }
+  .site-mobile-link { padding-inline: 4px; }
+  .site-mobile-sublinks a { font-size: 13px; }
+  .site-mobile-link:hover, .site-mobile-sublinks a:hover { color: var(--ink); background: var(--wash); }
+  .site-mobile-language { margin-top: 12px; padding: 16px 4px 0; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .site-mobile-language label { color: var(--sub); font-size: 13px; }
+  .site-mobile-language select {
+    min-height: 44px; max-width: 190px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 10px;
+    background: #fff; color: var(--ink); font: inherit; font-size: 13px;
+  }
+  .site-footer { background: #fff; border-top: 1px solid var(--line); color: var(--sub); }
+  .site-footer-grid {
+    max-width: 1200px; margin: 0 auto; padding: 64px 24px 40px;
+    display: grid; grid-template-columns: minmax(180px, 1.15fr) minmax(0, 4.85fr); gap: 40px;
+  }
+  .site-footer-brand img { display: block; width: auto; height: 28px; }
+  .site-footer-brand p { max-width: 250px; margin: 16px 0 0; color: var(--sub); font-size: 13px; line-height: 1.8; }
+  .site-footer-links { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px; }
+  .site-footer-column { min-width: 0; }
+  .site-footer-title { margin: 0 0 12px; color: var(--ink); font-size: 13px; font-weight: 600; line-height: 1.5; }
+  .site-footer-title span { display: inline-block; }
+  .site-footer-column a, .site-footer-action {
+    appearance: none; width: 100%; min-height: 40px; padding: 7px 0; display: flex; align-items: center;
+    border: 0; background: transparent; color: var(--sub); font: inherit; font-size: 12px; line-height: 1.5;
+    text-align: left; text-decoration: none; cursor: pointer; overflow-wrap: anywhere;
+  }
+  .site-footer-column a:hover, .site-footer-action:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+  .site-footer-action { color: var(--ink); font-weight: 600; }
+  .site-footer-bottom {
+    max-width: 1200px; margin: 0 auto; padding: 20px 24px 28px; border-top: 1px solid var(--line);
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    color: var(--faint); font-size: 12px; line-height: 1.7;
+  }
+  #mode-explorer, #service-deploy, #service-security, #arch, #techRing, #dataSource, #aiAgent, #journeyBox, #certRow { scroll-margin-top: 88px; }
+  @media (max-width: 1399px) and (min-width: 1200px) {
+    .site-header-inner { gap: 12px; padding-inline: 20px; }
+    .site-desktop-nav { margin-left: 0; gap: 0; }
+    .site-nav-trigger, .site-nav-link, .site-login-link, .site-language-trigger { padding-inline: 6px; font-size: 12px; }
+    .site-header-actions { gap: 4px; }
+    .site-primary-button { padding-inline: 13px; font-size: 12px; }
+  }
+  @media (max-width: 1199px) {
+    .site-header-inner { padding-inline: 20px; gap: 12px; }
+    .site-desktop-nav, .site-login-link, .site-language { display: none; }
+    .site-mobile-toggle { display: inline-flex; }
+    .site-mobile-nav { display: block; }
+    .site-header-actions { gap: 8px; }
+    .site-cta-label { display: none; }
+    .site-cta-short { display: inline; }
+    .site-footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .site-footer-brand p { max-width: 460px; }
+  }
+  @media (max-width: 767px) {
+    .site-header-inner { padding-inline: 16px; }
+    .site-brand img { height: 29px; }
+    .site-primary-button { min-height: 40px; padding-inline: 13px; font-size: 12px; }
+    .site-footer-grid { padding: 48px 20px 32px; }
+    .site-footer-links { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; }
+    .site-footer-bottom { padding: 20px 20px 28px; flex-direction: column; gap: 10px; }
+  }
+  @media (max-width: 560px) {
+    .site-footer-links { gap: 24px 16px; }
+  }
+  @media (max-width: 380px) {
+    .site-header-inner { gap: 6px; padding-inline: 12px; }
+    .site-brand img { height: 24px; }
+    .site-header-actions { gap: 4px; }
+    .site-primary-button { padding-inline: 9px; font-size: 11px; }
+    #journeySteps { gap: 4px; }
+    .site-footer-links { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .site-skip-link, .site-nav-trigger, .site-nav-link, .site-login-link, .site-language-trigger,
+    .site-primary-button, .site-chevron { transition: none; }
+  }
 
 
   /* ---- 轮播 ---- */
@@ -550,7 +711,7 @@
   .cc-node {
     appearance: none; font: inherit; background: none; border: none; cursor: pointer;
     display: flex; flex-direction: column; align-items: center; gap: 8px;
-    padding: 2px 10px 0; color: var(--sub); text-align: center; border-radius: 12px;
+    min-width: 0; padding: 2px 10px 0; color: var(--sub); text-align: center; border-radius: 12px;
     transition: color .25s ease;
   }
   .cc-node:focus-visible { outline: none; }
@@ -575,8 +736,8 @@
   .cc-node.on .cc-dot { border-color: transparent; transform: scale(1.2); }
   .cc-node.on .cc-dot::before, .cc-node:hover .cc-dot::before { opacity: 1; }
   .cc-node.on .cc-dot i { opacity: 1; transform: scale(1); }
-  .cc-name { font-size: 14px; font-weight: 600; line-height: 1.3; }
-  .cc-tag { font-size: 11px; color: var(--faint); }
+  .cc-name { max-width: 100%; font-size: 14px; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; hyphens: auto; }
+  .cc-tag { max-width: 100%; font-size: 11px; color: var(--faint); overflow-wrap: anywhere; hyphens: auto; }
   .cc-link { position: relative; flex: 1; min-width: 24px; height: 1px; background: var(--line-2); margin-top: 9px; }
   .cc-link i {  /* 填充段：orb 同色系线性渐变 */
     position: absolute; inset: -0.5px 0; display: block;
@@ -764,87 +925,251 @@
   }
 </style>
 </head>
-<body>
+<body id="top">
 
 <!-- ============ 顶部导航 ============ -->
-<header class="h-16 bg-white/95 backdrop-blur flex items-center px-4 md:px-10 sticky top-0 z-50 border-b border-[var(--line)]">
-  <img src="assets/logo-shopex.png" alt="ShopeX" class="h-8 w-auto" onerror="this.outerHTML='<span class=&quot;text-[15px] font-bold tracking-wide&quot;>ShopeX</span>'">
-  <nav class="ml-12 hidden md:flex items-center gap-2">
-    <span class="relative">
-      <md-text-button id="m-product" trailing-icon data-i18n="nav.product">产品</md-text-button>
-      <md-menu anchor="m-product" id="mm-product">
-        <md-menu-item><div slot="headline" data-i18n="menu.product.1">子分类 1</div></md-menu-item>
-        <md-menu-item><div slot="headline" data-i18n="menu.product.2">子分类 2</div></md-menu-item>
-        <md-menu-item><div slot="headline" data-i18n="menu.product.3">子分类 3</div></md-menu-item>
-        <md-menu-item><div slot="headline" data-i18n="menu.product.4">子分类 4</div></md-menu-item>
-      </md-menu>
-    </span>
-    <span class="relative">
-      <md-text-button id="m-solution" trailing-icon data-i18n="nav.solution">解决方案</md-text-button>
-      <md-menu anchor="m-solution" id="mm-solution">
-        <md-menu-item data-industry-menu="0"><div slot="headline" data-i18n="menu.solution.1">家电与电工</div></md-menu-item>
-        <md-menu-item data-industry-menu="1"><div slot="headline" data-i18n="menu.solution.2">电子元器件</div></md-menu-item>
-        <md-menu-item data-industry-menu="2"><div slot="headline" data-i18n="menu.solution.3">工业制造</div></md-menu-item>
-        <md-menu-item data-industry-menu="3"><div slot="headline" data-i18n="menu.solution.4">快消与零售</div></md-menu-item>
-      </md-menu>
-    </span>
-    <span class="relative">
-      <md-text-button id="m-about" trailing-icon data-i18n="nav.about">关于我们</md-text-button>
-      <md-menu anchor="m-about" id="mm-about">
-        <md-menu-item><div slot="headline" data-i18n="menu.about.charity">公益</div></md-menu-item>
-        <md-menu-item><div slot="headline" data-i18n="menu.about.team">团队</div></md-menu-item>
-        <md-menu-item><div slot="headline" data-i18n="menu.about.locations">地点</div></md-menu-item>
-        <md-menu-item><div slot="headline" data-i18n="menu.about.awards">奖项</div></md-menu-item>
-      </md-menu>
-    </span>
-    <md-text-button data-i18n="nav.pricing" onclick="document.querySelector('#what-pricing')?.scrollIntoView({behavior:'smooth'})">价格</md-text-button>
-  </nav>
-  <div class="ml-auto flex items-center gap-2 md:gap-4">
-    <span class="relative md:hidden">
-      <md-icon-button id="m-nav" aria-label="导航菜单" data-i18n-aria="nav.menu">
-        <svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:currentColor" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
-      </md-icon-button>
-      <md-menu anchor="m-nav" id="mm-nav">
-        <md-menu-item data-scroll="#sec-what"><div slot="headline" data-i18n="nav.product">产品</div></md-menu-item>
-        <md-menu-item data-scroll="#sec-why"><div slot="headline" data-i18n="nav.solution">解决方案</div></md-menu-item>
-        <md-menu-item data-scroll="#sec-about"><div slot="headline" data-i18n="nav.about">关于我们</div></md-menu-item>
-        <md-menu-item data-scroll="#what-pricing"><div slot="headline" data-i18n="nav.pricing">价格</div></md-menu-item>
-      </md-menu>
-    </span>
-    <span class="relative">
-      <md-text-button id="m-lang">
-        <svg slot="icon" viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.27 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>
-        <span data-i18n="nav.lang" class="hidden sm:inline">语言</span>
-      </md-text-button>
-      <md-menu anchor="m-lang" id="mm-lang">
-        <md-menu-item data-lang="zh-CN"><div slot="headline">中文（简体）</div></md-menu-item>
-        <md-menu-item data-lang="en"><div slot="headline">English</div></md-menu-item>
-        <md-menu-item data-lang="ja"><div slot="headline">日本語</div></md-menu-item>
-        <md-menu-item data-lang="ko"><div slot="headline">한국어</div></md-menu-item>
-        <md-menu-item data-lang="es"><div slot="headline">Español</div></md-menu-item>
-        <md-menu-item data-lang="fr"><div slot="headline">Français</div></md-menu-item>
-        <md-menu-item data-lang="de"><div slot="headline">Deutsch</div></md-menu-item>
-        <md-menu-item data-lang="ru"><div slot="headline">Русский</div></md-menu-item>
-      </md-menu>
-    </span>
-    <span class="hidden md:inline-flex"><md-text-button data-i18n="nav.login">登录</md-text-button></span>
-    <md-filled-button data-lead-open="header" data-i18n="cta.get">获取方案</md-filled-button>
+
+<a class="site-skip-link" href="#main-content" data-i18n="nav.skip">跳到主要内容</a>
+<header class="site-header" id="siteHeader">
+  <div class="site-header-inner">
+    <a class="site-brand" href="#top" aria-label="ShopeX">
+      <img src="assets/logo-shopex.png" alt="ShopeX" onerror="this.outerHTML='<span class=&quot;site-brand-fallback&quot;>ShopeX</span>'">
+    </a>
+    <nav class="site-desktop-nav" aria-label="导航菜单" data-i18n-aria="nav.menu">
+      <div class="site-nav-item">
+        <button class="site-nav-trigger" id="m-product" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="mm-product" data-nav-section="product">
+          <span data-i18n="nav.product">产品与服务</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <md-menu anchor="m-product" id="mm-product">
+          <md-menu-item data-header-target="#sec-what"><div slot="headline" data-i18n="menu.product.1">产品总览</div></md-menu-item>
+          <md-menu-item data-header-target="#mode-explorer"><div slot="headline" data-i18n="menu.product.2">四种经营模式</div></md-menu-item>
+          <md-menu-item data-header-target="#service-deploy"><div slot="headline" data-i18n="svc.deploy.title">私有化部署</div></md-menu-item>
+          <md-menu-item data-header-target="#service-security"><div slot="headline" data-i18n="svc.security.title">数据安全</div></md-menu-item>
+        </md-menu>
+      </div>
+      <div class="site-nav-item">
+        <button class="site-nav-trigger" id="m-solution" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="mm-solution" data-nav-section="solution">
+          <span data-i18n="nav.solution">行业方案</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <md-menu anchor="m-solution" id="mm-solution">
+          <md-menu-item data-industry-menu="0"><div slot="headline" data-i18n="menu.solution.1">家电与电工</div></md-menu-item>
+          <md-menu-item data-industry-menu="1"><div slot="headline" data-i18n="menu.solution.2">电子元器件</div></md-menu-item>
+          <md-menu-item data-industry-menu="2"><div slot="headline" data-i18n="menu.solution.3">工业制造</div></md-menu-item>
+          <md-menu-item data-industry-menu="3"><div slot="headline" data-i18n="menu.solution.4">快消与零售</div></md-menu-item>
+        </md-menu>
+      </div>
+      <a class="site-nav-link" href="#caseStudies" data-nav-section="cases"><span data-i18n="nav.cases">客户案例</span></a>
+      <a class="site-nav-link" href="#aiAgent" data-nav-section="ai"><span data-i18n="nav.ai">AI 智能体</span></a>
+      <div class="site-nav-item">
+        <button class="site-nav-trigger" id="m-tech" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="mm-tech" data-nav-section="tech">
+          <span data-i18n="nav.tech">技术架构</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <md-menu anchor="m-tech" id="mm-tech">
+          <md-menu-item data-header-target="#arch"><div slot="headline" data-i18n="arch.title">整体架构</div></md-menu-item>
+          <md-menu-item data-header-target="#techRing"><div slot="headline" data-i18n="menu.tech.stack">技术栈</div></md-menu-item>
+          <md-menu-item data-header-target="#dataSource"><div slot="headline" data-i18n="menu.tech.data">数据同源</div></md-menu-item>
+        </md-menu>
+      </div>
+      <div class="site-nav-item">
+        <button class="site-nav-trigger" id="m-about" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="mm-about" data-nav-section="about">
+          <span data-i18n="nav.about">关于我们</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <md-menu anchor="m-about" id="mm-about">
+          <md-menu-item data-header-target="#sec-about"><div slot="headline" data-i18n="menu.about.company">公司介绍</div></md-menu-item>
+          <md-menu-item data-header-target="#journeyBox"><div slot="headline" data-i18n="footer.address">地址与联系</div></md-menu-item>
+          <md-menu-item data-header-target="#certRow"><div slot="headline" data-i18n="menu.about.certifications">安全认证</div></md-menu-item>
+        </md-menu>
+      </div>
+    </nav>
+    <div class="site-header-actions">
+      <div class="site-language">
+        <button class="site-language-trigger" id="m-lang" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="mm-lang">
+          <svg class="site-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.2 2.4 3.3 5.4 3.3 9s-1.1 6.6-3.3 9c-2.2-2.4-3.3-5.4-3.3-9S9.8 5.4 12 3Z"/></svg>
+          <span data-i18n="nav.lang">语言</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <md-menu anchor="m-lang" id="mm-lang">
+          <md-menu-item data-lang="zh-CN"><div slot="headline">中文（简体）</div></md-menu-item>
+          <md-menu-item data-lang="en"><div slot="headline">English</div></md-menu-item>
+          <md-menu-item data-lang="ja"><div slot="headline">日本語</div></md-menu-item>
+          <md-menu-item data-lang="ko"><div slot="headline">한국어</div></md-menu-item>
+          <md-menu-item data-lang="es"><div slot="headline">Español</div></md-menu-item>
+          <md-menu-item data-lang="fr"><div slot="headline">Français</div></md-menu-item>
+          <md-menu-item data-lang="de"><div slot="headline">Deutsch</div></md-menu-item>
+          <md-menu-item data-lang="ru"><div slot="headline">Русский</div></md-menu-item>
+        </md-menu>
+      </div>
+      <button class="site-login-link" type="button" data-i18n="nav.login">登录</button>
+      <button class="site-primary-button" type="button" data-lead-open="header" data-i18n-aria="cta.get" aria-label="获取方案">
+        <span class="site-cta-label" data-i18n="cta.get">获取方案</span><span class="site-cta-short" data-i18n="cta.short">获取方案</span>
+      </button>
+      <button class="site-mobile-toggle" id="m-nav" type="button" aria-label="导航菜单" data-i18n-aria="nav.menu" aria-expanded="false" aria-controls="mobileNav">
+        <svg class="site-icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="site-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+
   </div>
+  <nav class="site-mobile-nav" id="mobileNav" aria-label="导航菜单" data-i18n-aria="nav.menu" hidden>
+    <div class="site-mobile-nav-inner">
+      <details class="site-mobile-group">
+        <summary><span data-i18n="nav.product">产品与服务</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+        <div class="site-mobile-sublinks">
+          <a href="#sec-what" data-mobile-link data-i18n="menu.product.1">产品总览</a>
+          <a href="#mode-explorer" data-mobile-link data-i18n="menu.product.2">四种经营模式</a>
+          <a href="#service-deploy" data-mobile-link data-i18n="svc.deploy.title">私有化部署</a>
+          <a href="#service-security" data-mobile-link data-i18n="svc.security.title">数据安全</a>
+        </div>
+      </details>
+      <details class="site-mobile-group">
+        <summary><span data-i18n="nav.solution">行业方案</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+        <div class="site-mobile-sublinks">
+          <a href="#industrySolutions" data-mobile-link data-industry-menu="0" data-i18n="menu.solution.1">家电与电工</a>
+          <a href="#industrySolutions" data-mobile-link data-industry-menu="1" data-i18n="menu.solution.2">电子元器件</a>
+          <a href="#industrySolutions" data-mobile-link data-industry-menu="2" data-i18n="menu.solution.3">工业制造</a>
+          <a href="#industrySolutions" data-mobile-link data-industry-menu="3" data-i18n="menu.solution.4">快消与零售</a>
+        </div>
+      </details>
+      <a class="site-mobile-link" href="#caseStudies" data-mobile-link><span data-i18n="nav.cases">客户案例</span></a>
+      <a class="site-mobile-link" href="#aiAgent" data-mobile-link><span data-i18n="nav.ai">AI 智能体</span></a>
+      <details class="site-mobile-group">
+        <summary><span data-i18n="nav.tech">技术架构</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+        <div class="site-mobile-sublinks">
+          <a href="#arch" data-mobile-link data-i18n="arch.title">整体架构</a>
+          <a href="#techRing" data-mobile-link data-i18n="menu.tech.stack">技术栈</a>
+          <a href="#dataSource" data-mobile-link data-i18n="menu.tech.data">数据同源</a>
+        </div>
+      </details>
+      <details class="site-mobile-group">
+        <summary><span data-i18n="nav.about">关于我们</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+        <div class="site-mobile-sublinks">
+          <a href="#sec-about" data-mobile-link data-i18n="menu.about.company">公司介绍</a>
+          <a href="#journeyBox" data-mobile-link data-i18n="footer.address">地址与联系</a>
+          <a href="#certRow" data-mobile-link data-i18n="menu.about.certifications">安全认证</a>
+        </div>
+      </details>
+      <div class="site-mobile-language">
+        <label for="mobileLang" data-i18n="nav.lang">语言</label>
+        <select id="mobileLang" aria-label="语言" data-i18n-aria="nav.lang">
+          <option value="zh-CN">中文（简体）</option><option value="en">English</option>
+          <option value="ja">日本語</option><option value="ko">한국어</option>
+          <option value="es">Español</option><option value="fr">Français</option>
+          <option value="de">Deutsch</option><option value="ru">Русский</option>
+        </select>
+      </div>
+    </div>
+  </nav>
 </header>
 <script>
-  document.querySelectorAll('md-menu').forEach((menu) => {
-    const btn = document.getElementById(menu.getAttribute('anchor'));
-    btn?.addEventListener('click', () => { menu.open = !menu.open; });
-  });
-  // 移动端汉堡菜单：点击章节项平滑滚动并关闭
-  document.querySelectorAll('#mm-nav md-menu-item[data-scroll]').forEach((item) => {
-    item.addEventListener('click', () => {
-      const el = document.querySelector(item.getAttribute('data-scroll'));
-      document.getElementById('mm-nav').open = false;
-      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+(function () {
+  const header = document.getElementById('siteHeader');
+  const mobileToggle = document.getElementById('m-nav');
+  const mobileNav = document.getElementById('mobileNav');
+  const mobileLang = document.getElementById('mobileLang');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const menus = [...document.querySelectorAll('.site-header md-menu[anchor]')];
+
+  function closeMenus(except) {
+    menus.forEach((menu) => {
+      if (menu === except) return;
+      menu.open = false;
+      const trigger = document.getElementById(menu.getAttribute('anchor'));
+      trigger?.setAttribute('aria-expanded', 'false');
     });
+  }
+  menus.forEach((menu) => {
+    const trigger = document.getElementById(menu.getAttribute('anchor'));
+    if (!trigger) return;
+    trigger.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const open = !menu.open;
+      closeMenus(menu);
+      menu.open = open;
+      trigger.setAttribute('aria-expanded', String(open));
+    });
+    menu.addEventListener('closed', () => trigger.setAttribute('aria-expanded', 'false'));
   });
+
+  function closeMobileNav() {
+    if (!mobileNav || !mobileToggle) return;
+    mobileNav.hidden = true;
+    mobileToggle.setAttribute('aria-expanded', 'false');
+  }
+  window.__closeSiteMobileNav = closeMobileNav;
+  mobileToggle?.addEventListener('click', () => {
+    const open = mobileNav.hidden;
+    mobileNav.hidden = !open;
+    mobileToggle.setAttribute('aria-expanded', String(open));
+    if (open) closeMenus();
+  });
+  mobileNav?.querySelectorAll('[data-mobile-link]').forEach((link) => {
+    link.addEventListener('click', () => { closeMobileNav(); closeMenus(); });
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    closeMenus();
+    if (mobileNav && !mobileNav.hidden) {
+      closeMobileNav();
+      mobileToggle?.focus();
+    }
+  });
+  document.addEventListener('click', (event) => {
+    if (mobileNav && !mobileNav.hidden && header && !header.contains(event.target)) closeMobileNav();
+  });
+
+  function scrollToTarget(selector) {
+    const target = document.querySelector(selector);
+    if (!target) return;
+    closeMenus();
+    closeMobileNav();
+    target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    try { history.replaceState(null, '', selector); } catch (e) { /* file:// 等环境下保留滚动行为即可 */ }
+  }
+  document.addEventListener('click', (event) => {
+    const item = event.target.closest?.('[data-header-target]');
+    if (!item) return;
+    event.preventDefault();
+    scrollToTarget(item.getAttribute('data-header-target'));
+  });
+  document.querySelectorAll('.site-header a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', () => { closeMenus(); closeMobileNav(); });
+  });
+  mobileLang?.addEventListener('change', () => {
+    window.__i18nApply?.(mobileLang.value);
+    closeMobileNav();
+  });
+  document.addEventListener('i18n:applied', (event) => {
+    if (mobileLang && event.detail?.lang) mobileLang.value = event.detail.lang;
+  });
+
+  const sectionMap = [
+    ['sec-what', 'product'], ['what-pricing', 'pricing'], ['industrySolutions', 'solution'],
+    ['caseStudies', 'cases'], ['sec-how', 'tech'], ['aiAgent', 'ai'], ['sec-about', 'about'],
+  ];
+  const navItems = [...document.querySelectorAll('[data-nav-section]')];
+  let scrollTicking = false;
+  function updateActiveNav() {
+    const marker = window.scrollY + 112;
+    let active = '';
+    sectionMap.forEach(([id, key]) => {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top + window.scrollY <= marker) active = key;
+    });
+    navItems.forEach((item) => item.classList.toggle('is-active', item.getAttribute('data-nav-section') === active));
+    scrollTicking = false;
+  }
+  function requestActiveNav() {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(updateActiveNav);
+  }
+  window.addEventListener('scroll', requestActiveNav, { passive: true });
+  window.addEventListener('resize', requestActiveNav);
+  window.addEventListener('load', updateActiveNav);
+  updateActiveNav();
+})();
 </script>
+
+<main id="main-content" tabindex="-1">
 
 <!-- ============ HERO 轮播 ============ -->
 <section class="relative overflow-hidden">
@@ -864,7 +1189,9 @@
       <div>
         <h1 class="text-[34px] leading-[1.15] md:text-[56px] md:leading-[1.2] font-extrabold tracking-tight" data-i18n="hero1.title">B2B数智化</h1>
         <p class="mt-6 text-[var(--sub)] text-[16px] leading-7 max-w-[440px]" data-i18n="hero1.desc">渠道业务一句话概述（如：覆盖品牌方、经销商、门店、终端的多级渠道协同）</p>
+
         <div class="mt-10"><md-filled-button data-lead-open="hero-1" trailing-icon data-i18n="cta.get">获取方案</md-filled-button></div>
+
       </div>
     </div>
 
@@ -872,7 +1199,7 @@
       <div>
         <h1 class="text-[34px] leading-[1.15] md:text-[56px] md:leading-[1.2] font-extrabold tracking-tight" data-i18n="hero2.title">AI智能体</h1>
         <p class="mt-6 text-[var(--sub)] text-[16px] leading-7 max-w-[440px]" data-i18n="hero2.desc">AI 智能体一句话概述（客服机器人 / Workflow 智能体等，降低使用门槛）</p>
-        <div class="mt-10"><md-outlined-button data-i18n="hero2.cta">了解 AI 智能体</md-outlined-button></div>
+        <div class="mt-10"><md-outlined-button data-header-target="#aiAgent" data-i18n="hero2.cta">了解 AI 智能体</md-outlined-button></div>
       </div>
     </div>
 
@@ -880,7 +1207,9 @@
       <div>
         <h1 class="text-[34px] leading-[1.15] md:text-[56px] md:leading-[1.2] font-extrabold tracking-tight" data-i18n="hero3.title">让数据流动</h1>
         <p class="mt-6 text-[var(--sub)] text-[16px] leading-7 max-w-[440px]" data-i18n="hero3.desc">副标题 / 一句话价值主张（一句话解释产品解决什么问题）</p>
+
         <div class="mt-10"><md-filled-button data-lead-open="hero-3" trailing-icon data-i18n="cta.get">获取方案</md-filled-button></div>
+
       </div>
     </div>
 
@@ -1092,13 +1421,15 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
       <p class="what-block-sub" data-i18n="what.services.sub">按您的 IT 环境选择部署方式，以加密、权限与合规能力保护业务数据。</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <md-outlined-card class="service-card"><div class="pad service-card-inner">
+
+      <md-outlined-card id="service-deploy" class="service-card"><div class="pad service-card-inner">
         <div class="service-orb-frame" aria-hidden="true"><svg class="service-orb orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></div>
         <div class="service-copy"><h4 data-i18n="svc.deploy.title">私有化部署</h4><p data-i18n="svc.deploy.desc">本地 / 专属云部署说明</p></div>
       </div></md-outlined-card>
-      <md-outlined-card class="service-card"><div class="pad service-card-inner">
+      <md-outlined-card id="service-security" class="service-card"><div class="pad service-card-inner">
         <div class="service-orb-frame" aria-hidden="true"><svg class="service-orb orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></div>
         <div class="service-copy"><h4 data-i18n="svc.security.title">数据安全</h4><p data-i18n="svc.security.desc">加密 / 权限 / 合规说明</p></div>
+
       </div></md-outlined-card>
     </div>
 
@@ -1396,22 +1727,26 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
           heading.focus({ preventScroll: true });
         }
       });
-      document.querySelectorAll('[data-industry-menu]').forEach(function (item) {
-        item.addEventListener('click', function () {
-          var selected = tabs[Number(item.getAttribute('data-industry-menu'))];
-          go(Number(item.getAttribute('data-industry-menu')), false);
-          var menu = item.closest('md-menu');
-          if (menu) {
-            menu.skipRestoreFocus = true;
-            menu.addEventListener('closed', function () {
-              if (selected) selected.focus({ preventScroll: true });
-            }, { once: true });
-            menu.open = false;
-          } else if (selected) {
-            selected.focus({ preventScroll: true });
-          }
-          root.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
-        });
+      /* 事件委托覆盖页眉、移动菜单与页脚；行业入口同时定位并选中对应 Tab。 */
+      document.addEventListener('click', function (event) {
+        var item = event.target.closest ? event.target.closest('[data-industry-menu]') : null;
+        if (!item) return;
+        event.preventDefault();
+        var selected = tabs[Number(item.getAttribute('data-industry-menu'))];
+        go(Number(item.getAttribute('data-industry-menu')), false);
+        var menu = item.closest('md-menu');
+        if (menu) {
+          menu.skipRestoreFocus = true;
+          menu.addEventListener('closed', function () {
+            if (selected) selected.focus({ preventScroll: true });
+          }, { once: true });
+          menu.open = false;
+        } else if (selected) {
+          selected.focus({ preventScroll: true });
+        }
+        if (window.__closeSiteMobileNav) window.__closeSiteMobileNav();
+        root.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+        try { history.replaceState(null, '', '#industrySolutions'); } catch (e) { /* file:// 下保留滚动 */ }
       });
 
       var resizeTimer;
@@ -1832,6 +2167,22 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
         }
         qBtns.forEach(function (btn) { btn.addEventListener('click', function () { ask(btn); }); });
 
+        /* 页脚 AI 场景入口：直达演示并切换对应场景。 */
+        document.querySelectorAll('[data-ai-scene]').forEach(function (link) {
+          link.addEventListener('click', function (event) {
+            event.preventDefault();
+            var scene = link.getAttribute('data-ai-scene');
+            var tab = sceneTabs.find(function (item) { return item.getAttribute('data-scene') === scene; });
+            if (tab) {
+              tab.click();
+              tab.focus({ preventScroll: true });
+            }
+            if (window.__closeSiteMobileNav) window.__closeSiteMobileNav();
+            root.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+            try { history.replaceState(null, '', '#aiAgent'); } catch (e) { /* file:// 下保留滚动 */ }
+          });
+        });
+
         /* 语言切换：刷新状态文案 + 已显示对话（打断进行中的流式输出） */
         document.addEventListener('i18n:applied', function () {
           statusEl.textContent = tr(statusEl.getAttribute('data-i18n'));
@@ -2002,27 +2353,69 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
           <p class="mt-3 text-[14px] md:text-[15px] leading-6 text-[var(--sub)]" data-i18n="cta.final.desc">留下需求，我们将在 1 个工作日内联系你</p>
         </div>
         <div class="w-full md:w-auto shrink-0">
+
           <md-filled-button class="final-cta-button w-full md:w-auto" data-lead-open="final-cta" trailing-icon data-i18n="cta.get">获取方案</md-filled-button>
+
         </div>
       </div>
     </div>
   </div>
 </section>
 
+</main>
+
 <!-- ============ 页脚 ============ -->
-<footer class="pt-16 pb-8 text-[var(--sub)] bg-white border-t border-[var(--line)]">
-  <div class="max-w-[1200px] mx-auto px-6 grid grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-8 text-[14px]">
-    <div>
-      <img src="assets/logo-shopex.png" alt="ShopeX" class="h-7 w-auto" onerror="this.outerHTML='<span class=&quot;text-[14px] font-bold tracking-wide&quot;>ShopeX</span>'">
-      <p class="mt-4 text-[13px] text-[var(--faint)] leading-6" data-i18n-html="footer.slogan">公司一句话简介 / 品牌主张<br>（可复用 hero slogan）</p>
+<footer class="site-footer">
+  <div class="site-footer-grid">
+    <div class="site-footer-brand">
+      <a class="site-brand" href="#top" aria-label="ShopeX">
+        <img src="assets/logo-shopex.png" alt="ShopeX" onerror="this.outerHTML='<span class=&quot;site-brand-fallback&quot;>ShopeX</span>'">
+      </a>
+      <p data-i18n="footer.slogan">让渠道、数据与 AI 在同一套 B2B 底座上协同流动。</p>
     </div>
-    <div><h4 class="text-[var(--ink)] font-semibold mb-4" data-i18n="nav.product">产品</h4><div class="ph-bar w-4/5 mb-3"></div><div class="ph-bar w-4/5 mb-3"></div><div class="ph-bar w-4/5"></div></div>
-    <div><h4 class="text-[var(--ink)] font-semibold mb-4" data-i18n="nav.solution">解决方案</h4><div class="ph-bar w-4/5 mb-3"></div><div class="ph-bar w-4/5 mb-3"></div><div class="ph-bar w-4/5"></div></div>
-    <div><h4 class="text-[var(--ink)] font-semibold mb-4" data-i18n="nav.about">关于我们</h4><div class="ph-bar w-4/5 mb-3"></div><div class="ph-bar w-4/5 mb-3"></div><div class="ph-bar w-4/5"></div></div>
-    <div><h4 class="text-[var(--ink)] font-semibold mb-4" data-i18n="footer.support">支持 / 联系</h4><div class="ph-bar w-4/5 mb-3"></div><div class="ph-bar w-4/5 mb-3"></div><div class="ph-bar w-4/5"></div></div>
+    <nav class="site-footer-links" aria-label="导航菜单" data-i18n-aria="nav.menu">
+      <section class="site-footer-column">
+        <h2 class="site-footer-title" data-i18n="nav.product">产品与服务</h2>
+        <a href="#sec-what" data-i18n="menu.product.1">产品总览</a>
+        <a href="#mode-explorer" data-i18n="menu.product.2">四种经营模式</a>
+        <a href="#service-deploy" data-i18n="svc.deploy.title">私有化部署</a>
+        <a href="#service-security" data-i18n="svc.security.title">数据安全</a>
+        <a href="#what-pricing" data-i18n="nav.pricing">价格</a>
+      </section>
+      <section class="site-footer-column">
+        <h2 class="site-footer-title" data-i18n="footer.industry.cases">行业与案例</h2>
+        <a href="#industrySolutions" data-industry-menu="0" data-i18n="menu.solution.1">家电与电工</a>
+        <a href="#industrySolutions" data-industry-menu="1" data-i18n="menu.solution.2">电子元器件</a>
+        <a href="#industrySolutions" data-industry-menu="2" data-i18n="menu.solution.3">工业制造</a>
+        <a href="#industrySolutions" data-industry-menu="3" data-i18n="menu.solution.4">快消与零售</a>
+        <a href="#caseStudies" data-i18n="nav.cases">客户案例</a>
+      </section>
+      <section class="site-footer-column">
+        <h2 class="site-footer-title" data-i18n="nav.ai">AI 智能体</h2>
+        <a href="#aiAgent" data-i18n="footer.ai.overview">AI 智能体总览</a>
+        <a href="#aiAgent" data-ai-scene="1" data-i18n="ag.scene.1">客服场景</a>
+        <a href="#aiAgent" data-ai-scene="2" data-i18n="ag.scene.2">询报价场景</a>
+        <a href="#aiAgent" data-ai-scene="3" data-i18n="ag.scene.3">工单场景</a>
+      </section>
+      <section class="site-footer-column">
+        <h2 class="site-footer-title" data-i18n="nav.tech">技术架构</h2>
+        <a href="#arch" data-i18n="arch.title">整体架构</a>
+        <a href="#techRing" data-i18n="menu.tech.stack">技术栈</a>
+        <a href="#dataSource" data-i18n="menu.tech.data">数据同源</a>
+      </section>
+      <section class="site-footer-column">
+        <h2 class="site-footer-title" data-i18n="footer.about">关于与支持</h2>
+        <a href="#sec-about" data-i18n="menu.about.company">公司介绍</a>
+        <a href="#journeyBox" data-i18n="footer.address">地址与联系</a>
+        <a href="#certRow" data-i18n="menu.about.certifications">安全认证</a>
+        <a href="#sec-faq" data-i18n="how.qa">Q&amp;A · 常见问题</a>
+        <button class="site-footer-action" type="button" data-lead-open="footer" data-i18n="plan.cta">获取方案和报价</button>
+      </section>
+    </nav>
   </div>
-  <div class="max-w-[1200px] mx-auto px-6 mt-12 pt-6 border-t border-[var(--line)] text-[12px] text-[var(--faint)] flex flex-col gap-2 md:flex-row md:justify-between">
-    <span data-i18n="footer.copy">© 2025 公司名称 · 京ICP备XXXXXXXX号 · 公安备案号</span><span data-i18n="footer.links">隐私政策 | 服务条款 | 网站地图</span>
+  <div class="site-footer-bottom">
+    <span data-i18n="footer.copy">© 2025 ShopeX</span>
+    <span data-i18n="footer.links">隐私政策 | 服务条款 | 网站地图</span>
   </div>
 </footer>
 
@@ -2100,7 +2493,9 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
   window.__openLeadDialog = function (mode) {
     openLead('', mode);
   };
+
   document.querySelectorAll('[data-lead-open]').forEach((button) => {
+
     button.addEventListener('click', () => openLead());
   });
   document.getElementById('cta-plan').addEventListener('click', () => openLead());
