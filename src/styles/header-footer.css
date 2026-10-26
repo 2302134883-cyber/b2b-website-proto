@@ -183,14 +183,14 @@
     color: var(--faint); font-size: 12px; line-height: 1.7;
   }
   #mode-explorer, #service-deploy, #service-security, #arch, #techRing, #dataSource, #aiAgent, #journeyBox, #certRow { scroll-margin-top: 88px; }
-  @media (max-width: 1399px) and (min-width: 1200px) {
+  @media (max-width: 1399px) and (min-width: 1024px) {
     .site-header-inner { gap: 12px; padding-inline: 20px; }
     .site-desktop-nav { margin-left: 0; gap: 0; }
     .site-nav-trigger, .site-nav-link, .site-login-link, .site-language-trigger { padding-inline: 6px; font-size: 12px; }
     .site-header-actions { gap: 4px; }
     .site-primary-button { padding-inline: 13px; font-size: 12px; }
   }
-  @media (max-width: 1199px) {
+  @media (max-width: 1023px) {
     .site-header-inner { padding-inline: 20px; gap: 12px; }
     .site-desktop-nav, .site-login-link, .site-language { display: none; }
     .site-mobile-toggle { display: inline-flex; }
