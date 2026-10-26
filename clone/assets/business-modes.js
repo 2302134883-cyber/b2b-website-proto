@@ -7,7 +7,7 @@
     'zh-CN': {
       'what.products': "DMS-B2B 交易管理系统",
       'modes.title': "一套系统，支持四种经营模式",
-      'modes.sub': "不用先懂缩写：看货谁供、客户归谁、规矩谁定，就能找到适合您的经营方式。",
+      'modes.sub': "看供货、客户和规则，找到适合您的经营方式。",
       'modes.aria': "四种经营模式",
       'modes.chain': "角色关系",
       'modes.capabilities': "关键能力",
@@ -87,7 +87,7 @@
     en: {
       'what.products': "DMS-B2B transaction management",
       'modes.title': "One system, four operating models",
-      'modes.sub': "Skip the acronyms. See who supplies the goods, owns the customer relationship and sets the rules to find your fit.",
+      'modes.sub': "Compare supply, customer ownership and rules to find your fit.",
       'modes.aria': "Four operating models",
       'modes.chain': "How it works",
       'modes.capabilities': "Key capabilities",
@@ -167,7 +167,7 @@
     ja: {
       'what.products': "DMS-B2B 取引管理システム",
       'modes.title': "1つのシステムで、4つの経営モデルに対応",
-      'modes.sub': "略語を覚える必要はありません。貨物の供給者、顧客の所有者、ルールの決定者から最適なモデルを選べます。",
+      'modes.sub': "供給・顧客・ルールから、最適な経営モデルを見つけられます。",
       'modes.aria': "4つの経営モデル",
       'modes.chain': "取引の流れ",
       'modes.capabilities': "主な機能",
@@ -247,7 +247,7 @@
     ko: {
       'what.products': "DMS-B2B 거래 관리 시스템",
       'modes.title': "하나의 시스템, 네 가지 운영 모델",
-      'modes.sub': "약어를 외울 필요가 없습니다. 상품 공급자, 고객 소유 주체, 규칙 결정자를 확인하면 맞는 모델을 찾을 수 있습니다.",
+      'modes.sub': "공급, 고객, 규칙을 기준으로 알맞은 운영 모델을 찾아보세요.",
       'modes.aria': "네 가지 운영 모델",
       'modes.chain': "거래 구조",
       'modes.capabilities': "핵심 기능",
@@ -327,7 +327,7 @@
     es: {
       'what.products': "Sistema de gestión de transacciones DMS-B2B",
       'modes.title': "Un sistema, cuatro modelos de negocio",
-      'modes.sub': "Olvide las siglas. Vea quién suministra, quién posee la relación con el cliente y quién define las reglas para encontrar su modelo.",
+      'modes.sub': "Suministro, clientes y reglas: encuentre el modelo que mejor encaja con su negocio.",
       'modes.aria': "Cuatro modelos de negocio",
       'modes.chain': "Cómo funciona",
       'modes.capabilities': "Capacidades clave",
@@ -407,7 +407,7 @@
     fr: {
       'what.products': "Système de gestion des transactions DMS-B2B",
       'modes.title': "Un système, quatre modèles d’exploitation",
-      'modes.sub': "Inutile de connaître les sigles. Identifiez qui fournit les biens, qui possède la relation client et qui fixe les règles pour trouver votre modèle.",
+      'modes.sub': "Approvisionnement, clients et règles : trouvez le modèle adapté à votre activité.",
       'modes.aria': "Quatre modèles d’exploitation",
       'modes.chain': "Comment cela fonctionne",
       'modes.capabilities': "Fonctions clés",
@@ -487,7 +487,7 @@
     de: {
       'what.products': "DMS-B2B Transaktionsmanagement",
       'modes.title': "Ein System, vier Geschäftsmodelle",
-      'modes.sub': "Sie müssen die Abkürzungen nicht kennen. Sehen Sie, wer liefert, wem die Kundenbeziehung gehört und wer die Regeln festlegt, um das passende Modell zu finden.",
+      'modes.sub': "Warenbezug, Kunden und Regeln: Finden Sie das passende Geschäftsmodell.",
       'modes.aria': "Vier Geschäftsmodelle",
       'modes.chain': "So funktioniert es",
       'modes.capabilities': "Kernfunktionen",
@@ -567,7 +567,7 @@
     ru: {
       'what.products': "Система управления сделками DMS-B2B",
       'modes.title': "Одна система — четыре модели бизнеса",
-      'modes.sub': "Не нужно разбираться в аббревиатурах. Посмотрите, кто поставляет товар, кому принадлежат клиенты и кто устанавливает правила, чтобы выбрать модель.",
+      'modes.sub': "Сравните поставки, работу с клиентами и правила, чтобы выбрать подходящую модель.",
       'modes.aria': "Четыре модели бизнеса",
       'modes.chain': "Как это работает",
       'modes.capabilities': "Ключевые возможности",
