@@ -1,0 +1,105 @@
+/* ============ Gemini Neural Expressive × Material 3 令牌 ============ */
+  :root {
+    --md-sys-color-primary: #111827;
+    --md-sys-color-on-primary: #ffffff;
+    --md-sys-color-secondary: #6d5ef0;
+    --md-sys-color-on-secondary: #ffffff;
+    --md-sys-color-secondary-container: #f1edfd;
+    --md-sys-color-on-secondary-container: #4c3fd6;
+    --md-sys-color-surface: #ffffff;
+    --md-sys-color-surface-container: #fafbfc;
+    --md-sys-color-surface-container-high: #f7f8fa;
+    --md-sys-color-on-surface: #111827;
+    --md-sys-color-on-surface-variant: #6b7280;
+    --md-sys-color-outline: #e2e5ea;
+    --md-sys-color-outline-variant: #eceef2;
+    --md-sys-typescale-plain-font-family: "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    --md-sys-shape-corner-medium: 16px;
+    --md-sys-shape-corner-large: 16px;
+
+    --ink: #111827;
+    --sub: #6b7280;
+    --faint: #6e7681;
+    --line: #eceef2;
+    --line-2: #e2e5ea;
+    --wash: #fafbfc;
+  }
+  body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #fff; color: var(--ink); -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- SVG 圆形弥散渐变（唯一色彩来源） ---- */
+  .orb { display: block; will-change: transform; animation: orbspin 64s linear infinite; }
+  .orb-slow { animation-duration: 96s; }
+  @keyframes orbspin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .orb, .title-orb { animation: none !important; } }
+
+  /* ---- 占位 ---- */
+  .ph {
+    border: 1px dashed var(--line-2); border-radius: 12px; background: var(--wash);
+    color: var(--faint); font-size: 13px; display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 8px;
+  }
+  .ph-bar { height: 12px; border-radius: 6px; background: #f1f2f5; }
+
+  .cert-card {
+    width: 152px; padding: 16px 12px 12px; box-sizing: border-box;
+    border: 1px solid var(--line); border-radius: 16px; background: #fff;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    transition: transform .25s ease, border-color .2s ease;
+    opacity: 0;
+  }
+  .certs-in .cert-card { animation: cert-in .55s cubic-bezier(.22,.8,.36,1) forwards; }
+  .certs-in .cert-card:nth-child(2) { animation-delay: .08s; }
+  .certs-in .cert-card:nth-child(3) { animation-delay: .16s; }
+  .certs-in .cert-card:nth-child(4) { animation-delay: .24s; }
+  .certs-in .cert-card:nth-child(5) { animation-delay: .32s; }
+  .certs-in .cert-card:nth-child(6) { animation-delay: .40s; }
+  .certs-done .cert-card { animation: none; opacity: 1; }
+  @keyframes cert-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  .cert-card:hover { border-color: #ddd6fe; transform: translateY(-4px); }
+  .cert-card img { width: 72px; height: 72px; object-fit: contain; animation: cert-breathe 4s ease-in-out infinite; }
+  .cert-card:nth-child(2) img { animation-delay: -0.7s; }
+  .cert-card:nth-child(3) img { animation-delay: -1.4s; }
+  .cert-card:nth-child(4) img { animation-delay: -2.1s; }
+  .cert-card:nth-child(5) img { animation-delay: -2.8s; }
+  .cert-card:nth-child(6) img { animation-delay: -3.5s; }
+  @keyframes cert-breathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  .cert-card span { font-size: 12px; color: var(--sub); }
+  @media (prefers-reduced-motion: reduce) {
+    .cert-card, .cert-card img { animation: none !important; opacity: 1; transform: none; }
+  }
+
+  /* ---- 章节头：小 orb 节点 ---- */
+  .sec-head { width: 100%; display: flex; align-items: center; justify-content: center; gap: 16px; }
+
+  /* ---- 收尾 CTA：细边卡片 + 局部 orb ---- */
+  .final-cta-card {
+    position: relative; overflow: hidden;
+    border: 1px solid var(--line); border-radius: 24px; background: #fff;
+  }
+  .final-cta-orb {
+    position: absolute; width: 192px; height: 192px; right: -72px; bottom: -48px;
+    opacity: .42; pointer-events: none; transform-origin: center;
+    animation: orbspin 96s linear infinite, final-cta-breathe 5.6s ease-in-out infinite;
+  }
+  @keyframes final-cta-breathe {
+    0%, 100% { scale: .96; opacity: .32; }
+    50% { scale: 1.05; opacity: .5; }
+  }
+  .final-cta-button { --md-filled-button-container-height: 48px; }
+  @media (min-width: 768px) {
+    .final-cta-orb {
+      width: 240px; height: 240px; right: -40px; top: 50%; bottom: auto; margin-top: -120px;
+    }
+  }
+
+  /* ---- MWC 局部驯化 ---- */
+  md-outlined-card { --md-outlined-card-outline-color: var(--line); border-radius: 16px; }
+  md-outlined-card .pad { padding: 32px; }
+  md-outlined-card:hover { --md-outlined-card-outline-color: #ddd6fe; }
+  md-outlined-select, md-outlined-text-field { width: 100%; }
+  md-menu { --md-menu-container-color: #fff; }
+  md-dialog { --md-dialog-container-color: #fff; --md-dialog-container-shape: 20px; }
+  md-dialog [slot="content"] { min-width: 300px; }

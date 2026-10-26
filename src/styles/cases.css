@@ -1,0 +1,63 @@
+/* ============ CASE 节点链选择器（cc- 前缀，独立组件） ============ */
+  .cc { margin-top: 8px; }
+  .cc-chain { display: flex; align-items: flex-start; }
+  .cc-node {
+    appearance: none; font: inherit; background: none; border: none; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    min-width: 0; padding: 2px 10px 0; color: var(--sub); text-align: center; border-radius: 12px;
+    transition: color .25s ease;
+  }
+  .cc-node:focus-visible { outline: none; }
+  .cc-node:focus-visible .cc-dot { box-shadow: 0 0 0 3px rgba(17,24,39,.12); }
+  .cc-dot {
+    position: relative; width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+    border: 1px solid var(--line-2); background: #fff;
+    transition: transform .3s cubic-bezier(.25,1,.5,1), border-color .3s ease;
+  }
+  .cc-dot::before {  /* orb 光晕（与 lm-mark::after 同色系） */
+    content: ""; position: absolute; inset: -16px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(196,181,253,.45), rgba(147,184,248,.18) 58%, transparent 76%);
+    opacity: 0; transition: opacity .35s ease;
+  }
+  .cc-dot i {  /* orb 核心（与 arch-spine 流动点同渐变） */
+    position: absolute; inset: 1px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #a8c8fa, #d3c6f8 55%, rgba(255,255,255,0) 85%);
+    opacity: 0; transform: scale(.3);
+    transition: opacity .3s ease, transform .35s cubic-bezier(.25,1,.5,1);
+  }
+  .cc-node.on { color: var(--ink); }
+  .cc-node.on .cc-dot { border-color: transparent; transform: scale(1.2); }
+  .cc-node.on .cc-dot::before, .cc-node:hover .cc-dot::before { opacity: 1; }
+  .cc-node.on .cc-dot i { opacity: 1; transform: scale(1); }
+  .cc-name { max-width: 100%; font-size: 14px; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; hyphens: auto; }
+  .cc-tag { max-width: 100%; font-size: 11px; color: var(--faint); overflow-wrap: anywhere; hyphens: auto; }
+  .cc-link { position: relative; flex: 1; min-width: 24px; height: 1px; background: var(--line-2); margin-top: 9px; }
+  .cc-link i {  /* 填充段：orb 同色系线性渐变 */
+    position: absolute; inset: -0.5px 0; display: block;
+    background: linear-gradient(90deg, #93b8f8, #c4b5f5, #f0c9e8);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .6s cubic-bezier(.4,0,.2,1);
+  }
+  .cc-link.fill i { transform: scaleX(1); }
+
+  .cc-stage { margin-top: 40px; }
+  .cc-pane { display: none; grid-template-columns: 1.3fr .7fr; gap: 56px; align-items: start; }
+  .cc-pane.on { display: grid; animation: archIn .32s ease both; }
+  .cc-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .cc-block { margin-top: 28px; }
+  .cc-label { font-size: 11px; letter-spacing: .04em; color: var(--faint); margin-bottom: 10px; }
+  .cc-mode { font-size: 15px; font-weight: 600; border-left: 2px solid #c4b5f5; padding-left: 14px; }
+  .cc-desc { font-size: 13px; color: var(--sub); line-height: 1.9; }
+  .cc-stat { border: 1px solid var(--line); border-radius: 16px; background: var(--wash); padding: 28px; }
+  .cc-num { font-size: 48px; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .cc-suffix { font-size: 24px; font-weight: 700; color: var(--faint); margin-left: 4px; }
+  .cc-statcap { margin-top: 10px; font-size: 12px; color: var(--sub); }
+  @media (max-width: 860px) {
+    .cc-pane, .cc-pane.on { grid-template-columns: 1fr; gap: 28px; }
+    .cc-name { font-size: 12px; }
+    .cc-tag { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cc-dot, .cc-dot i, .cc-dot::before, .cc-link i { transition: none; }
+    .cc-pane.on { animation: none; }
+  }
