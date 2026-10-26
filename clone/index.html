@@ -137,7 +137,7 @@
     backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
   }
   .site-header-inner {
-    max-width: 1200px; height: 64px; margin: 0 auto; padding: 0 24px;
+    position: relative; max-width: 1200px; height: 64px; margin: 0 auto; padding: 0 24px;
     display: flex; align-items: center; gap: 20px;
   }
   .site-brand { display: inline-flex; align-items: center; flex: none; text-decoration: none; }
@@ -183,12 +183,15 @@
   .site-nav-item.is-open .site-nav-panel { opacity: 1; visibility: visible; transform: translateY(0); }
   .site-nav-panel--right { left: auto; right: 0; }
   .site-nav-panel--right::before { left: auto; right: 24px; }
+  .site-nav-item--tech { position: static; }
+  .site-nav-panel--tech { left: auto; right: 24px; }
+  .site-nav-panel--tech::before { left: auto; right: var(--site-nav-caret-right, 24px); }
   .site-nav-panel--product { width: 520px; }
   .site-nav-panel--solution { width: 560px; }
   .site-nav-panel--cases { width: 640px; }
   .site-nav-panel--ai { width: 480px; }
   .site-nav-panel--tech { width: 560px; }
-  .site-nav-panel--about { width: 260px; }
+  .site-nav-panel--about { width: 560px; }
   .site-nav-panel-grid { display: grid; gap: 8px; }
   .site-nav-panel-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .site-nav-panel-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -1057,11 +1060,11 @@
           </div>
         </div>
       </div>
-      <div class="site-nav-item">
+      <div class="site-nav-item site-nav-item--tech">
         <a class="site-nav-trigger" id="m-tech" href="#arch" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-panel-tech" data-nav-section="tech">
           <span data-i18n="nav.tech">技术架构</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
         </a>
-        <div class="site-nav-panel site-nav-panel--tech site-nav-panel--right" id="nav-panel-tech" role="menu" aria-label="技术架构">
+        <div class="site-nav-panel site-nav-panel--tech" id="nav-panel-tech" role="menu" aria-label="技术架构">
           <div class="site-nav-panel-grid site-nav-panel-grid--3">
             <a class="site-nav-card" href="#arch" data-header-target="#arch"><span class="site-nav-card-title"><span data-i18n="arch.title">整体架构</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="arch.sub">中台化 B2B 系统 · 角色视角</span></a>
             <a class="site-nav-card" href="#techRing" data-header-target="#techRing"><span class="site-nav-card-title"><span data-i18n="menu.tech.stack">技术栈</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="tech.core.d">一体化数智化底座</span></a>
@@ -1074,9 +1077,11 @@
           <span data-i18n="nav.about">关于我们</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
         </a>
         <div class="site-nav-panel site-nav-panel--about site-nav-panel--right" id="nav-panel-about" role="menu" aria-label="关于我们">
-          <a class="site-nav-panel-link" href="#sec-about" data-header-target="#sec-about" data-i18n="menu.about.company">公司介绍</a>
-          <a class="site-nav-panel-link" href="#journeyBox" data-header-target="#journeyBox" data-i18n="footer.address">地址与联系</a>
-          <a class="site-nav-panel-link" href="#certRow" data-header-target="#certRow" data-i18n="menu.about.certifications">安全认证</a>
+          <div class="site-nav-panel-grid site-nav-panel-grid--3">
+            <a class="site-nav-card" href="#sec-about" data-header-target="#sec-about"><span class="site-nav-card-title"><span data-i18n="menu.about.company">公司介绍</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="about.video">视频占位 · 约 30s</span></a>
+            <a class="site-nav-card" href="#journeyBox" data-header-target="#journeyBox"><span class="site-nav-card-title"><span data-i18n="footer.address">地址与联系</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="addr.building">新漕河泾国际商务中心B座</span></a>
+            <a class="site-nav-card" href="#certRow" data-header-target="#certRow"><span class="site-nav-card-title"><span data-i18n="menu.about.certifications">安全认证</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="why.certs">权威的信息安全管理体系认证</span></a>
+          </div>
         </div>
       </div>
     </nav>
@@ -1202,6 +1207,21 @@
       if (!item.contains(event.relatedTarget)) trigger?.setAttribute('aria-expanded', 'false');
     });
   });
+
+  const techItem = document.querySelector('.site-nav-item--tech');
+  const techPanel = document.getElementById('nav-panel-tech');
+  const headerActions = document.querySelector('.site-header-actions');
+  function alignTechPanelCaret() {
+    if (!techItem || !techPanel || !headerActions) return;
+    const actionsRect = headerActions.getBoundingClientRect();
+    const itemRect = techItem.getBoundingClientRect();
+    const center = itemRect.left + itemRect.width / 2;
+    techPanel.style.setProperty('--site-nav-caret-right', Math.round(actionsRect.right - center - 5) + 'px');
+  }
+  window.addEventListener('resize', alignTechPanelCaret);
+  document.addEventListener('i18n:applied', () => requestAnimationFrame(alignTechPanelCaret));
+  window.addEventListener('load', alignTechPanelCaret);
+  alignTechPanelCaret();
 
   function closeMenus(except) {
     menus.forEach((menu) => {
