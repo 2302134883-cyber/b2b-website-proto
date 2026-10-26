@@ -120,7 +120,7 @@
   }
   document.addEventListener('click', (event) => {
     const item = event.target.closest?.('[data-header-target]');
-    if (!item) return;
+    if (!item || item.hasAttribute('data-tech-capability')) return;
     event.preventDefault();
     scrollToTarget(item.getAttribute('data-header-target'));
   });
