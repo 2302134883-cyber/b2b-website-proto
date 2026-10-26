@@ -49,6 +49,35 @@
 .tc-scene-head > p:last-child { margin: 8px 0 0; color: var(--faint); font-size: 12px; line-height: 1.65; }
 .tc-scene #dataSource { margin-top: 8px; }
 
+/* 桌面紧凑演示：点击后，笔记本一屏内完成左右对照。 */
+@media (min-width: 861px) {
+  #how-data { margin-top: 16px; padding-top: 16px; }
+  #how-data .tc-scene-head { margin-bottom: 4px; }
+  #how-data .tc-scene-head h4 { margin-top: 4px; font-size: 19px; }
+  #how-data .tc-scene-head > p:last-child { margin-top: 4px; }
+  #how-data .dsc-controls {
+    margin-bottom: 12px; padding: 12px 16px; display: grid;
+    grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 16px;
+  }
+  #how-data .dsc-play { min-height: 38px; padding: 8px 16px; font-size: 12px; white-space: nowrap; }
+  #how-data .dsc-tip { min-height: 0; margin: 0; text-align: left; }
+  #how-data .dsc-progress { grid-column: 1 / -1; gap: 16px; margin-top: 4px; }
+  #how-data .dsc-progress-track { height: 2px; margin-top: 4px; }
+  #how-data .dsc-col { padding: 12px 14px; }
+  #how-data .dsc-col-head { min-height: 0; margin-bottom: 10px; }
+  #how-data .dsc-col-status { margin-top: 4px; }
+  #how-data .dsc-ledger, #how-data .dsc-floats { gap: 8px; }
+  #how-data .dsc-price-card { padding: 9px 10px; border-radius: 10px; }
+  #how-data .dsc-price-card .cp { margin-top: 2px; }
+  #how-data .dsc-price-row { min-height: 24px; margin-top: 6px; gap: 6px; }
+  #how-data .dsc-price-card .prc { font-size: 22px; }
+  #how-data .dsc-note { padding-top: 10px; }
+  #how-data .dsc-links, #how-data .dsc-links i { height: 10px; }
+  #how-data .dsc-source { padding: 10px; }
+  #how-data .dsc-cyl-mods { gap: 4px; margin-top: 8px; }
+  #how-data .dsc-cyl-mods span { padding: 3px 2px; }
+}
+
 @media (max-width: 960px) {
   .tc-workbench { grid-template-columns: 1fr; }
   .tc-visual { max-width: 620px; width: 100%; margin: 0 auto; }
