@@ -371,6 +371,86 @@
     .mode-panel.on { animation: none; }
   }
 
+  /* ============ INDUSTRY 行业方案浏览器（ind- 前缀，独立组件） ============ */
+  #industrySolutions { scroll-margin-top: 88px; }
+  .ind-heading { margin-top: 48px; }
+  .ind-heading h3 { margin: 0; font-size: 20px; line-height: 1.4; font-weight: 700; letter-spacing: -.01em; }
+  .ind-sub { margin-top: 8px; font-size: 13px; line-height: 1.7; color: var(--sub); }
+  .ind { margin-top: 24px; }
+  .ind-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 16px; }
+  .ind-tab {
+    appearance: none; font: inherit; min-width: 0; min-height: 64px; padding: 12px 16px;
+    display: flex; align-items: center; gap: 12px; text-align: left; cursor: pointer;
+    color: var(--sub); background: #fff; border: 1px solid var(--line); border-radius: 12px;
+    transition: border-color .2s ease, color .2s ease, background .2s ease;
+  }
+  .ind-tab:hover { border-color: var(--ink); color: var(--ink); }
+  .ind-tab.on { border-color: var(--ink); color: var(--ink); background: var(--wash); }
+  .ind-tab:focus-visible, .ind-pane:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .ind-tab-index { flex-shrink: 0; font-size: 11px; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .ind-tab.on .ind-tab-index { color: var(--ink); }
+  .ind-tab-label { min-width: 0; font-size: 13px; line-height: 1.4; font-weight: 600; overflow-wrap: anywhere; hyphens: auto; }
+  .ind-panes { position: relative; }
+  .ind-pane {
+    box-sizing: border-box; width: 100%; padding: 32px;
+    display: none; grid-template-columns: minmax(0, 1.08fr) minmax(300px, .92fr); gap: 40px;
+    background: #fff; border: 1px solid var(--line); border-radius: 16px;
+  }
+  .ind-pane.on { display: grid; animation: indIn .28s ease both; }
+  @keyframes indIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .ind-copy { min-width: 0; }
+  .ind-index { display: block; font-size: 11px; line-height: 1; letter-spacing: .12em; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .ind-title { margin: 14px 0 0; font-size: 24px; line-height: 1.4; font-weight: 700; letter-spacing: -.02em; }
+  .ind-desc { margin: 14px 0 0; font-size: 13px; line-height: 1.9; color: var(--sub); }
+  .ind-label { margin-top: 24px; font-size: 11px; line-height: 1.5; letter-spacing: .04em; color: var(--faint); }
+  .ind-challenges { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 9px; }
+  .ind-challenges li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.6; color: var(--ink); }
+  .ind-challenges li::before { content: ""; width: 6px; height: 6px; margin-top: 7px; flex-shrink: 0; border: 1px solid var(--ink); border-radius: 50%; box-sizing: border-box; }
+  .ind-products { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .ind-product { padding: 6px 11px; font-size: 11px; line-height: 1.5; color: var(--ink); background: var(--wash); border: 1px solid var(--line-2); border-radius: 999px; }
+  .ind-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .ind-btn {
+    appearance: none; font: inherit; min-height: 44px; padding: 0 20px; cursor: pointer;
+    border-radius: 999px; font-size: 13px; line-height: 1.4; font-weight: 600;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .ind-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .ind-primary { color: #fff; background: var(--ink); border: 1px solid var(--ink); }
+  .ind-primary:hover { background: #2b3442; }
+  .ind-secondary { color: var(--ink); background: #fff; border: 1px solid var(--line-2); }
+  .ind-secondary:hover { border-color: var(--ink); }
+  .ind-visual { min-width: 0; margin: 0; }
+  .ind-image-wrap { position: relative; overflow: hidden; aspect-ratio: 4 / 3; background: var(--wash); border: 1px solid var(--line); border-radius: 12px; }
+  /* 轻微柔化：贴近原图色彩，仅小幅降低饱和度与对比度 */
+  .ind-image-wrap img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.82) contrast(.96) brightness(1.02); transition: transform .6s cubic-bezier(.25,1,.5,1); }
+  .ind-visual:hover .ind-image-wrap img { transform: scale(1.025); }
+  .ind-visual figcaption .ind-label { margin-top: 20px; }
+  .ind-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+  .ind-flow-step { padding: 6px 10px; font-size: 11px; line-height: 1.5; color: var(--ink); background: #fff; border: 1px solid var(--line-2); border-radius: 999px; }
+  .ind-flow-arrow { font-size: 11px; color: var(--faint); }
+  @media (max-width: 900px) {
+    .ind-heading { margin-top: 40px; }
+    .ind-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ind-pane { grid-template-columns: 1fr; gap: 28px; padding: 24px; }
+    .ind-image-wrap { aspect-ratio: 16 / 9; }
+  }
+  @media (max-width: 520px) {
+    .ind-tab { min-height: 60px; padding: 12px; gap: 8px; }
+    .ind-pane { padding: 20px; }
+    .ind-title { font-size: 22px; }
+    .ind-actions { flex-direction: column; align-items: stretch; }
+    .ind-btn { width: 100%; }
+    .ind-image-wrap { aspect-ratio: 4 / 3; }
+  }
+  @media (max-width: 360px) {
+    .ind-tabs { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ind-tab, .ind-btn, .ind-image-wrap img { transition: none; }
+    .ind-pane.on { animation: none; }
+    .ind-visual:hover .ind-image-wrap img { transform: none; }
+  }
+
   /* ============ CASE 节点链选择器（cc- 前缀，独立组件） ============ */
   .cc { margin-top: 8px; }
   .cc-chain { display: flex; align-items: flex-start; }
@@ -609,10 +689,10 @@
     <span class="relative">
       <md-text-button id="m-solution" trailing-icon data-i18n="nav.solution">解决方案</md-text-button>
       <md-menu anchor="m-solution" id="mm-solution">
-        <md-menu-item><div slot="headline" data-i18n="menu.solution.1">行业 1</div></md-menu-item>
-        <md-menu-item><div slot="headline" data-i18n="menu.solution.2">行业 2</div></md-menu-item>
-        <md-menu-item><div slot="headline" data-i18n="menu.solution.3">行业 3</div></md-menu-item>
-        <md-menu-item><div slot="headline" data-i18n="menu.solution.4">行业 4</div></md-menu-item>
+        <md-menu-item data-industry-menu="0"><div slot="headline" data-i18n="menu.solution.1">家电与电工</div></md-menu-item>
+        <md-menu-item data-industry-menu="1"><div slot="headline" data-i18n="menu.solution.2">电子元器件</div></md-menu-item>
+        <md-menu-item data-industry-menu="2"><div slot="headline" data-i18n="menu.solution.3">工业制造</div></md-menu-item>
+        <md-menu-item data-industry-menu="3"><div slot="headline" data-i18n="menu.solution.4">快消与零售</div></md-menu-item>
       </md-menu>
     </span>
     <span class="relative">
@@ -968,15 +1048,271 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     </div>
 
 
-    <h3 class="mt-10 md:mt-16 mb-6 text-[15px] font-semibold" data-i18n="why.industries">行业方案（使用真实图片）</h3>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-      <div class="text-center"><div class="ph h-[136px]" data-i18n="ind.img">行业图</div><div class="mt-4"><md-assist-chip label="行业 1" data-i18n-label="menu.solution.1"></md-assist-chip></div></div>
-      <div class="text-center"><div class="ph h-[136px]" data-i18n="ind.img">行业图</div><div class="mt-4"><md-assist-chip label="行业 2" data-i18n-label="menu.solution.2"></md-assist-chip></div></div>
-      <div class="text-center"><div class="ph h-[136px]" data-i18n="ind.img">行业图</div><div class="mt-4"><md-assist-chip label="行业 3" data-i18n-label="menu.solution.3"></md-assist-chip></div></div>
-      <div class="text-center"><div class="ph h-[136px]" data-i18n="ind.img">行业图</div><div class="mt-4"><md-assist-chip label="行业 4" data-i18n-label="menu.solution.4"></md-assist-chip></div></div>
+    <div class="ind-heading">
+      <h3 data-i18n="why.industries">行业方案</h3>
+      <p class="ind-sub" data-i18n="ind.sub">围绕真实业务链路，组合产品、数据与 AI 能力</p>
     </div>
+    <div class="ind" id="industrySolutions">
+      <div class="ind-tabs" role="tablist" aria-orientation="horizontal" data-i18n-aria="ind.tabs.aria" aria-label="行业方案切换">
+        <button class="ind-tab on" id="indTab1" type="button" role="tab" aria-selected="true" aria-controls="indPanel1" tabindex="0" data-industry="0">
+          <span class="ind-tab-index" aria-hidden="true">01</span><span class="ind-tab-label" data-i18n="menu.solution.1">家电与电工</span>
+        </button>
+        <button class="ind-tab" id="indTab2" type="button" role="tab" aria-selected="false" aria-controls="indPanel2" tabindex="-1" data-industry="1">
+          <span class="ind-tab-index" aria-hidden="true">02</span><span class="ind-tab-label" data-i18n="menu.solution.2">电子元器件</span>
+        </button>
+        <button class="ind-tab" id="indTab3" type="button" role="tab" aria-selected="false" aria-controls="indPanel3" tabindex="-1" data-industry="2">
+          <span class="ind-tab-index" aria-hidden="true">03</span><span class="ind-tab-label" data-i18n="menu.solution.3">工业制造</span>
+        </button>
+        <button class="ind-tab" id="indTab4" type="button" role="tab" aria-selected="false" aria-controls="indPanel4" tabindex="-1" data-industry="3">
+          <span class="ind-tab-index" aria-hidden="true">04</span><span class="ind-tab-label" data-i18n="menu.solution.4">快消与零售</span>
+        </button>
+      </div>
 
-    <h3 class="mt-10 md:mt-16 mb-6 text-[15px] font-semibold" data-i18n="why.cases">案例展示</h3>
+      <div class="ind-panes" id="indPanes">
+        <article class="ind-pane on" id="indPanel1" role="tabpanel" aria-labelledby="indTab1" tabindex="0">
+          <div class="ind-copy">
+            <span class="ind-index" aria-hidden="true">01</span>
+            <h4 class="ind-title" data-i18n="ind1.title">家电与电工行业数字化方案</h4>
+            <p class="ind-desc" data-i18n="ind1.desc">面向品牌总部、经销商与终端门店，统一商品、价格、库存与渠道政策，让订货、履约和售后在同一链路协同。</p>
+            <div class="ind-label" data-i18n="ind.challenges">关键业务挑战</div>
+            <ul class="ind-challenges">
+              <li data-i18n="ind1.challenge1">多级渠道价格与政策难统一</li>
+              <li data-i18n="ind1.challenge2">订单依赖人工，错单漏单难追踪</li>
+              <li data-i18n="ind1.challenge3">库存与售后信息割裂</li>
+            </ul>
+            <div class="ind-label" data-i18n="ind.products">推荐产品组合</div>
+            <div class="ind-products">
+              <span class="ind-product" data-i18n="ind1.product1">B2B（DMS）订货平台</span>
+              <span class="ind-product" data-i18n="ind1.product2">经销商管理</span>
+              <span class="ind-product" data-i18n="ind1.product3">AI 客服智能体</span>
+            </div>
+            <div class="ind-actions">
+              <button type="button" class="ind-btn ind-primary" data-lead-industry="mfg" data-i18n="ind.cta">获取行业方案</button>
+              <button type="button" class="ind-btn ind-secondary" data-case-index="0" data-i18n="ind.case">查看相关案例</button>
+            </div>
+          </div>
+          <figure class="ind-visual">
+            <div class="ind-image-wrap"><img src="assets/industries/appliances.webp" alt="" width="1200" height="900" loading="lazy" decoding="async"></div>
+            <figcaption>
+              <div class="ind-label" data-i18n="ind.chain">典型协同链路</div>
+              <div class="ind-flow">
+                <span class="ind-flow-step" data-i18n="ind1.step1">渠道订货</span><span class="ind-flow-arrow" aria-hidden="true">→</span>
+                <span class="ind-flow-step" data-i18n="ind1.step2">订单审核</span><span class="ind-flow-arrow" aria-hidden="true">→</span>
+                <span class="ind-flow-step" data-i18n="ind1.step3">仓储履约</span><span class="ind-flow-arrow" aria-hidden="true">→</span>
+                <span class="ind-flow-step" data-i18n="ind1.step4">售后服务</span>
+              </div>
+            </figcaption>
+          </figure>
+        </article>
+
+        <article class="ind-pane" id="indPanel2" role="tabpanel" aria-labelledby="indTab2" tabindex="0" hidden>
+          <div class="ind-copy">
+            <span class="ind-index" aria-hidden="true">02</span>
+            <h4 class="ind-title" data-i18n="ind2.title">电子元器件行业供应链协同方案</h4>
+            <p class="ind-desc" data-i18n="ind2.desc">连接上游供应商、平台方与下游采购企业，围绕型号、批次、交期与询价建立高效协同，支撑垂直行业交易与供应链服务。</p>
+            <div class="ind-label" data-i18n="ind.challenges">关键业务挑战</div>
+            <ul class="ind-challenges">
+              <li data-i18n="ind2.challenge1">SKU 与型号复杂，选型效率低</li>
+              <li data-i18n="ind2.challenge2">询报价与交期协同链路长</li>
+              <li data-i18n="ind2.challenge3">供需、库存与订单数据分散</li>
+            </ul>
+            <div class="ind-label" data-i18n="ind.products">推荐产品组合</div>
+            <div class="ind-products">
+              <span class="ind-product" data-i18n="ind2.product1">S2B2B 供应链平台</span>
+              <span class="ind-product" data-i18n="ind2.product2">智能推荐与询报价</span>
+              <span class="ind-product" data-i18n="ind2.product3">供应链协同管理</span>
+            </div>
+            <div class="ind-actions">
+              <button type="button" class="ind-btn ind-primary" data-lead-industry="mfg" data-i18n="ind.cta">获取行业方案</button>
+              <button type="button" class="ind-btn ind-secondary" data-case-index="1" data-i18n="ind.case">查看相关案例</button>
+            </div>
+          </div>
+          <figure class="ind-visual">
+            <div class="ind-image-wrap"><img src="assets/industries/electronics.webp" alt="" width="1200" height="900" loading="lazy" decoding="async"></div>
+            <figcaption>
+              <div class="ind-label" data-i18n="ind.chain">典型协同链路</div>
+              <div class="ind-flow">
+                <span class="ind-flow-step" data-i18n="ind2.step1">寻源选型</span><span class="ind-flow-arrow" aria-hidden="true">→</span>
+                <span class="ind-flow-step" data-i18n="ind2.step2">询价报价</span><span class="ind-flow-arrow" aria-hidden="true">→</span>
+                <span class="ind-flow-step" data-i18n="ind2.step3">订单协同</span><span class="ind-flow-arrow" aria-hidden="true">→</span>
+                <span class="ind-flow-step" data-i18n="ind2.step4">交付对账</span>
+              </div>
+            </figcaption>
+          </figure>
+        </article>
+
+        <article class="ind-pane" id="indPanel3" role="tabpanel" aria-labelledby="indTab3" tabindex="0" hidden>
+          <div class="ind-copy">
+            <span class="ind-index" aria-hidden="true">03</span>
+            <h4 class="ind-title" data-i18n="ind3.title">工业制造行业集采与协同方案</h4>
+            <p class="ind-desc" data-i18n="ind3.desc">面向多工厂、多事业部和多法人组织，统一寻源、合同、订单与结算，连接供应商及内部业务系统，提升采购协同与过程透明度。</p>
+            <div class="ind-label" data-i18n="ind.challenges">关键业务挑战</div>
+            <ul class="ind-challenges">
+              <li data-i18n="ind3.challenge1">多组织采购规则与权限复杂</li>
+              <li data-i18n="ind3.challenge2">供应商全生命周期难管理</li>
+              <li data-i18n="ind3.challenge3">跨系统订单与财务对账繁琐</li>
+            </ul>
+            <div class="ind-label" data-i18n="ind.products">推荐产品组合</div>
+            <div class="ind-products">
+              <span class="ind-product" data-i18n="ind3.product1">B2B 集采平台</span>
+              <span class="ind-product" data-i18n="ind3.product2">供应商全周期管理</span>
+              <span class="ind-product" data-i18n="ind3.product3">ERP / SAP 集成</span>
+            </div>
+            <div class="ind-actions">
+              <button type="button" class="ind-btn ind-primary" data-lead-industry="mfg" data-i18n="ind.cta">获取行业方案</button>
+              <button type="button" class="ind-btn ind-secondary" data-case-index="2" data-i18n="ind.case">查看相关案例</button>
+            </div>
+          </div>
+          <figure class="ind-visual">
+            <div class="ind-image-wrap"><img src="assets/industries/manufacturing.webp" alt="" width="1200" height="900" loading="lazy" decoding="async"></div>
+            <figcaption>
+              <div class="ind-label" data-i18n="ind.chain">典型协同链路</div>
+              <div class="ind-flow">
+                <span class="ind-flow-step" data-i18n="ind3.step1">采购需求</span><span class="ind-flow-arrow" aria-hidden="true">→</span>
+                <span class="ind-flow-step" data-i18n="ind3.step2">寻源审批</span><span class="ind-flow-arrow" aria-hidden="true">→</span>
+                <span class="ind-flow-step" data-i18n="ind3.step3">合同订单</span><span class="ind-flow-arrow" aria-hidden="true">→</span>
+                <span class="ind-flow-step" data-i18n="ind3.step4">结算对账</span>
+              </div>
+            </figcaption>
+          </figure>
+        </article>
+
+        <article class="ind-pane" id="indPanel4" role="tabpanel" aria-labelledby="indTab4" tabindex="0" hidden>
+          <div class="ind-copy">
+            <span class="ind-index" aria-hidden="true">04</span>
+            <h4 class="ind-title" data-i18n="ind4.title">快消与零售行业渠道数字化方案</h4>
+            <p class="ind-desc" data-i18n="ind4.desc">服务品牌商、经销商与零售终端，将高频补货、促销活动、信用支付和库存履约在线化，支撑多区域、多渠道的精细化运营。</p>
+            <div class="ind-label" data-i18n="ind.challenges">关键业务挑战</div>
+            <ul class="ind-challenges">
+              <li data-i18n="ind4.challenge1">高频补货与订单峰值压力大</li>
+              <li data-i18n="ind4.challenge2">促销、价盘与渠道政策复杂</li>
+              <li data-i18n="ind4.challenge3">终端库存与动销反馈滞后</li>
+            </ul>
+            <div class="ind-label" data-i18n="ind.products">推荐产品组合</div>
+            <div class="ind-products">
+              <span class="ind-product" data-i18n="ind4.product1">B2B 订货平台</span>
+              <span class="ind-product" data-i18n="ind4.product2">渠道营销与价格中心</span>
+              <span class="ind-product" data-i18n="ind4.product3">授信支付与库存协同</span>
+            </div>
+            <div class="ind-actions">
+              <button type="button" class="ind-btn ind-primary" data-lead-industry="retail" data-i18n="ind.cta">获取行业方案</button>
+              <button type="button" class="ind-btn ind-secondary" data-industry-explore data-i18n="ind.explore">探索产品与服务</button>
+            </div>
+          </div>
+          <figure class="ind-visual">
+            <div class="ind-image-wrap"><img src="assets/industries/retail.webp" alt="" width="1200" height="900" loading="lazy" decoding="async"></div>
+            <figcaption>
+              <div class="ind-label" data-i18n="ind.chain">典型协同链路</div>
+              <div class="ind-flow">
+                <span class="ind-flow-step" data-i18n="ind4.step1">终端补货</span><span class="ind-flow-arrow" aria-hidden="true">→</span>
+                <span class="ind-flow-step" data-i18n="ind4.step2">智能定价</span><span class="ind-flow-arrow" aria-hidden="true">→</span>
+                <span class="ind-flow-step" data-i18n="ind4.step3">信用支付</span><span class="ind-flow-arrow" aria-hidden="true">→</span>
+                <span class="ind-flow-step" data-i18n="ind4.step4">库存履约</span>
+              </div>
+            </figcaption>
+          </figure>
+        </article>
+      </div>
+    </div>
+    <script>
+    (function () {
+      var root = document.getElementById('industrySolutions');
+      if (!root) return;
+      var tabs = Array.prototype.slice.call(root.querySelectorAll('.ind-tab'));
+      var panes = Array.prototype.slice.call(root.querySelectorAll('.ind-pane'));
+      var stage = document.getElementById('indPanes');
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var current = 0;
+
+      function syncHeight() {
+        var max = 0;
+        panes.forEach(function (pane) {
+          pane.style.cssText = 'display:grid;visibility:hidden;position:absolute;left:0;right:0;top:0;';
+          max = Math.max(max, pane.offsetHeight);
+          pane.style.cssText = '';
+        });
+        stage.style.minHeight = max + 'px';
+      }
+
+      function go(index, focusTab) {
+        current = (index + tabs.length) % tabs.length;
+        tabs.forEach(function (tab, i) {
+          var on = i === current;
+          tab.classList.toggle('on', on);
+          tab.setAttribute('aria-selected', on ? 'true' : 'false');
+          tab.tabIndex = on ? 0 : -1;
+        });
+        panes.forEach(function (pane, i) {
+          var on = i === current;
+          pane.hidden = !on;
+          pane.classList.toggle('on', on);
+        });
+        if (focusTab) tabs[current].focus();
+      }
+
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () { go(i, false); });
+      });
+      root.querySelector('.ind-tabs').addEventListener('keydown', function (event) {
+        var next = null;
+        if (event.key === 'ArrowRight') next = current + 1;
+        if (event.key === 'ArrowLeft') next = current - 1;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = tabs.length - 1;
+        if (next !== null) { event.preventDefault(); go(next, true); }
+      });
+
+      root.querySelectorAll('[data-case-index]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var index = Number(button.getAttribute('data-case-index'));
+          var chain = document.getElementById('caseChain');
+          var caseTabs = chain ? chain.querySelectorAll('.cc-node') : [];
+          if (caseTabs[index]) caseTabs[index].click();
+          var heading = document.getElementById('caseStudies');
+          if (heading) heading.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+          if (caseTabs[index]) caseTabs[index].focus({ preventScroll: true });
+        });
+      });
+      var explore = root.querySelector('[data-industry-explore]');
+      if (explore) explore.addEventListener('click', function () {
+        var section = document.getElementById('sec-what');
+        var heading = section ? section.querySelector('.sec-head h2') : null;
+        if (section) section.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+        if (heading) {
+          heading.tabIndex = -1;
+          heading.focus({ preventScroll: true });
+        }
+      });
+      document.querySelectorAll('[data-industry-menu]').forEach(function (item) {
+        item.addEventListener('click', function () {
+          var selected = tabs[Number(item.getAttribute('data-industry-menu'))];
+          go(Number(item.getAttribute('data-industry-menu')), false);
+          var menu = item.closest('md-menu');
+          if (menu) {
+            menu.skipRestoreFocus = true;
+            menu.addEventListener('closed', function () {
+              if (selected) selected.focus({ preventScroll: true });
+            }, { once: true });
+            menu.open = false;
+          } else if (selected) {
+            selected.focus({ preventScroll: true });
+          }
+          root.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+        });
+      });
+
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(syncHeight, 180);
+      });
+      document.addEventListener('i18n:applied', function () { setTimeout(syncHeight, 0); });
+      window.addEventListener('load', syncHeight);
+      syncHeight();
+    })();
+    </script>
+
+    <h3 id="caseStudies" class="mt-10 md:mt-16 mb-6 text-[15px] font-semibold" data-i18n="why.cases">案例展示</h3>
     <div class="cc" id="caseChain">
       <div class="cc-chain" role="tablist" data-i18n-aria="case.chain.aria" aria-label="案例切换">
         <button class="cc-node on" role="tab" aria-selected="true">
@@ -1612,6 +1948,7 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
   const actDone = document.getElementById('leadDoneActions');
   const emailEl = document.getElementById('leadEmail');
   const errEl = document.getElementById('leadEmailErr');
+  let leadIndustry = '';
 
   function showForm() {
     formEl.style.display = ''; doneEl.style.display = 'none';
@@ -1628,19 +1965,26 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     console.log('[lead]', {
       mode: window.__selectedBusinessMode || null,
       services: [...document.querySelectorAll('#q-services md-filter-chip')].filter((c) => c.selected).map((c) => c.getAttribute('data-i18n-label')),
-      industry: document.getElementById('q-industry').value,
+      industry: leadIndustry || document.getElementById('q-industry').value,
       size: document.getElementById('q-size').value,
       email: v,
     });
     formEl.style.display = 'none'; doneEl.style.display = '';
     actForm.style.display = 'none'; actDone.style.display = '';
   }
-  window.__openLeadDialog = function (mode) {
+  function openLead(industry, mode) {
+    leadIndustry = industry || '';
     window.__selectedBusinessMode = mode || null;
     showForm();
     dlg.show();
+  }
+  window.__openLeadDialog = function (mode) {
+    openLead('', mode);
   };
-  document.getElementById('cta-plan').addEventListener('click', () => window.__openLeadDialog());
+  document.getElementById('cta-plan').addEventListener('click', () => openLead());
+  document.querySelectorAll('[data-lead-industry]').forEach((button) => {
+    button.addEventListener('click', () => openLead(button.getAttribute('data-lead-industry')));
+  });
   document.getElementById('leadCancel').addEventListener('click', () => dlg.close());
   document.getElementById('leadClose').addEventListener('click', () => dlg.close());
   document.getElementById('leadSubmit').addEventListener('click', submit);
