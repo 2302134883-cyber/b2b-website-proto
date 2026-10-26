@@ -186,6 +186,9 @@
   .site-nav-item--tech { position: static; }
   .site-nav-panel--tech { left: auto; right: 24px; }
   .site-nav-panel--tech::before { left: auto; right: var(--site-nav-caret-right, 24px); }
+  .site-nav-item--about { position: static; }
+  .site-nav-panel--about { left: auto; right: 24px; }
+  .site-nav-panel--about::before { left: auto; right: var(--site-nav-about-caret-right, 24px); }
   .site-nav-panel--product { width: 520px; }
   .site-nav-panel--solution { width: 560px; }
   .site-nav-panel--cases { width: 640px; }
@@ -1072,11 +1075,11 @@
           </div>
         </div>
       </div>
-      <div class="site-nav-item">
+      <div class="site-nav-item site-nav-item--about">
         <a class="site-nav-trigger" id="m-about" href="#sec-about" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-panel-about" data-nav-section="about">
           <span data-i18n="nav.about">关于我们</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
         </a>
-        <div class="site-nav-panel site-nav-panel--about site-nav-panel--right" id="nav-panel-about" role="menu" aria-label="关于我们">
+        <div class="site-nav-panel site-nav-panel--about" id="nav-panel-about" role="menu" aria-label="关于我们">
           <div class="site-nav-panel-grid site-nav-panel-grid--3">
             <a class="site-nav-card" href="#sec-about" data-header-target="#sec-about"><span class="site-nav-card-title"><span data-i18n="menu.about.company">公司介绍</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="about.video">视频占位 · 约 30s</span></a>
             <a class="site-nav-card" href="#journeyBox" data-header-target="#journeyBox"><span class="site-nav-card-title"><span data-i18n="footer.address">地址与联系</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="addr.building">新漕河泾国际商务中心B座</span></a>
@@ -1222,6 +1225,20 @@
   document.addEventListener('i18n:applied', () => requestAnimationFrame(alignTechPanelCaret));
   window.addEventListener('load', alignTechPanelCaret);
   alignTechPanelCaret();
+
+  const aboutItem = document.querySelector('.site-nav-item--about');
+  const aboutPanel = document.getElementById('nav-panel-about');
+  function alignAboutPanelCaret() {
+    if (!aboutItem || !aboutPanel || !headerActions) return;
+    const actionsRect = headerActions.getBoundingClientRect();
+    const itemRect = aboutItem.getBoundingClientRect();
+    const center = itemRect.left + itemRect.width / 2;
+    aboutPanel.style.setProperty('--site-nav-about-caret-right', Math.round(actionsRect.right - center - 5) + 'px');
+  }
+  window.addEventListener('resize', alignAboutPanelCaret);
+  document.addEventListener('i18n:applied', () => requestAnimationFrame(alignAboutPanelCaret));
+  window.addEventListener('load', alignAboutPanelCaret);
+  alignAboutPanelCaret();
 
   function closeMenus(except) {
     menus.forEach((menu) => {
