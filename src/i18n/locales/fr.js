@@ -6,6 +6,8 @@ export default {
       'cta.get': 'Obtenir une proposition', 'cta.short': 'Proposition',
       'menu.product.1': 'Présentation du produit', 'menu.product.2': 'Quatre modèles d’exploitation', 'menu.product.3': 'Déploiement privé', 'menu.product.4': 'Sécurité des données',
       'menu.solution.1': 'Électroménager et électricité', 'menu.solution.2': 'Composants électroniques', 'menu.solution.3': 'Industrie manufacturière', 'menu.solution.4': 'Grande consommation et distribution',
+      'nav.solution.more': 'Au service d’autres secteurs et marques renommées',
+      'ind.g1': 'Mode & sport · Joaillerie', 'ind.g2': 'Beauté · Hygiène · Puériculture', 'ind.g3': 'Maison & déco · Électronique', 'ind.g4': 'Alimentation & boissons · Agri-tech', 'ind.g5': 'Électronique · Fabrication intelligente', 'ind.g6': 'Pharma & santé · Dispositifs médicaux', 'ind.g7': 'Retail · Immobilier commercial',
       'menu.about.charity': 'Mécénat', 'menu.about.team': 'Équipe', 'menu.about.locations': 'Sites', 'menu.about.awards': 'Récompenses',
       'menu.about.company': 'Présentation de l’entreprise', 'menu.about.certifications': 'Certifications de sécurité',
       'menu.tech.stack': 'Stack technique', 'menu.tech.data': 'Données unifiées',
