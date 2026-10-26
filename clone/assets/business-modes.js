@@ -1,5 +1,5 @@
 /* ============ WHAT · 四种经营模式选择器 ============
- * 内容模型：中文场景优先，缩写辅助；角色链路 + 货 / 客 / 权 + 关键能力。
+ * 内容模型：专业代号 + 中文业务名 + 采购价值；角色链路 + 货 / 客 / 权 + 关键能力。
  * 本文件在 i18n.js 前加载，词条由 i18n.js 合并进主词典。
  */
 (function () {
@@ -7,7 +7,7 @@
     'zh-CN': {
       'what.products': "DMS-B2B 交易管理系统",
       'modes.title': "一套系统，支持四种经营模式",
-      'modes.sub': "不用先懂缩写：看货谁供、客户归谁、规矩谁定，就能找到适合您的经营方式。",
+      'modes.sub': "按供货关系、客户归属与规则制定权选择，支持多模式并行。",
       'modes.aria': "四种经营模式",
       'modes.chain': "角色关系",
       'modes.capabilities': "关键能力",
@@ -22,7 +22,7 @@
       'modes.compare.hint': "货 · 客 · 权",
       'modes.note': "模式不互斥：直营、供应链协同与经销商开店可在同一系统并行，按业务需要组合，不必重换底座。",
       'mode.b2b.name': "品牌直营",
-      'mode.b2b.quote': "我开商城，经销商来下单",
+      'mode.b2b.quote': "经销商订货、价格政策与账期统一管理",
       'mode.b2b.role': "品牌是卖家",
       'mode.b2b.desc': "把订货会、电话报单和 Excel 对账搬上线，统一商品、价格、库存与订单，让渠道订货更高效。",
       'mode.b2b.fit': "以一级经销为主、刚开始渠道数字化的品牌",
@@ -37,7 +37,7 @@
       'mode.b2b.cap.rebate': "返利核算",
       'mode.b2b.cap.overseas': "海外 B2B",
       'mode.s2b2b.name': "供应链协同",
-      'mode.s2b2b.quote': "我组织供应链，一起服务客户",
+      'mode.s2b2b.quote': "供应商协同、比价与履约管理",
       'mode.s2b2b.role': "品牌是链主",
       'mode.s2b2b.desc': "整合供应商、生产商、加工商与批发商，上游协同供给，下游统一分销，从卖家升级为链主。",
       'mode.s2b2b.fit': "供应链复杂、多级分销、多角色协作的集团",
@@ -52,7 +52,7 @@
       'mode.s2b2b.cap.compare': "多商家比价",
       'mode.s2b2b.cap.fulfill': "履约协同",
       'mode.b2b2c.name': "市场型平台",
-      'mode.b2b2c.quote': "我不卖货，我开市场",
+      'mode.b2b2c.quote': "商户入驻、交易规则与平台治理",
       'mode.b2b2c.role': "平台是市场运营者",
       'mode.b2b2c.desc': "厂商入驻开铺、客户比价采购；平台负责招商、活动、交易秩序与风险治理，不碰货权。",
       'mode.b2b2c.fit': "有行业或区域号召力的政府、协会与龙头企业",
@@ -67,7 +67,7 @@
       'mode.b2b2c.cap.audit': "交易穿透稽核",
       'mode.b2b2c.cap.risk': "风险监控",
       'mode.b2d2b.name': "经销商开店",
-      'mode.b2d2b.quote': "我给经销商开他自己的店",
+      'mode.b2d2b.quote': "渠道独立经营，品牌提供系统与货盘",
       'mode.b2d2b.role': "品牌是渠道赋能者",
       'mode.b2d2b.desc': "经销商拥有挂自己品牌的订货站，从品牌标品库选品；客户归经销商，品牌提供系统与货盘能力。",
       'mode.b2d2b.fit': "有大经销商体系、希望赋能渠道的成熟品牌",
@@ -87,7 +87,7 @@
     en: {
       'what.products': "DMS-B2B transaction management",
       'modes.title': "One system, four operating models",
-      'modes.sub': "Skip the acronyms. See who supplies the goods, owns the customer relationship and sets the rules to find your fit.",
+      'modes.sub': "Select by supply, customer ownership and governance; models can run in parallel.",
       'modes.aria': "Four operating models",
       'modes.chain': "How it works",
       'modes.capabilities': "Key capabilities",
@@ -102,7 +102,7 @@
       'modes.compare.hint': "Goods · Customers · Rules",
       'modes.note': "These models are not mutually exclusive. Direct Sales, Supply Chain Collaboration and Dealer Storefronts can run in parallel on the same system—no need to replace the foundation.",
       'mode.b2b.name': "Direct Sales",
-      'mode.b2b.quote': "I run the store; dealers place the orders",
+      'mode.b2b.quote': "Unified dealer ordering, pricing and credit terms",
       'mode.b2b.role': "Brand as seller",
       'mode.b2b.desc': "Move order events, phone orders and Excel reconciliation online. Unify products, pricing, inventory and orders for more efficient channel purchasing.",
       'mode.b2b.fit': "Brands starting channel digitalization with a primarily direct dealer network",
@@ -117,7 +117,7 @@
       'mode.b2b.cap.rebate': "Rebate accounting",
       'mode.b2b.cap.overseas': "Cross-border B2B",
       'mode.s2b2b.name': "Supply Chain Collaboration",
-      'mode.s2b2b.quote': "I coordinate the supply chain to serve my customers",
+      'mode.s2b2b.quote': "Supplier collaboration, comparison and fulfillment",
       'mode.s2b2b.role': "Brand as chain orchestrator",
       'mode.s2b2b.desc': "Connect suppliers, manufacturers, processors and wholesalers. Coordinate upstream supply and unify downstream distribution as the chain orchestrator.",
       'mode.s2b2b.fit': "Groups with complex supply chains, multi-tier distribution and multiple roles",
@@ -132,7 +132,7 @@
       'mode.s2b2b.cap.compare': "Multi-seller comparison",
       'mode.s2b2b.cap.fulfill': "Fulfillment coordination",
       'mode.b2b2c.name': "Marketplace",
-      'mode.b2b2c.quote': "I do not sell the goods; I run the market",
+      'mode.b2b2c.quote': "Merchant onboarding, transaction rules and platform governance",
       'mode.b2b2c.role': "Platform as market operator",
       'mode.b2b2c.desc': "Merchants open stores and buyers compare offers. The platform runs recruitment, campaigns, transaction governance and risk control without taking ownership of inventory.",
       'mode.b2b2c.fit': "Governments, associations and leading enterprises with industry or regional influence",
@@ -147,7 +147,7 @@
       'mode.b2b2c.cap.audit': "Transaction auditing",
       'mode.b2b2c.cap.risk': "Risk monitoring",
       'mode.b2d2b.name': "Dealer Storefronts",
-      'mode.b2d2b.quote': "I give each dealer their own storefront",
+      'mode.b2d2b.quote': "Independent dealer operations with brand systems and supply",
       'mode.b2d2b.role': "Brand as channel enabler",
       'mode.b2d2b.desc': "Dealers run white-label ordering storefronts and select products from the brand catalog. They own the customer relationships; the brand provides the system and product supply.",
       'mode.b2d2b.fit': "Established brands with large dealer networks looking to empower their channels",
@@ -167,7 +167,7 @@
     ja: {
       'what.products': "DMS-B2B 取引管理システム",
       'modes.title': "1つのシステムで、4つの経営モデルに対応",
-      'modes.sub': "略語を覚える必要はありません。貨物の供給者、顧客の所有者、ルールの決定者から最適なモデルを選べます。",
+      'modes.sub': "供給関係・顧客帰属・ルール決定権で選択でき、複数モデルの併用にも対応します。",
       'modes.aria': "4つの経営モデル",
       'modes.chain': "取引の流れ",
       'modes.capabilities': "主な機能",
@@ -182,7 +182,7 @@
       'modes.compare.hint': "貨 · 客 · 権",
       'modes.note': "各モデルは排他的ではありません。ブランド直販、サプライチェーン協業、販売店ストアを同一システムで並行運用でき、基盤の入れ替えは不要です。",
       'mode.b2b.name': "ブランド直販",
-      'mode.b2b.quote': "自社モールに販売店が発注",
+      'mode.b2b.quote': "販売店の発注・価格・与信を統一管理",
       'mode.b2b.role': "ブランドが売り手",
       'mode.b2b.desc': "展示会受注、電話注文、Excel照合をオンライン化。商品・価格・在庫・注文を統一し、チャネル発注を効率化します。",
       'mode.b2b.fit': "一次販売店中心で、チャネルのデジタル化を始めるブランド",
@@ -197,7 +197,7 @@
       'mode.b2b.cap.rebate': "リベート計算",
       'mode.b2b.cap.overseas': "海外B2B",
       'mode.s2b2b.name': "サプライチェーン協業",
-      'mode.s2b2b.quote': "供給網を束ね、顧客に共同で価値提供",
+      'mode.s2b2b.quote': "供給者協業・比較・フルフィルメント管理",
       'mode.s2b2b.role': "ブランドがチェーン主導者",
       'mode.s2b2b.desc': "供給者・メーカー・加工者・卸を連携し、上流の供給協業と下流の統一分販を実現。売り手からチェーン主導者へ進化します。",
       'mode.s2b2b.fit': "複雑な供給網、多段階流通、多役割の協業を持つグループ",
@@ -212,7 +212,7 @@
       'mode.s2b2b.cap.compare': "複数社の価格比較",
       'mode.s2b2b.cap.fulfill': "フルフィルメント協業",
       'mode.b2b2c.name': "マーケットプレイス",
-      'mode.b2b2c.quote': "自らは売らず、市場を運営",
+      'mode.b2b2c.quote': "出店管理・取引ルール・プラットフォーム統制",
       'mode.b2b2c.role': "プラットフォームが市場運営者",
       'mode.b2b2c.desc': "出店者が店を開き、購入者が価格を比較。プラットフォームは貨権を持たず、招商・販促・取引秩序・リスクを管理します。",
       'mode.b2b2c.fit': "業界や地域に影響力を持つ政府、協会、大手企業",
@@ -227,7 +227,7 @@
       'mode.b2b2c.cap.audit': "取引監査",
       'mode.b2b2c.cap.risk': "リスク監視",
       'mode.b2d2b.name': "販売店ストア",
-      'mode.b2d2b.quote': "販売店に自社ブランドのストアを提供",
+      'mode.b2d2b.quote': "販売店の独立運営を、ブランドのシステムと商品供給で支援",
       'mode.b2d2b.role': "ブランドがチャネルを支援",
       'mode.b2d2b.desc': "販売店は自社ブランドの発注ストアを持ち、ブランドの共通カタログから選品。顧客は販売店に帰属し、ブランドはシステムと商品を提供します。",
       'mode.b2d2b.fit': "大手販売店網を持ち、チャネルを強化したい成熟ブランド",
@@ -247,7 +247,7 @@
     ko: {
       'what.products': "DMS-B2B 거래 관리 시스템",
       'modes.title': "하나의 시스템, 네 가지 운영 모델",
-      'modes.sub': "약어를 외울 필요가 없습니다. 상품 공급자, 고객 소유 주체, 규칙 결정자를 확인하면 맞는 모델을 찾을 수 있습니다.",
+      'modes.sub': "공급 관계, 고객 귀속, 규칙 결정권을 기준으로 선택하며 여러 모델을 병행할 수 있습니다.",
       'modes.aria': "네 가지 운영 모델",
       'modes.chain': "거래 구조",
       'modes.capabilities': "핵심 기능",
@@ -262,7 +262,7 @@
       'modes.compare.hint': "상품 · 고객 · 규칙",
       'modes.note': "모델은 상호 배타적이지 않습니다. 직영, 공급망 협업, 딜러 스토어를 같은 시스템에서 병행할 수 있으며 기반을 교체할 필요가 없습니다.",
       'mode.b2b.name': "브랜드 직영",
-      'mode.b2b.quote': "브랜드 몰에서 딜러가 직접 주문",
+      'mode.b2b.quote': "딜러 주문·가격·결제 조건 통합 관리",
       'mode.b2b.role': "브랜드가 판매자",
       'mode.b2b.desc': "주문 행사, 전화 주문, Excel 정산을 온라인으로 전환하고 상품·가격·재고·주문을 통합해 채널 주문 효율을 높입니다.",
       'mode.b2b.fit': "1차 딜러 중심으로 채널 디지털화를 시작하는 브랜드",
@@ -277,7 +277,7 @@
       'mode.b2b.cap.rebate': "리베이트 정산",
       'mode.b2b.cap.overseas': "해외 B2B",
       'mode.s2b2b.name': "공급망 협업",
-      'mode.s2b2b.quote': "공급망을 조직해 고객을 함께 지원",
+      'mode.s2b2b.quote': "공급사 협업·비교·이행 관리",
       'mode.s2b2b.role': "브랜드가 체인 리더",
       'mode.s2b2b.desc': "공급사·제조사·가공사·도매상을 연결해 상류 공급을 협업하고 하류 유통을 통합합니다. 판매자에서 체인 리더로 확장합니다.",
       'mode.s2b2b.fit': "복잡한 공급망, 다단계 유통, 다양한 역할이 있는 그룹",
@@ -292,7 +292,7 @@
       'mode.s2b2b.cap.compare': "다판매자 가격 비교",
       'mode.s2b2b.cap.fulfill': "이행 협업",
       'mode.b2b2c.name': "마켓플레이스",
-      'mode.b2b2c.quote': "직접 팔지 않고 시장을 운영",
+      'mode.b2b2c.quote': "입점·거래 규칙·플랫폼 거버넌스",
       'mode.b2b2c.role': "플랫폼이 시장 운영자",
       'mode.b2b2c.desc': "판매사가 입점하고 구매사가 가격을 비교합니다. 플랫폼은 상품 소유 없이 입점·행사·거래 질서·리스크를 관리합니다.",
       'mode.b2b2c.fit': "업계나 지역에 영향력이 있는 정부, 협회, 선도 기업",
@@ -307,7 +307,7 @@
       'mode.b2b2c.cap.audit': "거래 감사",
       'mode.b2b2c.cap.risk': "리스크 모니터링",
       'mode.b2d2b.name': "딜러 스토어",
-      'mode.b2d2b.quote': "딜러에게 자체 브랜드 스토어 제공",
+      'mode.b2d2b.quote': "딜러의 독립 운영과 브랜드의 시스템·상품 공급",
       'mode.b2d2b.role': "브랜드가 채널을 지원",
       'mode.b2d2b.desc': "딜러는 자체 브랜드 주문 스토어를 운영하고 브랜드 카탈로그에서 상품을 고릅니다. 고객은 딜러에게 귀속되고 브랜드는 시스템과 상품을 제공합니다.",
       'mode.b2d2b.fit': "대형 딜러망을 갖추고 채널을 강화하려는 성숙한 브랜드",
@@ -327,7 +327,7 @@
     es: {
       'what.products': "Sistema de gestión de transacciones DMS-B2B",
       'modes.title': "Un sistema, cuatro modelos de negocio",
-      'modes.sub': "Olvide las siglas. Vea quién suministra, quién posee la relación con el cliente y quién define las reglas para encontrar su modelo.",
+      'modes.sub': "Seleccione por relación de suministro, titularidad del cliente y normas; los modelos pueden combinarse.",
       'modes.aria': "Cuatro modelos de negocio",
       'modes.chain': "Cómo funciona",
       'modes.capabilities': "Capacidades clave",
@@ -342,7 +342,7 @@
       'modes.compare.hint': "Bienes · Clientes · Reglas",
       'modes.note': "Los modelos no son excluyentes. Venta directa, colaboración de suministro y tiendas de distribuidores pueden funcionar en paralelo sobre el mismo sistema, sin cambiar la base.",
       'mode.b2b.name': "Venta directa",
-      'mode.b2b.quote': "Yo gestiono la tienda; los distribuidores hacen pedidos",
+      'mode.b2b.quote': "Pedidos, precios y condiciones de pago unificados para distribuidores",
       'mode.b2b.role': "La marca como vendedora",
       'mode.b2b.desc': "Digitalice pedidos telefónicos, ferias y conciliación en Excel. Unifique productos, precios, inventario y pedidos para compras de canal más eficientes.",
       'mode.b2b.fit': "Marcas que inician la digitalización de canales con una red de distribuidores directos",
@@ -357,7 +357,7 @@
       'mode.b2b.cap.rebate': "Cálculo de rebajas",
       'mode.b2b.cap.overseas': "B2B internacional",
       'mode.s2b2b.name': "Colaboración de suministro",
-      'mode.s2b2b.quote': "Coordino la cadena de suministro para servir a mis clientes",
+      'mode.s2b2b.quote': "Colaboración, comparación y cumplimiento con proveedores",
       'mode.s2b2b.role': "La marca como coordinadora",
       'mode.s2b2b.desc': "Conecte proveedores, fabricantes, procesadores y mayoristas. Coordine el suministro y unifique la distribución como líder de la cadena.",
       'mode.s2b2b.fit': "Grupos con cadenas complejas, distribución multinivel y múltiples participantes",
@@ -372,7 +372,7 @@
       'mode.s2b2b.cap.compare': "Comparación de vendedores",
       'mode.s2b2b.cap.fulfill': "Coordinación de entregas",
       'mode.b2b2c.name': "Marketplace",
-      'mode.b2b2c.quote': "No vendo los productos; gestiono el mercado",
+      'mode.b2b2c.quote': "Incorporación de vendedores, reglas de transacción y gobernanza",
       'mode.b2b2c.role': "La plataforma como operadora",
       'mode.b2b2c.desc': "Los comercios abren tiendas y los compradores comparan ofertas. La plataforma gestiona captación, campañas, orden de transacciones y riesgos sin poseer el inventario.",
       'mode.b2b2c.fit': "Gobiernos, asociaciones y empresas líderes con influencia sectorial o regional",
@@ -387,7 +387,7 @@
       'mode.b2b2c.cap.audit': "Auditoría de transacciones",
       'mode.b2b2c.cap.risk': "Control de riesgos",
       'mode.b2d2b.name': "Tiendas para distribuidores",
-      'mode.b2d2b.quote': "Doy a cada distribuidor su propia tienda",
+      'mode.b2d2b.quote': "Operación independiente con sistemas y suministro de la marca",
       'mode.b2d2b.role': "La marca impulsa el canal",
       'mode.b2d2b.desc': "Los distribuidores operan sitios de pedidos de marca blanca y eligen del catálogo de la marca. Poseen la relación con el cliente; la marca aporta sistema y suministro.",
       'mode.b2d2b.fit': "Marcas consolidadas con grandes redes de distribuidores que quieren potenciar su canal",
@@ -407,7 +407,7 @@
     fr: {
       'what.products': "Système de gestion des transactions DMS-B2B",
       'modes.title': "Un système, quatre modèles d’exploitation",
-      'modes.sub': "Inutile de connaître les sigles. Identifiez qui fournit les biens, qui possède la relation client et qui fixe les règles pour trouver votre modèle.",
+      'modes.sub': "Choisissez selon l’approvisionnement, la propriété client et les règles ; les modèles peuvent fonctionner en parallèle.",
       'modes.aria': "Quatre modèles d’exploitation",
       'modes.chain': "Comment cela fonctionne",
       'modes.capabilities': "Fonctions clés",
@@ -422,7 +422,7 @@
       'modes.compare.hint': "Biens · Clients · Règles",
       'modes.note': "Ces modèles ne sont pas exclusifs. Vente directe, collaboration fournisseurs et boutiques revendeurs fonctionnent en parallèle sur le même socle, sans le remplacer.",
       'mode.b2b.name': "Vente directe",
-      'mode.b2b.quote': "Je gère la boutique ; les revendeurs commandent",
+      'mode.b2b.quote': "Commandes, tarifs et délais de paiement unifiés pour les revendeurs",
       'mode.b2b.role': "La marque comme vendeur",
       'mode.b2b.desc': "Passez les salons, commandes téléphoniques et rapprochements Excel en ligne. Unifiez produits, prix, stocks et commandes pour un canal plus efficace.",
       'mode.b2b.fit': "Marques qui digitalisent leur canal avec un réseau de revendeurs directs",
@@ -437,7 +437,7 @@
       'mode.b2b.cap.rebate': "Calcul des remises",
       'mode.b2b.cap.overseas': "B2B international",
       'mode.s2b2b.name': "Collaboration fournisseurs",
-      'mode.s2b2b.quote': "Je coordonne la chaîne pour servir mes clients",
+      'mode.s2b2b.quote': "Collaboration, comparaison et exécution avec les fournisseurs",
       'mode.s2b2b.role': "La marque comme chef de chaîne",
       'mode.s2b2b.desc': "Reliez fournisseurs, fabricants, transformateurs et grossistes. Coordonnez l’offre amont et unifiez la distribution aval en chef de chaîne.",
       'mode.s2b2b.fit': "Groupes avec chaînes complexes, distribution multiniveau et acteurs multiples",
@@ -452,7 +452,7 @@
       'mode.s2b2b.cap.compare': "Comparaison des vendeurs",
       'mode.s2b2b.cap.fulfill': "Coordination logistique",
       'mode.b2b2c.name': "Place de marché",
-      'mode.b2b2c.quote': "Je ne vends pas ; je gère le marché",
+      'mode.b2b2c.quote': "Intégration des marchands, règles de transaction et gouvernance",
       'mode.b2b2c.role': "La plateforme comme opérateur",
       'mode.b2b2c.desc': "Les marchands ouvrent leurs boutiques et les acheteurs comparent. La plateforme gère recrutement, campagnes, transactions et risques sans posséder les stocks.",
       'mode.b2b2c.fit': "Gouvernements, associations et grandes entreprises avec une influence sectorielle ou régionale",
@@ -467,7 +467,7 @@
       'mode.b2b2c.cap.audit': "Audit des transactions",
       'mode.b2b2c.cap.risk': "Surveillance des risques",
       'mode.b2d2b.name': "Boutiques revendeurs",
-      'mode.b2d2b.quote': "Je donne à chaque revendeur sa propre boutique",
+      'mode.b2d2b.quote': "Exploitation autonome avec systèmes et approvisionnement de la marque",
       'mode.b2d2b.role': "La marque comme facilitateur",
       'mode.b2d2b.desc': "Les revendeurs exploitent des sites de commande en marque blanche et choisissent dans le catalogue. Ils possèdent les clients ; la marque fournit système et produits.",
       'mode.b2d2b.fit': "Marques établies avec un grand réseau de revendeurs souhaitant renforcer leur canal",
@@ -487,7 +487,7 @@
     de: {
       'what.products': "DMS-B2B Transaktionsmanagement",
       'modes.title': "Ein System, vier Geschäftsmodelle",
-      'modes.sub': "Sie müssen die Abkürzungen nicht kennen. Sehen Sie, wer liefert, wem die Kundenbeziehung gehört und wer die Regeln festlegt, um das passende Modell zu finden.",
+      'modes.sub': "Auswahl nach Lieferbeziehung, Kundenzuordnung und Regelhoheit; Modelle lassen sich kombinieren.",
       'modes.aria': "Vier Geschäftsmodelle",
       'modes.chain': "So funktioniert es",
       'modes.capabilities': "Kernfunktionen",
@@ -502,7 +502,7 @@
       'modes.compare.hint': "Waren · Kunden · Regeln",
       'modes.note': "Die Modelle schließen sich nicht aus. Direktvertrieb, Lieferketten-Kollaboration und Händler-Shops laufen parallel auf demselben System – ohne Austausch der Basis.",
       'mode.b2b.name': "Direktvertrieb",
-      'mode.b2b.quote': "Ich betreibe den Shop; Händler bestellen",
+      'mode.b2b.quote': "Händlerbestellungen, Preispolitik und Zahlungsziele zentral steuern",
       'mode.b2b.role': "Marke als Verkäufer",
       'mode.b2b.desc': "Bestellveranstaltungen, Telefonbestellungen und Excel-Abgleich werden digital. Produkte, Preise, Bestände und Aufträge sind für effizientere Kanalbestellungen vereinheitlicht.",
       'mode.b2b.fit': "Marken am Start der Kanal-Digitalisierung mit vorwiegend direktem Händlernetz",
@@ -517,7 +517,7 @@
       'mode.b2b.cap.rebate': "Bonusabrechnung",
       'mode.b2b.cap.overseas': "Internationales B2B",
       'mode.s2b2b.name': "Lieferketten-Kollaboration",
-      'mode.s2b2b.quote': "Ich koordiniere die Lieferkette für meine Kunden",
+      'mode.s2b2b.quote': "Lieferantenabstimmung, Vergleich und Fulfillment",
       'mode.s2b2b.role': "Marke als Kettenkoordinator",
       'mode.s2b2b.desc': "Lieferanten, Hersteller, Verarbeiter und Großhändler werden verbunden. Die Marke koordiniert das vorgelagerte Angebot und vereinheitlicht den Vertrieb.",
       'mode.s2b2b.fit': "Konzerne mit komplexen Lieferketten, mehrstufigem Vertrieb und vielen Rollen",
@@ -532,7 +532,7 @@
       'mode.s2b2b.cap.compare': "Anbietervergleich",
       'mode.s2b2b.cap.fulfill': "Fulfillment-Koordination",
       'mode.b2b2c.name': "Marktplatz",
-      'mode.b2b2c.quote': "Ich verkaufe nicht; ich betreibe den Markt",
+      'mode.b2b2c.quote': "Händler-Onboarding, Transaktionsregeln und Plattform-Governance",
       'mode.b2b2c.role': "Plattform als Marktbetreiber",
       'mode.b2b2c.desc': "Händler eröffnen Shops, Einkäufer vergleichen Angebote. Die Plattform steuert Akquise, Kampagnen, Transaktionen und Risiken, ohne Waren zu besitzen.",
       'mode.b2b2c.fit': "Behörden, Verbände und führende Unternehmen mit Branchen- oder Regionalreichweite",
@@ -547,7 +547,7 @@
       'mode.b2b2c.cap.audit': "Transaktionsprüfung",
       'mode.b2b2c.cap.risk': "Risikoüberwachung",
       'mode.b2d2b.name': "Händler-Shops",
-      'mode.b2d2b.quote': "Ich gebe jedem Händler einen eigenen Shop",
+      'mode.b2d2b.quote': "Eigenständiger Handel mit Markensystemen und Warenversorgung",
       'mode.b2d2b.role': "Marke als Kanal-Enabler",
       'mode.b2d2b.desc': "Händler betreiben White-Label-Bestellseiten und wählen aus dem Markenkatalog. Ihnen gehören die Kundenbeziehungen; die Marke liefert System und Produkte.",
       'mode.b2d2b.fit': "Etablierte Marken mit großen Händlernetzen, die ihre Kanäle stärken möchten",
@@ -567,7 +567,7 @@
     ru: {
       'what.products': "Система управления сделками DMS-B2B",
       'modes.title': "Одна система — четыре модели бизнеса",
-      'modes.sub': "Не нужно разбираться в аббревиатурах. Посмотрите, кто поставляет товар, кому принадлежат клиенты и кто устанавливает правила, чтобы выбрать модель.",
+      'modes.sub': "Выбирайте по поставкам, принадлежности клиентов и правилам; модели можно сочетать.",
       'modes.aria': "Четыре модели бизнеса",
       'modes.chain': "Как это работает",
       'modes.capabilities': "Ключевые возможности",
@@ -582,7 +582,7 @@
       'modes.compare.hint': "Товар · Клиенты · Правила",
       'modes.note': "Модели не исключают друг друга. Прямые продажи, кооперация поставок и магазины дилеров работают параллельно на одной системе — без замены основы.",
       'mode.b2b.name': "Прямые продажи",
-      'mode.b2b.quote': "Я управляю магазином, дилеры делают заказы",
+      'mode.b2b.quote': "Единое управление заказами, ценами и отсрочкой платежа дилеров",
       'mode.b2b.role': "Бренд — продавец",
       'mode.b2b.desc': "Перенесите заказы с выставок, по телефону и сверку в Excel в онлайн. Объедините товары, цены, остатки и заказы для эффективной работы канала.",
       'mode.b2b.fit': "Бренды, начинающие цифровизацию канала с сетью прямых дилеров",
@@ -597,7 +597,7 @@
       'mode.b2b.cap.rebate': "Расчёт бонусов",
       'mode.b2b.cap.overseas': "Международный B2B",
       'mode.s2b2b.name': "Кооперация поставок",
-      'mode.s2b2b.quote': "Я координирую цепочку поставок для клиентов",
+      'mode.s2b2b.quote': "Сотрудничество с поставщиками, сравнение и исполнение",
       'mode.s2b2b.role': "Бренд — координатор цепочки",
       'mode.s2b2b.desc': "Объедините поставщиков, производителей, переработчиков и оптовиков. Координируйте поставки и управляйте дистрибуцией как лидер цепочки.",
       'mode.s2b2b.fit': "Группы со сложными цепочками, многоуровневой дистрибуцией и множеством ролей",
@@ -612,7 +612,7 @@
       'mode.s2b2b.cap.compare': "Сравнение продавцов",
       'mode.s2b2b.cap.fulfill': "Координация исполнения",
       'mode.b2b2c.name': "Торговая площадка",
-      'mode.b2b2c.quote': "Я не продаю товар, а управляю рынком",
+      'mode.b2b2c.quote': "Подключение продавцов, правила сделок и управление площадкой",
       'mode.b2b2c.role': "Платформа — оператор рынка",
       'mode.b2b2c.desc': "Продавцы открывают магазины, покупатели сравнивают предложения. Платформа управляет привлечением, акциями, сделками и рисками, не владея товаром.",
       'mode.b2b2c.fit': "Органы власти, ассоциации и лидеры с влиянием в отрасли или регионе",
@@ -627,7 +627,7 @@
       'mode.b2b2c.cap.audit': "Аудит сделок",
       'mode.b2b2c.cap.risk': "Мониторинг рисков",
       'mode.b2d2b.name': "Магазины дилеров",
-      'mode.b2d2b.quote': "Я даю каждому дилеру собственный магазин",
+      'mode.b2d2b.quote': "Независимая работа дилеров с системами и поставками бренда",
       'mode.b2d2b.role': "Бренд поддерживает канал",
       'mode.b2d2b.desc': "Дилеры управляют сайтами заказов под своим брендом и выбирают товары из каталога. Клиенты принадлежат дилерам, а бренд предоставляет систему и товары.",
       'mode.b2d2b.fit': "Зрелые бренды с крупными дилерскими сетями, развивающие свои каналы",
@@ -650,10 +650,10 @@
   window.__BUSINESS_MODE_I18N = MODE_I18N;
 
   const MODES = [
-    { id: 'b2b', no: '01', code: 'B2B', chain: ['brand', 'buyers'], caps: ['price', 'credit', 'bulk', 'rebate', 'overseas'] },
-    { id: 's2b2b', no: '02', code: 'S2B2B', chain: ['supply', 'leader', 'channel'], caps: ['catalog', 'access', 'compare', 'fulfill'] },
-    { id: 'b2b2c', no: '03', code: 'B2B2C', chain: ['merchant', 'platform', 'buyer'], caps: ['merchant', 'campaign', 'audit', 'risk'] },
-    { id: 'b2d2b', no: '04', code: 'B2D2B', chain: ['brand', 'dealer', 'customer'], caps: ['whitelabel', 'catalog', 'autonomy', 'multibrand'] },
+    { id: 'b2b', code: 'B2B', chain: ['brand', 'buyers'], caps: ['price', 'credit', 'bulk', 'rebate', 'overseas'] },
+    { id: 's2b2b', code: 'S2B2B', chain: ['supply', 'leader', 'channel'], caps: ['catalog', 'access', 'compare', 'fulfill'] },
+    { id: 'b2b2c', code: 'B2B2C', chain: ['merchant', 'platform', 'buyer'], caps: ['merchant', 'campaign', 'audit', 'risk'] },
+    { id: 'b2d2b', code: 'B2D2B', chain: ['brand', 'dealer', 'customer'], caps: ['whitelabel', 'catalog', 'autonomy', 'multibrand'] },
   ];
 
   const root = document.getElementById('mode-explorer');
@@ -673,7 +673,7 @@
       ${MODES.map((mode, index) => {
         const key = `mode.${mode.id}`;
         return `<button class="mode-tab${index === 0 ? ' on' : ''}" id="mode-tab-${mode.id}" type="button" role="tab" data-mode="${mode.id}" aria-selected="${index === 0}" aria-controls="mode-panel-${mode.id}" tabindex="${index === 0 ? '0' : '-1'}">
-          <span class="mode-tab-meta"><span class="mode-tab-no">${mode.no}</span><span class="mode-tab-code">${mode.code}</span></span>
+          <span class="mode-tab-meta"><span class="mode-tab-code">${mode.code}</span></span>
           ${text(`${key}.name`, 'mode-tab-name')}
           ${text(`${key}.quote`, 'mode-tab-quote')}
           <span class="mode-tab-indicator" aria-hidden="true"><span></span></span>
@@ -686,7 +686,7 @@
         const key = `mode.${mode.id}`;
         return `<div class="mode-panel${index === 0 ? ' on' : ''}" id="mode-panel-${mode.id}" role="tabpanel" aria-labelledby="mode-tab-${mode.id}" data-panel="${mode.id}" tabindex="0"${index === 0 ? '' : ' hidden'}>
           <div class="mode-panel-head">
-            <div class="mode-panel-kicker"><span>MODE ${mode.no}</span><i aria-hidden="true"></i>${text(`${key}.role`)}</div>
+            <div class="mode-panel-kicker"><span class="mode-panel-code">${mode.code}</span><i aria-hidden="true"></i>${text(`${key}.role`)}</div>
             <h4>${text(`${key}.quote`)}</h4>
             <p>${text(`${key}.desc`)}</p>
           </div>
