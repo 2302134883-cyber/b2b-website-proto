@@ -14,7 +14,16 @@
   var activeTo = 92;
   var playing = false;
   var hasRun = false;
+  var timers = [];
   var refs = { leftCards: [], rightCards: [] };
+
+  function schedule(callback, delay) {
+    var id = window.setTimeout(function () {
+      timers = timers.filter(function (timer) { return timer !== id; });
+      callback();
+    }, delay);
+    timers.push(id);
+  }
 
   var STATE_KEYS = {
     idle: 'ds.idle',
@@ -326,10 +335,10 @@
     /* 传统三端：保留旧价，用独立状态表示同步，再逐个生效。 */
     refs.leftCards.forEach(function (card, index) {
       var delay = 500 + index * 800;
-      window.setTimeout(function () {
+      schedule(function () {
         setCardState(card, 'syncing', activeFrom, activeTo);
       }, delay);
-      window.setTimeout(function () {
+      schedule(function () {
         setCardState(card, 'done', activeFrom, activeTo);
         setProgress(refs.leftProgress, index + 1, 3);
         if (index === refs.leftCards.length - 1) {
@@ -344,6 +353,21 @@
 
   document.addEventListener('i18n:applied', function (event) {
     if (event.detail && event.detail.lang) lang = event.detail.lang;
+    renderDynamicText();
+  });
+
+  document.addEventListener('tech:data-scene-visibility', function (event) {
+    if (event.detail?.visible !== false || !playing) return;
+    timers.forEach(function (id) { window.clearTimeout(id); });
+    timers = [];
+    refs.leftCards.concat(refs.rightCards).forEach(function (card) {
+      setCardState(card, 'done', activeFrom, activeTo);
+    });
+    setProgress(refs.leftProgress, 3, 3);
+    setProgress(refs.rightProgress, 4, 4);
+    playing = false;
+    refs.root.dataset.phase = 'done';
+    refs.host.setAttribute('aria-busy', 'false');
     renderDynamicText();
   });
 

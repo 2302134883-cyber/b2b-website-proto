@@ -89,7 +89,7 @@
           <div class="site-nav-panel-grid site-nav-panel-grid--3">
             <a class="site-nav-card" href="#arch" data-header-target="#arch"><span class="site-nav-card-title"><span data-i18n="arch.title">整体架构</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="arch.sub">中台化 B2B 系统 · 角色视角</span></a>
             <a class="site-nav-card" href="#techRing" data-header-target="#techRing"><span class="site-nav-card-title"><span data-i18n="menu.tech.stack">技术栈</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="tech.core.d">一体化数智化底座</span></a>
-            <a class="site-nav-card" href="#dataSource" data-header-target="#dataSource"><span class="site-nav-card-title"><span data-i18n="menu.tech.data">数据同源</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ds.sub">一次改价，同一秒生效</span></a>
+            <a class="site-nav-card" href="#dataSource" data-header-target="#dataSource" data-tech-capability="data"><span class="site-nav-card-title"><span data-i18n="menu.tech.data">数据同源</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ds.sub">一次改价，同一秒生效</span></a>
           </div>
         </div>
       </div>
@@ -647,8 +647,7 @@
     <nav class="what-nav" data-i18n-aria="what.nav.aria" aria-label="本章内容">
       <a class="what-nav-link" href="#arch"><span class="what-nav-num" aria-hidden="true">01</span><span data-i18n="how.nav.arch">整体架构</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a class="what-nav-link" href="#how-tech"><span class="what-nav-num" aria-hidden="true">02</span><span data-i18n="how.nav.tech">技术栈</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a class="what-nav-link" href="#how-data"><span class="what-nav-num" aria-hidden="true">03</span><span data-i18n="how.nav.data">数据同源</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a class="what-nav-link" href="#how-ai"><span class="what-nav-num" aria-hidden="true">04</span><span data-i18n="how.nav.ai">AI 智能体</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="what-nav-link" href="#how-ai"><span class="what-nav-num" aria-hidden="true">03</span><span data-i18n="how.nav.ai">AI 智能体</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </nav>
 
     <!-- ARCH · 整体架构（选人式交互），保留 #arch 深链接 -->
@@ -687,16 +686,30 @@
       </div>
     </section>
 
-    <div class="sec-sub" id="how-tech"><h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">02</span><span class="sec-sub-text" data-i18n="how.tech">技术栈</span></h3></div>
-    <div id="techRing" class="w-full max-w-[560px] mx-auto"></div>
-
-    <div class="sec-sub" id="how-data">
-      <h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">03</span><span class="sec-sub-text" data-i18n="ds.title">数据同源</span></h3>
-      <p class="mt-3 text-[12px] text-[var(--faint)]" data-i18n="ds.lead">一次改价的差别</p>
+    <div class="sec-sub" id="how-tech">
+      <h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">02</span><span class="sec-sub-text" data-i18n="how.tech">技术中台与场景验证</span></h3>
+      <p class="mt-2 text-[14px] text-[var(--sub)]" data-i18n="tech.ui.capabilities">选择一项能力，查看它如何支撑真实业务。</p>
     </div>
-    <div id="dataSource" class="w-full max-w-[960px] mx-auto"></div>
+    <section class="tc-shell" id="techCapabilities" aria-label="技术中台能力选择" data-i18n-aria="tech.ui.capabilities">
+      <div class="tc-tabs" id="techCapabilityTabs" role="tablist" aria-label="技术中台能力选择" data-i18n-aria="tech.ui.capabilities"></div>
+      <div class="tc-workbench">
+        <div class="tc-visual">
+          <div id="techRing" class="w-full"></div>
+          <p class="tc-hint" data-i18n="tech.ui.hint">点击圆盘或上方按钮切换能力，选中后查看固定详情。</p>
+        </div>
+        <div class="tc-detail" id="techDetail"></div>
+      </div>
+      <div class="tc-scene" id="how-data">
+        <div class="tc-scene-head">
+          <p class="tc-eyebrow"><span data-i18n="tech.ui.scene">场景验证</span><span aria-hidden="true"> / </span><span data-i18n="tech.1">数据同源</span></p>
+          <h4 tabindex="-1" data-i18n="ds.title">数据同源</h4>
+          <p data-i18n="ds.lead">一次改价的差别</p>
+        </div>
+        <div id="dataSource" class="w-full max-w-[960px] mx-auto"></div>
+      </div>
+    </section>
 
-    <div class="sec-sub" id="how-ai"><h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">04</span><span class="sec-sub-text" data-i18n="how.ai">创造 AI 智能体</span></h3></div>
+    <div class="sec-sub" id="how-ai"><h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">03</span><span class="sec-sub-text" data-i18n="how.ai">创造 AI 智能体</span></h3></div>
     <div class="ag" id="aiAgent" data-state="idle">
       <div class="ag-grid">
         <div class="ag-stage">
@@ -931,7 +944,7 @@
         <h2 class="site-footer-title" data-i18n="nav.tech">技术架构</h2>
         <a href="#arch" data-i18n="arch.title">整体架构</a>
         <a href="#techRing" data-i18n="menu.tech.stack">技术栈</a>
-        <a href="#dataSource" data-i18n="menu.tech.data">数据同源</a>
+        <a href="#dataSource" data-tech-capability="data" data-i18n="menu.tech.data">数据同源</a>
       </section>
       <section class="site-footer-column">
         <h2 class="site-footer-title" data-i18n="footer.about">关于与支持</h2>

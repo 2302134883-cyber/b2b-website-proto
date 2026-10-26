@@ -6,6 +6,7 @@
  */
 
 import businessModeDicts from './business-modes.js';
+import techCapabilityDicts from './tech-capabilities.js';
 import zhCN from './locales/zh-CN.js';
 import en from './locales/en.js';
 import ja from './locales/ja.js';
@@ -32,6 +33,9 @@ import ru from './locales/ru.js';
   /* 合并经营模式词典，并覆盖旧版三模式 FAQ。 */
   Object.keys(businessModeDicts).forEach((lang) => {
     if (DICT[lang]) Object.assign(DICT[lang], businessModeDicts[lang]);
+  });
+  Object.keys(techCapabilityDicts).forEach((lang) => {
+    if (DICT[lang]) Object.assign(DICT[lang], techCapabilityDicts[lang]);
   });
 
   window.__I18N_DICTS = DICT;
