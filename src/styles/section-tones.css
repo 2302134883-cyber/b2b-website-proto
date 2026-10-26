@@ -22,3 +22,11 @@
   --sub: #66666c;
   --faint: #6a6a70;
 }
+
+/* CTA 与上方 FAQ 呼应：外层仍留白，仅卡片使用浅灰，避免连成一片灰。 */
+#finalCta .final-cta-card {
+  --sub: #66666c;
+  --faint: #6a6a70;
+  background-color: var(--tone-gray);
+  border-color: rgba(17,24,39,.045);
+}
