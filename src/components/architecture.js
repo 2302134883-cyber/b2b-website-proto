@@ -195,4 +195,36 @@
       if (selected) selected.focus({ preventScroll: true });
     });
   });
+
+  /* 入视自动演示一遍：选「企业客户」进入 → 依次点亮业务员 / 运营 → 回到企业客户（用户点击/按键即让位） */
+  let demoToken = 0;
+  const archRoot = selectEl.closest('section') || selectEl.parentElement;
+  function autoDemo() {
+    if (selectedRole || !viewEl.hidden) return;   // 用户已经玩过
+    const my = ++demoToken;
+    const seq = [
+      () => {
+        const input = roleInputs.find((i) => i.value === 'customer');
+        if (input) input.checked = true;
+        choose('customer');
+      },
+      () => { enterBtn.click(); },
+      () => { pick('sales', false); },
+      () => { pick('ops', false); },
+      () => { pick('customer', false); },
+    ];
+    let i = 0;
+    (function next() {
+      if (my !== demoToken || i >= seq.length) return;
+      seq[i++]();
+      setTimeout(next, i === 1 ? 900 : 2400);   // 选中后稍快进入，之后每个角色停留 2.4s
+    })();
+  }
+  new IntersectionObserver((entries, obs) => {
+    if (!entries[0].isIntersecting) return;
+    obs.disconnect();
+    setTimeout(autoDemo, 500);
+  }, { threshold: 0.35 }).observe(archRoot);
+  archRoot.addEventListener('pointerdown', () => { demoToken++; }, { capture: true });
+  archRoot.addEventListener('keydown', () => { demoToken++; }, true);
 })();

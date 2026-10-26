@@ -155,6 +155,39 @@
           });
         });
 
+        /* 入视自动演示一遍：三个场景各问一题（用户点击/按键即让位，不再自动播） */
+        var demoToken = 0;
+        function autoDemo() {
+          if (busy || thread.querySelector('.ag-msg')) return;   // 用户已经在玩
+          var my = ++demoToken;
+          var seq = ['1', '2', '3'], idx = 0;
+          function step() {
+            if (my !== demoToken || idx >= seq.length) return;
+            var tab = sceneTabs.find(function (t) { return t.getAttribute('data-scene') === seq[idx]; });
+            if (tab && !tab.classList.contains('on')) tab.click();
+            setTimeout(function () {
+              if (my !== demoToken) return;
+              var q = qBtns.find(function (b) { return b.getAttribute('data-scene') === seq[idx] && !b.classList.contains('hide'); });
+              if (q) q.click();
+              idx++;
+              var wait = setInterval(function () {
+                if (my !== demoToken || !busy) {
+                  clearInterval(wait);
+                  if (my === demoToken) setTimeout(step, 900);
+                }
+              }, 300);
+            }, 500);
+          }
+          step();
+        }
+        new IntersectionObserver(function (entries, obs) {
+          if (!entries[0].isIntersecting) return;
+          obs.disconnect();
+          setTimeout(autoDemo, 600);
+        }, { threshold: 0.4 }).observe(root);
+        root.addEventListener('pointerdown', function () { demoToken++; }, { capture: true });
+        root.addEventListener('keydown', function () { demoToken++; }, true);
+
         setState('idle');
       }
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
