@@ -1,0 +1,63 @@
+/* ============ AI 智能体 orb 演示（ag- 前缀，独立组件） ============ */
+  .ag-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 24px; align-items: stretch; }
+  .ag-stage {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+    padding: 32px 16px;
+  }
+  .ag-orbzone {
+    position: relative; width: 200px; height: 200px; display: grid; place-items: center;
+    cursor: pointer; border-radius: 50%;
+  }
+  .ag-orbzone:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(17,24,39,.12); }
+  .ag-orb { width: 180px; height: 180px; }
+  .ag-ring {
+    position: absolute; width: 180px; height: 180px; border-radius: 50%;
+    border: 1px solid #c4b5f5; opacity: 0; pointer-events: none;
+  }
+  #aiAgent[data-state="think"] .ag-ring { animation: agRipple 1.3s cubic-bezier(.22,.8,.36,1) infinite; }
+  @keyframes agRipple { from { transform: scale(.92); opacity: .8; } to { transform: scale(1.5); opacity: 0; } }
+  .ag-breathe { animation: agBreath 4.5s ease-in-out infinite; will-change: transform; }
+  @keyframes agBreath { 0%,100% { transform: scale(1); } 50% { transform: scale(1.045); } }
+  #aiAgent[data-state="think"] .ag-breathe { animation-duration: 1.4s; }
+  .ag-orbzone.poke .ag-breathe { animation: agPoke .5s cubic-bezier(.25,1,.5,1); }
+  @keyframes agPoke { 0% { transform: scale(1); } 35% { transform: scale(1.12, .88); } 70% { transform: scale(.96, 1.04); } 100% { transform: scale(1); } }
+  .ag-status { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--faint); }
+  .ag-status i { width: 6px; height: 6px; border-radius: 50%; background: var(--faint); flex-shrink: 0; transition: background .3s; }
+  #aiAgent[data-state="listen"] .ag-status i { background: #93b8f8; animation: archPulse 2s ease-in-out infinite; }
+  #aiAgent[data-state="think"] .ag-status i { background: #c4b5f5; animation: archPulse 1s ease-in-out infinite; }
+  #aiAgent[data-state="done"] .ag-status i { background: var(--ink); }
+
+  .ag-chat { border: 1px solid var(--line); border-radius: 16px; padding: 24px; background: #fff; }
+  .ag-scenes { display: flex; gap: 8px; flex-wrap: wrap; }
+  .ag-thread {
+    margin-top: 16px; min-height: 190px; max-height: 300px; overflow-y: auto;
+    display: flex; flex-direction: column; gap: 12px;
+    border-radius: 12px; background: var(--wash); padding: 16px;
+    transition: opacity .2s ease;
+  }
+  .ag-thread.fading { opacity: 0; }
+  .ag-empty { margin: auto; font-size: 12px; color: var(--faint); text-align: center; padding: 24px 8px; }
+  .ag-msg { display: flex; gap: 10px; align-items: flex-start; animation: archIn .32s ease both; }
+  .ag-msg .ag-ava { width: 22px; height: 22px; flex-shrink: 0; margin-top: 2px; }
+  .ag-bubble { max-width: 82%; padding: 10px 14px; font-size: 13px; line-height: 1.8; border-radius: 14px; }
+  .ag-msg.user { justify-content: flex-end; }
+  .ag-msg.user .ag-bubble { background: #f1f2f5; color: var(--ink); border-bottom-right-radius: 4px; }
+  .ag-msg.bot .ag-bubble { background: #fff; border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+  .ag-qs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  .ag-q { cursor: pointer; font: inherit; background: #fff; }
+  .ag-q:hover:not(:disabled) { border-color: var(--ink); color: var(--ink); }
+  .ag-q:disabled { opacity: .4; cursor: default; }
+  .ag-q.hide { display: none; }
+
+  @media (max-width: 860px) {
+    .ag-grid { grid-template-columns: 1fr; }
+    .ag-stage { padding: 16px 0 8px; }
+    .ag-orbzone { width: 150px; height: 150px; }
+    .ag-orb { width: 130px; height: 130px; }
+    .ag-ring { width: 130px; height: 130px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ag-breathe, .ag-ring, #aiAgent .ag-status i { animation: none !important; }
+    .ag-msg { animation: none; }
+    .ag-thread { transition: none; }
+  }

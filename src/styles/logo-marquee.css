@@ -1,0 +1,69 @@
+/* ---- 安全网：菜单组件未升级完成前整体隐藏（防裸内容漏出） ---- */
+  md-menu:not(:defined) { display: none; }
+  /* ============ Logo 无缝轮播（lm- 前缀，独立组件） ============ */
+  .logo-marquee {
+    --lm-tint: #111827;        /* 静默态：深墨色剪影 */
+    --lm-duration: 40s;
+    --lm-gap: 56px;
+    --lm-fade: 8%;
+    --lm-w: 152px;
+    --lm-h: 56px;
+    position: relative;
+  }
+  .lm-window {
+    overflow: hidden;
+    padding: 16px 0 30px;
+    mask-image: linear-gradient(90deg, transparent, #000 var(--lm-fade), #000 calc(100% - var(--lm-fade)), transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--lm-fade), #000 calc(100% - var(--lm-fade)), transparent);
+  }
+  .lm-track {
+    display: flex; width: max-content;
+    will-change: transform; user-select: none;
+    animation: lm-scroll var(--lm-duration) linear infinite;
+  }
+  .lm-list {
+    display: flex; flex-shrink: 0; align-items: center;
+    gap: var(--lm-gap); padding: 0 var(--lm-gap) 0 0;
+    margin: 0; list-style: none;
+  }
+  .lm-item { flex-shrink: 0; }
+  .lm-mark {
+    position: relative; display: grid; place-items: center;
+    width: var(--lm-w); height: var(--lm-h);
+    transition: transform .3s cubic-bezier(.25, 1, .5, 1);
+  }
+  .lm-mark::after {
+    content: ""; position: absolute; inset: -34px; z-index: 0; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(196,181,253,.42), rgba(147,184,248,.18) 58%, transparent 76%);
+    filter: blur(6px);
+    opacity: 0; transition: opacity .35s ease;
+  }
+  .lm-mark::before {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+    background: var(--lm-tint);
+    mask: var(--lm-src) center / contain no-repeat;
+    -webkit-mask: var(--lm-src) center / contain no-repeat;
+    transition: opacity .3s cubic-bezier(.25, 1, .5, 1);
+  }
+  .lm-item img {
+    position: relative; z-index: 2;
+    display: block; width: 100%; height: 100%; object-fit: contain;
+    opacity: 0; transition: opacity .3s cubic-bezier(.25, 1, .5, 1);
+  }
+  @keyframes lm-scroll {
+    from { transform: translate3d(-50%, 0, 0); }
+    to   { transform: translate3d(0, 0, 0); }
+  }
+  .logo-marquee[data-running="false"] .lm-track { animation-play-state: paused; }
+  .lm-item:hover .lm-mark { transform: scale(1.1); }
+  .lm-item:hover .lm-mark::before { opacity: 0; }
+  .lm-item:hover .lm-mark::after { opacity: 1; }
+  .lm-item:hover img { opacity: 1; }
+  @media (max-width: 760px) {
+    .logo-marquee { --lm-gap: 36px; --lm-w: 120px; --lm-h: 44px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lm-track { animation: none; will-change: auto; }
+    .lm-window { overflow-x: auto; mask-image: none; -webkit-mask-image: none; }
+    .lm-list[aria-hidden="true"] { display: none; }
+  }

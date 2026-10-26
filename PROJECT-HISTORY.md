@@ -142,7 +142,7 @@
 ## 📂 关键路径备忘
 
 - 主仓库：`~/Projects/b2b-website-proto`（GitHub: `2302134883-cyber/b2b-website-proto`，私有）
-- 主页面：`clone/index.html`（单文件 + assets/ + vendor/）
+- 当前主页面：`index.html`；组件与词典位于 `src/`，静态资源位于 `public/assets/`（Vite 迁移前的 `clone/` 路径仅作历史记录）
 - 已归档旧仓：`~/Projects/shopline-clone`（GitHub: `b2b-website-google-style`）
-- 预览：`cd clone && python3 -m http.server 4174`
+- 预览：根目录执行 `npm run dev`，打开 `http://127.0.0.1:4174/`
 - 并行规则：仓库根 `AGENTS.md`

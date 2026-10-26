@@ -1,0 +1,20 @@
+/* ============ FAQ 手风琴（qa- 前缀，独立组件） ============ */
+  .qa-item + .qa-item { border-top: 1px solid var(--line); }
+  .qa-q {
+    appearance: none; font: inherit; width: 100%; text-align: left; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 20px 24px; background: none; border: none; color: var(--ink);
+    font-size: 14px; font-weight: 600; transition: background .2s ease;
+  }
+  .qa-item:first-child .qa-q { border-radius: 16px 16px 0 0; }
+  .qa-item:last-child .qa-q { border-radius: 0 0 16px 16px; }
+  .qa-item.open:last-child .qa-q { border-radius: 0; }
+  .qa-q:hover { background: var(--wash); }
+  .qa-q:focus-visible { outline: none; box-shadow: inset 0 0 0 2px rgba(17,24,39,.18); }
+  .qa-ico { width: 18px; height: 18px; flex-shrink: 0; color: var(--faint); transition: transform .3s cubic-bezier(.25,1,.5,1), color .2s ease; }
+  .qa-item.open .qa-ico { transform: rotate(45deg); color: var(--ink); }
+  .qa-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s cubic-bezier(.4,0,.2,1); }
+  .qa-a > div { overflow: hidden; min-height: 0; }
+  .qa-item.open .qa-a { grid-template-rows: 1fr; }
+  .qa-a p { padding: 0 24px 22px; margin: 0; font-size: 13px; line-height: 1.9; color: var(--sub); }
+  @media (prefers-reduced-motion: reduce) { .qa-a, .qa-ico { transition: none; } }

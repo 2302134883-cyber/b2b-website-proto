@@ -1,0 +1,20 @@
+/* ---- 轮播 ---- */
+  .slide { display: none; }
+  .slide.on { display: grid; }
+  .car-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; }
+
+  .f-btn { font-size: 11px; --md-outlined-icon-button-outline-color: var(--line-2); }
+  #orbWrap:hover { transform: scale(1.02); }
+  #heroOrb:focus { outline: none; }
+  #heroOrb:focus-visible, #dots button:focus-visible { outline: 2px solid var(--md-sys-color-secondary); outline-offset: 3px; border-radius: 9999px; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  section[id], h3[id], .sec-sub[id] { scroll-margin-top: 96px; }
+
+  /* ---- 响应式（移动端 orb 缩小防溢出） ---- */
+  @media (max-width: 767px) {
+    #orbWrap { width: 320px !important; height: 320px !important; right: -110px !important; top: -40px !important; }
+    #orbWrap .orb { opacity: .6; }
+  }
+  #heroContent md-filled-button, #heroContent md-outlined-button, #heroContent md-icon-button, #heroContent #dots button { pointer-events: auto; }
