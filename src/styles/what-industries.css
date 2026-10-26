@@ -11,12 +11,17 @@
   }
 
   /* ---- 紫色焦点跟随鼠标（报价三步），移出区域回默认项 ---- */
-  .q-step.on {
+  #q-flow .q-step { background: #fff; }
+  #q-flow .q-step.on {
     --md-outlined-button-outline-color: transparent;
     --md-outlined-button-label-text-color: #4c3fd6;
     --md-sys-color-primary: #4c3fd6;
     background: var(--md-sys-color-secondary-container);
     border-radius: 999px;
+  }
+  #q-flow .q-step-cards > md-outlined-card {
+    --md-outlined-card-container-color: #fff;
+    background: #fff;
   }
 
   /* ============ WHAT · 四种经营模式选择器 ============ */
