@@ -958,8 +958,27 @@
           <md-menu-item data-industry-menu="3"><div slot="headline" data-i18n="menu.solution.4">快消与零售</div></md-menu-item>
         </md-menu>
       </div>
-      <a class="site-nav-link" href="#caseStudies" data-nav-section="cases"><span data-i18n="nav.cases">客户案例</span></a>
-      <a class="site-nav-link" href="#aiAgent" data-nav-section="ai"><span data-i18n="nav.ai">AI 智能体</span></a>
+      <div class="site-nav-item">
+        <button class="site-nav-trigger" id="m-cases" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="mm-cases" data-nav-section="cases">
+          <span data-i18n="nav.cases">客户案例</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <md-menu anchor="m-cases" id="mm-cases">
+          <md-menu-item data-case-menu="0"><div slot="headline" data-i18n="case1.name">公牛集团</div></md-menu-item>
+          <md-menu-item data-case-menu="1"><div slot="headline" data-i18n="case2.name">芯智雲城</div></md-menu-item>
+          <md-menu-item data-case-menu="2"><div slot="headline" data-i18n="case3.name">某电子科技上市公司</div></md-menu-item>
+        </md-menu>
+      </div>
+      <div class="site-nav-item">
+        <button class="site-nav-trigger" id="m-ai" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="mm-ai" data-nav-section="ai">
+          <span data-i18n="nav.ai">AI 智能体</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <md-menu anchor="m-ai" id="mm-ai">
+          <md-menu-item data-header-target="#aiAgent"><div slot="headline" data-i18n="footer.ai.overview">AI 智能体总览</div></md-menu-item>
+          <md-menu-item data-ai-scene="1"><div slot="headline" data-i18n="ag.scene.1">客服场景</div></md-menu-item>
+          <md-menu-item data-ai-scene="2"><div slot="headline" data-i18n="ag.scene.2">询报价场景</div></md-menu-item>
+          <md-menu-item data-ai-scene="3"><div slot="headline" data-i18n="ag.scene.3">工单场景</div></md-menu-item>
+        </md-menu>
+      </div>
       <div class="site-nav-item">
         <button class="site-nav-trigger" id="m-tech" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="mm-tech" data-nav-section="tech">
           <span data-i18n="nav.tech">技术架构</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
@@ -1029,8 +1048,23 @@
           <a href="#industrySolutions" data-mobile-link data-industry-menu="3" data-i18n="menu.solution.4">快消与零售</a>
         </div>
       </details>
-      <a class="site-mobile-link" href="#caseStudies" data-mobile-link><span data-i18n="nav.cases">客户案例</span></a>
-      <a class="site-mobile-link" href="#aiAgent" data-mobile-link><span data-i18n="nav.ai">AI 智能体</span></a>
+      <details class="site-mobile-group">
+        <summary><span data-i18n="nav.cases">客户案例</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+        <div class="site-mobile-sublinks">
+          <a href="#caseStudies" data-mobile-link data-case-menu="0" data-i18n="case1.name">公牛集团</a>
+          <a href="#caseStudies" data-mobile-link data-case-menu="1" data-i18n="case2.name">芯智雲城</a>
+          <a href="#caseStudies" data-mobile-link data-case-menu="2" data-i18n="case3.name">某电子科技上市公司</a>
+        </div>
+      </details>
+      <details class="site-mobile-group">
+        <summary><span data-i18n="nav.ai">AI 智能体</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+        <div class="site-mobile-sublinks">
+          <a href="#aiAgent" data-mobile-link data-i18n="footer.ai.overview">AI 智能体总览</a>
+          <a href="#aiAgent" data-mobile-link data-ai-scene="1" data-i18n="ag.scene.1">客服场景</a>
+          <a href="#aiAgent" data-mobile-link data-ai-scene="2" data-i18n="ag.scene.2">询报价场景</a>
+          <a href="#aiAgent" data-mobile-link data-ai-scene="3" data-i18n="ag.scene.3">工单场景</a>
+        </div>
+      </details>
       <details class="site-mobile-group">
         <summary><span data-i18n="nav.tech">技术架构</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
         <div class="site-mobile-sublinks">
@@ -1129,6 +1163,17 @@
     if (!item) return;
     event.preventDefault();
     scrollToTarget(item.getAttribute('data-header-target'));
+  });
+  document.addEventListener('click', (event) => {
+    const item = event.target.closest?.('[data-case-menu]');
+    if (!item) return;
+    event.preventDefault();
+    const tabs = document.querySelectorAll('#caseChain .cc-node');
+    tabs[Number(item.getAttribute('data-case-menu'))]?.click();
+    closeMenus();
+    closeMobileNav();
+    document.getElementById('caseStudies')?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    try { history.replaceState(null, '', '#caseStudies'); } catch (e) { /* file:// 下保留滚动 */ }
   });
   document.querySelectorAll('.site-header a[href^="#"]').forEach((link) => {
     link.addEventListener('click', () => { closeMenus(); closeMobileNav(); });
@@ -2171,6 +2216,8 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
         document.querySelectorAll('[data-ai-scene]').forEach(function (link) {
           link.addEventListener('click', function (event) {
             event.preventDefault();
+            var menu = link.closest('md-menu');
+            if (menu) menu.open = false;
             var scene = link.getAttribute('data-ai-scene');
             var tab = sceneTabs.find(function (item) { return item.getAttribute('data-scene') === scene; });
             if (tab) {
