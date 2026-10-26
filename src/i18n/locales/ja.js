@@ -6,6 +6,8 @@ export default {
       'cta.get': '提案を依頼', 'cta.short': '提案依頼',
       'menu.product.1': '製品概要', 'menu.product.2': '4つの経営モデル', 'menu.product.3': 'プライベートデプロイ', 'menu.product.4': 'データセキュリティ',
       'menu.solution.1': '家電・電気用品', 'menu.solution.2': '電子部品', 'menu.solution.3': '製造業', 'menu.solution.4': '消費財・小売',
+      'nav.solution.more': 'その他の業界・知名品牌にも対応',
+      'ind.g1': 'アパレル・スポーツ · ジュエリー', 'ind.g2': 'ビューティ · 日用品・ケア · ベビー', 'ind.g3': '家居・インテリア · 家電・デジタル', 'ind.g4': '食品・飲料 · アグリテック', 'ind.g5': 'エレクトロニクス · スマート製造', 'ind.g6': '医薬・ヘルスケア · 医療機器', 'ind.g7': '小売運営 · 商業不動産',
       'menu.about.charity': '社会貢献', 'menu.about.team': 'チーム', 'menu.about.locations': '拠点', 'menu.about.awards': '受賞歴',
       'menu.about.company': '会社紹介', 'menu.about.certifications': 'セキュリティ認証',
       'menu.tech.stack': '技術スタック', 'menu.tech.data': 'データの統一',

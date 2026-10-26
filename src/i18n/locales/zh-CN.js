@@ -6,6 +6,8 @@ export default {
       'cta.get': '获取方案', 'cta.short': '获取方案',
       'menu.product.1': '产品总览', 'menu.product.2': '四种经营模式', 'menu.product.3': '私有化部署', 'menu.product.4': '数据安全',
       'menu.solution.1': '家电与电工', 'menu.solution.2': '电子元器件', 'menu.solution.3': '工业制造', 'menu.solution.4': '快消与零售',
+      'nav.solution.more': '正在服务更多行业知名品牌企业',
+      'ind.g1': '鞋服运动 · 珠宝首饰', 'ind.g2': '美妆 · 日化个护 · 母婴', 'ind.g3': '家居家装 · 数码电器', 'ind.g4': '食品饮料 · 农业科技', 'ind.g5': '电子工业 · 智能制造', 'ind.g6': '医药健康 · 医疗器械', 'ind.g7': '零售运营 · 商业地产',
       'menu.about.charity': '公益', 'menu.about.team': '团队', 'menu.about.locations': '地点', 'menu.about.awards': '奖项',
       'menu.about.company': '公司介绍', 'menu.about.certifications': '安全认证',
       'menu.tech.stack': '技术栈', 'menu.tech.data': '数据同源',

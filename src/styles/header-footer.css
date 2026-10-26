@@ -65,6 +65,13 @@
   .site-nav-panel--about::before { left: auto; right: var(--site-nav-about-caret-right, 24px); }
   .site-nav-panel--product { width: 520px; }
   .site-nav-panel--solution { width: 560px; }
+  /* ---- 行业面板：更多行业展示区（纯展示，不可点击） ---- */
+  .site-nav-indmore { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .site-nav-indmore-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 8px; }
+  .site-nav-indpill {
+    padding: 6px 10px; border-radius: 8px; background: var(--wash);
+    color: var(--sub); font-size: 12px; line-height: 1.5; cursor: default;
+  }
   .site-nav-panel--cases { width: 640px; }
   .site-nav-panel--ai { width: 480px; }
   .site-nav-panel--tech { width: 560px; }
@@ -153,6 +160,8 @@
   .site-mobile-link { padding-inline: 4px; }
   .site-mobile-sublinks a { font-size: 13px; }
   .site-mobile-link:hover, .site-mobile-sublinks a:hover { color: var(--ink); background: var(--wash); }
+  .site-mobile-indmore-title { margin: 12px 0 6px; padding: 0 12px; color: var(--faint); font-size: 11px; font-weight: 600; letter-spacing: .06em; }
+  .site-mobile-indmore { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 12px 12px; }
   .site-mobile-language { margin-top: 16px; padding: 20px 4px 0; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .site-mobile-language label { color: var(--sub); font-size: 13px; }
   .site-mobile-language select {
