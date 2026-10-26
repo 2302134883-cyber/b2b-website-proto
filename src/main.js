@@ -15,6 +15,7 @@ import './styles/cases.css';
 import './styles/ai-agent.css';
 import './styles/faq.css';
 import './styles/logo-marquee.css';
+import './styles/section-tones.css';
 
 import './components/material.js';
 
