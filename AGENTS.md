@@ -42,6 +42,58 @@
 
 5. **vendor/** 不入库，重建用 `bash setup-vendor.sh`。
 
+## “显示 b2b-website-proto 最新版”标准 Workflow
+
+用户只说“显示 b2b-website-proto 最新版”时，“最新版”默认且仅指**主仓 `main` 的最新提交**，不是所有分支中时间最新的提交，也不自动包含未合并的 worktree 改动。唯一来源和入口：
+
+- 仓库：`~/Projects/b2b-website-proto`
+- 主页面：`~/Projects/b2b-website-proto/clone/index.html`
+- 预览：`http://127.0.0.1:4174/`
+- 对话目录副本和 `~/Projects/b2b-website-proto-worktrees/` 一律不得作为此请求的展示来源。
+
+必须按顺序执行并验证：
+
+1. **同步并确认版本**：
+   ```bash
+   cd ~/Projects/b2b-website-proto
+   test "$(git rev-parse --show-toplevel)" = "$HOME/Projects/b2b-website-proto"
+   git checkout main
+   git pull --ff-only origin main
+   git status --short --branch
+   test -z "$(git status --porcelain -- clone)"
+   git log -1 --oneline
+   git branch --no-merged main
+   ```
+   `pull` 失败时必须说明本地 commit 和失败原因，不得把未同步的本地页面称为“最新版”。`clone/` 必须没有未提交或未跟踪改动；若第二个 `test` 失败，必须报告并请用户选择看 `main` 还是工作区，不得擅自清理、提交或把工作区称为 `main`。其他位置的未提交修改也必须报告。列出未合入 `main` 的分支供用户判断，**不得为了“显示最新版”自动 merge 任务分支**。
+
+2. **核验或启动 `4174`**：
+   ```bash
+   lsof -nP -iTCP:4174 -sTCP:LISTEN
+   ps -p <PID> -o command
+   lsof -a -p <PID> -d cwd
+   ```
+   已有进程的实际服务目录必须是 `~/Projects/b2b-website-proto/clone`（普通启动看 cwd；使用 `--directory` 时同时核对该参数）。若端口被其他目录的旧 b2b 预览占用，确认 PID 后 `kill <PID>` 再启动；若是无关服务，不得盲目 kill，必须报告端口冲突。需要启动时：
+   ```bash
+   cd ~/Projects/b2b-website-proto/clone
+   nohup python3 -m http.server 4174 --bind 127.0.0.1 >/tmp/b2b-website-proto-main.log 2>&1 &
+   ```
+
+3. **验证 HTTP 内容，而不是只验证端口能打开**：
+   ```bash
+   TMP=$(mktemp)
+   curl -fsS http://127.0.0.1:4174/ -o "$TMP" && \
+     cmp "$TMP" "$HOME/Projects/b2b-website-proto/clone/index.html"
+   rm -f "$TMP"
+   ```
+   `curl` 成功且 `cmp` 退出码为 `0` 才算通过。失败时重新检查目录、进程和分支，不得先用“浏览器缓存”搪塞。
+
+4. **展示并报告**：
+   ```bash
+   cd ~/Projects/b2b-website-proto
+   open "http://127.0.0.1:4174/?v=$(git rev-parse --short HEAD)"
+   ```
+   回复必须写明：仓库路径、`main` 的短 commit、URL、HTTP 内容核验结果，以及未合入 `main` 的分支。只有以上验证全部通过才能说“已显示最新版”。若代码与 HTTP 核验均正确但页面仍旧，再提示硬刷新（Cmd+Shift+R）。
+
 ## 仓库结构
 
 主页面：`clone/index.html`（最新 Hero orb⇄X 形变 + 3D 地球 + 客户 logo 无缝轮播）
