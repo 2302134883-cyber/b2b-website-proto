@@ -141,30 +141,56 @@
   #heroContent md-filled-button, #heroContent md-outlined-button, #heroContent md-icon-button, #heroContent #dots button { pointer-events: auto; }
 
   /* ============ ARCH 选人式架构（arch- 前缀，独立组件） ============ */
-  .arch-select { margin-top: 48px; transition: opacity .24s ease, transform .24s ease; }
+  .arch-select { margin-top: 40px; transition: opacity .24s ease, transform .24s ease; }
   .arch-select.bye { opacity: 0; transform: translateY(-8px); pointer-events: none; }
+  .arch-select-head { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+  .arch-hint { margin: 0; font-size: 13px; font-weight: 600; color: var(--ink); }
+  .arch-select-note { margin: 0; font-size: 12px; line-height: 1.6; color: var(--faint); text-align: right; }
   .arch-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   .arch-role {
-    appearance: none; font: inherit; text-align: left; cursor: pointer; width: 100%;
+    position: relative; display: block; min-width: 0; width: 100%; font: inherit; text-align: left; cursor: pointer;
     background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px;
-    transition: transform .25s cubic-bezier(.25,1,.5,1), border-color .25s ease;
+    transition: transform .25s cubic-bezier(.25,1,.5,1), border-color .2s ease, box-shadow .2s ease;
   }
   .arch-role:hover { transform: translateY(-4px); border-color: var(--ink); }
-  .arch-role:focus-visible { outline: none; border-color: var(--ink); box-shadow: 0 0 0 3px rgba(17,24,39,.12); }
-  .arch-who { display: flex; align-items: center; gap: 14px; }
+  .arch-role:has(.arch-role-input:checked) { border-color: var(--ink); box-shadow: inset 0 0 0 .5px var(--ink); }
+  .arch-role:has(.arch-role-input:checked):hover { transform: none; }
+  .arch-role:has(.arch-role-input:focus-visible) { outline: 3px solid rgba(17,24,39,.12); outline-offset: 3px; }
+  .arch-role-input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; }
+  .arch-radio {
+    position: absolute; top: 24px; right: 24px; display: grid; place-items: center;
+    width: 20px; height: 20px; border: 1.5px solid var(--line-2); border-radius: 50%;
+    background: #fff; transition: border-color .2s ease;
+  }
+  .arch-radio::after {
+    content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--ink);
+    transform: scale(0); transition: transform .18s ease;
+  }
+  .arch-role-input:checked + .arch-radio { border-color: var(--ink); }
+  .arch-role-input:checked + .arch-radio::after { transform: scale(1); }
+  .arch-who { display: flex; align-items: center; gap: 14px; padding-right: 30px; }
   .arch-ava { position: relative; width: 56px; height: 56px; flex-shrink: 0; }
   .arch-ava .orb { width: 56px; height: 56px; }
   .arch-gly { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink); }
-  .arch-rname { display: block; font-size: 15px; font-weight: 600; }
+  .arch-rname { display: block; font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
   .arch-rtag { display: block; font-size: 12px; color: var(--sub); margin-top: 3px; }
   .arch-stats { display: grid; gap: 10px; margin-top: 22px; }
   .arch-stat { display: grid; grid-template-columns: 56px 1fr 34px; align-items: center; gap: 10px; font-size: 11px; color: var(--faint); }
   .arch-stat .bar { height: 4px; border-radius: 2px; background: #f1f2f5; overflow: hidden; }
   .arch-stat .bar i { display: block; height: 100%; border-radius: 2px; background: var(--ink); transform-origin: left; }
   .arch-stat .val { text-align: right; }
-  .arch-hint { margin-top: 28px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: var(--faint); }
-  .arch-hint i { width: 6px; height: 6px; border-radius: 50%; background: var(--ink); animation: archPulse 2.4s ease-in-out infinite; }
-  @keyframes archPulse { 50% { opacity: .2; } }
+  .arch-actions { margin-top: 24px; display: flex; justify-content: center; }
+  .arch-enter {
+    appearance: none; width: 100%; max-width: 360px; min-height: 48px; padding: 12px 24px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+    border: 1px solid var(--ink); border-radius: 999px; background: var(--ink); color: #fff;
+    font: inherit; font-size: 13px; font-weight: 500; line-height: 1.5; cursor: pointer;
+    transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .arch-enter svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .arch-enter:hover:not(:disabled) { transform: translateY(-2px); }
+  .arch-enter:focus-visible { outline: 3px solid rgba(17,24,39,.12); outline-offset: 3px; }
+  .arch-enter:disabled { background: #fff; border-color: var(--line-2); color: var(--faint); cursor: not-allowed; }
 
   .arch-view { margin-top: 40px; }
   .arch-view[hidden] { display: none; }
@@ -221,6 +247,8 @@
   .arch-chain + .arch-chain { margin-top: 6px; color: var(--faint); }
 
   @media (max-width: 960px) {
+    .arch-select-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .arch-select-note { text-align: left; }
     .arch-cards { grid-template-columns: 1fr; }
     .arch-stage { grid-template-columns: 1fr; }
     .arch-panel { position: static; }
@@ -228,9 +256,9 @@
     .arch-spine { left: 24px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .arch-spine i, .arch-hint i { animation: none; }
+    .arch-spine i { animation: none; }
     .arch-view.hi { animation: none; }
-    .arch-select, .arch-role, .arch-node { transition: none; }
+    .arch-select, .arch-role, .arch-node, .arch-radio, .arch-radio::after, .arch-enter { transition: none; }
   }
 
   /* ---- 报价三步：与下方卡片使用相同的三列轨道和 24px 列间距 ---- */
@@ -1507,45 +1535,49 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
   </div>
 </section>
 
-<!-- ============ ARCH · 整体架构（选人式交互） ============ -->
-<section id="arch" class="py-24 border-t border-[var(--line)]">
+<!-- ============ HOW · 技术框架与整体架构 ============ -->
+<section id="sec-how" class="py-16 md:py-24 border-t border-[var(--line)]">
   <div class="max-w-[1200px] mx-auto px-6">
     <div class="sec-head">
       <svg class="node orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
-      <h2 class="text-[26px] md:text-[32px] font-bold tracking-tight" data-i18n="arch.title">整体架构</h2>
-    </div>
-    <p class="mt-3 text-center text-[14px] text-[var(--sub)]" data-i18n="arch.sub">中台化 B2B 系统 · 选择一个角色，看 TA 眼中的系统</p>
-
-    <!-- 第一幕：选人（游戏式角色卡） -->
-    <div id="archSelect" class="arch-select">
-      <div class="arch-cards" id="archCards"></div>
-      <p class="arch-hint"><i></i><span data-i18n="arch.hint">选择角色进入</span></p>
+      <h2 class="text-[26px] md:text-[32px] font-bold tracking-tight" data-i18n="how.title">我们如何用技术搭建框架？</h2>
     </div>
 
-    <!-- 第二幕：该角色视角下的架构 -->
-    <div id="archView" class="arch-view" hidden>
-      <div class="arch-toolbar">
-        <div class="arch-tabs" id="archTabs"></div>
-        <button id="archBack" class="arch-back" type="button">← <span data-i18n="arch.back">重新选择</span></button>
+    <!-- ARCH · 整体架构（选人式交互），保留 #arch 深链接 -->
+    <section id="arch" class="mt-10 md:mt-16 scroll-mt-24" aria-labelledby="arch-title">
+      <h3 id="arch-title" class="text-[15px] font-semibold" data-i18n="arch.title">整体架构</h3>
+      <p class="mt-2 text-[14px] text-[var(--sub)]" data-i18n="arch.sub">中台化 B2B 系统 · 选择一个角色，看 TA 眼中的系统</p>
+
+      <!-- 第一幕：选择角色（单选 + 确认进入） -->
+      <div id="archSelect" class="arch-select">
+        <div class="arch-select-head">
+          <p class="arch-hint" data-i18n="arch.hint">选择角色进入</p>
+          <p id="archSelectNote" class="arch-select-note" data-i18n="arch.select.note">不同角色将看到不同的业务链路与系统能力。</p>
+        </div>
+        <div class="arch-cards" id="archCards" role="radiogroup" data-i18n-aria="arch.hint" aria-label="选择角色进入" aria-describedby="archSelectNote"></div>
+        <div class="arch-actions">
+          <button id="archEnter" class="arch-enter" type="button" disabled>
+            <span id="archEnterLabel" data-i18n="arch.enter.empty">请先选择角色</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="arch-stage">
-        <div class="arch-board" id="archBoard"><div class="arch-spine" aria-hidden="true"><i></i></div></div>
-        <aside class="arch-panel" id="archPanel"></aside>
+
+      <!-- 第二幕：该角色视角下的架构 -->
+      <div id="archView" class="arch-view" hidden>
+        <div class="arch-toolbar">
+          <div class="arch-tabs" id="archTabs"></div>
+          <button id="archBack" class="arch-back" type="button">← <span data-i18n="arch.back">重新选择</span></button>
+        </div>
+        <div class="arch-stage">
+          <div class="arch-board" id="archBoard"><div class="arch-spine" aria-hidden="true"><i></i></div></div>
+          <aside class="arch-panel" id="archPanel"></aside>
+        </div>
+        <p class="mt-6 text-[12px] text-[var(--faint)]" data-i18n="arch.note">说明：节点为中台化 B2B 典型模块占位，接入实际产品线后替换。</p>
       </div>
-      <p class="mt-6 text-[12px] text-[var(--faint)]" data-i18n="arch.note">说明：节点为中台化 B2B 典型模块占位，接入实际产品线后替换。</p>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ============ HOW ============ -->
-<section id="sec-how" class="py-16 md:py-24">
-  <div class="max-w-[1200px] mx-auto px-6">
-    <div class="sec-head">
-      <svg class="node orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
-      <h2 class="text-[26px] md:text-[32px] font-bold tracking-tight" data-i18n="how.title">我们如何做到</h2>
-    </div>
-
-    <h3 class="mt-10 md:mt-16 mb-6 text-[15px] font-semibold" data-i18n="how.tech">技术栈（圆盘 / 环形）</h3>
+    <h3 class="mt-16 mb-6 text-[15px] font-semibold" data-i18n="how.tech">技术栈（圆盘 / 环形）</h3>
     <div id="techRing" class="w-full max-w-[560px] mx-auto"></div>
 
     <h3 class="mt-16 mb-2 text-[15px] font-semibold" data-i18n="ds.title">数据同源 · 一次改价的差别</h3>
@@ -2078,7 +2110,8 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
   const $ = (id) => document.getElementById(id);
   const selectEl = $('archSelect'), viewEl = $('archView');
   const cards = $('archCards'), tabs = $('archTabs'), board = $('archBoard'), panel = $('archPanel');
-  if (!selectEl || !viewEl || !cards || !tabs || !board || !panel) return;
+  const enterBtn = $('archEnter'), enterLabel = $('archEnterLabel');
+  if (!selectEl || !viewEl || !cards || !tabs || !board || !panel || !enterBtn || !enterLabel) return;
 
   const chip = (id) => `<span class="arch-node" data-n="${id}">${N[id]}</span>`;
   const stat = (key, label, v, max) =>
@@ -2086,7 +2119,9 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
 
   /* 一次性渲染全部内容（含三个角色面板），之后只做 class / hidden 切换——语言切换由 i18n.js 全量 apply 覆盖 */
   cards.innerHTML = ROLES.map((r) => `
-    <button class="arch-role" type="button" data-role="${r.id}">
+    <label class="arch-role" data-role="${r.id}">
+      <input class="arch-role-input" type="radio" name="arch-role" value="${r.id}" data-i18n-aria="role.${r.id}.name" aria-label="${r.name}">
+      <span class="arch-radio" aria-hidden="true"></span>
       <span class="arch-who">
         <span class="arch-ava">
           <svg class="orb orb-slow" viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
@@ -2102,7 +2137,7 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
         ${stat('arch.stat.touch', '触点', r.touch, 7)}
         ${stat('arch.stat.scene', '场景', r.scenes, 8)}
       </span>
-    </button>`).join('');
+    </label>`).join('');
 
   tabs.innerHTML = ROLES.map((r) =>
     `<button class="arch-tab" type="button" data-role="${r.id}" aria-pressed="false"><span data-i18n="role.${r.id}.name">${r.name}</span></button>`).join('');
@@ -2130,7 +2165,33 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
   const nodes = board.querySelectorAll('.arch-node');
   const tabEls = [...tabs.querySelectorAll('.arch-tab')];
   const panes = [...panel.querySelectorAll('.arch-pane')];
-  let switching = false;
+  const roleInputs = [...cards.querySelectorAll('.arch-role-input')];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let selectedRole = null, switching = false;
+
+  function tr(key, fallback) {
+    return (window.__i18nT && window.__i18nT(key)) || fallback;
+  }
+
+  function updateEnter() {
+    enterBtn.disabled = !selectedRole;
+    if (!selectedRole) {
+      enterLabel.textContent = tr('arch.enter.empty', '请先选择角色');
+      return;
+    }
+    const role = ROLES.find((r) => r.id === selectedRole);
+    const roleName = tr('role.' + selectedRole + '.name', role.name);
+    enterLabel.textContent = tr('arch.enter', '以「{role}」视角进入').replace('{role}', roleName);
+  }
+
+  function choose(id) {
+    if (!ROLES.some((r) => r.id === id)) return;
+    selectedRole = id;
+    updateEnter();
+  }
+
+  updateEnter();
+  document.addEventListener('i18n:applied', updateEnter);
 
   function pick(id, fromCards) {
     const role = ROLES.find((r) => r.id === id);
@@ -2153,13 +2214,17 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
         viewEl.hidden = false;
         viewEl.classList.add('hi');
         switching = false;
-      }, 240);
+        const activeTab = tabEls.find((t) => t.dataset.role === id);
+        if (activeTab) activeTab.focus({ preventScroll: true });
+      }, reduceMotion ? 0 : 240);
     }
   }
 
-  cards.addEventListener('click', (e) => {
-    const btn = e.target.closest('.arch-role');
-    if (btn) pick(btn.dataset.role, true);
+  cards.addEventListener('change', (e) => {
+    if (e.target.matches('.arch-role-input')) choose(e.target.value);
+  });
+  enterBtn.addEventListener('click', () => {
+    if (selectedRole) pick(selectedRole, true);
   });
   tabs.addEventListener('click', (e) => {
     const btn = e.target.closest('.arch-tab');
@@ -2170,7 +2235,11 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     viewEl.classList.remove('hi', 'picked');
     nodes.forEach((n) => n.classList.remove('on'));
     selectEl.hidden = false;
-    requestAnimationFrame(() => selectEl.classList.remove('bye'));
+    requestAnimationFrame(() => {
+      selectEl.classList.remove('bye');
+      const selected = roleInputs.find((input) => input.value === selectedRole);
+      if (selected) selected.focus({ preventScroll: true });
+    });
   });
 })();
 </script>
