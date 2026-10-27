@@ -19,7 +19,6 @@ import './styles/section-tones.css';
 import './styles/tech-capabilities.css';
 import './styles/about-company.css';
 import './styles/gemini-glass.css';
-import './styles/gemini-aura.css';
 import './styles/gemini-air.css';
 
 import './components/material.js';
