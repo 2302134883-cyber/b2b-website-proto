@@ -78,12 +78,6 @@ import MODE_I18N from '../i18n/business-modes.js';
   const zh = (key) => MODE_I18N['zh-CN'][key] || key;
   const text = (key, className = '') => `<span class="${className}" data-i18n="${key}">${zh(key)}</span>`;
 
-  const compareRights = (mode) => RIGHTS.map((right) => `
-    <div class="mode-right compare-right">
-      <dt>${text(`modes.${right}`)}</dt>
-      <dd>${text(`mode.${mode.id}.rights.${right}`)}</dd>
-    </div>`).join('');
-
   const rightControls = (mode) => RIGHTS.map((right) => `
     <button class="mode-right-button" type="button" data-lens-select="${right}" aria-pressed="false">
       <span class="mode-right-label">${text(`modes.${right}`)}</span>
@@ -189,14 +183,7 @@ import MODE_I18N from '../i18n/business-modes.js';
       }).join('')}
     </div>
 
-    <p class="mode-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 12.5 11 15.5 16.5 9"/><circle cx="12" cy="12" r="9"/></svg><span>${text('modes.note')}</span></p>
-
-    <details class="mode-compare">
-      <summary><span class="mode-compare-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16M9 3v18M15 3v18"/></svg>${text('modes.compare')}</span><span class="mode-compare-hint">${text('modes.compare.hint')}</span><svg class="mode-compare-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
-      <div class="mode-compare-grid">
-        ${MODES.map((mode) => `<article class="mode-compare-card"><h4><span>${mode.code}</span>${text(`mode.${mode.id}.name`)}</h4><dl>${compareRights(mode)}</dl></article>`).join('')}
-      </div>
-    </details>`;
+    <p class="mode-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 12.5 11 15.5 16.5 9"/><circle cx="12" cy="12" r="9"/></svg><span>${text('modes.note')}</span></p>`;
 
   const tabs = [...root.querySelectorAll('[role="tab"]')];
   const panels = [...root.querySelectorAll('[role="tabpanel"]')];
