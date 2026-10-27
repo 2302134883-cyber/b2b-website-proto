@@ -57,7 +57,7 @@
   .service-card { height: 100%; border: 1px solid var(--line); border-radius: 16px; background: #fff; --md-outlined-card-outline-color: transparent; transition: border-color .2s ease; }
   .service-card:hover { border-color: #ddd6fe; }
   .service-card .service-card-inner { min-height: 152px; padding: 28px; box-sizing: border-box; display: flex; align-items: center; gap: 24px; }
-  .service-orb-frame { width: 80px; height: 80px; flex: none; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; }
+  .service-orb-frame { width: 80px; height: 80px; flex: none; display: grid; place-items: center; }
   .service-orb { width: 64px; height: 64px; }
   .service-card:nth-child(2) .service-orb { animation-direction: reverse; }
   .service-copy { min-width: 0; }
