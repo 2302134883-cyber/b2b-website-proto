@@ -1,0 +1,194 @@
+/* ============ Gemini Glass · 轻玻璃材质精修 ============
+ * 只调整重点容器的材质与交互反馈，不改变布局、排版和既有 orb 色彩。
+ * 内层面板继续使用中性浅灰，避免整页磨砂和层级消失。
+ */
+:root {
+  --glass-bg: rgba(255, 255, 255, .64);
+  --glass-bg-strong: rgba(255, 255, 255, .82);
+  --glass-border: rgba(103, 91, 160, .20);
+  --glass-border-hover: rgba(109, 94, 240, .38);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, .94);
+  --glass-shadow:
+    0 18px 44px -26px rgba(70, 58, 130, .40),
+    0 3px 10px rgba(17, 24, 39, .035);
+  --glass-shadow-hover:
+    0 20px 44px -24px rgba(76, 63, 214, .32),
+    0 0 0 4px rgba(147, 184, 248, .10);
+  --glass-blur: blur(18px) saturate(112%);
+}
+
+/* 重点内容容器：半透明底、细边与顶部高光。 */
+.service-card,
+.mode-tab,
+.mode-stage,
+.mode-compare,
+#q-flow .q-step-cards > md-outlined-card,
+.ind-pane,
+.cc-stat,
+.arch-role,
+.arch-board,
+.arch-panel,
+.tc-visual,
+.tc-detail,
+.ag-chat,
+.about-address-card,
+.about-company-card,
+.cert-card,
+#sec-faq md-outlined-card,
+.final-cta-card {
+  background-color: var(--glass-bg);
+  border-color: var(--glass-border);
+  background-clip: padding-box;
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+/* 白底上的复杂面板提高不透明度，避免切换动画期间内容互相透出。 */
+.ind-pane,
+.arch-panel,
+.tc-detail,
+.ag-chat,
+.about-address-card,
+.about-company-card,
+#sec-faq md-outlined-card {
+  background-color: var(--glass-bg-strong);
+}
+
+/* Material 卡片同时更新内部容器，避免组件默认底色盖住玻璃材质。 */
+.service-card,
+#q-flow .q-step-cards > md-outlined-card,
+#sec-faq md-outlined-card {
+  --md-outlined-card-container-color: transparent;
+  --md-outlined-card-outline-color: var(--glass-border);
+}
+
+/* 选中态仍然沿用原有黑色边界，不用渐变替代状态表达。 */
+.mode-tab.on {
+  background-color: var(--glass-bg-strong);
+}
+.arch-role:has(.arch-role-input:checked) {
+  background-color: var(--glass-bg-strong);
+  box-shadow: var(--glass-highlight), var(--glass-shadow), inset 0 0 0 .5px var(--ink);
+}
+
+/* 保留现有 orb 图标，仅给承载容器增加轻微折射感。 */
+.service-orb-frame {
+  background: rgba(255, 255, 255, .46);
+  border-color: rgba(103, 91, 160, .12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .78);
+}
+
+/* 首屏小面积 Glass：保留原轮播结构，不增加任何额外 orb。 */
+.hero-carousel-controls {
+  width: fit-content;
+  margin-inline: auto;
+  padding: 7px 12px;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .58);
+  background-clip: padding-box;
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  backdrop-filter: blur(16px) saturate(112%);
+  -webkit-backdrop-filter: blur(16px) saturate(112%);
+}
+@media (max-width: 767px) {
+  .hero-carousel-controls { padding: 5px 9px; }
+}
+
+/* 静态容器只有材质过渡；位移只属于可操作卡片。 */
+.service-card,
+.mode-stage,
+.mode-compare,
+#q-flow .q-step-cards > md-outlined-card,
+.ind-pane,
+.cc-stat,
+.arch-board,
+.arch-panel,
+.tc-visual,
+.tc-detail,
+.ag-chat,
+.about-address-card,
+.about-company-card,
+#sec-faq md-outlined-card,
+.final-cta-card {
+  transition: border-color .2s ease, box-shadow .22s ease, background-color .2s ease;
+}
+.mode-tab,
+.arch-role,
+.cert-card {
+  transition:
+    transform .22s cubic-bezier(.25, 1, .5, 1),
+    border-color .2s ease,
+    box-shadow .22s ease,
+    background-color .2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mode-tab:hover,
+  .arch-role:hover,
+  .cert-card:hover {
+    box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
+    transform: translateY(-2px);
+  }
+  .mode-tab:not(.on):hover,
+  .arch-role:hover,
+  .cert-card:hover {
+    border-color: var(--glass-border-hover);
+  }
+  .arch-role:has(.arch-role-input:checked):hover {
+    box-shadow: var(--glass-highlight), var(--glass-shadow), inset 0 0 0 .5px var(--ink);
+  }
+}
+
+/* 无 backdrop-filter 时仍为清晰、稳定的浅色卡片。 */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .service-card,
+  .mode-tab,
+  .mode-stage,
+  .mode-compare,
+  #q-flow .q-step-cards > md-outlined-card,
+  .ind-pane,
+  .cc-stat,
+  .arch-role,
+  .arch-board,
+  .arch-panel,
+  .tc-visual,
+  .tc-detail,
+  .ag-chat,
+  .about-address-card,
+  .about-company-card,
+  .cert-card,
+  #sec-faq md-outlined-card,
+  .final-cta-card {
+    background-color: #fff;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card,
+  .mode-tab,
+  .mode-stage,
+  .mode-compare,
+  #q-flow .q-step-cards > md-outlined-card,
+  .ind-pane,
+  .cc-stat,
+  .arch-role,
+  .arch-board,
+  .arch-panel,
+  .tc-visual,
+  .tc-detail,
+  .ag-chat,
+  .about-address-card,
+  .about-company-card,
+  .cert-card,
+  #sec-faq md-outlined-card,
+  .final-cta-card {
+    transition: none;
+  }
+  .mode-tab:hover,
+  .arch-role:hover,
+  .cert-card:hover {
+    transform: none;
+  }
+}
