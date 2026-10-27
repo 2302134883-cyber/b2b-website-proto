@@ -17,6 +17,7 @@ import './styles/faq.css';
 import './styles/logo-marquee.css';
 import './styles/section-tones.css';
 import './styles/tech-capabilities.css';
+import './styles/about-company.css';
 
 import './components/material.js';
 

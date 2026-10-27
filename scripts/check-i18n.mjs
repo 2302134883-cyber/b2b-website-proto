@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import businessModeDicts from '../src/i18n/business-modes.js';
 import techCapabilityDicts from '../src/i18n/tech-capabilities.js';
+import aboutCompanyDicts from '../src/i18n/about-company.js';
 import zhCN from '../src/i18n/locales/zh-CN.js';
 import en from '../src/i18n/locales/en.js';
 import ja from '../src/i18n/locales/ja.js';
@@ -16,7 +17,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const baseDicts = { 'zh-CN': zhCN, en, ja, ko, es, fr, de, ru };
 const languages = Object.keys(baseDicts);
 const dictionaries = Object.fromEntries(
-  languages.map((lang) => [lang, { ...baseDicts[lang], ...businessModeDicts[lang], ...techCapabilityDicts[lang] }]),
+  languages.map((lang) => [lang, { ...baseDicts[lang], ...businessModeDicts[lang], ...techCapabilityDicts[lang], ...aboutCompanyDicts[lang] }]),
 );
 const errors = [];
 const referenceKeys = Object.keys(dictionaries['zh-CN']).sort();
