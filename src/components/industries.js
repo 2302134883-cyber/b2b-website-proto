@@ -5,7 +5,7 @@
       var panes = Array.prototype.slice.call(root.querySelectorAll('.ind-pane'));
       var stage = document.getElementById('indPanes');
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var current = 0;
+      var current = 0, leaving = null;
 
       function syncHeight() {
         var max = 0;
@@ -17,30 +17,47 @@
         stage.style.minHeight = max + 'px';
       }
 
-      function go(index, focusTab) {
+      function go(index, focusTab, dir) {
+        var prev = current;
         current = (index + tabs.length) % tabs.length;
+        if (dir == null) dir = index >= prev ? 1 : -1;
+        stage.setAttribute('data-dir', dir > 0 ? 'next' : 'prev');
         tabs.forEach(function (tab, i) {
           var on = i === current;
           tab.classList.toggle('on', on);
           tab.setAttribute('aria-selected', on ? 'true' : 'false');
           tab.tabIndex = on ? 0 : -1;
         });
+        /* 横推：旧面板浮层推出，270ms 后藏掉；快速连点先立即收尾上一轮 */
+        if (leaving) { leaving.classList.remove('on', 'ind-out'); leaving.hidden = true; leaving = null; }
+        var oldPane = panes[prev];
         panes.forEach(function (pane, i) {
           var on = i === current;
-          pane.hidden = !on;
-          pane.classList.toggle('on', on);
+          if (!on && pane !== oldPane) { pane.hidden = true; pane.classList.remove('on'); }
+          if (on) { pane.hidden = false; pane.classList.add('on'); }
         });
+        if (!reduced && oldPane !== panes[current]) {
+          oldPane.hidden = false;
+          oldPane.classList.remove('on');
+          oldPane.classList.add('ind-out');
+          leaving = oldPane;
+          setTimeout(function () {
+            if (leaving === oldPane) { oldPane.classList.remove('ind-out'); oldPane.hidden = true; leaving = null; }
+          }, 270);
+        } else if (oldPane !== panes[current]) {
+          oldPane.classList.remove('on'); oldPane.hidden = true;
+        }
         if (focusTab) tabs[current].focus();
         startAuto();
       }
 
-      /* 自动轮播：6.5s 一档；悬停 / 聚焦 / 切后台暂停，reduced-motion 不自动播 */
-      var autoTimer = null, hovering = false, focusing = false;
-      function stopAuto() { clearInterval(autoTimer); autoTimer = null; }
+      /* 自动轮播：滚入视野 2s 后播第一档，之后 3s 一档；离开视野 / 悬停 / 聚焦 / 切后台暂停，reduced-motion 不自动播 */
+      var autoTimer = null, firstTimer = null, hovering = false, focusing = false, inView = false;
+      function stopAuto() { clearInterval(autoTimer); autoTimer = null; clearTimeout(firstTimer); firstTimer = null; }
       function startAuto() {
         stopAuto();
-        if (reduced || hovering || focusing || document.hidden) return;
-        autoTimer = setInterval(function () { go(current + 1, false); }, 6500);
+        if (reduced || !inView || hovering || focusing || document.hidden) return;
+        autoTimer = setInterval(function () { go(current + 1, false, 1); }, 3000);
       }
       root.addEventListener('mouseenter', function () { hovering = true; startAuto(); });
       root.addEventListener('mouseleave', function () { hovering = false; startAuto(); });
@@ -49,11 +66,22 @@
         if (!root.contains(e.relatedTarget)) { focusing = false; startAuto(); }
       });
       document.addEventListener('visibilitychange', startAuto);
+      new IntersectionObserver(function (entries) {
+        var was = inView;
+        inView = entries[0].isIntersecting;
+        if (inView && !was && !reduced && !hovering && !focusing && !document.hidden) {
+          /* 刚滚入视野：2s 后播第一档，之后回到 3s 节奏 */
+          stopAuto();
+          firstTimer = setTimeout(function () { go(current + 1, false, 1); }, 2000);
+        } else {
+          startAuto();
+        }
+      }, { threshold: 0.25 }).observe(root);
 
       var prevBtn = document.getElementById('indPrev');
       var nextBtn = document.getElementById('indNext');
-      if (prevBtn) prevBtn.addEventListener('click', function () { go(current - 1, false); });
-      if (nextBtn) nextBtn.addEventListener('click', function () { go(current + 1, false); });
+      if (prevBtn) prevBtn.addEventListener('click', function () { go(current - 1, false, -1); });
+      if (nextBtn) nextBtn.addEventListener('click', function () { go(current + 1, false, 1); });
 
       tabs.forEach(function (tab, i) {
         tab.addEventListener('click', function () { go(i, false); });
@@ -119,5 +147,4 @@
       document.addEventListener('i18n:applied', function () { setTimeout(syncHeight, 0); });
       window.addEventListener('load', syncHeight);
       syncHeight();
-      startAuto();
     })();
