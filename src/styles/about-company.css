@@ -1,0 +1,67 @@
+/* ============ ABOUT · 地址巡游 + 公司介绍（5/5 主从布局） ============ */
+.about-profile { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: stretch; margin-top: 32px; }
+.about-address-card, .about-company-card {
+  min-width: 0; border: 1px solid var(--line); border-radius: 16px; background: #fff;
+  scroll-margin-top: 96px;
+}
+.about-address-card { padding: 16px; display: flex; flex-direction: column; }
+.about-card-head { padding: 4px 4px 0; }
+.about-eyebrow { margin: 0; color: var(--faint); font-size: 10px; font-weight: 600; line-height: 1.5; letter-spacing: .18em; }
+.about-address-name { margin: 8px 0 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; color: var(--ink); font-size: 14px; font-weight: 600; line-height: 1.5; }
+.about-address-floor { color: var(--sub); font-size: 12px; font-weight: 400; }
+#journeyBox { width: 100%; height: 400px; flex: none; }
+.about-address-info { padding: 16px 4px 0; }
+.about-address-city { margin: 0; color: var(--sub); font-size: 12px; line-height: 1.65; }
+.about-address-hours { margin: 6px 0 0; color: var(--faint); font-size: 11px; line-height: 1.5; }
+.about-contact-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 12px; }
+.about-contact-links a { color: var(--ink); font-size: 12px; line-height: 1.5; text-decoration: none; }
+.about-contact-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.about-contact-links a:focus-visible, .about-company-link:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.about-contact-links a:last-child { margin-left: auto; color: var(--md-sys-color-secondary); font-weight: 600; }
+.about-journey-hint { margin: 10px 0 0; color: var(--faint); font-size: 11px; line-height: 1.5; text-align: center; }
+
+.about-company-card { padding: 36px; display: flex; flex-direction: column; justify-content: center; }
+.about-company-card h3 { margin: 12px 0 0; color: var(--ink); font-size: 32px; font-weight: 700; line-height: 1.25; letter-spacing: -.025em; text-wrap: balance; overflow-wrap: break-word; hyphens: auto; }
+.about-company-lead { margin: 18px 0 0; color: var(--sub); font-size: 14px; line-height: 1.85; }
+.about-company-lead + .about-company-lead { margin-top: 12px; }
+.company-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 28px 0 24px; }
+.company-facts span {
+  min-height: 64px; padding: 13px 10px; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--wash); color: var(--ink);
+  font-size: 12px; font-weight: 500; line-height: 1.55; text-align: center; overflow-wrap: anywhere;
+}
+.about-company-link {
+  appearance: none; align-self: flex-start; min-height: 44px; padding: 10px 18px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid var(--ink); border-radius: 999px; background: var(--ink); color: #fff;
+  font-size: 12px; font-weight: 600; line-height: 1.4; text-decoration: none;
+}
+.about-company-link::after { content: "→"; font-size: 14px; }
+.about-company-link:hover { background: #2b3442; }
+
+@media (max-width: 1200px) and (min-width: 961px) {
+  #journeyBox { height: 370px; }
+  .about-company-card { padding: 28px; }
+  .about-company-card h3 { font-size: 28px; }
+}
+@media (max-width: 960px) {
+  .about-profile { grid-template-columns: 1fr; }
+  .about-company-card { order: -1; }
+  #journeyBox { height: 390px; }
+}
+@media (max-width: 640px) {
+  .about-profile { gap: 16px; margin-top: 24px; }
+  .about-address-card { padding: 12px; }
+  .about-company-card { padding: 24px 20px; }
+  .about-company-card h3 { font-size: 26px; }
+  .about-company-lead { font-size: 13px; }
+  .company-facts { grid-template-columns: 1fr; gap: 8px; margin: 22px 0; }
+  .company-facts span { min-height: 0; padding: 12px; text-align: left; justify-content: flex-start; }
+  #journeyBox { height: 330px; }
+  .about-contact-links a:last-child { margin-left: 0; }
+}
+@media (max-width: 380px) {
+  .about-company-card h3 { font-size: 23px; }
+  #journeyBox { height: 300px; }
+  .about-contact-links { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
