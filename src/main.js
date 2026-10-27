@@ -18,6 +18,7 @@ import './styles/logo-marquee.css';
 import './styles/section-tones.css';
 import './styles/tech-capabilities.css';
 import './styles/about-company.css';
+import './styles/gemini-glass.css';
 
 import './components/material.js';
 
