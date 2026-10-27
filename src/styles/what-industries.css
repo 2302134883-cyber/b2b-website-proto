@@ -233,34 +233,18 @@
     display: none; grid-template-columns: minmax(0, 1.08fr) minmax(300px, .92fr); gap: 40px;
     background: #fff; border: 1px solid var(--line); border-radius: 16px;
   }
-  .ind-pane.on { display: grid; animation: indFade .32s ease both; }
-  @keyframes indFade { from { opacity: 0; } to { opacity: 1; } }
-  /* ---- 方案 B：内容错峰入场（位移极小，节奏感来自编排） ---- */
-  @keyframes indRise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  .ind-pane.on .ind-copy > * { animation: indRise .4s cubic-bezier(.25,1,.5,1) both; }
-  .ind-pane.on .ind-copy > *:nth-child(1) { animation-delay: .04s; }
-  .ind-pane.on .ind-copy > *:nth-child(2) { animation-delay: .10s; }
-  .ind-pane.on .ind-copy > *:nth-child(3) { animation-delay: .16s; }
-  .ind-pane.on .ind-copy > *:nth-child(4) { animation-delay: .22s; }
-  .ind-pane.on .ind-copy > *:nth-child(6) { animation-delay: .46s; }
-  .ind-pane.on .ind-copy > *:nth-child(7) { animation-delay: .50s; }
-  .ind-pane.on .ind-copy > *:nth-child(8) { animation-delay: .56s; }
-  .ind-pane.on .ind-challenges li { animation: indRise .35s cubic-bezier(.25,1,.5,1) both; }
-  .ind-pane.on .ind-challenges li:nth-child(1) { animation-delay: .28s; }
-  .ind-pane.on .ind-challenges li:nth-child(2) { animation-delay: .34s; }
-  .ind-pane.on .ind-challenges li:nth-child(3) { animation-delay: .40s; }
-  /* 配图帘幕揭开 + 细线扫过 + 微缩放 */
-  .ind-pane.on .ind-image-wrap { clip-path: inset(0 100% 0 0); animation: indWipe .55s cubic-bezier(.6,.05,.25,1) .15s forwards; }
-  @keyframes indWipe { to { clip-path: inset(0 0 0 0); } }
-  .ind-pane.on .ind-image-wrap::after {
-    content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 1px;
-    background: var(--ink); opacity: 0; pointer-events: none;
-    animation: indEdge .55s cubic-bezier(.6,.05,.25,1) .15s forwards;
-  }
-  @keyframes indEdge { 0% { left: 0; opacity: .3; } 85% { opacity: .3; } 100% { left: calc(100% - 1px); opacity: 0; } }
-  .ind-pane.on .ind-image-wrap img { animation: indImgSettle .7s cubic-bezier(.25,1,.5,1) .15s both; }
-  @keyframes indImgSettle { from { transform: scale(1.04); } to { transform: scale(1); } }
-  .ind-pane.on .ind-visual figcaption { animation: indRise .4s cubic-bezier(.25,1,.5,1) .45s both; }
+  .ind-pane.on { display: grid; }
+  /* ---- 横推切换：方向感知，新面板推入、旧面板带下倒感反向推出 ---- */
+  #indPanes[data-dir="next"] .ind-pane.on { animation: indPushInR .25s cubic-bezier(.25,1,.5,1) both; }
+  #indPanes[data-dir="prev"] .ind-pane.on { animation: indPushInL .25s cubic-bezier(.25,1,.5,1) both; }
+  #indPanes .ind-pane.on, #indPanes .ind-pane.ind-out { transform-origin: 50% 100%; }
+  @keyframes indPushInR { from { opacity: 0; transform: translateX(64px) translateY(6px) rotate(1.2deg); } to { opacity: 1; transform: translateX(0) translateY(0) rotate(0); } }
+  @keyframes indPushInL { from { opacity: 0; transform: translateX(-64px) translateY(6px) rotate(-1.2deg); } to { opacity: 1; transform: translateX(0) translateY(0) rotate(0); } }
+  .ind-pane.ind-out { position: absolute; inset: 0; display: grid; pointer-events: none; z-index: 1; }
+  #indPanes[data-dir="next"] .ind-pane.ind-out { animation: indPushOutL .25s cubic-bezier(.25,1,.5,1) both; }
+  #indPanes[data-dir="prev"] .ind-pane.ind-out { animation: indPushOutR .25s cubic-bezier(.25,1,.5,1) both; }
+  @keyframes indPushOutL { from { opacity: 1; transform: translateX(0) translateY(0) rotate(0); } to { opacity: 0; transform: translateX(-64px) translateY(10px) rotate(-1.6deg); } }
+  @keyframes indPushOutR { from { opacity: 1; transform: translateX(0) translateY(0) rotate(0); } to { opacity: 0; transform: translateX(64px) translateY(10px) rotate(1.6deg); } }
   .ind-copy { min-width: 0; }
   .ind-index { display: block; font-size: 11px; line-height: 1; letter-spacing: .12em; color: var(--faint); font-variant-numeric: tabular-nums; }
   .ind-title { margin: 14px 0 0; font-size: 24px; line-height: 1.4; font-weight: 700; letter-spacing: -.02em; }
@@ -311,9 +295,6 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .ind-tab, .ind-btn, .ind-arrow, .ind-image-wrap img { transition: none; }
-    .ind-pane.on, .ind-pane.on .ind-copy > *, .ind-pane.on .ind-challenges li,
-    .ind-pane.on .ind-image-wrap, .ind-pane.on .ind-image-wrap img, .ind-pane.on .ind-visual figcaption { animation: none; }
-    .ind-pane.on .ind-image-wrap { clip-path: none; }
-    .ind-pane.on .ind-image-wrap::after { content: none; }
+    .ind-pane.on, .ind-pane.ind-out { animation: none; }
     .ind-visual:hover .ind-image-wrap img { transform: none; }
   }
