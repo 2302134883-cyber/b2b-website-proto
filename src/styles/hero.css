@@ -6,6 +6,12 @@
   .f-btn { font-size: 11px; --md-outlined-icon-button-outline-color: var(--line-2); }
   #orbWrap:hover { transform: scale(1.02); }
   #heroOrb:focus { outline: none; }
+  #heroOrb.is-breathing { transform-origin: center; animation: hero-orb-breathe 4.8s ease-in-out infinite; }
+  @keyframes hero-orb-breathe {
+    0%, 100% { scale: 1; opacity: .82; }
+    50% { scale: 1.035; opacity: .95; }
+  }
+  @media (prefers-reduced-motion: reduce) { #heroOrb.is-breathing { animation: none !important; } }
   #heroOrb:focus-visible, #dots button:focus-visible { outline: 2px solid var(--md-sys-color-secondary); outline-offset: 3px; border-radius: 9999px; }
 
   html { scroll-behavior: smooth; }

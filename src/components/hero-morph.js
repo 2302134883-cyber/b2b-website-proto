@@ -3,35 +3,27 @@
 const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31],[56.44,35.85],[60.98,40.38],[65.51,44.92],[70.05,49.46],[72.24,54.97],[76.32,59.69],[80.86,64.23],[85.39,68.77],[89.93,73.3],[92.07,78.84],[96.2,83.54],[100.74,88.08],[105.28,92.61],[109.81,97.15],[111.9,102.7],[107.71,107.39],[103.17,111.92],[98.63,116.46],[96.03,121.8],[92.36,126.7],[87.83,131.23],[83.29,135.77],[78.75,140.31],[74.21,144.84],[72.24,150.44],[67.94,155.08],[63.41,159.62],[58.87,164.15],[54.33,168.69],[52.42,174.31],[48.06,178.93],[43.53,183.46],[38.99,188],[36.56,187.45],[36.56,181.04],[36.56,174.62],[36.56,168.2],[37.19,162.05],[40.52,157.01],[43.46,151.81],[47.99,147.28],[52.53,142.74],[57.07,138.2],[61.6,133.66],[64.31,128.37],[67.87,123.43],[72.41,118.89],[76.95,114.35],[81.49,109.82],[86.02,105.28],[85.65,100.74],[83.92,95.04],[79.38,90.51],[74.84,85.97],[70.31,81.43],[65.77,76.9],[61.23,72.36],[59.5,66.66],[54.96,62.12],[50.42,57.59],[45.89,53.05],[41.35,48.51],[39.62,42.81],[36.56,37.67],[36.56,31.25],[36.56,24.83],[36.56,18.42]],[[139.65,39.76],[144.67,39.76],[149.69,39.76],[154.71,39.76],[159.74,39.76],[163.44,41.07],[161.77,45.4],[158.22,48.95],[154.67,52.5],[151.12,56.05],[147.56,59.6],[144.01,63.15],[143.27,67.86],[139.72,71.41],[136.17,74.96],[132.62,78.51],[129.07,82.06],[125.52,81.13],[121.97,77.58],[118.42,74.03],[115.86,70.07],[117.6,65.77],[121.15,62.22],[124.7,58.67],[128.25,55.12],[131.72,51.53],[132.55,46.86],[136.1,43.31]],[[127.76,119.06],[131.31,122.61],[134.86,126.16],[135.69,130.84],[139.15,134.42],[142.7,137.97],[146.25,141.52],[149.8,145.07],[153.36,148.62],[156.91,152.17],[159.48,156.13],[161.2,160.44],[161.59,162.68],[156.57,162.68],[151.55,162.68],[146.53,162.68],[141.5,162.68],[137.41,160.44],[133.86,156.89],[130.31,153.33],[127.76,149.37],[126.01,145.07],[122.46,141.52],[118.91,137.97],[116.36,134.42],[119.83,130.84],[120.66,126.16],[124.21,122.61]]];
   const orbSvg = document.getElementById('heroOrb');
   const orbPath = document.getElementById('orbPath');
+  const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
   const toD = (P) => P.map(sub => 'M' + sub.map(p => p.join(',')).join('L') + 'Z').join('');
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let isX = false, anim = null;
+  let reduced = motionQuery.matches;
+  let isX = false, currentShape = CIRCLE, anim = null;
+  let introStarted = false, introDone = false, introPaused = false;
+  let waitTask = null, pausedWait = null, pausedTween = null;
 
-  function setShape(P) { orbPath.setAttribute('d', toD(P)); }
-  function tween(from, to, done) {
-    if (reduced) { setShape(to); done(); return; }
-    if (anim) cancelAnimationFrame(anim);
-    const t0 = performance.now(), DUR = 700;
-    const step = (now) => {
-      const t = Math.min(1, (now - t0) / DUR);
-      // easeInOutCubic + 轻微回弹
-      let p = t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
-      p += 0.07 * Math.sin(t * Math.PI * 2) * Math.sin(t * Math.PI);
-      setShape(from.map((fs, j) => fs.map((f, i) => [f[0] + (to[j][i][0] - f[0]) * p, f[1] + (to[j][i][1] - f[1]) * p])));
-      if (t < 1) anim = requestAnimationFrame(step);
-      else { setShape(to); done(); }
-    };
-    anim = requestAnimationFrame(step);
+  function setShape(P) {
+    currentShape = P;
+    orbPath.setAttribute('d', toD(P));
   }
-  function toggle() {
-    isX = !isX;
-    orbSvg.setAttribute('aria-pressed', String(isX));
+  function setBreathing(on) {
+    orbSvg.classList.toggle('is-breathing', Boolean(on && !isX && !reduced));
+  }
+  function applyVisualState() {
     if (isX) {
-      // 读出当前旋转角 → 停动画 → 平滑归零（否则 X 会歪在随机角度）
-      const m = getComputedStyle(orbSvg).transform;
+      // 保留当前角度再归零，避免 X 在随机角度停住。
+      const matrix = getComputedStyle(orbSvg).transform;
       orbSvg.style.animation = 'none';
       orbSvg.style.transition = 'none';
-      orbSvg.style.transform = m === 'none' ? 'rotate(0deg)' : m;
+      orbSvg.style.transform = matrix === 'none' ? 'rotate(0deg)' : matrix;
       requestAnimationFrame(() => {
         orbSvg.style.transition = 'transform .7s cubic-bezier(.4,0,.2,1)';
         orbSvg.style.transform = 'rotate(0deg)';
@@ -39,13 +31,157 @@ const XSHAPE=[[[36.56,12],[41.09,16.54],[45.63,21.07],[48.45,26.32],[51.9,31.31]
     } else {
       orbSvg.style.transition = 'none';
       orbSvg.style.transform = '';
-      orbSvg.style.animation = '';   // 恢复 CSS 慢转
+      orbSvg.style.animation = '';
     }
-    const from = isX ? CIRCLE : XSHAPE, to = isX ? XSHAPE : CIRCLE;
-    tween(from, to, () => {});
   }
+
+  function tween(from, to, done, duration = 700) {
+    if (reduced || duration <= 0) { setShape(to); done(); return; }
+    if (anim) cancelAnimationFrame(anim.raf);
+    const start = performance.now();
+    anim = { to, done, duration, start, raf: null };
+    const step = (now) => {
+      if (!anim) return;
+      const t = Math.min(1, (now - start) / duration);
+      // easeInOutCubic + 轻微回弹，路径始终从当前画面继续。
+      let p = t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+      p += 0.07 * Math.sin(t * Math.PI * 2) * Math.sin(t * Math.PI);
+      setShape(from.map((fs, j) => fs.map((f, i) => [
+        f[0] + (to[j][i][0] - f[0]) * p,
+        f[1] + (to[j][i][1] - f[1]) * p,
+      ])));
+      if (t < 1) anim.raf = requestAnimationFrame(step);
+      else {
+        setShape(to);
+        const callback = anim.done;
+        anim = null;
+        callback();
+      }
+    };
+    anim.raf = requestAnimationFrame(step);
+  }
+
+  function schedule(callback, delay) {
+    const task = { callback, remaining: delay, start: performance.now(), id: null };
+    task.id = setTimeout(() => {
+      if (waitTask !== task) return;
+      waitTask = null;
+      callback();
+    }, delay);
+    waitTask = task;
+  }
+
+  function morphTo(target, done) {
+    isX = target === XSHAPE;
+    orbSvg.setAttribute('aria-pressed', String(isX));
+    setBreathing(false);
+    applyVisualState();
+    tween(currentShape, target, done);
+  }
+
+  function finishIntro() {
+    introDone = true;
+    introPaused = false;
+    pausedWait = null;
+    pausedTween = null;
+    setBreathing(true);
+  }
+
+  function startIntro() {
+    if (reduced || introStarted || introDone || document.hidden) return;
+    introStarted = true;
+    // 第 3 秒圆球 → X；第 6 秒 X → 圆球；完成后开始呼吸。
+    schedule(() => {
+      morphTo(XSHAPE, () => {
+        schedule(() => morphTo(CIRCLE, finishIntro), 2300);
+      });
+    }, 3000);
+  }
+
+  function pauseIntro() {
+    if (introDone || introPaused) return;
+    introPaused = true;
+    const now = performance.now();
+    if (waitTask) {
+      pausedWait = {
+        callback: waitTask.callback,
+        remaining: Math.max(0, waitTask.remaining - (now - waitTask.start)),
+      };
+      clearTimeout(waitTask.id);
+      waitTask = null;
+    }
+    if (anim) {
+      pausedTween = {
+        to: anim.to,
+        done: anim.done,
+        remaining: Math.max(0, anim.duration - (now - anim.start)),
+      };
+      cancelAnimationFrame(anim.raf);
+      anim = null;
+    }
+  }
+
+  function resumeIntro() {
+    if (!introPaused || introDone) return;
+    introPaused = false;
+    if (pausedTween) {
+      const pending = pausedTween;
+      pausedTween = null;
+      tween(currentShape, pending.to, pending.done, pending.remaining);
+    } else if (pausedWait) {
+      const pending = pausedWait;
+      pausedWait = null;
+      schedule(pending.callback, pending.remaining);
+    }
+  }
+
+  function cancelIntro() {
+    introDone = true;
+    introPaused = false;
+    if (waitTask) { clearTimeout(waitTask.id); waitTask = null; }
+    if (anim) { cancelAnimationFrame(anim.raf); anim = null; }
+    pausedWait = null;
+    pausedTween = null;
+    setBreathing(false);
+  }
+
+  function toggle() {
+    cancelIntro();
+    isX = !isX;
+    orbSvg.setAttribute('aria-pressed', String(isX));
+    applyVisualState();
+    const target = isX ? XSHAPE : CIRCLE;
+    if (reduced) { setShape(target); setBreathing(false); return; }
+    tween(currentShape, target, () => { if (!isX) setBreathing(true); });
+  }
+
   orbSvg.addEventListener('click', toggle);
-  orbSvg.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+  orbSvg.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggle(); }
   });
+  document.addEventListener('visibilitychange', () => {
+    if (introDone || reduced) return;
+    if (document.hidden) pauseIntro();
+    else if (!introStarted) startIntro();
+    else resumeIntro();
+  });
+  motionQuery.addEventListener('change', (event) => {
+    reduced = event.matches;
+    if (reduced) {
+      cancelIntro();
+      isX = false;
+      orbSvg.setAttribute('aria-pressed', 'false');
+      orbSvg.style.animation = 'none';
+      orbSvg.style.transition = 'none';
+      orbSvg.style.transform = 'rotate(0deg)';
+      setShape(CIRCLE);
+      setBreathing(false);
+    } else {
+      introDone = true; // 偏好转回后也不重播首次演示。
+      applyVisualState();
+      setBreathing(true);
+    }
+  });
+
   setShape(CIRCLE);
+  if (!reduced) startIntro();
