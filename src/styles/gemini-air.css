@@ -1,0 +1,17 @@
+/* ============ Gemini Air · 入场前的可访问初始状态 ============
+ * 仅 JS 确认可执行动画后添加；动画结束即恢复组件原有交互样式。
+ */
+.air-pending {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: none !important;
+}
+.air-pending--scale { transform: translateY(8px) scale(.94); }
+
+@media (prefers-reduced-motion: reduce) {
+  .air-pending,
+  .air-pending--scale {
+    opacity: 1;
+    transform: none;
+  }
+}

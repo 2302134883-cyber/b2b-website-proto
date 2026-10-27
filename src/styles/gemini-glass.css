@@ -3,17 +3,17 @@
  * 内层面板继续使用中性浅灰，避免整页磨砂和层级消失。
  */
 :root {
-  --glass-bg: rgba(255, 255, 255, .72);
-  --glass-bg-strong: rgba(255, 255, 255, .86);
-  --glass-border: rgba(103, 91, 160, .14);
-  --glass-border-hover: rgba(109, 94, 240, .30);
-  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, .82);
+  --glass-bg: rgba(255, 255, 255, .64);
+  --glass-bg-strong: rgba(255, 255, 255, .82);
+  --glass-border: rgba(103, 91, 160, .20);
+  --glass-border-hover: rgba(109, 94, 240, .38);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, .94);
   --glass-shadow:
-    0 14px 36px -26px rgba(70, 58, 130, .34),
-    0 2px 8px rgba(17, 24, 39, .025);
+    0 18px 44px -26px rgba(70, 58, 130, .40),
+    0 3px 10px rgba(17, 24, 39, .035);
   --glass-shadow-hover:
-    0 18px 40px -24px rgba(76, 63, 214, .28),
-    0 0 0 3px rgba(147, 184, 248, .07);
+    0 20px 44px -24px rgba(76, 63, 214, .32),
+    0 0 0 4px rgba(147, 184, 248, .10);
   --glass-blur: blur(18px) saturate(112%);
 }
 
