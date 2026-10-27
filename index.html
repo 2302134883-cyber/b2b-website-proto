@@ -101,7 +101,7 @@
           <div class="site-nav-panel-grid site-nav-panel-grid--3">
             <a class="site-nav-card" href="#arch" data-header-target="#arch"><span class="site-nav-card-title"><span data-i18n="arch.title">整体架构</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="arch.sub">中台化 B2B 系统 · 角色视角</span></a>
             <a class="site-nav-card" href="#techRing" data-header-target="#techRing"><span class="site-nav-card-title"><span data-i18n="menu.tech.stack">技术栈</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="tech.core.d">一体化数智化底座</span></a>
-            <a class="site-nav-card" href="#dataSource" data-header-target="#dataSource"><span class="site-nav-card-title"><span data-i18n="menu.tech.data">数据同源</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ds.sub">一次改价，同一秒生效</span></a>
+            <a class="site-nav-card" href="#dataSource" data-header-target="#dataSource" data-tech-capability="data"><span class="site-nav-card-title"><span data-i18n="menu.tech.data">数据同源</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ds.sub">一次改价，同一秒生效</span></a>
           </div>
         </div>
       </div>
@@ -675,8 +675,7 @@
     <nav class="what-nav" data-i18n-aria="what.nav.aria" aria-label="本章内容">
       <a class="what-nav-link" href="#arch"><span class="what-nav-num" aria-hidden="true">01</span><span data-i18n="how.nav.arch">整体架构</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a class="what-nav-link" href="#how-tech"><span class="what-nav-num" aria-hidden="true">02</span><span data-i18n="how.nav.tech">技术栈</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a class="what-nav-link" href="#how-data"><span class="what-nav-num" aria-hidden="true">03</span><span data-i18n="how.nav.data">数据同源</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a class="what-nav-link" href="#how-ai"><span class="what-nav-num" aria-hidden="true">04</span><span data-i18n="how.nav.ai">AI 智能体</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="what-nav-link" href="#how-ai"><span class="what-nav-num" aria-hidden="true">03</span><span data-i18n="how.nav.ai">AI 智能体</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </nav>
 
     <!-- ARCH · 整体架构（选人式交互），保留 #arch 深链接 -->
@@ -715,16 +714,30 @@
       </div>
     </section>
 
-    <div class="sec-sub" id="how-tech"><h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">02</span><span class="sec-sub-text" data-i18n="how.tech">技术栈</span></h3></div>
-    <div id="techRing" class="w-full max-w-[560px] mx-auto"></div>
-
-    <div class="sec-sub" id="how-data">
-      <h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">03</span><span class="sec-sub-text" data-i18n="ds.title">数据同源</span></h3>
-      <p class="mt-3 text-[12px] text-[var(--faint)]" data-i18n="ds.lead">一次改价的差别</p>
+    <div class="sec-sub" id="how-tech">
+      <h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">02</span><span class="sec-sub-text" data-i18n="how.tech">技术中台与场景验证</span></h3>
+      <p class="mt-2 text-[14px] text-[var(--sub)]" data-i18n="tech.ui.capabilities">选择一项能力，查看它如何支撑真实业务。</p>
     </div>
-    <div id="dataSource" class="w-full max-w-[960px] mx-auto"></div>
+    <section class="tc-shell" id="techCapabilities" aria-label="技术中台能力选择" data-i18n-aria="tech.ui.capabilities">
+      <div class="tc-tabs" id="techCapabilityTabs" role="tablist" aria-label="技术中台能力选择" data-i18n-aria="tech.ui.capabilities"></div>
+      <div class="tc-workbench">
+        <div class="tc-visual">
+          <div id="techRing" class="w-full"></div>
+          <p class="tc-hint" data-i18n="tech.ui.hint">点击圆盘或上方按钮切换能力，选中后查看固定详情。</p>
+        </div>
+        <div class="tc-detail" id="techDetail"></div>
+      </div>
+      <div class="tc-scene" id="how-data">
+        <div class="tc-scene-head">
+          <p class="tc-eyebrow"><span data-i18n="tech.ui.scene">场景验证</span><span aria-hidden="true"> / </span><span data-i18n="tech.1">数据同源</span></p>
+          <h4 tabindex="-1" data-i18n="ds.title">数据同源</h4>
+          <p data-i18n="ds.lead">一次改价的差别</p>
+        </div>
+        <div id="dataSource" class="w-full max-w-[960px] mx-auto"></div>
+      </div>
+    </section>
 
-    <div class="sec-sub" id="how-ai"><h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">04</span><span class="sec-sub-text" data-i18n="how.ai">创造 AI 智能体</span></h3></div>
+    <div class="sec-sub" id="how-ai"><h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">03</span><span class="sec-sub-text" data-i18n="how.ai">创造 AI 智能体</span></h3></div>
     <div class="ag" id="aiAgent" data-state="idle">
       <div class="ag-grid">
         <div class="ag-stage">
@@ -796,37 +809,41 @@
       <a class="what-nav-link" href="#about-certs"><span class="what-nav-num" aria-hidden="true">03</span><span data-i18n="about.nav.certs">安全认证</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5h10v10M5 15 15 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </nav>
 
-    <div class="sec-sub sec-sub--first" id="about-walk">
-      <h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">01</span><span class="sec-sub-text" data-i18n="about.walk">走进我们</span></h3>
-    </div>
-    <div class="ph h-[288px] flex-col gap-4">
-      <md-fab><span slot="icon" style="font-size:20px">▶</span></md-fab>
-      <span data-i18n="about.video">视频占位 · 约 30s</span>
-    </div>
-    <p class="mt-4 text-[12px] text-[var(--faint)]" data-i18n="about.script">脚本结构（30s 分段）：0–8s 公益（价值观） → 8–16s 团队（真人） → 16–24s 地点（实拍） → 24–30s 奖项（背书）</p>
-    <div class="mt-4">
-      <md-chip-set>
-        <md-assist-chip label="公益" data-i18n-label="menu.about.charity"></md-assist-chip>
-        <md-assist-chip label="团队" data-i18n-label="menu.about.team"></md-assist-chip>
-        <md-assist-chip label="地点" data-i18n-label="menu.about.locations"></md-assist-chip>
-        <md-assist-chip label="奖项" data-i18n-label="menu.about.awards"></md-assist-chip>
-      </md-chip-set>
-    </div>
+    <div class="about-profile">
+      <div class="about-address-card" id="about-address">
+        <div class="about-card-head">
+          <p class="about-eyebrow" data-i18n="addr.label">ADDRESS · 地址</p>
+          <p class="about-address-name"><span data-i18n="addr.building">新漕河泾国际商务中心B座</span><span class="about-address-floor" data-i18n="addr.floor">9 层</span></p>
+        </div>
+        <div id="journeyBox" class="relative select-none">
+          <canvas id="journeyCanvas" class="w-full h-full block cursor-pointer"></canvas>
+          <div id="journeySteps" class="absolute left-1/2 -translate-x-1/2 bottom-1 flex items-center gap-2"></div>
+        </div>
+        <div class="about-address-info">
+          <p class="about-address-city" data-i18n-html="addr.city">上海市徐汇区<br>桂平路 391 号（近漕宝路）</p>
+          <p class="about-address-hours" data-i18n="company.hours">周一至周五 9:00–18:30</p>
+          <div class="about-contact-links">
+            <a href="tel:4008213016">400-821-3016</a>
+            <a href="mailto:mkt@shopex.cn">mkt@shopex.cn</a>
+            <a href="https://uri.amap.com/search?keyword=上海市徐汇区桂平路391号&amp;city=上海" target="_blank" rel="noopener noreferrer" data-i18n="company.map" data-i18n-aria="company.map.aria" aria-label="在高德地图中查看公司地址">地图导航</a>
+          </div>
+        </div>
+        <p class="about-journey-hint" data-i18n="journey.hint">自动巡游中 · 点击画面推进一级 · 地球上可拖拽旋转</p>
+      </div>
 
-    <div class="sec-sub" id="about-address"><h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">02</span><span class="sec-sub-text" data-i18n="about.address">地址</span></h3></div>
-    <div id="journeyBox" class="w-full h-[440px] md:h-[600px] relative select-none">
-      <canvas id="journeyCanvas" class="w-full h-full block cursor-pointer"></canvas>
-      <div id="journeySteps" class="absolute left-1/2 -translate-x-1/2 bottom-1 flex items-center gap-2"></div>
-      <div class="absolute right-10 top-1/2 -translate-y-1/2 text-right pointer-events-none hidden md:block">
-        <p class="text-[10px] tracking-[0.28em] text-[var(--faint)] font-medium" data-i18n="addr.label">ADDRESS · 地址</p>
-        <p class="mt-3 text-[16px] font-semibold leading-6" data-i18n="addr.building">新漕河泾国际商务中心B座</p>
-        <p class="text-[13px] text-[var(--ink)] mt-0.5" data-i18n="addr.floor">9 层</p>
-        <div class="my-3 ml-auto w-8 h-px bg-[var(--line-2)]"></div>
-        <p class="text-[12px] text-[var(--sub)] leading-5" data-i18n-html="addr.city">上海市徐汇区<br>桂平路 391 号（近漕宝路）</p>
+      <div class="about-company-card" id="about-walk">
+        <p class="about-eyebrow">ABOUT SHOPEX</p>
+        <h3 data-i18n="company.title">品牌企业数智科技伙伴</h3>
+        <p class="about-company-lead" data-i18n="company.p1">商派成立于 2002 年，以 Open SaaS 模式提供数智化产品与服务，业务覆盖 B2B 渠道数字化、全渠道运营中台、AI 智能体及实施运维保障。</p>
+        <p class="about-company-lead" data-i18n="company.p2">通过轻咨询、产品定制与长期陪跑，协助中国品牌出海、海外品牌入华，实现全渠道业务增长与管理升级。</p>
+        <div class="company-facts">
+          <span data-i18n="company.fact.year">2002 年成立</span>
+          <span data-i18n="company.fact.clients">2000+ 品牌与集团企业</span>
+          <span data-i18n="company.fact.letters">500+ 客户感谢信</span>
+        </div>
+        <a class="about-company-link" href="https://www.shopex.cn/about" target="_blank" rel="noopener noreferrer" data-i18n="company.cta">了解商派</a>
       </div>
     </div>
-    <p class="mt-2 text-[12px] text-[var(--faint)] text-center" data-i18n="journey.hint">自动巡游中 · 点击画面推进一级 · 地球上可拖拽旋转</p>
-    <p class="mt-2 text-[12px] text-[var(--sub)] text-center md:hidden" data-i18n="addr.city.oneline">上海市徐汇区桂平路 391 号 · 新漕河泾国际商务中心B座 9 层</p>
 
     <div class="sec-sub" id="about-certs">
       <h3 class="sec-sub-head"><span class="sec-sub-num" aria-hidden="true">03</span><span class="sec-sub-text" data-i18n="why.certs">权威的信息安全管理体系认证</span></h3>
@@ -959,7 +976,7 @@
         <h2 class="site-footer-title" data-i18n="nav.tech">技术架构</h2>
         <a href="#arch" data-i18n="arch.title">整体架构</a>
         <a href="#techRing" data-i18n="menu.tech.stack">技术栈</a>
-        <a href="#dataSource" data-i18n="menu.tech.data">数据同源</a>
+        <a href="#dataSource" data-tech-capability="data" data-i18n="menu.tech.data">数据同源</a>
       </section>
       <section class="site-footer-column">
         <h2 class="site-footer-title" data-i18n="footer.about">关于与支持</h2>
