@@ -16,6 +16,8 @@ import './styles/ai-agent.css';
 import './styles/faq.css';
 import './styles/logo-marquee.css';
 import './styles/section-tones.css';
+import './styles/tech-capabilities.css';
+import './styles/about-company.css';
 
 import './components/material.js';
 
@@ -34,6 +36,7 @@ import './components/pricing.js';
 import './components/business-modes.js';
 import './i18n/index.js';
 import './components/tech-ring.js';
+import './components/tech-capabilities.js';
 import './components/data-source.js';
 import './components/journey.js';
 import './components/hero-morph.js';
