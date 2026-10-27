@@ -8,6 +8,7 @@ export default {
       'menu.solution.1': '가전·전기', 'menu.solution.2': '전자부품', 'menu.solution.3': '산업 제조', 'menu.solution.4': '소비재·유통',
       'nav.solution.more': '더 많은 업계의 유명 브랜드에 서비스 제공 중',
       'ind.g1': '패션·스포츠 · 주얼리', 'ind.g2': '뷰티 · 생활용품·케어 · 유아', 'ind.g3': '홈·인테리어 · 가전·디지털', 'ind.g4': '식음료 · 애그리테크', 'ind.g5': '전자공업 · 스마트 제조', 'ind.g6': '제약·헬스케어 · 의료기기', 'ind.g7': '리테일 운영 · 상업용 부동산',
+      'ind.prev': '이전 업계', 'ind.next': '다음 업계',
       'menu.about.charity': '사회공헌', 'menu.about.team': '팀', 'menu.about.locations': '위치', 'menu.about.awards': '수상',
       'menu.about.company': '회사 소개', 'menu.about.certifications': '보안 인증',
       'menu.tech.stack': '기술 스택', 'menu.tech.data': '단일 데이터 소스',

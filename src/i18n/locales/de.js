@@ -8,6 +8,7 @@ export default {
       'menu.solution.1': 'Haushaltsgeräte & Elektrotechnik', 'menu.solution.2': 'Elektronische Bauelemente', 'menu.solution.3': 'Industrielle Fertigung', 'menu.solution.4': 'FMCG & Einzelhandel',
       'nav.solution.more': 'Wir bedienen weitere Branchen und renommierte Marken',
       'ind.g1': 'Mode & Sport · Schmuck', 'ind.g2': 'Beauty · Körperpflege · Baby', 'ind.g3': 'Haus & Wohnen · Elektronik', 'ind.g4': 'Lebensmittel & Getränke · Agri-Tech', 'ind.g5': 'Elektronik · Smart Manufacturing', 'ind.g6': 'Pharma & Gesundheit · Medizintechnik', 'ind.g7': 'Retail · Gewerbeimmobilien',
+      'ind.prev': 'Vorherige Branche', 'ind.next': 'Nächste Branche',
       'menu.about.charity': 'Gemeinnützigkeit', 'menu.about.team': 'Team', 'menu.about.locations': 'Standorte', 'menu.about.awards': 'Auszeichnungen',
       'menu.about.company': 'Unternehmen im Überblick', 'menu.about.certifications': 'Sicherheitszertifizierungen',
       'menu.tech.stack': 'Tech-Stack', 'menu.tech.data': 'Einheitliche Daten',

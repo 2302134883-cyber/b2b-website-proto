@@ -31,7 +31,29 @@
           pane.classList.toggle('on', on);
         });
         if (focusTab) tabs[current].focus();
+        startAuto();
       }
+
+      /* 自动轮播：6.5s 一档；悬停 / 聚焦 / 切后台暂停，reduced-motion 不自动播 */
+      var autoTimer = null, hovering = false, focusing = false;
+      function stopAuto() { clearInterval(autoTimer); autoTimer = null; }
+      function startAuto() {
+        stopAuto();
+        if (reduced || hovering || focusing || document.hidden) return;
+        autoTimer = setInterval(function () { go(current + 1, false); }, 6500);
+      }
+      root.addEventListener('mouseenter', function () { hovering = true; startAuto(); });
+      root.addEventListener('mouseleave', function () { hovering = false; startAuto(); });
+      root.addEventListener('focusin', function () { focusing = true; startAuto(); });
+      root.addEventListener('focusout', function (e) {
+        if (!root.contains(e.relatedTarget)) { focusing = false; startAuto(); }
+      });
+      document.addEventListener('visibilitychange', startAuto);
+
+      var prevBtn = document.getElementById('indPrev');
+      var nextBtn = document.getElementById('indNext');
+      if (prevBtn) prevBtn.addEventListener('click', function () { go(current - 1, false); });
+      if (nextBtn) nextBtn.addEventListener('click', function () { go(current + 1, false); });
 
       tabs.forEach(function (tab, i) {
         tab.addEventListener('click', function () { go(i, false); });
@@ -97,4 +119,5 @@
       document.addEventListener('i18n:applied', function () { setTimeout(syncHeight, 0); });
       window.addEventListener('load', syncHeight);
       syncHeight();
+      startAuto();
     })();
