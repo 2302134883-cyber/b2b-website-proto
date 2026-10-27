@@ -1,0 +1,86 @@
+/* ============ Gemini Aura · 局部环境光 ============
+ * 色彩仍只来自既有 orbNode / orbHero，不新增荧光色或整屏渐变。
+ */
+.aura-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+#sec-what .aura-layer + div,
+#sec-why .aura-layer + div,
+#sec-how .aura-layer + div {
+  position: relative;
+  z-index: 1;
+}
+.aura-orb {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  animation: aura-drift 24s ease-in-out infinite;
+}
+.aura-layer .aura-orb { opacity: .25; }
+.aura-layer .aura-orb--b {
+  opacity: .19;
+  animation-duration: 30s;
+  animation-delay: -12s;
+}
+
+/* Hero：在原有右侧大 orb 之外，只补一团靠近玻璃控件的低透明光。 */
+#heroShowcase > .aura-orb--hero {
+  left: 46%;
+  bottom: 0;
+  z-index: 4;
+  width: 360px;
+  height: 360px;
+  opacity: .34;
+  animation-duration: 27s;
+}
+
+/* WHAT：光场位于经营模式与服务卡片后方，让玻璃材质真正可见。 */
+#sec-what .aura-orb--a { left: -180px; top: 260px; width: 540px; height: 540px; }
+#sec-what .aura-orb--b { right: -150px; top: 980px; width: 440px; height: 440px; }
+
+/* WHY：白底章节只保留一团局部光，维持原有的白 / 灰节奏。 */
+#sec-why .aura-orb--a { right: -170px; top: 390px; width: 500px; height: 500px; opacity: .18; }
+
+/* HOW：分别照亮角色卡片与技术工作台，不覆盖标题和正文。 */
+#sec-how .aura-orb--a { right: -190px; top: 300px; width: 560px; height: 560px; }
+#sec-how .aura-orb--b { left: -170px; top: 1260px; width: 460px; height: 460px; }
+
+@keyframes aura-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(18px, -14px, 0) scale(1.04); }
+}
+
+/* 首屏小面积 Glass：不改变轮播结构，只收拢现有控制区。 */
+.hero-carousel-controls {
+  width: fit-content;
+  margin-inline: auto;
+  padding: 7px 12px;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .58);
+  background-clip: padding-box;
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  backdrop-filter: blur(16px) saturate(112%);
+  -webkit-backdrop-filter: blur(16px) saturate(112%);
+}
+
+@media (max-width: 767px) {
+  #heroShowcase > .aura-orb--hero {
+    left: -150px;
+    bottom: 0;
+    width: 340px;
+    height: 340px;
+    opacity: .26;
+  }
+  .aura-layer .aura-orb { opacity: .19; }
+  .aura-layer .aura-orb--b { opacity: .15; }
+  .hero-carousel-controls { padding: 5px 9px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aura-orb { animation: none; }
+}
