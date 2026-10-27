@@ -8,6 +8,7 @@ export default {
       'menu.solution.1': 'Home Appliances & Electrical', 'menu.solution.2': 'Electronic Components', 'menu.solution.3': 'Industrial Manufacturing', 'menu.solution.4': 'FMCG & Retail',
       'nav.solution.more': 'Serving more industries & renowned brands',
       'ind.g1': 'Footwear & Sports · Jewelry', 'ind.g2': 'Beauty · Personal Care · Baby', 'ind.g3': 'Home & Living · Electronics', 'ind.g4': 'Food & Beverage · Agri-tech', 'ind.g5': 'Electronics · Smart Manufacturing', 'ind.g6': 'Pharma & Health · Medical Devices', 'ind.g7': 'Retail Ops · Commercial Real Estate',
+      'ind.prev': 'Previous industry', 'ind.next': 'Next industry',
       'menu.about.charity': 'Philanthropy', 'menu.about.team': 'Team', 'menu.about.locations': 'Locations', 'menu.about.awards': 'Awards',
       'menu.about.company': 'Company overview', 'menu.about.certifications': 'Security certifications',
       'menu.tech.stack': 'Tech stack', 'menu.tech.data': 'Unified data',

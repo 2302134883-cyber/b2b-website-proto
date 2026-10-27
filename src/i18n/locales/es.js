@@ -8,6 +8,7 @@ export default {
       'menu.solution.1': 'Electrodomésticos y electricidad', 'menu.solution.2': 'Componentes electrónicos', 'menu.solution.3': 'Fabricación industrial', 'menu.solution.4': 'Gran consumo y distribución',
       'nav.solution.more': 'También servimos a más sectores y marcas de renombre',
       'ind.g1': 'Moda y deporte · Joyería', 'ind.g2': 'Belleza · Cuidado personal · Bebés', 'ind.g3': 'Hogar · Electrónica', 'ind.g4': 'Alimentación y bebidas · Agrotecnología', 'ind.g5': 'Electrónica · Fabricación inteligente', 'ind.g6': 'Farma y salud · Equipos médicos', 'ind.g7': 'Retail · Inmuebles comerciales',
+      'ind.prev': 'Sector anterior', 'ind.next': 'Sector siguiente',
       'menu.about.charity': 'Filantropía', 'menu.about.team': 'Equipo', 'menu.about.locations': 'Sedes', 'menu.about.awards': 'Premios',
       'menu.about.company': 'Sobre la empresa', 'menu.about.certifications': 'Certificaciones de seguridad',
       'menu.tech.stack': 'Stack tecnológico', 'menu.tech.data': 'Datos unificados',
