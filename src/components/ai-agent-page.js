@@ -160,7 +160,8 @@
     ctaWidth=customBtn.getBoundingClientRect().width+workbuddyBtn.getBoundingClientRect().width+gap;
   }
   function resize(){const dpr=devicePixelRatio||1;measure();W=box.clientWidth;H=box.clientHeight;canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
-  new ResizeObserver(resize).observe(box);resize();
+  let resizeFrame=0;
+  new ResizeObserver(()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(resize);}).observe(box);resize();
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(resize);
   window.addEventListener('resize',resize);
   function loop(t){drawScene(ctx,W,H,t,reduced);requestAnimationFrame(loop);} requestAnimationFrame(loop);
@@ -195,7 +196,8 @@
       const dpr=devicePixelRatio||1;PW=panel.clientWidth;PH=panel.clientHeight;
       canvas.width=PW*dpr;canvas.height=PH*dpr;pctx.setTransform(dpr,0,0,dpr,0,0);
     }
-    new ResizeObserver(resizePyramid).observe(panel);resizePyramid();
+    let pyramidResizeFrame=0;
+    new ResizeObserver(()=>{cancelAnimationFrame(pyramidResizeFrame);pyramidResizeFrame=requestAnimationFrame(resizePyramid);}).observe(panel);resizePyramid();
     function pyramidPoint(t,corner,angle,scale,cx,cy){
       const y=1.25-t*2.3,s=t*1.05;
       const coords=[[-s,y,-s],[s,y,-s],[s,y,s],[-s,y,s]][corner];
@@ -313,7 +315,8 @@
     });
     list.addEventListener('mouseleave',()=>{hovering=false;});
     function resize(){const dpr=devicePixelRatio||1;W=panel.clientWidth;H=panel.clientHeight;canvas.width=W*dpr;canvas.height=H*dpr;wctx.setTransform(dpr,0,0,dpr,0,0);}
-    new ResizeObserver(resize).observe(panel);resize();
+    let workbuddyResizeFrame=0;
+    new ResizeObserver(()=>{cancelAnimationFrame(workbuddyResizeFrame);workbuddyResizeFrame=requestAnimationFrame(resize);}).observe(panel);resize();
     function point(y,c,scale,cx,cy,pull){
       const s=1.05,coords=[[-s,y,-s],[s,y,-s],[s,y,s],[-s,y,s]][c];
       let p={x:coords[0]+pull,y:coords[1],z:coords[2]};p=rotY(p,angle);p=rotX(p,.1);
@@ -382,7 +385,8 @@
     let W,H;
     const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
     function resize(){const dpr=devicePixelRatio||1;W=box.clientWidth;H=box.clientHeight;canvas.width=W*dpr;canvas.height=H*dpr;sctx.setTransform(dpr,0,0,dpr,0,0);}
-    new ResizeObserver(resize).observe(box);resize();
+    let stepsResizeFrame=0;
+    new ResizeObserver(()=>{cancelAnimationFrame(stepsResizeFrame);stepsResizeFrame=requestAnimationFrame(resize);}).observe(box);resize();
     function iso(p,cx,cy,scale){return [cx+(p.x-p.z)*scale*.9,cy+p.z*scale*.22-p.y*scale];}
     function poly(points,fill,stroke,width=1.2){
       sctx.beginPath();points.forEach((p,i)=>i?sctx.lineTo(p[0],p[1]):sctx.moveTo(p[0],p[1]));sctx.closePath();
