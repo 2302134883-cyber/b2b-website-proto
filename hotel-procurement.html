@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-i18n-title="hp.meta.title">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="酒店集采商的 AI 采购中台：按规则匹配供应商、自动报价、自动出采购单，报价从 2 小时到 5 分钟，酒店客户翻倍，采购团队不加人。">
+<title>酒店文旅 · 酒店集采方案</title>
+<link rel="icon" type="image/png" href="/b2b-website-proto/assets/logo-shopex.png">
+  <script type="module" crossorigin src="/b2b-website-proto/assets/hotel-procurement-DzXBK1cO.js"></script>
+  <link rel="modulepreload" crossorigin href="/b2b-website-proto/assets/section-tones-B6wW9CL1.js">
+  <link rel="modulepreload" crossorigin href="/b2b-website-proto/assets/rolldown-runtime-XKyaHtl9.js">
+  <link rel="modulepreload" crossorigin href="/b2b-website-proto/assets/vendor-q-tJEsbj.js">
+  <link rel="modulepreload" crossorigin href="/b2b-website-proto/assets/material-DrwUIEwa.js">
+  <link rel="modulepreload" crossorigin href="/b2b-website-proto/assets/lead-dialog-Dv6n-xC2.js">
+  <link rel="modulepreload" crossorigin href="/b2b-website-proto/assets/faq-HfHC4Koc.js">
+  <link rel="modulepreload" crossorigin href="/b2b-website-proto/assets/i18n-uBwl9M1u.js">
+  <link rel="stylesheet" crossorigin href="/b2b-website-proto/assets/section-tones-FQEOl6jT.css">
+  <link rel="stylesheet" crossorigin href="/b2b-website-proto/assets/vendor-zduAUJxo.css">
+  <link rel="stylesheet" crossorigin href="/b2b-website-proto/assets/lead-dialog-CL2VsTFD.css">
+  <link rel="stylesheet" crossorigin href="/b2b-website-proto/assets/faq-BJAzkhmi.css">
+  <link rel="stylesheet" crossorigin href="/b2b-website-proto/assets/hotel-procurement-C4wbzMqe.css">
+</head>
+<body id="top">
+
+<!-- ============ 顶部导航（与首页一致，链接回首页锚点） ============ -->
+<a class="site-skip-link" href="#main-content" data-i18n="nav.skip">跳到主要内容</a>
+<header class="site-header" id="siteHeader">
+  <div class="site-header-inner">
+    <a class="site-brand" href="/" aria-label="ShopeX">
+      <img src="/b2b-website-proto/assets/logo-shopex.png" alt="ShopeX" onerror="this.outerHTML='<span class=&quot;site-brand-fallback&quot;>ShopeX</span>'">
+    </a>
+    <nav class="site-desktop-nav" aria-label="导航菜单" data-i18n-aria="nav.menu">
+      <div class="site-nav-item">
+        <a class="site-nav-trigger" id="m-product" href="/#sec-what" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-panel-product" data-nav-section="product">
+          <span data-i18n="nav.product">产品与服务</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </a>
+        <div class="site-nav-panel site-nav-panel--product" id="nav-panel-product" role="menu" aria-label="产品与服务">
+          <a class="site-nav-panel-head" href="/#sec-what"><span data-i18n="menu.product.1">产品总览</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="site-nav-panel-grid site-nav-panel-grid--2">
+            <div class="site-nav-group">
+              <p class="site-nav-group-title" data-i18n="menu.product.2">四种经营模式</p>
+              <a class="site-nav-panel-link" href="/#mode-explorer" data-i18n="mode.b2b.name">品牌直营</a>
+              <a class="site-nav-panel-link" href="/#mode-explorer" data-i18n="mode.s2b2b.name">供应链协同</a>
+              <a class="site-nav-panel-link" href="/#mode-explorer" data-i18n="mode.b2b2c.name">市场型平台</a>
+              <a class="site-nav-panel-link" href="/#mode-explorer" data-i18n="mode.b2d2b.name">经销商开店</a>
+            </div>
+            <div class="site-nav-group">
+              <p class="site-nav-group-title" data-i18n="what.services">服务与部署</p>
+              <a class="site-nav-panel-link" href="/#service-deploy" data-i18n="svc.deploy.title">私有化部署</a>
+              <a class="site-nav-panel-link" href="/#service-security" data-i18n="svc.security.title">数据安全</a>
+              <a class="site-nav-panel-link" href="/#what-pricing" data-i18n="nav.pricing">价格</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="site-nav-item">
+        <a class="site-nav-trigger" id="m-solution" href="/#industrySolutions" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-panel-solution" data-nav-section="solution">
+          <span data-i18n="nav.solution">行业方案</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </a>
+        <div class="site-nav-panel site-nav-panel--solution" id="nav-panel-solution" role="menu" aria-label="行业方案">
+          <div class="site-nav-panel-grid site-nav-panel-grid--2">
+            <a class="site-nav-card" href="/#industrySolutions"><span class="site-nav-card-title"><span data-i18n="menu.solution.1">家电与电工</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ind1.desc">统一商品、价格、库存与渠道政策。</span></a>
+            <a class="site-nav-card" href="/#industrySolutions"><span class="site-nav-card-title"><span data-i18n="menu.solution.2">电子元器件</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ind2.desc">连接上游供应商与下游采购企业。</span></a>
+            <a class="site-nav-card" href="/#industrySolutions"><span class="site-nav-card-title"><span data-i18n="menu.solution.3">工业制造</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ind3.desc">统一寻源、合同、订单与结算。</span></a>
+            <a class="site-nav-card" href="/#industrySolutions"><span class="site-nav-card-title"><span data-i18n="menu.solution.4">快消与零售</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ind4.desc">将补货、促销、授信与履约在线化。</span></a>
+            <a class="site-nav-card" href="/hotel-procurement.html" aria-current="page"><span class="site-nav-card-title"><span data-i18n="menu.solution.5">酒店文旅</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ind5.desc">集采商的 AI 寻源与自动报价中台。</span></a>
+            <a class="site-nav-card" href="/medical-device.html"><span class="site-nav-card-title"><span data-i18n="menu.solution.6">医疗器械</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ind6.desc">合规校验、留痕与审计导出的交易中台。</span></a>
+          </div>
+          <div class="site-nav-indmore">
+            <p class="site-nav-group-title" data-i18n="nav.solution.more">正在服务更多行业知名品牌企业</p>
+            <div class="site-nav-indmore-grid">
+              <span class="site-nav-indpill" data-i18n="ind.g1">鞋服运动 · 珠宝首饰</span>
+              <span class="site-nav-indpill" data-i18n="ind.g2">美妆 · 日化个护 · 母婴</span>
+              <span class="site-nav-indpill" data-i18n="ind.g3">家居家装 · 数码电器</span>
+              <span class="site-nav-indpill" data-i18n="ind.g4">食品饮料 · 农业科技</span>
+              <span class="site-nav-indpill" data-i18n="ind.g5">电子工业 · 智能制造</span>
+              <span class="site-nav-indpill" data-i18n="ind.g6">医药健康 · 医疗器械</span>
+              <span class="site-nav-indpill" data-i18n="ind.g7">零售运营 · 商业地产</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="site-nav-item">
+        <a class="site-nav-trigger" id="m-cases" href="/#caseStudies" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-panel-cases" data-nav-section="cases">
+          <span data-i18n="nav.cases">客户案例</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </a>
+        <div class="site-nav-panel site-nav-panel--cases" id="nav-panel-cases" role="menu" aria-label="客户案例">
+          <div class="site-nav-panel-grid site-nav-panel-grid--3">
+            <a class="site-nav-card" href="/#caseStudies"><span class="site-nav-card-title"><span data-i18n="case1.name">公牛集团</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="case1.tag">民用电工 · 渠道数字化</span></a>
+            <a class="site-nav-card" href="/#caseStudies"><span class="site-nav-card-title"><span data-i18n="case2.name">芯智雲城</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="case2.tag">电子元器件 · S2B2B</span></a>
+            <a class="site-nav-card" href="/#caseStudies"><span class="site-nav-card-title"><span data-i18n="case3.name">某电子科技上市公司</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="case3.tag">智能制造 · 保密客户</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="site-nav-item">
+        <a class="site-nav-trigger" id="m-ai" href="/#aiAgent" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-panel-ai" data-nav-section="ai">
+          <span data-i18n="nav.ai">AI 智能体</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </a>
+        <div class="site-nav-panel site-nav-panel--ai" id="nav-panel-ai" role="menu" aria-label="AI 智能体">
+          <a class="site-nav-panel-head" href="/#aiAgent"><span data-i18n="footer.ai.overview">AI 智能体总览</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <div class="site-nav-panel-grid site-nav-panel-grid--2">
+            <a class="site-nav-card" href="/#aiAgent"><span class="site-nav-card-title"><span data-i18n="ag.scene.1">客服场景</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ag.q1">我的订单什么时候发货？</span></a>
+            <a class="site-nav-card" href="/#aiAgent"><span class="site-nav-card-title"><span data-i18n="ag.scene.2">询报价场景</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ag.q3">报 2,000 件 X-30 的价格</span></a>
+            <a class="site-nav-card" href="/#aiAgent"><span class="site-nav-card-title"><span data-i18n="ag.scene.3">工单场景</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ag.q5">上周的售后工单进展如何？</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="site-nav-item site-nav-item--tech">
+        <a class="site-nav-trigger" id="m-tech" href="/#arch" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-panel-tech" data-nav-section="tech">
+          <span data-i18n="nav.tech">技术架构</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </a>
+        <div class="site-nav-panel site-nav-panel--tech" id="nav-panel-tech" role="menu" aria-label="技术架构">
+          <div class="site-nav-panel-grid site-nav-panel-grid--3">
+            <a class="site-nav-card" href="/#arch"><span class="site-nav-card-title"><span data-i18n="arch.title">整体架构</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="arch.sub">中台化 B2B 系统 · 角色视角</span></a>
+            <a class="site-nav-card" href="/#techRing"><span class="site-nav-card-title"><span data-i18n="menu.tech.stack">技术栈</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="tech.core.d">一体化数智化底座</span></a>
+            <a class="site-nav-card" href="/#dataSource"><span class="site-nav-card-title"><span data-i18n="menu.tech.data">数据同源</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ds.sub">一次改价，同一秒生效</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="site-nav-item site-nav-item--about">
+        <a class="site-nav-trigger" id="m-about" href="/#sec-about" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-panel-about" data-nav-section="about">
+          <span data-i18n="nav.about">关于我们</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </a>
+        <div class="site-nav-panel site-nav-panel--about" id="nav-panel-about" role="menu" aria-label="关于我们">
+          <div class="site-nav-panel-grid site-nav-panel-grid--3">
+            <a class="site-nav-card" href="/#sec-about"><span class="site-nav-card-title"><span data-i18n="menu.about.company">公司介绍</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="about.video">视频占位 · 约 30s</span></a>
+            <a class="site-nav-card" href="/#journeyBox"><span class="site-nav-card-title"><span data-i18n="footer.address">地址与联系</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="addr.building">新漕河泾国际商务中心B座</span></a>
+            <a class="site-nav-card" href="/#certRow"><span class="site-nav-card-title"><span data-i18n="menu.about.certifications">安全认证</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="why.certs">权威的信息安全管理体系认证</span></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="site-header-actions">
+      <div class="site-language">
+        <button class="site-language-trigger" id="m-lang" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="mm-lang">
+          <svg class="site-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.2 2.4 3.3 5.4 3.3 9s-1.1 6.6-3.3 9c-2.2-2.4-3.3-5.4-3.3-9S9.8 5.4 12 3Z"/></svg>
+          <span data-i18n="nav.lang">语言</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+        </button>
+        <md-menu anchor="m-lang" id="mm-lang">
+          <md-menu-item data-lang="zh-CN"><div slot="headline">中文（简体）</div></md-menu-item>
+          <md-menu-item data-lang="en"><div slot="headline">English</div></md-menu-item>
+          <md-menu-item data-lang="ja"><div slot="headline">日本語</div></md-menu-item>
+          <md-menu-item data-lang="ko"><div slot="headline">한국어</div></md-menu-item>
+          <md-menu-item data-lang="es"><div slot="headline">Español</div></md-menu-item>
+          <md-menu-item data-lang="fr"><div slot="headline">Français</div></md-menu-item>
+          <md-menu-item data-lang="de"><div slot="headline">Deutsch</div></md-menu-item>
+          <md-menu-item data-lang="ru"><div slot="headline">Русский</div></md-menu-item>
+        </md-menu>
+      </div>
+      <button class="site-login-link" type="button" data-i18n="nav.login">登录</button>
+      <button class="site-primary-button" type="button" data-lead-open="header" data-i18n-aria="cta.get" aria-label="获取方案">
+        <span class="site-cta-label" data-i18n="cta.get">获取方案</span><span class="site-cta-short" data-i18n="cta.short">获取方案</span>
+      </button>
+      <button class="site-mobile-toggle" id="m-nav" type="button" aria-label="导航菜单" data-i18n-aria="nav.menu" aria-expanded="false" aria-controls="mobileNav">
+        <svg class="site-icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="site-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="site-mobile-nav" id="mobileNav" aria-label="导航菜单" data-i18n-aria="nav.menu" hidden>
+    <div class="site-mobile-nav-inner">
+      <details class="site-mobile-group">
+        <summary><span data-i18n="nav.product">产品与服务</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+        <div class="site-mobile-sublinks">
+          <a href="/#sec-what" data-mobile-link data-i18n="menu.product.1">产品总览</a>
+          <a href="/#mode-explorer" data-mobile-link data-i18n="menu.product.2">四种经营模式</a>
+          <a href="/#service-deploy" data-mobile-link data-i18n="svc.deploy.title">私有化部署</a>
+          <a href="/#service-security" data-mobile-link data-i18n="svc.security.title">数据安全</a>
+        </div>
+      </details>
+      <details class="site-mobile-group" open>
+        <summary><span data-i18n="nav.solution">行业方案</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+        <div class="site-mobile-sublinks">
+          <a href="/#industrySolutions" data-mobile-link data-i18n="menu.solution.1">家电与电工</a>
+          <a href="/#industrySolutions" data-mobile-link data-i18n="menu.solution.2">电子元器件</a>
+          <a href="/#industrySolutions" data-mobile-link data-i18n="menu.solution.3">工业制造</a>
+          <a href="/#industrySolutions" data-mobile-link data-i18n="menu.solution.4">快消与零售</a>
+          <a href="/hotel-procurement.html" data-mobile-link data-i18n="menu.solution.5" aria-current="page">酒店文旅</a>
+          <a href="/medical-device.html" data-mobile-link data-i18n="menu.solution.6">医疗器械</a>
+          <p class="site-mobile-indmore-title" data-i18n="nav.solution.more">正在服务更多行业知名品牌企业</p>
+          <div class="site-mobile-indmore">
+            <span class="site-nav-indpill" data-i18n="ind.g1">鞋服运动 · 珠宝首饰</span>
+            <span class="site-nav-indpill" data-i18n="ind.g2">美妆 · 日化个护 · 母婴</span>
+            <span class="site-nav-indpill" data-i18n="ind.g3">家居家装 · 数码电器</span>
+            <span class="site-nav-indpill" data-i18n="ind.g4">食品饮料 · 农业科技</span>
+            <span class="site-nav-indpill" data-i18n="ind.g5">电子工业 · 智能制造</span>
+            <span class="site-nav-indpill" data-i18n="ind.g6">医药健康 · 医疗器械</span>
+            <span class="site-nav-indpill" data-i18n="ind.g7">零售运营 · 商业地产</span>
+          </div>
+        </div>
+      </details>
+      <details class="site-mobile-group">
+        <summary><span data-i18n="nav.cases">客户案例</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+        <div class="site-mobile-sublinks">
+          <a href="/#caseStudies" data-mobile-link data-i18n="case1.name">公牛集团</a>
+          <a href="/#caseStudies" data-mobile-link data-i18n="case2.name">芯智雲城</a>
+          <a href="/#caseStudies" data-mobile-link data-i18n="case3.name">某电子科技上市公司</a>
+        </div>
+      </details>
+      <details class="site-mobile-group">
+        <summary><span data-i18n="nav.ai">AI 智能体</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+        <div class="site-mobile-sublinks">
+          <a href="/#aiAgent" data-mobile-link data-i18n="footer.ai.overview">AI 智能体总览</a>
+          <a href="/#aiAgent" data-mobile-link data-i18n="ag.scene.1">客服场景</a>
+          <a href="/#aiAgent" data-mobile-link data-i18n="ag.scene.2">询报价场景</a>
+          <a href="/#aiAgent" data-mobile-link data-i18n="ag.scene.3">工单场景</a>
+        </div>
+      </details>
+      <details class="site-mobile-group">
+        <summary><span data-i18n="nav.tech">技术架构</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+        <div class="site-mobile-sublinks">
+          <a href="/#arch" data-mobile-link data-i18n="arch.title">整体架构</a>
+          <a href="/#techRing" data-mobile-link data-i18n="menu.tech.stack">技术栈</a>
+          <a href="/#dataSource" data-mobile-link data-i18n="menu.tech.data">数据同源</a>
+        </div>
+      </details>
+      <details class="site-mobile-group">
+        <summary><span data-i18n="nav.about">关于我们</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+        <div class="site-mobile-sublinks">
+          <a href="/#sec-about" data-mobile-link data-i18n="menu.about.company">公司介绍</a>
+          <a href="/#journeyBox" data-mobile-link data-i18n="footer.address">地址与联系</a>
+          <a href="/#certRow" data-mobile-link data-i18n="menu.about.certifications">安全认证</a>
+        </div>
+      </details>
+      <div class="site-mobile-language">
+        <label for="mobileLang" data-i18n="nav.lang">语言</label>
+        <select id="mobileLang" aria-label="语言" data-i18n-aria="nav.lang">
+          <option value="zh-CN">中文（简体）</option><option value="en">English</option>
+          <option value="ja">日本語</option><option value="ko">한국어</option>
+          <option value="es">Español</option><option value="fr">Français</option>
+          <option value="de">Deutsch</option><option value="ru">Русский</option>
+        </select>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content" tabindex="-1">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="orbNode" cx="38%" cy="32%" r="75%">
+      <stop offset="0%" stop-color="#93b8f8"/><stop offset="45%" stop-color="#c4b5f5"/>
+      <stop offset="78%" stop-color="#f0c9e8"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orbHero" cx="38%" cy="32%" r="75%">
+      <stop offset="0%" stop-color="#a8c8fa"/><stop offset="42%" stop-color="#d3c6f8"/>
+      <stop offset="72%" stop-color="#f3d4ec"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+<!-- ============ HERO ============ -->
+<section class="hp-hero section-tone section-tone--white">
+  <svg class="orb orb-slow hp-hero-orb" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+    <circle cx="100" cy="100" r="98" fill="url(#orbHero)"/>
+  </svg>
+  <div class="max-w-[1200px] mx-auto px-6 pt-16 pb-14 md:pt-24 md:pb-20">
+    <div class="hp-hero-inner">
+      <p class="hp-eyebrow" data-i18n="hp.eyebrow">行业方案 · 酒店文旅</p>
+      <h1 data-i18n="hp.hero.title">酒店集采商的 AI 采购中台</h1>
+      <p class="hp-hero-lead" data-i18n="hp.hero.lead">酒店下单、你来寻源配货：按规则匹配供应商，自动报价、自动出采购单。报价从 2 小时到 5 分钟，酒店客户翻倍，采购团队不加人。</p>
+      <div class="hp-hero-actions">
+        <md-filled-button data-lead-open="hotel-hero" trailing-icon data-i18n="ind.cta">获取行业方案</md-filled-button>
+        <button type="button" class="hp-btn-ghost" data-hp-scroll="#hp-case" data-i18n="hp.hero.cta2">看演示录屏</button>
+      </div>
+      <div class="hp-hero-stats">
+        <div class="hp-hero-stat"><div class="num" data-i18n="hp.hero.stat1.num">5 分钟</div><div class="cap" data-i18n="hp.hero.stat1.cap">急单报价时效</div></div>
+        <div class="hp-hero-stat"><div class="num" data-i18n="hp.hero.stat2.num">3 人</div><div class="cap" data-i18n="hp.hero.stat2.cap">采购团队即可支撑</div></div>
+        <div class="hp-hero-stat"><div class="num" data-i18n="hp.hero.stat3.num">30+</div><div class="cap" data-i18n="hp.hero.stat3.cap">酒店客户同在线</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 痛点自检 ============ -->
+<section id="hp-pain" class="hp-sec py-12 md:py-16 section-tone section-tone--gray">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="sec-head">
+      <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+      <h2 class="sec-title" data-i18n="hp.pain.title">这些场景，是不是很眼熟？</h2>
+    </div>
+    <p class="what-lead mx-auto text-center" data-i18n="hp.pain.lead">点一点你中招的几条，看看同行是怎么解的。</p>
+
+    <div class="hp-pain-grid">
+      <button type="button" class="hp-pain-card" aria-pressed="false"><span class="hp-pain-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6"/></svg></span><span data-i18n="hp.pain.1">急单来了，采购员在微信群里挨个问价，2 小时报不出价</span></button>
+      <button type="button" class="hp-pain-card" aria-pressed="false"><span class="hp-pain-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6"/></svg></span><span data-i18n="hp.pain.2">供应商资源在老采购脑子里，人一走，客户跟着裸奔</span></button>
+      <button type="button" class="hp-pain-card" aria-pressed="false"><span class="hp-pain-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6"/></svg></span><span data-i18n="hp.pain.3">同一 SKU 五家供应商五个价，底价永远拿不准</span></button>
+      <button type="button" class="hp-pain-card" aria-pressed="false"><span class="hp-pain-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6"/></svg></span><span data-i18n="hp.pain.4">酒店、供应商、内部三套账，月底对账耗掉一整周</span></button>
+      <button type="button" class="hp-pain-card" aria-pressed="false"><span class="hp-pain-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6"/></svg></span><span data-i18n="hp.pain.5">酒店客户翻倍，采购员就得翻倍，规模越大越不赚钱</span></button>
+      <button type="button" class="hp-pain-card" aria-pressed="false"><span class="hp-pain-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6"/></svg></span><span data-i18n="hp.pain.6">酒店压账期、供应商要现款，现金流全靠人肉调度</span></button>
+    </div>
+
+    <div class="hp-pain-result">
+      <p class="hp-pain-count"><span data-i18n="hp.pain.counter.pre">你中了</span> <b id="hpPainCount">0</b> <span data-i18n="hp.pain.counter.unit">条</span></p>
+      <p class="hp-pain-verdict" id="hpPainVerdict">一条没中？那你是同行里的少数派。</p>
+      <button type="button" class="hp-pain-cta" id="hpPainCta" data-hp-scroll="#hp-solution" data-i18n="hp.pain.cta">看看系统怎么解 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 方案四步 ============ -->
+<section id="hp-solution" class="hp-sec py-12 md:py-16 section-tone section-tone--white">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="sec-head">
+      <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+      <h2 class="sec-title" data-i18n="hp.sol.title">把集采商的流程，原样搬到线上</h2>
+    </div>
+    <p class="what-lead mx-auto text-center" data-i18n="hp.sol.lead">不改变集采生意的逻辑，只把每个环节交给系统和 AI 跑。</p>
+
+    <div class="hp-flow">
+      <div class="hp-step">
+        <div class="hp-step-head"><span class="hp-step-num">01</span><span class="hp-step-title" data-i18n="hp.sol.step1.t">需求聚合</span></div>
+        <div class="hp-step-row before"><span class="hp-step-tag" data-i18n="hp.sol.before">以前</span><span data-i18n="hp.sol.step1.before">酒店电话、微信、Excel 多头报单</span></div>
+        <div class="hp-step-row after"><span class="hp-step-tag" data-i18n="hp.sol.after">现在</span><span data-i18n="hp.sol.step1.after">酒店端统一在线下单，需求自动聚合归并</span></div>
+      </div>
+      <div class="hp-step">
+        <div class="hp-step-head"><span class="hp-step-num">02</span><span class="hp-step-title" data-i18n="hp.sol.step2.t">智能寻源</span></div>
+        <div class="hp-step-row before"><span class="hp-step-tag" data-i18n="hp.sol.before">以前</span><span data-i18n="hp.sol.step2.before">采购员凭人脉找货、凭经验砍价</span></div>
+        <div class="hp-step-row after"><span class="hp-step-tag" data-i18n="hp.sol.after">现在</span><span data-i18n="hp.sol.step2.after">规则引擎按品类、价格、履约记录匹配供应商池</span></div>
+      </div>
+      <div class="hp-step">
+        <div class="hp-step-head"><span class="hp-step-num">03</span><span class="hp-step-title" data-i18n="hp.sol.step3.t">自动报价</span></div>
+        <div class="hp-step-row before"><span class="hp-step-tag" data-i18n="hp.sol.before">以前</span><span data-i18n="hp.sol.step3.before">微信群问价，2 小时凑不齐一轮报价</span></div>
+        <div class="hp-step-row after"><span class="hp-step-tag" data-i18n="hp.sol.after">现在</span><span data-i18n="hp.sol.step3.after">AI 采购助手自动比价生成报价单，5 分钟响应急单</span></div>
+      </div>
+      <div class="hp-step">
+        <div class="hp-step-head"><span class="hp-step-num">04</span><span class="hp-step-title" data-i18n="hp.sol.step4.t">出单履约</span></div>
+        <div class="hp-step-row before"><span class="hp-step-tag" data-i18n="hp.sol.before">以前</span><span data-i18n="hp.sol.step4.before">Excel 开单、人工跟单、三套账手工对</span></div>
+        <div class="hp-step-row after"><span class="hp-step-tag" data-i18n="hp.sol.after">现在</span><span data-i18n="hp.sol.step4.after">一键生成采购单直连供应商，发货、对账自动同步</span></div>
+      </div>
+    </div>
+
+    <div class="hp-chain">
+      <div class="hp-chain-label" data-i18n="hp.sol.chain.label">三边协同</div>
+      <span class="hp-chain-node" data-i18n="hp.sol.chain.hotel">酒店端 · 在线下单 / 看履约</span>
+      <span class="hp-chain-arrow" aria-hidden="true">⇄</span>
+      <span class="hp-chain-node hub" data-i18n="hp.sol.chain.hub">集采中台 · 规则匹配 / 自动报价</span>
+      <span class="hp-chain-arrow" aria-hidden="true">⇄</span>
+      <span class="hp-chain-node" data-i18n="hp.sol.chain.supplier">供应商端 · 接单 / 报价 / 发货</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 同类案例 ============ -->
+<section id="hp-case" class="hp-sec py-12 md:py-16 section-tone section-tone--gray">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="sec-head">
+      <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+      <h2 class="sec-title" data-i18n="hp.case.title">和你一样角色的集采商，已经跑通了</h2>
+    </div>
+
+    <div class="hp-case-card">
+      <svg class="orb orb-slow hp-case-orb" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg>
+      <div class="hp-case-head">
+        <div>
+          <h3 class="hp-case-name" data-i18n="hp.case.name">某酒店采购集成商</h3>
+          <p class="hp-case-tag" data-i18n="hp.case.tag">酒店集采 · S2B2B 供应链协同</p>
+        </div>
+        <div class="hp-case-chips">
+          <span class="ind-product" data-i18n="hp.case.chip1">规则引擎匹配</span>
+          <span class="ind-product" data-i18n="hp.case.chip2">AI 自动报价</span>
+          <span class="ind-product" data-i18n="hp.case.chip3">全链路在线</span>
+        </div>
+      </div>
+      <div class="hp-case-body">
+        <div class="hp-case-main">
+          <p class="hp-case-desc" data-i18n="hp.case.desc">为 30+ 家酒店提供全品类集采服务：中台按预设规则自动匹配供应商、AI 采购助手自动报价并生成采购单，寻源、配货、发货全链路在线。</p>
+          <div class="hp-case-bench" data-i18n="hp.case.bench">模式背书：华住发布供应链「九大服务承诺」，Avendra 为全球酒店提供集采服务——酒店集采的链主模式已被验证。</div>
+          <div class="ind-actions hp-case-actions">
+            <a class="ind-btn ind-secondary" href="/#caseStudies" data-i18n="hp.case.cta">查看完整案例</a>
+          </div>
+        </div>
+        <button type="button" class="hp-demo" data-lead-open="hotel-demo">
+          <span class="hp-demo-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+          <span class="hp-demo-title" data-i18n="hp.demo.title">演示录屏</span>
+          <span class="hp-demo-sub" data-i18n="hp.demo.sub">约 15 分钟 · 用真实 SKU 跑一遍报价</span>
+        </button>
+      </div>
+      <div class="hp-case-stats">
+        <div class="hp-stat">
+          <div class="hp-stat-num"><span data-count="40" data-i18n="hp.case.stat1.num">40</span><span class="hp-stat-suf" data-i18n="hp.case.stat1.suf">×</span></div>
+          <p class="hp-stat-cap" data-i18n="hp.case.stat1.cap">急单报价提速（2 小时 → 5 分钟）</p>
+        </div>
+        <div class="hp-stat">
+          <div class="hp-stat-num"><span data-count="60" data-i18n="hp.case.stat2.num">60</span><span class="hp-stat-suf" data-i18n="hp.case.stat2.suf">%</span></div>
+          <p class="hp-stat-cap" data-i18n="hp.case.stat2.cap">采购人效提升，团队未加一人</p>
+        </div>
+        <div class="hp-stat">
+          <div class="hp-stat-num"><span data-count="87" data-i18n="hp.case.stat3.num">87</span><span class="hp-stat-suf" data-i18n="hp.case.stat3.suf">%</span></div>
+          <p class="hp-stat-cap" data-i18n="hp.case.stat3.cap">对账工作量下降</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 ROI 计算器 ============ -->
+<section id="hp-roi" class="hp-sec py-12 md:py-16 section-tone section-tone--white">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="sec-head">
+      <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+      <h2 class="sec-title" data-i18n="hp.roi.title">这笔账，你自己算</h2>
+    </div>
+    <p class="what-lead mx-auto text-center" data-i18n="hp.roi.lead">拖动滑块，按你的生意规模估算。</p>
+
+    <div class="hp-roi-grid">
+      <div class="hp-roi-card">
+        <div class="hp-roi-row">
+          <div class="hp-roi-rowhead">
+            <label class="hp-roi-label" for="hpRoiHotels" data-i18n="hp.roi.in.hotels">服务酒店数</label>
+            <span class="hp-roi-value"><span id="hpRoiHotelsVal">40</span><small data-i18n="hp.roi.in.hotels.unit">家</small></span>
+          </div>
+          <input type="range" id="hpRoiHotels" min="5" max="200" step="5" value="40">
+        </div>
+        <div class="hp-roi-row">
+          <div class="hp-roi-rowhead">
+            <label class="hp-roi-label" for="hpRoiGmv" data-i18n="hp.roi.in.gmv">月采购额</label>
+            <span class="hp-roi-value"><span id="hpRoiGmvVal">800</span><small data-i18n="hp.roi.unit.wan">万元</small></span>
+          </div>
+          <input type="range" id="hpRoiGmv" min="100" max="5000" step="100" value="800">
+        </div>
+        <div class="hp-roi-row">
+          <div class="hp-roi-rowhead">
+            <label class="hp-roi-label" for="hpRoiStaff" data-i18n="hp.roi.in.staff">采购团队人数</label>
+            <span class="hp-roi-value"><span id="hpRoiStaffVal">5</span><small data-i18n="hp.roi.in.staff.unit">人</small></span>
+          </div>
+          <input type="range" id="hpRoiStaff" min="2" max="20" step="1" value="5">
+        </div>
+      </div>
+      <div class="hp-roi-card hp-roi-result">
+        <div class="hp-roi-out">
+          <span class="label" data-i18n="hp.roi.out.labor">释放采购人力</span>
+          <span class="value"><span id="hpRoiLabor">3</span><small data-i18n="hp.roi.out.labor.unit">人</small></span>
+        </div>
+        <div class="hp-roi-out">
+          <span class="label" data-i18n="hp.roi.out.premium">急单溢价节省 / 年</span>
+          <span class="value"><span id="hpRoiPremium">192</span><small data-i18n="hp.roi.unit.wan">万元</small></span>
+        </div>
+        <div class="hp-roi-total">
+          <div class="label" data-i18n="hp.roi.out.total">预计年合计收益</div>
+          <div class="value"><span id="hpRoiTotal">228</span><small data-i18n="hp.roi.unit.wan">万元</small></div>
+        </div>
+      </div>
+    </div>
+    <p class="hp-roi-note" data-i18n="hp.roi.note">估算口径：采购人效释放约 60%、急单溢价下降约 2%，按行业服务经验值测算，仅供选型参考。</p>
+  </div>
+</section>
+
+<!-- ============ 05 FAQ ============ -->
+<section id="hp-faq" class="hp-sec pt-12 pb-12 md:pt-16 md:pb-16 section-tone section-tone--gray">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <h3 class="mt-0 mb-6 text-[15px] font-semibold" data-i18n="hp.faq.title">Q&A · 集采商关心的问题</h3>
+    <md-outlined-card>
+      <div id="faqList">
+        <div class="qa-item open">
+          <button class="qa-q" aria-expanded="true">
+            <span data-i18n="hp.faq.q1">供应商价格是我的商业机密，放进系统安全吗？</span>
+            <svg class="qa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="qa-a"><div><p data-i18n="hp.faq.a1">支持私有化部署与字段级权限：供应商只看到自己的订单与报价，底价、毛利规则仅对授权角色可见，数据归你所有。</p></div></div>
+        </div>
+        <div class="qa-item">
+          <button class="qa-q" aria-expanded="false">
+            <span data-i18n="hp.faq.q2">团队平均年龄偏大，采购员用得起来吗？</span>
+            <svg class="qa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="qa-a"><div><p data-i18n="hp.faq.a2">采购员端只保留「审单、确认、跟单」三件事，匹配与报价由系统自动完成；实施含驻场培训，通常 2 周内全员上手。</p></div></div>
+        </div>
+        <div class="qa-item">
+          <button class="qa-q" aria-expanded="false">
+            <span data-i18n="hp.faq.q3">酒店那边有自己的系统，能对接吗？</span>
+            <svg class="qa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="qa-a"><div><p data-i18n="hp.faq.a3">提供标准接口与酒店 PMS / ERP / 财务系统对接，订单、验收、对账数据双向同步；没有系统的酒店可直接用小程序下单。</p></div></div>
+        </div>
+        <div class="qa-item">
+          <button class="qa-q" aria-expanded="false">
+            <span data-i18n="hp.faq.q4">实施要多久？中间生意会不会停？</span>
+            <svg class="qa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="qa-a"><div><p data-i18n="hp.faq.a4">分阶段上线：先跑通「下单—报价—采购单」主链路（约 4–6 周），再逐步接入对账与供应商端，老流程并行切换，生意不停。</p></div></div>
+        </div>
+        <div class="qa-item">
+          <button class="qa-q" aria-expanded="false">
+            <span data-i18n="hp.faq.q5">我们是买断转售、赚差价的模式，也支持吗？</span>
+            <svg class="qa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="qa-a"><div><p data-i18n="hp.faq.a5">支持。系统兼容 S2B2B 供应链协同与 B2D2B 经销转售两种模式，可同一底座并行，按供货关系与货权灵活配置。</p></div></div>
+        </div>
+      </div>
+    </md-outlined-card>
+  </div>
+</section>
+
+<!-- ============ 收尾 CTA ============ -->
+<section id="finalCta" class="pt-4 pb-16 md:pt-8 md:pb-20 section-tone section-tone--gray" aria-labelledby="finalCtaTitle">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="final-cta-card px-6 py-8 md:px-12 md:py-12">
+      <svg class="orb orb-slow final-cta-orb" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+        <circle cx="100" cy="100" r="98" fill="url(#orbNode)"/>
+      </svg>
+      <div class="relative z-[1] flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between md:gap-12">
+        <div class="max-w-[680px]">
+          <h2 id="finalCtaTitle" class="text-[26px] md:text-[32px] font-bold tracking-tight leading-tight" data-i18n="hp.final.title">拿你的真实 SKU，跑一遍报价</h2>
+          <p class="mt-3 text-[14px] md:text-[15px] leading-6 text-[var(--sub)]" data-i18n="hp.final.desc">留下邮箱，我们用你的品类清单做一次真实寻源与自动报价演示，1 个工作日内联系你。</p>
+        </div>
+        <div class="w-full md:w-auto shrink-0">
+          <md-filled-button class="final-cta-button w-full md:w-auto" data-lead-open="hotel-final" trailing-icon data-i18n="cta.get">获取方案</md-filled-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ 页脚 ============ -->
+<footer id="siteFooter" class="site-footer">
+  <div class="site-footer-grid">
+    <div class="site-footer-brand">
+      <a class="site-brand" href="/" aria-label="ShopeX">
+        <img src="/b2b-website-proto/assets/logo-shopex.png" alt="ShopeX" onerror="this.outerHTML='<span class=&quot;site-brand-fallback&quot;>ShopeX</span>'">
+      </a>
+      <p data-i18n="footer.slogan">让渠道、数据与 AI 在同一套 B2B 底座上协同流动。</p>
+    </div>
+    <nav class="site-footer-links" aria-label="导航菜单" data-i18n-aria="nav.menu">
+      <section class="site-footer-column">
+        <h2 class="site-footer-title" data-i18n="nav.product">产品与服务</h2>
+        <a href="/#sec-what" data-i18n="menu.product.1">产品总览</a>
+        <a href="/#mode-explorer" data-i18n="menu.product.2">四种经营模式</a>
+        <a href="/#service-deploy" data-i18n="svc.deploy.title">私有化部署</a>
+        <a href="/#service-security" data-i18n="svc.security.title">数据安全</a>
+        <a href="/#what-pricing" data-i18n="nav.pricing">价格</a>
+      </section>
+      <section class="site-footer-column">
+        <h2 class="site-footer-title" data-i18n="footer.industry.cases">行业与案例</h2>
+        <a href="/#industrySolutions" data-i18n="menu.solution.1">家电与电工</a>
+        <a href="/#industrySolutions" data-i18n="menu.solution.2">电子元器件</a>
+        <a href="/#industrySolutions" data-i18n="menu.solution.3">工业制造</a>
+        <a href="/#industrySolutions" data-i18n="menu.solution.4">快消与零售</a>
+        <a href="/hotel-procurement.html" data-i18n="menu.solution.5" aria-current="page">酒店文旅</a>
+        <a href="/medical-device.html" data-i18n="menu.solution.6">医疗器械</a>
+        <a href="/#caseStudies" data-i18n="nav.cases">客户案例</a>
+      </section>
+      <section class="site-footer-column">
+        <h2 class="site-footer-title" data-i18n="nav.ai">AI 智能体</h2>
+        <a href="/#aiAgent" data-i18n="footer.ai.overview">AI 智能体总览</a>
+        <a href="/#aiAgent" data-i18n="ag.scene.1">客服场景</a>
+        <a href="/#aiAgent" data-i18n="ag.scene.2">询报价场景</a>
+        <a href="/#aiAgent" data-i18n="ag.scene.3">工单场景</a>
+      </section>
+      <section class="site-footer-column">
+        <h2 class="site-footer-title" data-i18n="nav.tech">技术架构</h2>
+        <a href="/#arch" data-i18n="arch.title">整体架构</a>
+        <a href="/#techRing" data-i18n="menu.tech.stack">技术栈</a>
+        <a href="/#dataSource" data-i18n="menu.tech.data">数据同源</a>
+      </section>
+      <section class="site-footer-column">
+        <h2 class="site-footer-title" data-i18n="footer.about">关于与支持</h2>
+        <a href="/#sec-about" data-i18n="menu.about.company">公司介绍</a>
+        <a href="/#journeyBox" data-i18n="footer.address">地址与联系</a>
+        <a href="/#certRow" data-i18n="menu.about.certifications">安全认证</a>
+        <a href="/#sec-faq" data-i18n="how.qa">Q&amp;A · 常见问题</a>
+        <button class="site-footer-action" type="button" data-lead-open="footer" data-i18n="plan.cta">获取方案和报价</button>
+      </section>
+    </nav>
+  </div>
+  <div class="site-footer-bottom">
+    <span data-i18n="footer.copy">© 2025 ShopeX</span>
+    <span data-i18n="footer.links">隐私政策 | 服务条款 | 网站地图</span>
+  </div>
+</footer>
+
+<!-- ============ 浮动 ============ -->
+<div class="fixed right-4 bottom-20 md:right-6 md:bottom-24 z-40 scale-90 md:scale-100 origin-bottom-right flex flex-col gap-3 items-center">
+  <md-outlined-icon-button class="f-btn" data-lead-open="support" aria-label="客服" data-i18n-aria="float.cs"><svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:currentColor" aria-hidden="true"><path d="M12 3a9 9 0 0 0-9 9v7a3 3 0 0 0 3 3h3v-8H5v-2a7 7 0 0 1 14 0v2h-4v8h3a3 3 0 0 0 3-3v-7a9 9 0 0 0-9-9z"/></svg></md-outlined-icon-button>
+  <md-outlined-icon-button class="f-btn" data-lead-open="email" aria-label="邮箱" data-i18n-aria="float.mail"><svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6a2 2 0 0 0 2 2h16a2 2 0 0 0-2-2z"/></svg></md-outlined-icon-button>
+  <md-fab lowered aria-label="回到顶部" data-i18n-aria="float.top" onclick="scrollTo({top:0,behavior:'smooth'})"><svg slot="icon" viewBox="0 0 24 24" style="width:20px;height:20px;fill:currentColor" aria-hidden="true"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.59 5.58L20 12l-8-8-8 8z"/></svg></md-fab>
+</div>
+
+<!-- ============ 留资小框（与首页共用同一组件逻辑） ============ -->
+<md-dialog id="leadDialog">
+  <div slot="headline" data-i18n="plan.cta">获取方案和报价</div>
+  <div slot="content">
+    <div id="leadForm">
+      <md-outlined-text-field id="leadEmail" type="email" label="工作邮箱" data-i18n-label="dlg.email" class="w-full"></md-outlined-text-field>
+      <p id="leadEmailErr" class="text-[12px] mt-1" style="color:#b3261e;display:none" data-i18n="dlg.email.error">请输入有效的工作邮箱</p>
+    </div>
+    <div id="leadDone" style="display:none" class="text-center py-4">
+      <p class="text-[14px] font-semibold" data-i18n="dlg.success.title">✓ 已收到您的需求</p>
+      <p class="text-[12px] text-[var(--sub)] mt-2 leading-6" data-i18n="dlg.success.desc">方案和报价将在 1 个工作日内发送至您的邮箱</p>
+      <p class="text-[12px] mt-3"><a href="#" style="color:var(--ink)" data-i18n="dlg.success.cs">急需？联系在线客服 →</a></p>
+    </div>
+  </div>
+  <div slot="actions" id="leadActions">
+    <md-text-button id="leadCancel" data-i18n="dlg.cancel">取消</md-text-button>
+    <md-filled-button id="leadSubmit" data-i18n="plan.cta">获取方案和报价</md-filled-button>
+  </div>
+  <div slot="actions" id="leadDoneActions" style="display:none">
+    <md-filled-button id="leadClose" data-i18n="dlg.done">完成</md-filled-button>
+  </div>
+</md-dialog>
+
+</body>
+</html>

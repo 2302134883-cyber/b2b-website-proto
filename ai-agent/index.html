@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>选择你的 AI 智能体方案 · Hero</title>
+<style>
+  :root {
+    --purple: #7c3aed;
+    --blue: #3b6cf6;
+    --pink: #ec4899;
+    --ink: #111318;
+    --muted: #6b7280;
+    --line: #e8edf5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--ink);
+    background: #fff;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .hero { max-width: 1180px; margin: 0 auto; padding: 64px 24px 28px; }
+  .hero-copy { text-align: center; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin-bottom: 22px; color: var(--purple);
+    font-size: 12px; font-weight: 700; letter-spacing: .16em;
+  }
+  .eyebrow::before { content: ""; width: 18px; height: 1px; background: #a78bfa; }
+  h1 {
+    font-size: clamp(38px, 5.1vw, 66px);
+    font-weight: 800;
+    letter-spacing: -.045em;
+    line-height: 1.28;
+  }
+  .title-line { display: block; }
+  .title-measure { display: inline-block; }
+  .title-line + .title-line { margin-top: 4px; }
+  .underlined { position: relative; display: inline-block; }
+  .scribble {
+    position: absolute; left: -3%; bottom: -.2em;
+    width: 106%; height: .28em; overflow: visible;
+    pointer-events: none;
+  }
+  .bubble {
+    position: relative; display: inline-block;
+    padding: .01em .2em .06em;
+    margin: 0 .03em;
+    border-radius: .42em;
+    background: linear-gradient(105deg, #e9f1ff 0%, #eee7ff 52%, #faeaf5 100%);
+    isolation: isolate;
+  }
+  .bubble::after {
+    content: ""; position: absolute; right: -.02em; bottom: .03em;
+    width: .18em; height: .18em;
+    background: #f8e9f4;
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+    transform: rotate(8deg);
+    z-index: -1;
+  }
+  .inline-icon {
+    display: inline-flex; vertical-align: -.08em;
+    width: .93em; height: .93em; margin-left: .1em;
+    filter: drop-shadow(0 5px 8px rgba(124,58,237,.12));
+  }
+  .subtitle { margin: 24px auto 24px; color: var(--muted); font-size: clamp(15px, 1.6vw, 18px); }
+  .cta { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    min-height: 48px; padding: 12px 24px;
+    border-radius: 13px; text-decoration: none;
+    font-size: 15px; font-weight: 650;
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .btn svg { width: 18px; height: 18px; }
+  .btn-primary { color: #fff; background: #111318; box-shadow: 0 10px 24px rgba(17,19,24,.14); }
+  .btn-secondary { color: var(--ink); background: #fff; border: 1px solid #dfe5ee; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary:hover { background: #000; box-shadow: 0 14px 30px rgba(17,19,24,.2); }
+  .hero-visual { height: 600px; margin-top: 2px; }
+  canvas { display: block; width: 100%; height: 100%; }
+  @media (max-width: 700px) {
+    .hero { padding: 44px 18px 16px; }
+    h1 { letter-spacing: -.035em; line-height: 1.35; }
+    .inline-icon { width: .82em; height: .82em; }
+    .hero-visual { height: 420px; margin-top: 12px; }
+    .subtitle { margin-top: 20px; }
+  }
+  /* ---------- Custom Agent 区块 ---------- */
+  .custom-section { position: relative; overflow: hidden; background: #f7f8fb; padding: 88px 24px 76px; border-top: 1px solid #f0f2f7; }
+  .custom-wrap { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; }
+  .custom-x-bg { position: absolute; z-index: 0; top: -12%; right: 2%; width: min(680px,52vw); max-width: none; height: auto; opacity: .22; pointer-events: none; }
+  .section-kicker { color: var(--purple); font-size: 12px; font-weight: 750; letter-spacing: .14em; text-align: center; }
+  .section-title { margin-top: 12px; text-align: center; font-size: clamp(30px, 4vw, 44px); font-weight: 800; letter-spacing: -.035em; }
+  .section-sub { max-width: 650px; margin: 14px auto 0; color: var(--muted); text-align: center; font-size: 16px; }
+  .custom-arch { display: grid; grid-template-columns: 1.15fr .85fr; gap: 28px; align-items: stretch; margin-top: 44px; }
+  .pyramid-panel { position: relative; min-height: 480px; border: 1px solid #edf0f5; border-radius: 20px; overflow: hidden; background: radial-gradient(100% 100% at 40% 20%, #fff 35%, #fbfafd 100%); }
+  .pyramid-panel canvas { width: 100%; height: 100%; display: block; cursor: pointer; }
+  .visual-note { position: absolute; left: 20px; bottom: 16px; color: #8a94a6; font-size: 12px; pointer-events: none; }
+  .layer-list { display: flex; flex-direction: column; height: 100%; overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: #fff; }
+  .layer-item { position: relative; flex: 1; display: flex; flex-direction: column; justify-content: center; width: 100%; padding: 18px 22px; text-align: left; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; color: var(--ink); font: inherit; cursor: pointer; transition: background .2s ease; }
+  .layer-item:last-child { border-bottom: 0; }
+  .layer-item::before { content: ""; position: absolute; left: 0; top: 24%; bottom: 24%; width: 2px; border-radius: 2px; background: transparent; }
+  .layer-item:hover { background: #fcfaff; }
+  .layer-item.active { background: linear-gradient(110deg, #fff, #f7f3ff); }
+  .layer-item.active::before { background: linear-gradient(#93b8f8, #a78bfa, #e7a8d2); }
+  .layer-top { display: flex; align-items: center; gap: 10px; }
+  .layer-index { color: #a78bfa; font-size: 11px; font-weight: 800; letter-spacing: .08em; }
+  .layer-name { font-size: 16px; font-weight: 750; }
+  .layer-badge { margin-left: auto; padding: 3px 8px; border-radius: 999px; background: #efe8ff; color: var(--purple); font-size: 10px; font-weight: 700; }
+  .layer-desc { margin-top: 7px; color: var(--muted); font-size: 13px; line-height: 1.65; }
+  .promise-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 4px; }
+  .promise-chain { position: relative; height: 20px; margin: 36px 18px 0; }
+  .promise-chain::before { content: ""; position: absolute; left: 0; right: 0; top: 9px; height: 2px; background: repeating-linear-gradient(90deg, #c4ccd8 0 7px, transparent 7px 13px); border-radius: 2px; }
+  .chain-node { position: absolute; top: 5px; width: 10px; height: 10px; border: 1.5px solid #b7c0ce; border-radius: 50%; background: #f7f8fb; }
+  .chain-node.n1 { left: 16.66%; } .chain-node.n2 { left: 50%; } .chain-node.n3 { left: 83.33%; }
+  .chain-flow { position: absolute; top: 7px; left: 0; width: 6px; height: 6px; border-radius: 50%; background: #a78bfa; box-shadow: 0 0 9px #c4b5f5; animation: chainFlow 5.5s linear infinite; }
+  .chain-flow.second { animation-delay: -2.75s; }
+  @keyframes chainFlow { 0% { left: 0; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { left: calc(100% - 6px); opacity: 0; } }
+  .promise-card { padding: 18px 18px 0; border: 0; border-radius: 0; background: transparent; }
+  .promise-icon { width: auto; height: auto; margin-bottom: 12px; line-height: 1; background: transparent; filter: drop-shadow(0 5px 5px rgba(45,42,60,.08)); }
+  .promise-icon svg { width: 44px; height: 44px; overflow: visible; }
+  .promise-card:nth-child(1) .promise-icon svg { transform: rotate(-3deg); }
+  .promise-card:nth-child(2) .promise-icon svg { transform: rotate(2deg); }
+  .promise-card:nth-child(3) .promise-icon svg { transform: rotate(-2deg); }
+  .title-underline { position: relative; display: inline-block; }
+  .title-scribble { position: absolute; left: -4%; bottom: -.28em; width: 108%; height: .3em; overflow: visible; pointer-events: none; }
+  .title-emoji { display: inline-block; width: .82em; height: .82em; margin-left: .16em; vertical-align: -.08em; transform: rotate(4deg); filter: drop-shadow(0 4px 5px rgba(45,42,60,.08)); }
+  @media (prefers-reduced-motion: reduce) { .chain-flow { display: none; } }
+  .promise-card h3 { font-size: 17px; font-weight: 750; }
+  .promise-card p { margin-top: 9px; color: var(--muted); font-size: 14px; }
+  .deploy-head { margin: 58px 0 22px; text-align: center; }
+  .deploy-head h3 { font-size: clamp(23px,3vw,30px); font-weight: 800; letter-spacing: -.02em; }
+  .deploy-head p { margin-top: 8px; color: var(--muted); font-size: 14px; }
+  .deploy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .deploy-card { padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: #fff; }
+  .deploy-head .embed-highlight { display: inline-block; padding: .01em .2em .06em; border-radius: .38em; background: linear-gradient(105deg,#e9f1ff,#eee7ff 55%,#faeaf5); }
+  .deploy-head .external-highlight { position: relative; display: inline-block; }
+  .deploy-head .external-highlight::after { content: ""; position: absolute; left: 0; right: 0; bottom: -.12em; height: 2px; border-radius: 999px; background: #93b8f8; transform: rotate(-2deg); }
+  .title-crown { position: absolute; top: -.72em; right: -.42em; width: .72em; height: .72em; transform: rotate(8deg); }
+  .deploy-diagram { position: relative; height: 292px; margin-bottom: 18px; padding: 14px; border-radius: 15px; overflow: hidden; background: radial-gradient(70% 85% at 20% 85%, rgba(147,184,248,.24), transparent 72%), radial-gradient(65% 80% at 78% 18%, rgba(196,181,245,.25), transparent 72%), radial-gradient(55% 60% at 82% 88%, rgba(240,201,232,.24), transparent 75%), #fafbfe; }
+  .embed-window { position: relative; height: 100%; border: 1px solid #e1e6ee; border-radius: 13px; background: rgba(255,255,255,.7); overflow: hidden; box-shadow: 0 10px 26px rgba(70,75,100,.05); }
+  .embed-topbar { display: flex; align-items: center; gap: 5px; height: 30px; padding: 0 11px; border-bottom: 1px solid #edf0f4; color: #929aaa; font-size: 9px; }
+  .embed-topbar i { width: 5px; height: 5px; border-radius: 50%; background: #d4dae3; }
+  .embed-topbar span { margin-left: 5px; }
+  .embed-lines { position: absolute; left: 13px; top: 55px; width: 30px; }
+  .embed-lines i { display: block; height: 4px; margin-bottom: 10px; border-radius: 4px; background: #e2e6ed; }
+  .agent-chat { position: absolute; border: 1px solid #e6e3ef; border-radius: 12px; background: rgba(255,255,255,.94); box-shadow: 0 12px 30px rgba(80,70,120,.08); }
+  .embed-chat { left: 54px; right: 11px; top: 42px; bottom: 11px; padding: 10px; }
+  .chat-scenarios { display: flex; gap: 5px; }
+  .chat-scenarios span { padding: 3px 7px; border: 1px solid #e6e9ef; border-radius: 999px; color: #8a91a0; font-size: 8px; }
+  .chat-scenarios span.active { border-color: #111318; background: #111318; color: #fff; }
+  .chat-row.user { display: flex; justify-content: flex-end; margin-top: 12px; }
+  .chat-bubble { max-width: 85%; padding: 6px 10px; border-radius: 10px 10px 3px 10px; background: #f3f4f6; color: #4b5563; font-size: 9px; }
+  .chat-answer { display: flex; align-items: flex-start; gap: 7px; margin-top: 10px; }
+  .agent-dot { flex: 0 0 auto; width: 13px; height: 13px; margin-top: 3px; border-radius: 50%; background: radial-gradient(circle at 35% 30%,#a8c8fa,#d3c6f8 55%,#f3d4ec); animation: agentBreath 4.8s ease-in-out infinite; }
+  .chat-answer div { padding: 7px 9px; border: 1px solid #ececf1; border-radius: 3px 10px 10px 10px; color: #4b5563; font-size: 9px; line-height: 1.55; }
+  .chat-input { position: absolute; left: 10px; right: 10px; bottom: 9px; display: flex; align-items: center; justify-content: space-between; padding: 6px 8px 6px 10px; border: 1px solid #e5e7ec; border-radius: 999px; color: #a0a6b1; font-size: 8px; }
+  .chat-input b { display: grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; background: #111318; color: #fff; font-size: 10px; }
+  .standalone-chat { position: relative; height: 100%; padding: 15px 18px; border: 1px solid rgba(225,229,238,.9); border-radius: 14px; background: rgba(255,255,255,.76); box-shadow: 0 14px 34px rgba(80,70,120,.07); backdrop-filter: blur(8px); }
+  .standalone-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .standalone-brand { display: flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; }
+  .standalone-brand .agent-dot { width: 15px; height: 15px; margin: 0; }
+  .mcp-status { display: flex; align-items: center; gap: 4px; color: #7d8797; font-size: 8px; }
+  .mcp-status::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: #a78bfa; }
+  .standalone-welcome { margin-top: 36px; text-align: center; color: #272b34; font-size: 19px; font-weight: 550; letter-spacing: -.02em; }
+  .standalone-input { display: flex; align-items: center; gap: 9px; margin: 18px auto 0; max-width: 350px; padding: 9px 10px 9px 13px; border: 1px solid #e1e5ec; border-radius: 999px; background: #fff; color: #969eaa; font-size: 10px; box-shadow: 0 6px 18px rgba(60,70,100,.05); }
+  .standalone-input .plus { color: #6b7280; font-size: 15px; }
+  .standalone-input b { display: grid; place-items: center; width: 22px; height: 22px; margin-left: auto; border-radius: 50%; background: #111318; color: #fff; }
+  .standalone-suggestions { display: flex; justify-content: center; gap: 6px; margin-top: 12px; }
+  .standalone-suggestions span { padding: 5px 8px; border: 1px solid #e5e8ee; border-radius: 999px; background: rgba(255,255,255,.7); color: #7f8794; font-size: 8px; }
+  @keyframes agentBreath { 0%,100% { transform: scale(1); opacity: .85; } 50% { transform: scale(1.12); opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .agent-dot { animation: none; } }
+  .deploy-card h4 { font-size: 17px; font-weight: 750; }
+  .deploy-card strong { display: block; margin-top: 8px; font-size: 14px; font-weight: 600; }
+  .deploy-card p { margin-top: 6px; color: var(--muted); font-size: 13px; }
+  .next-solution { display: flex; justify-content: center; margin-top: 34px; }
+  .next-solution a { color: var(--purple); font-size: 14px; font-weight: 650; text-decoration: none; }
+  .next-solution a:hover { text-decoration: underline; }
+  @media (max-width: 820px) {
+    .custom-section { padding: 64px 18px 56px; }
+    .custom-arch { grid-template-columns: 1fr; }
+    .pyramid-panel { min-height: 390px; }
+    .layer-list { height: auto; }
+    .layer-item { min-height: 104px; }
+    .promise-grid, .deploy-grid { grid-template-columns: 1fr; }
+  }
+  /* ---------- Workbuddy 区块 ---------- */
+  .workbuddy-section { position: relative; overflow: hidden; background: #fff; padding: 88px 24px 76px; border-top: 1px solid #f0f2f7; }
+  .workbuddy-wrap { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; }
+  .wb-peek-bg { position: absolute; z-index: 0; left: 50%; bottom: 0; width: min(1900px,108vw); height: auto; transform: translate(-50%,50%); opacity: .34; pointer-events: none; }
+  .wb-kicker { color: var(--blue); font-size: 12px; font-weight: 750; letter-spacing: .14em; text-align: center; }
+  .wb-title { margin-top: 12px; text-align: center; font-size: clamp(30px,4vw,44px); font-weight: 800; letter-spacing: -.035em; }
+  .wb-title-underline { position: relative; display: inline-block; }
+  .wb-title-scribble { position: absolute; left: -3%; bottom: -.28em; width: 106%; height: .3em; overflow: visible; pointer-events: none; }
+  .wb-title-emoji { display: inline-block; width: .82em; height: .82em; margin-left: .16em; vertical-align: -.08em; transform: rotate(-5deg); filter: drop-shadow(0 4px 5px rgba(45,42,60,.08)); }
+  .wb-sub { max-width: 680px; margin: 14px auto 0; color: var(--muted); text-align: center; font-size: 16px; }
+  .wb-arch { display: grid; grid-template-columns: 1.15fr .85fr; gap: 28px; align-items: stretch; margin-top: 44px; }
+  .wb-pyramid-panel { position: relative; min-height: 540px; border: 1px solid #e9eef5; border-radius: 20px; overflow: hidden; background: radial-gradient(100% 100% at 40% 20%, #fff 35%, #fafcff 100%); }
+  .wb-pyramid-panel canvas { display: block; width: 100%; height: 100%; cursor: pointer; }
+  .wb-layer-list { display: flex; flex-direction: column; height: 100%; overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: #fff; }
+  .wb-layer-item { position: relative; flex: 1; display: flex; flex-direction: column; justify-content: center; width: 100%; padding: 14px 20px; text-align: left; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--ink); font: inherit; cursor: pointer; transition: background .2s ease; }
+  .wb-layer-item:last-child { border-bottom: 0; }
+  .wb-layer-item::before { content: ""; position: absolute; left: 0; top: 24%; bottom: 24%; width: 2px; border-radius: 2px; background: transparent; }
+  .wb-layer-item:hover { background: #fafcff; }
+  .wb-layer-item.active { background: linear-gradient(110deg,#fff,#f2f7ff); }
+  .wb-layer-item.active::before { background: linear-gradient(#93b8f8,#3b6cf6); }
+  .wb-layer-top { display: flex; align-items: center; gap: 10px; }
+  .wb-layer-index { color: #93b8f8; font-size: 11px; font-weight: 800; letter-spacing: .08em; }
+  .wb-layer-name { font-size: 15px; font-weight: 750; }
+  .wb-layer-badge { margin-left: auto; padding: 3px 8px; border-radius: 999px; background: #eaf2ff; color: var(--blue); font-size: 10px; font-weight: 700; }
+  .wb-layer-desc { display: block; margin-top: 6px; color: var(--muted); font-size: 12px; line-height: 1.55; }
+  .wb-feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 28px; }
+  .wb-feature { display: flex; gap: 18px; align-items: flex-start; padding: 26px; border: 1px solid var(--line); border-radius: 18px; background: #fff; }
+  .wb-feature-icon { flex: 0 0 auto; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 13px; background: #f5f6f8; font-size: 25px; line-height: 1; }
+  .wb-feature h3 { font-size: 17px; font-weight: 750; }
+  .wb-feature strong { display: block; margin-top: 7px; font-size: 14px; font-weight: 600; }
+  .wb-feature p { margin-top: 5px; color: var(--muted); font-size: 13px; }
+  .wb-next { display: flex; justify-content: center; margin-top: 34px; }
+  .wb-next a { color: var(--blue); font-size: 14px; font-weight: 650; text-decoration: none; }
+  .wb-next a:hover { text-decoration: underline; }
+  @media (max-width: 820px) {
+    .workbuddy-section { padding: 64px 18px 56px; }
+    .wb-arch { grid-template-columns: 1fr; }
+    .wb-pyramid-panel { min-height: 420px; }
+    .wb-layer-list { height: auto; }
+    .wb-layer-item { min-height: 96px; }
+    .wb-feature-grid { grid-template-columns: 1fr; }
+  }
+  /* ---------- 最终 CTA：跃迁阶梯 ---------- */
+  .intelligence-section { background: #24272f; padding: 56px 24px 48px; border-top: 1px solid #30343e; text-align: center; }
+  .intelligence-wrap { max-width: 1080px; margin: 0 auto; }
+  .intelligence-kicker { color: #9aa3b2; font-size: 12px; font-weight: 750; letter-spacing: .15em; }
+  .intelligence-title { display: block; max-width: 860px; margin: 10px auto 0; color: #f5f7fb; font-size: clamp(28px,3.8vw,42px); font-weight: 800; letter-spacing: -.04em; line-height: 1.25; text-align: center; }
+  .intelligence-sub { max-width: 600px; margin: 14px auto 0; color: #aab2c0; font-size: 14px; }
+  .steps-visual { max-width: 860px; height: 260px; margin: 8px auto 0; }
+  .steps-visual canvas { display: block; width: 100%; height: 100%; }
+  .intelligence-cta { display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; border: 1px solid #68707d; border-radius: 12px; background: transparent; color: #f5f7fb; text-decoration: none; font-size: 14px; font-weight: 650; transition: transform .18s ease, background .18s ease, border-color .18s ease; }
+  .intelligence-cta:hover { transform: translateY(-2px); background: #30343e; border-color: #98a2b1; }
+  .intelligence-footnote { margin-top: 12px; color: #7f8998; font-size: 12px; }
+  @media (max-width: 700px) { .intelligence-section { padding: 48px 18px 42px; } .steps-visual { height: 230px; } }
+</style>
+</head>
+<body>
+<main class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">ENTERPRISE AI</div>
+    <h1>
+      <span class="title-line">
+        <span class="underlined">企业 AI
+          <svg class="scribble" viewBox="0 0 180 24" fill="none" aria-hidden="true">
+            <path d="M4 15 C42 7, 91 4, 173 7" stroke="#82b4f5" stroke-width="4" stroke-linecap="round" opacity=".85"/>
+            <path d="M15 21 C58 15, 105 12, 156 13" stroke="#a4c9f8" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+          </svg>
+        </span> 时代开启<svg class="inline-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <defs><linearGradient id="iconGrad" x1="8" y1="6" x2="58" y2="60" gradientUnits="userSpaceOnUse"><stop stop-color="#78aef6"/><stop offset=".55" stop-color="#a78bfa"/><stop offset="1" stop-color="#e7a8d2"/></linearGradient></defs>
+          <rect x="7" y="10" width="44" height="40" rx="8" fill="#f4f1ff" stroke="url(#iconGrad)" stroke-width="2"/>
+          <path d="M8 20h42" stroke="url(#iconGrad)" stroke-width="2"/>
+          <circle cx="14" cy="15" r="1.4" fill="#8fb9f5"/><circle cx="19" cy="15" r="1.4" fill="#b8a3ef"/>
+          <path d="M18 36l6-6 5 5 7-8 6 6" stroke="url(#iconGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M52 3l1.8 5.2L59 10l-5.2 1.8L52 17l-1.8-5.2L45 10l5.2-1.8L52 3Z" fill="#b69af1"/>
+          <path d="M55 45v11M49 51h12" stroke="#a9c6f4" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="title-line"><span class="title-measure" id="titleMeasure">选择你的 <span class="bubble">AI 智能体</span> 方案</span></span>
+    </h1>
+    <p class="subtitle">不改造系统、不碰数据库，把 AI 接进你的原有系统。</p>
+    <div class="cta" id="ctaGroup">
+      <a class="btn btn-primary" id="ctaCustom" href="#custom">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 21 19H3L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m8.2 13.3 7.6 0M6.2 16.3h11.6" stroke="currentColor" stroke-width="1.3" opacity=".75"/></svg>
+        Custom Agent
+      </a>
+      <a class="btn btn-secondary" id="ctaWorkbuddy" href="#workbuddy">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        接入 Workbuddy
+      </a>
+    </div>
+  </div>
+  <div class="hero-visual"><canvas id="heroCanvas" aria-label="原系统球体与两条智能体方案轨道"></canvas></div>
+</main>
+
+<section class="custom-section" id="custom">
+  <img class="custom-x-bg" src="./hero-x.svg" alt="" aria-hidden="true">
+  <div class="custom-wrap">
+    <div class="section-kicker">方案一 · CUSTOM AGENT</div>
+    <h2 class="section-title"><span class="title-underline">定制<svg class="title-scribble" viewBox="0 0 180 24" fill="none" aria-hidden="true"><path d="M4 13 C36 9 66 8 103 7 L82 14 59 21 C96 17 136 14 176 11" stroke="#b69af1" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 17 C31 14 46 13 63 12" stroke="#d0baf7" stroke-width="2" stroke-linecap="round" opacity=".8"/></svg></span>你的 AI 智能体<svg class="title-emoji" viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect x="8" y="10" width="32" height="29" rx="8" fill="#f2efe6" stroke="#d8d2c4" stroke-width="1.4"/><rect x="12" y="15" width="24" height="16" rx="4" fill="#292c31"/><circle cx="19" cy="23" r="2" fill="#a8c8fa"/><circle cx="29" cy="23" r="2" fill="#d3c6f8"/><path d="M20 28h8" stroke="#f3d4ec" stroke-width="1.6" stroke-linecap="round"/><path d="M24 10V5m0 0 4-2" stroke="#b9b2a6" stroke-width="1.5" stroke-linecap="round"/><circle cx="29" cy="3" r="2" fill="#b69af1"/><path d="M16 39v3m16-3v3" stroke="#b9b2a6" stroke-width="2" stroke-linecap="round"/></svg></h2>
+    <p class="section-sub">四层能力，一体交付；原系统不变，数据安全，企业级稳定。</p>
+
+    <div class="custom-arch">
+      <div class="pyramid-panel">
+        <canvas id="pyramidCanvas" aria-label="可交互的四层定制智能体金字塔"></canvas>
+        <span class="visual-note">点击金字塔层级，查看对应能力</span>
+      </div>
+      <div class="layer-list" id="layerList">
+        <button class="layer-item" type="button" data-layer="model">
+          <span class="layer-top"><span class="layer-index">01</span><span class="layer-name">模型层</span></span>
+          <span class="layer-desc">大模型可自选接入哪个、哪些模型，也支持私有化部署。</span>
+        </button>
+        <button class="layer-item" type="button" data-layer="runtime">
+          <span class="layer-top"><span class="layer-index">02</span><span class="layer-name">运行时层</span></span>
+          <span class="layer-desc">工具、上下文、记忆、编排，让智能体真正理解并完成任务。</span>
+        </button>
+        <button class="layer-item active" type="button" data-layer="mcp">
+          <span class="layer-top"><span class="layer-index">03</span><span class="layer-name">封装分发层</span><span class="layer-badge">商派交付核心</span></span>
+          <span class="layer-desc">通过 MCP-Server 将系统能力登记为工具，负责受控调用。</span>
+        </button>
+        <button class="layer-item" type="button" data-layer="product">
+          <span class="layer-top"><span class="layer-index">04</span><span class="layer-name">产品层</span></span>
+          <span class="layer-desc">形成你可拥有的智能体入口，支持内嵌原系统或独立外接。</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="promise-chain" aria-hidden="true">
+      <span class="chain-node n1"></span><span class="chain-node n2"></span><span class="chain-node n3"></span>
+      <span class="chain-flow"></span><span class="chain-flow second"></span>
+    </div>
+    <div class="promise-grid">
+      <article class="promise-card">
+        <div class="promise-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><rect x="7" y="4" width="34" height="39" rx="7" fill="#f2efe6" stroke="#d8d2c4" stroke-width="1.4"/><rect x="11" y="8" width="26" height="23" rx="4" fill="#292c31"/><path d="m16 24 5-5 4 4 6-8" stroke="#a8c8fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13" cy="37" r="1.5" fill="#c2bbae"/><path d="M24 37h10" stroke="#777268" stroke-width="2" stroke-linecap="round"/><path d="M18 43h12" stroke="#d8d2c4" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <h3>01 · 原系统不变</h3>
+        <p><strong>不改代码、不停机、不动业务逻辑。</strong><br>智能体建立在原系统之上，现有业务照常运行。</p>
+      </article>
+      <article class="promise-card">
+        <div class="promise-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><rect x="7" y="4" width="34" height="39" rx="7" fill="#f2efe6" stroke="#d8d2c4" stroke-width="1.4"/><rect x="11" y="8" width="26" height="23" rx="4" fill="#292c31"/><path d="M16 25v-5m6 5V14m6 11v-8m5 8V11" stroke-width="3" stroke-linecap="round" stroke="#a8c8fa"/><path d="M22 25V14m6 11v-8" stroke-width="3" stroke-linecap="round" stroke="#d3c6f8"/><path d="M33 25V11" stroke="#f3d4ec" stroke-width="3" stroke-linecap="round"/><circle cx="13" cy="37" r="1.5" fill="#c2bbae"/><path d="M24 37h10" stroke="#777268" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <h3>02 · 数据安全</h3>
+        <p><strong>不碰数据库、分级授权、哈希留痕。</strong><br>权限跟人走，调用可审计、可追溯、不可抵赖。</p>
+      </article>
+      <article class="promise-card">
+        <div class="promise-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M17 16v-4a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v4" stroke="#c9c2b5" stroke-width="3"/><rect x="5" y="15" width="38" height="27" rx="7" fill="#f2efe6" stroke="#d8d2c4" stroke-width="1.4"/><path d="M6 25c8 5 28 5 36 0" stroke="#d8d2c4" stroke-width="1.4"/><rect x="20" y="23" width="8" height="7" rx="2" fill="#292c31"/><path d="M23 26.5h2" stroke="#d3c6f8" stroke-width="1.5" stroke-linecap="round"/><path d="M11 36h8m10 0h8" stroke="#c2bbae" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <h3>03 · 企业级稳定</h3>
+        <p><strong>企业真实场景提前测试。</strong><br>围绕工具选择、参数传递和结果正确性建立评测，达标后交付。</p>
+      </article>
+    </div>
+
+    <div class="deploy-head">
+      <h3>可<span class="embed-highlight">内嵌</span>，也可<span class="external-highlight">外接<svg class="title-crown" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="m5 10 6 5 5-9 5 9 6-5-3 14H8L5 10Z" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 27h14" stroke="#93b8f8" stroke-width="1.8" stroke-linecap="round"/><circle cx="5" cy="9" r="1.5" fill="#d3c6f8"/><circle cx="16" cy="5" r="1.5" fill="#a8c8fa"/><circle cx="27" cy="9" r="1.5" fill="#f3d4ec"/></svg></span>入原系统运行</h3>
+      <p>同一种定制能力，两种产品形态。</p>
+    </div>
+    <div class="deploy-grid">
+      <article class="deploy-card">
+        <div class="deploy-diagram embedded-demo">
+          <div class="embed-window">
+            <div class="embed-topbar"><i></i><i></i><i></i><span>原系统 · 工单中心</span></div>
+            <div class="embed-lines"><i></i><i></i><i></i><i></i></div>
+            <div class="agent-chat embed-chat">
+              <div class="chat-scenarios"><span>客服场景</span><span>询报价场景</span><span class="active">工单场景</span></div>
+              <div class="chat-row user"><div class="chat-bubble">上周的售后工单进展如何？</div></div>
+              <div class="chat-answer"><span class="agent-dot"></span><div>工单 #S118：备件已到货，工程师已预约明日上午上门，已同步通知行政联系人。</div></div>
+              <div class="chat-input">继续追问工单进展…<b>↑</b></div>
+            </div>
+          </div>
+        </div>
+        <h4>内嵌运行</h4>
+        <strong>员工在熟悉的原系统界面里直接使用 AI。</strong>
+        <p>适合希望无感升级、统一工作入口的企业。</p>
+      </article>
+      <article class="deploy-card">
+        <div class="deploy-diagram external-demo">
+          <div class="standalone-chat">
+            <div class="standalone-head">
+              <div class="standalone-brand"><span class="agent-dot"></span>Custom Agent</div>
+              <span class="mcp-status">MCP 已连接原系统</span>
+            </div>
+            <div class="standalone-welcome">今天想处理什么业务？</div>
+            <div class="standalone-input"><span class="plus">＋</span><span>问问订单、库存或履约…</span><b>↑</b></div>
+            <div class="standalone-suggestions"><span>查询华东仓库存</span><span>跟进异常订单</span></div>
+          </div>
+        </div>
+        <h4>外接运行</h4>
+        <strong>智能体作为独立入口，通过 MCP 接入原系统。</strong>
+        <p>适合需要独立产品形态、跨多个业务系统使用的企业。</p>
+      </article>
+    </div>
+    <div class="next-solution"><a href="#workbuddy">不想自建产品形态？查看方案二：接入 Workbuddy →</a></div>
+  </div>
+</section>
+
+<section class="workbuddy-section" id="workbuddy">
+  <svg class="wb-peek-bg" xmlns="http://www.w3.org/2000/svg" width="1600" height="700" viewBox="0 0 1600 700" aria-hidden="true">
+    <defs>
+      <filter id="wbPeekBlur" color-interpolation-filters="sRGB" x="-10%" y="-25%" width="120%" height="155%"><feGaussianBlur stdDeviation="28"/></filter>
+      <linearGradient id="wbPeekGradient" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#A8C8FA"/><stop offset=".5" stop-color="#C4B5F5"/><stop offset="1" stop-color="#F0C9E8"/></linearGradient>
+    </defs>
+    <path fill="url(#wbPeekGradient)" filter="url(#wbPeekBlur)" d="M0 700L0 540C15 370 55 150 145 140C230 130 260 340 350 390C520 345 640 330 800 330C960 330 1080 345 1250 390C1340 340 1370 140 1460 140C1550 140 1585 390 1600 540L1600 700Z"/>
+  </svg>
+  <div class="workbuddy-wrap">
+    <div class="wb-kicker">方案二 · WORKBUDDY</div>
+    <h2 class="wb-title">接入<span class="wb-title-underline">现成工作台<svg class="wb-title-scribble" viewBox="0 0 180 24" fill="none" aria-hidden="true"><path d="M4 11 C38 14 63 13 91 10 L76 17 61 21 C98 17 132 12 176 13" stroke="#93b8f8" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 8 C37 10 55 10 72 9" stroke="#bfd6f7" stroke-width="2" stroke-linecap="round"/></svg></span><svg class="wb-title-emoji" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M18 8h12v6a5 5 0 1 1 0 10v6h6a5 5 0 1 1 10 0v10H35a5 5 0 1 0-10 0H14V29a5 5 0 1 0 0-10V8h4Z" fill="#f2efe6" stroke="#c9c2b5" stroke-width="1.5" stroke-linejoin="round"/><path d="M18 8h12v6a5 5 0 1 1 0 10v6" stroke="#93b8f8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="21" cy="16" r="2" fill="#292c31"/><path d="M33 34h6" stroke="#3b6cf6" stroke-width="2" stroke-linecap="round"/></svg></h2>
+    <p class="wb-sub">只交付 MCP-Server，通过五层受控链路，让 Workbuddy 安全调用你的原有系统。</p>
+
+    <div class="wb-arch">
+      <div class="wb-pyramid-panel">
+        <canvas id="workbuddyCanvas" aria-label="可交互的五层 Workbuddy 立体抽屉塔"></canvas>
+        <span class="visual-note">Workbuddy 在底 · Data 在尖 · 点击抽屉层级查看说明</span>
+      </div>
+      <div class="wb-layer-list" id="wbLayerList">
+        <button class="wb-layer-item" type="button" data-wb-layer="data">
+          <span class="wb-layer-top"><span class="wb-layer-index">01</span><span class="wb-layer-name">Data · 数据库</span></span>
+          <span class="wb-layer-desc">只有业务层能碰，AI 与工作台均不直连。</span>
+        </button>
+        <button class="wb-layer-item" type="button" data-wb-layer="business">
+          <span class="wb-layer-top"><span class="wb-layer-index">02</span><span class="wb-layer-name">Business · 业务能力</span></span>
+          <span class="wb-layer-desc">写行为落在原有业务契约与事务边界中。</span>
+        </button>
+        <button class="wb-layer-item" type="button" data-wb-layer="api">
+          <span class="wb-layer-top"><span class="wb-layer-index">03</span><span class="wb-layer-name">MCP API · 接口门</span></span>
+          <span class="wb-layer-desc">验证专用凭证、解析员工工牌与部门范围，禁止任意 SQL 穿透。</span>
+        </button>
+        <button class="wb-layer-item active" type="button" data-wb-layer="server">
+          <span class="wb-layer-top"><span class="wb-layer-index">04</span><span class="wb-layer-name">MCP Server · 工具层</span><span class="wb-layer-badge">商派交付核心</span></span>
+          <span class="wb-layer-desc">登记工具、校验参数、管理批准令牌。</span>
+        </button>
+        <button class="wb-layer-item" type="button" data-wb-layer="workbuddy">
+          <span class="wb-layer-top"><span class="wb-layer-index">05</span><span class="wb-layer-name">Workbuddy · 现成工作台</span></span>
+          <span class="wb-layer-desc">直接使用现成界面与能力，不重新开发产品形态。</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="wb-feature-grid">
+      <article class="wb-feature">
+        <div class="wb-feature-icon" aria-hidden="true">🖥️</div>
+        <div><h3>现有产品形态</h3><strong>不造工作台，直接使用 Workbuddy 的现成界面与能力。</strong><p>减少产品建设与推广成本，员工在成熟入口中直接使用 AI。</p></div>
+      </article>
+      <article class="wb-feature">
+        <div class="wb-feature-icon" aria-hidden="true">🐧</div>
+        <div><h3>腾讯生态</h3><strong>可接入企业微信等腾讯系产品。</strong><p>借助现有账号、组织与分发体系，让智能体进入企业已有工作流。</p></div>
+      </article>
+    </div>
+    <div class="wb-next"><a href="#intelligence">两种方案，同一个目标：从个人智能跃迁到企业群体智能 →</a></div>
+  </div>
+</section>
+
+<section class="intelligence-section" id="intelligence">
+  <div class="intelligence-wrap">
+    <div class="intelligence-kicker">FROM INDIVIDUAL TO COLLECTIVE</div>
+    <h2 class="intelligence-title">从个人智能，跃迁到企业群体智能</h2>
+    <p class="intelligence-sub">一个人的自然语言入口，逐步成为团队共享、整个企业可调用的系统能力。</p>
+    <div class="steps-visual"><canvas id="stepsCanvas" aria-label="个人、团队、企业三级跃迁台阶"></canvas></div>
+    <a class="intelligence-cta" href="#custom">开始你的跃迁 <span>→</span></a>
+    <div class="intelligence-footnote">不改造系统、不碰数据库，从第一个真实业务场景开始。</div>
+  </div>
+</section>
+
+<script>
+(function () {
+  const PURPLE = '#7c3aed', BLUE = '#3b6cf6';
+  const RING1 = '#a78bfa', RING2 = '#93c5fd';
+  const hexA = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`; };
+  const rotX = (p, a) => { const c=Math.cos(a), s=Math.sin(a); return {x:p.x, y:p.y*c-p.z*s, z:p.y*s+p.z*c}; };
+  const rotY = (p, a) => { const c=Math.cos(a), s=Math.sin(a); return {x:p.x*c+p.z*s, y:p.y, z:-p.x*s+p.z*c}; };
+  const rotZ = (p, a) => { const c=Math.cos(a), s=Math.sin(a); return {x:p.x*c-p.y*s, y:p.x*s+p.y*c, z:p.z}; };
+  function project(p, cx, cy, scale) { const k = 1 + p.z * .12; return [cx+p.x*scale*k, cy-p.y*scale*k, p.z]; }
+  function ringPoint(R, angle, tilt, global) {
+    let p = {x:R*Math.cos(angle), y:R*Math.sin(angle), z:0};
+    p = rotX(p, tilt[0]); p = rotZ(p, tilt[1]); p = rotY(p, global); return p;
+  }
+
+  function halo(ctx, x, y, now, size, reduced) {
+    const r = size * (reduced ? 1 : .9 + .1*Math.sin(now/1600));
+    const g = ctx.createRadialGradient(x,y,0,x,y,r);
+    g.addColorStop(0, hexA('#c4b5f5', .24));
+    g.addColorStop(.5, hexA('#c4b5f5', .1));
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+  }
+
+  // 方案 1 弥散柔光 + 方案 2 玻璃高光 / 边缘亮线
+  function drawFusedSphere(ctx, cx, cy, R, now, reduced) {
+    const r = R; // 直径严格等于按钮组总宽，呼吸只作用于光晕，不改变球体尺寸
+    // 弥散主体：主页 hero 同款蓝紫粉，边缘羽化
+    const body = ctx.createRadialGradient(cx-r*.12, cy-r*.18, r*.05, cx,cy,r);
+    body.addColorStop(0, '#a8c8fa');
+    body.addColorStop(.42, '#d3c6f8');
+    body.addColorStop(.72, '#f3d4ec');
+    body.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle=body; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill();
+    // 右下暗部：保留体积，不形成硬边
+    const shade = ctx.createRadialGradient(cx+r*.3,cy+r*.34,0,cx+r*.3,cy+r*.34,r*.85);
+    shade.addColorStop(0,'rgba(167,139,250,.16)');
+    shade.addColorStop(1,'rgba(167,139,250,0)');
+    ctx.fillStyle=shade; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill();
+    // 玻璃高光
+    const hi = ctx.createRadialGradient(cx-r*.34,cy-r*.4,0,cx-r*.34,cy-r*.4,r*.38);
+    hi.addColorStop(0,'rgba(255,255,255,.72)');
+    hi.addColorStop(.48,'rgba(255,255,255,.22)');
+    hi.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle=hi; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill();
+    // 克制的 rim light 与细边，透明度让轨道可柔和透出
+    ctx.strokeStyle='rgba(255,255,255,.48)'; ctx.lineWidth=1.4;
+    ctx.beginPath(); ctx.arc(cx,cy,r*.88,Math.PI*1.03,Math.PI*1.86); ctx.stroke();
+    ctx.strokeStyle='rgba(196,181,245,.2)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.arc(cx,cy,r*.92,0,Math.PI*2); ctx.stroke();
+    // 右下玻璃反射
+    const rf=ctx.createRadialGradient(cx+r*.4,cy+r*.46,0,cx+r*.4,cy+r*.46,r*.4);
+    rf.addColorStop(0,'rgba(168,200,250,.16)'); rf.addColorStop(1,'rgba(168,200,250,0)');
+    ctx.fillStyle=rf; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill();
+  }
+
+  function drawRingDashed(ctx,cx,cy,scale,R,tilt,global,color,half) {
+    const N=240, dashOn=3, dashPeriod=6;
+    for(let i=0;i<N;i++) {
+      if(i%dashPeriod>=dashOn) continue;
+      const p1=ringPoint(R,(i/N)*Math.PI*2,tilt,global);
+      const p2=ringPoint(R,((i+1)/N)*Math.PI*2,tilt,global);
+      const front=(p1.z+p2.z)/2>=0;
+      if(half==='front'&&!front) continue;
+      if(half==='back'&&front) continue;
+      const [x1,y1]=project(p1,cx,cy,scale), [x2,y2]=project(p2,cx,cy,scale);
+      ctx.strokeStyle=hexA(color,front?.8:.22); ctx.lineWidth=front?1.3:1;
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    }
+  }
+  function ringDots(ctx,cx,cy,scale,R,tilt,global,now,color,count,speed,reduced,half) {
+    for(let i=0;i<count;i++) {
+      const base=(i/count)*Math.PI*2, t=reduced?base:base+now*speed;
+      const p=ringPoint(R,t,tilt,global), front=p.z>=0;
+      if(half==='front'&&!front) continue;
+      if(half==='back'&&front) continue;
+      const [x,y]=project(p,cx,cy,scale), alpha=front?.95:.3, size=front?2.6:2;
+      const g=ctx.createRadialGradient(x,y,0,x,y,size*3);
+      g.addColorStop(0,hexA(color,alpha*.8)); g.addColorStop(1,hexA(color,0));
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,size*3,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle=hexA(color,alpha); ctx.beginPath(); ctx.arc(x,y,size,0,Math.PI*2); ctx.fill();
+    }
+  }
+  function ringLayer(ctx,cx,cy,scale,R,tilt,global,now,color,dotColor,speed,reduced,half) {
+    drawRingDashed(ctx,cx,cy,scale,R,tilt,global,color,half);
+    ringDots(ctx,cx,cy,scale,R,tilt,global,now,dotColor,9,speed,reduced,half);
+  }
+  function drawTetra(ctx,cx,cy,scale,R,tilt,global,selfAngle,size) {
+    const THETA=.7, verts=[[0,0,1],[0,.9428,-.3333],[.8165,-.4714,-.3333],[-.8165,-.4714,-.3333]];
+    const edges=[[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]];
+    const pts=verts.map(v=>{
+      let p={x:v[0]*size,y:v[1]*size,z:v[2]*size};
+      p=rotY(p,selfAngle); p=rotX(p,.18);
+      p.x+=R*Math.cos(THETA); p.y+=R*Math.sin(THETA);
+      p=rotX(p,tilt[0]); p=rotZ(p,tilt[1]); p=rotY(p,global);
+      return project(p,cx,cy,scale);
+    });
+    const depth=pts.reduce((s,p)=>s+p[2],0)/4;
+    ctx.strokeStyle=hexA(PURPLE,depth>=0?1:.45); ctx.lineWidth=1.6;
+    for(const [a,b] of edges){ctx.beginPath();ctx.moveTo(pts[a][0],pts[a][1]);ctx.lineTo(pts[b][0],pts[b][1]);ctx.stroke();}
+    return [pts.reduce((s,p)=>s+p[0],0)/4,pts.reduce((s,p)=>s+p[1],0)/4];
+  }
+  function drawCube(ctx,cx,cy,scale,R,tilt,global,selfAngle,size) {
+    const THETA=5.6, verts=[]; for(let x of [-1,1])for(let y of [-1,1])for(let z of [-1,1])verts.push([x,y,z]);
+    const edges=[[0,1],[2,3],[4,5],[6,7],[0,2],[1,3],[4,6],[5,7],[0,4],[1,5],[2,6],[3,7]];
+    const pts=verts.map(v=>{
+      let p={x:v[0]*size*.5,y:v[1]*size*.5,z:v[2]*size*.5};
+      p=rotY(p,selfAngle); p=rotX(p,.3);
+      p.x+=R*Math.cos(THETA); p.y+=R*Math.sin(THETA);
+      p=rotX(p,tilt[0]); p=rotZ(p,tilt[1]); p=rotY(p,global);
+      return project(p,cx,cy,scale);
+    });
+    const depth=pts.reduce((s,p)=>s+p[2],0)/8;
+    ctx.strokeStyle=hexA(BLUE,depth>=0?1:.45); ctx.lineWidth=1.6;
+    for(const [a,b] of edges){ctx.beginPath();ctx.moveTo(pts[a][0],pts[a][1]);ctx.lineTo(pts[b][0],pts[b][1]);ctx.stroke();}
+    return [pts.reduce((s,p)=>s+p[0],0)/8,pts.reduce((s,p)=>s+p[1],0)/8];
+  }
+  function label(ctx,text,x,y,size,color) {
+    ctx.font=`600 ${size||12}px Inter,"PingFang SC","Microsoft YaHei",sans-serif`;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineWidth=4;ctx.strokeStyle='rgba(255,255,255,.9)';
+    ctx.strokeText(text,x,y);ctx.fillStyle=color;ctx.fillText(text,x,y);
+  }
+  function drawScene(ctx,W,H,now,reduced) {
+    ctx.clearRect(0,0,W,H);
+    const CX=W/2,CY=H/2,R=1;
+    const sphereScale=ctaWidth/2;
+    const a1=now*.0004,a2=-now*.00034,selfT=now*.0008,selfC=-now*.0007;
+    const r1={R:1.55,tilt:[.95,.12]},r2={R:1.42,tilt:[-.82,.45]};
+
+    // 计算两条轨道当前帧的原始左右范围，再缩放到标题实际宽度
+    let minX=Infinity,maxX=-Infinity;
+    for(const [ring,angle] of [[r1,a1],[r2,a2]]) {
+      for(let i=0;i<=240;i++) {
+        const p=ringPoint(ring.R,(i/240)*Math.PI*2,ring.tilt,angle);
+        const x=p.x*(1+p.z*.12);
+        minX=Math.min(minX,x); maxX=Math.max(maxX,x);
+      }
+    }
+    const ringScale=titleWidth/(maxX-minX);
+    const ringCX=CX-(maxX+minX)/2*ringScale;
+
+    halo(ctx,CX,CY,now,R*sphereScale*1.7,reduced);
+    ringLayer(ctx,ringCX,CY,ringScale,r1.R,r1.tilt,a1,now,RING1,PURPLE,.0006,reduced,'back');
+    ringLayer(ctx,ringCX,CY,ringScale,r2.R,r2.tilt,a2,now,RING2,BLUE,-.0005,reduced,'back');
+    drawFusedSphere(ctx,CX,CY,R*sphereScale,now,reduced);
+    ringLayer(ctx,ringCX,CY,ringScale,r1.R,r1.tilt,a1,now,RING1,PURPLE,.0006,reduced,'front');
+    ringLayer(ctx,ringCX,CY,ringScale,r2.R,r2.tilt,a2,now,RING2,BLUE,-.0005,reduced,'front');
+    const [tx,ty]=drawTetra(ctx,ringCX,CY,ringScale,r1.R,r1.tilt,a1,selfT,.24);
+    const [bx,by]=drawCube(ctx,ringCX,CY,ringScale,r2.R,r2.tilt,a2,selfC,.22);
+    label(ctx,'Custom',tx,ty+28,12,PURPLE);
+    label(ctx,'MCP Server',bx,by-28,12,BLUE);
+  }
+  const canvas=document.getElementById('heroCanvas'),box=canvas.parentElement,ctx=canvas.getContext('2d');
+  const titleEl=document.getElementById('titleMeasure'),ctaGroup=document.getElementById('ctaGroup');
+  const customBtn=document.getElementById('ctaCustom'),workbuddyBtn=document.getElementById('ctaWorkbuddy');
+  let W,H,titleWidth=0,ctaWidth=0;
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function measure(){
+    titleWidth=titleEl.getBoundingClientRect().width;
+    const gap=parseFloat(getComputedStyle(ctaGroup).columnGap)||0;
+    ctaWidth=customBtn.getBoundingClientRect().width+workbuddyBtn.getBoundingClientRect().width+gap;
+  }
+  function resize(){const dpr=devicePixelRatio||1;measure();W=box.clientWidth;H=box.clientHeight;canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+  resize();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(resize);
+  window.addEventListener('resize',resize);
+  function loop(t){drawScene(ctx,W,H,t,reduced);requestAnimationFrame(loop);} requestAnimationFrame(loop);
+
+  /* ---------- Custom Agent：可交互立体四层金字塔 ---------- */
+  (function initPyramid(){
+    const canvas=document.getElementById('pyramidCanvas');
+    if(!canvas)return;
+    const panel=canvas.parentElement,pctx=canvas.getContext('2d');
+    const items=[...document.querySelectorAll('.layer-item')];
+    const layerList=document.getElementById('layerList');
+    const tiers=[
+      {key:'model',label:'MODEL',t0:0,t1:.14},
+      {key:'runtime',label:'HARNESS',t0:.26,t1:.40},
+      {key:'mcp',label:'MCP',t0:.52,t1:.66},
+      {key:'product',label:'PRODUCT',t0:.78,t1:1}
+    ];
+    let PW,PH,activeLayer='mcp',hitRegions=[],hovering=false;
+    let pyramidAngle=.45,lastFrame=0;
+    const motionReduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function setActive(key){
+      activeLayer=key;
+      items.forEach(el=>el.classList.toggle('active',el.dataset.layer===key));
+    }
+    items.forEach(el=>{
+      el.addEventListener('mouseenter',()=>{hovering=true;setActive(el.dataset.layer);});
+      el.addEventListener('focus',()=>{hovering=true;setActive(el.dataset.layer);});
+      el.addEventListener('click',()=>setActive(el.dataset.layer));
+    });
+    layerList.addEventListener('mouseleave',()=>{hovering=false;});
+    function resizePyramid(){
+      const dpr=devicePixelRatio||1;PW=panel.clientWidth;PH=panel.clientHeight;
+      canvas.width=PW*dpr;canvas.height=PH*dpr;pctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    window.addEventListener('resize',resizePyramid);resizePyramid();
+    function pyramidPoint(t,corner,angle,scale,cx,cy){
+      const y=1.25-t*2.3,s=t*1.05;
+      const coords=[[-s,y,-s],[s,y,-s],[s,y,s],[-s,y,s]][corner];
+      let p={x:coords[0],y:coords[1],z:coords[2]};
+      p=rotY(p,angle);p=rotX(p,.1);
+      return project(p,cx,cy,scale);
+    }
+    function pathPolygon(points){
+      pctx.beginPath();points.forEach((p,i)=>i?pctx.lineTo(p[0],p[1]):pctx.moveTo(p[0],p[1]));pctx.closePath();
+    }
+    function drawPyramid(now,angle){
+      pctx.clearRect(0,0,PW,PH);
+      const cx=PW*.46,cy=PH*.45+(motionReduced?0:Math.sin(now/1800)*2),scale=Math.min(PW,PH)*.22;
+      hitRegions=[];
+      const rendered=tiers.map(tier=>{
+        const top=[0,1,2,3].map(c=>pyramidPoint(tier.t0,c,angle,scale,cx,cy));
+        const bottom=[0,1,2,3].map(c=>pyramidPoint(tier.t1,c,angle,scale,cx,cy));
+        return {tier,top,bottom};
+      });
+      // 黑白线框：背面淡、前面清晰；当前层只用浅灰层片强调
+      rendered.forEach(({tier,top,bottom})=>{
+        const active=tier.key===activeLayer;
+        const xs=[...top,...bottom].map(p=>p[0]),ys=[...top,...bottom].map(p=>p[1]);
+        hitRegions.push({key:tier.key,minX:Math.min(...xs),maxX:Math.max(...xs),minY:Math.min(...ys),maxY:Math.max(...ys)});
+        for(let side=0;side<4;side++){
+          const next=(side+1)%4;
+          const poly=[top[side],top[next],bottom[next],bottom[side]];
+          const depth=(top[side][2]+top[next][2]+bottom[next][2]+bottom[side][2])/4;
+          pathPolygon(poly);
+          pctx.fillStyle=hexA('#111318',active?(depth>=0?.07:.025):(depth>=0?.018:.005));pctx.fill();
+          pctx.strokeStyle=hexA('#111318',active?(depth>=0?.9:.35):(depth>=0?.48:.13));
+          pctx.lineWidth=active?1.55:1;pctx.stroke();
+        }
+        // 每层的上下横截面与侧棱
+        [top,bottom].forEach(pts=>{
+          for(let i=0;i<4;i++){
+            const a=pts[i],b=pts[(i+1)%4],depth=(a[2]+b[2])/2;
+            pctx.strokeStyle=hexA('#111318',active?(depth>=0?.95:.38):(depth>=0?.5:.14));
+            pctx.lineWidth=active?1.55:1;
+            pctx.beginPath();pctx.moveTo(a[0],a[1]);pctx.lineTo(b[0],b[1]);pctx.stroke();
+          }
+        });
+        for(let c=0;c<4;c++){
+          const a=top[c],b=bottom[c],depth=(a[2]+b[2])/2;
+          pctx.strokeStyle=hexA('#111318',active?(depth>=0?.9:.35):(depth>=0?.5:.14));
+          pctx.lineWidth=active?1.5:1;
+          pctx.beginPath();pctx.moveTo(a[0],a[1]);pctx.lineTo(b[0],b[1]);pctx.stroke();
+        }
+      });
+      // 爆炸层之间的虚线投影辅助线，强化“同一座金字塔被展开”的关系
+      pctx.save();pctx.setLineDash([3,6]);
+      for(let i=0;i<rendered.length-1;i++){
+        for(let c=0;c<4;c++){
+          const a=rendered[i].bottom[c],b=rendered[i+1].top[c];
+          pctx.strokeStyle='rgba(17,19,24,.16)';pctx.lineWidth=1;
+          pctx.beginPath();pctx.moveTo(a[0],a[1]);pctx.lineTo(b[0],b[1]);pctx.stroke();
+        }
+      }
+      pctx.restore();
+      // 原系统地基：独立、静止，不属于四层
+      const ground=[0,1,2,3].map(c=>{
+        const coords=[[-1.35,-1.5,-1.05],[1.35,-1.5,-1.05],[1.35,-1.5,1.05],[-1.35,-1.5,1.05]][c];
+        let p={x:coords[0],y:coords[1],z:coords[2]};p=rotY(p,angle);p=rotX(p,.1);
+        return project(p,cx,cy,scale);
+      });
+      pathPolygon(ground);pctx.fillStyle='rgba(255,255,255,.35)';pctx.fill();
+      pctx.strokeStyle='rgba(148,163,184,.4)';pctx.lineWidth=1;pctx.setLineDash([5,5]);pctx.stroke();pctx.setLineDash([]);
+      label(pctx,'企业原有系统 + 数据库 · 不动 / 不碰',cx,cy+scale*1.82,12,'#7b8494');
+      // 浮动英文短标签 + 极细引导线
+      rendered.forEach(({tier,top,bottom})=>{
+        const active=tier.key===activeLayer;
+        const points=[...top,...bottom],xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);
+        const maxX=Math.max(...xs),midY=(Math.min(...ys)+Math.max(...ys))/2;
+        const lx=Math.min(PW-42,maxX+48),color=active?'#111318':'#8a94a6';
+        pctx.strokeStyle=hexA('#111318',active?.55:.22);pctx.lineWidth=1;
+        pctx.beginPath();pctx.moveTo(maxX+5,midY);pctx.lineTo(lx-25,midY);pctx.stroke();
+        label(pctx,tier.label,lx,midY,11,color);
+      });
+    }
+    function hitTest(event){
+      const rect=canvas.getBoundingClientRect(),x=event.clientX-rect.left,y=event.clientY-rect.top;
+      return hitRegions.find(r=>x>=r.minX&&x<=r.maxX&&y>=r.minY&&y<=r.maxY);
+    }
+    canvas.addEventListener('pointermove',e=>{const hit=hitTest(e);hovering=Boolean(hit);canvas.style.cursor=hit?'pointer':'default';});
+    canvas.addEventListener('pointerleave',()=>{hovering=false;});
+    canvas.addEventListener('click',e=>{const hit=hitTest(e);if(hit)setActive(hit.key);});
+    function pyramidLoop(t){
+      const dt=lastFrame?Math.min(40,t-lastFrame):16;lastFrame=t;
+      if(!motionReduced&&!hovering)pyramidAngle+=dt*.00012;
+      drawPyramid(t,pyramidAngle);requestAnimationFrame(pyramidLoop);
+    }
+    requestAnimationFrame(pyramidLoop);
+  })();
+
+  /* ---------- Workbuddy：五层爆炸式受控链路金字塔 ---------- */
+  (function initWorkbuddyPyramid(){
+    const canvas=document.getElementById('workbuddyCanvas');
+    if(!canvas)return;
+    const panel=canvas.parentElement,wctx=canvas.getContext('2d');
+    const items=[...document.querySelectorAll('.wb-layer-item')],list=document.getElementById('wbLayerList');
+    const tiers=[
+      {key:'data',label:'DATA',top:1.15,bottom:1.01},
+      {key:'business',label:'BUSINESS',top:.57,bottom:.43},
+      {key:'api',label:'MCP API',top:-.01,bottom:-.15},
+      {key:'server',label:'MCP SERVER',top:-.59,bottom:-.73},
+      {key:'workbuddy',label:'WORKBUDDY',top:-1.17,bottom:-1.31}
+    ];
+    let W,H,active='server',regions=[],hovering=false,angle=.45,last=0;
+    const motionReduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function setActive(key){active=key;items.forEach(el=>el.classList.toggle('active',el.dataset.wbLayer===key));}
+    items.forEach(el=>{
+      el.addEventListener('mouseenter',()=>{hovering=true;setActive(el.dataset.wbLayer);});
+      el.addEventListener('focus',()=>{hovering=true;setActive(el.dataset.wbLayer);});
+      el.addEventListener('click',()=>setActive(el.dataset.wbLayer));
+    });
+    list.addEventListener('mouseleave',()=>{hovering=false;});
+    function resize(){const dpr=devicePixelRatio||1;W=panel.clientWidth;H=panel.clientHeight;canvas.width=W*dpr;canvas.height=H*dpr;wctx.setTransform(dpr,0,0,dpr,0,0);}
+    window.addEventListener('resize',resize);resize();
+    function point(y,c,scale,cx,cy,pull){
+      const s=1.05,coords=[[-s,y,-s],[s,y,-s],[s,y,s],[-s,y,s]][c];
+      let p={x:coords[0]+pull,y:coords[1],z:coords[2]};p=rotY(p,angle);p=rotX(p,.1);
+      return project(p,cx,cy,scale);
+    }
+    function polygon(points){wctx.beginPath();points.forEach((p,i)=>i?wctx.lineTo(p[0],p[1]):wctx.moveTo(p[0],p[1]));wctx.closePath();}
+    function draw(now){
+      wctx.clearRect(0,0,W,H);
+      const cx=W*.45,cy=H*.46+(motionReduced?0:Math.sin(now/1900)*2),scale=Math.min(W,H)*.22;
+      regions=[];
+      const rendered=tiers.map(tier=>{
+        const pull=tier.key===active?.18:0;
+        return {tier,top:[0,1,2,3].map(c=>point(tier.top,c,scale,cx,cy,pull)),bottom:[0,1,2,3].map(c=>point(tier.bottom,c,scale,cx,cy,pull))};
+      });
+      rendered.forEach(({tier,top,bottom})=>{
+        const selected=tier.key===active,xs=[...top,...bottom].map(p=>p[0]),ys=[...top,...bottom].map(p=>p[1]);
+        regions.push({key:tier.key,minX:Math.min(...xs),maxX:Math.max(...xs),minY:Math.min(...ys),maxY:Math.max(...ys)});
+        for(let side=0;side<4;side++){
+          const next=(side+1)%4,poly=[top[side],top[next],bottom[next],bottom[side]];
+          const depth=(top[side][2]+top[next][2]+bottom[next][2]+bottom[side][2])/4;
+          polygon(poly);
+          wctx.fillStyle=hexA('#111318',selected?(depth>=0?.07:.025):(depth>=0?.018:.005));wctx.fill();
+          wctx.strokeStyle=hexA('#111318',selected?(depth>=0?.92:.35):(depth>=0?.48:.13));
+          wctx.lineWidth=selected?1.55:1;wctx.stroke();
+        }
+        [top,bottom].forEach(pts=>{
+          for(let i=0;i<4;i++){
+            const a=pts[i],b=pts[(i+1)%4],depth=(a[2]+b[2])/2;
+            wctx.strokeStyle=hexA('#111318',selected?(depth>=0?.95:.38):(depth>=0?.5:.14));
+            wctx.lineWidth=selected?1.55:1;wctx.beginPath();wctx.moveTo(a[0],a[1]);wctx.lineTo(b[0],b[1]);wctx.stroke();
+          }
+        });
+        for(let c=0;c<4;c++){
+          const a=top[c],b=bottom[c],depth=(a[2]+b[2])/2;
+          wctx.strokeStyle=hexA('#111318',selected?(depth>=0?.9:.35):(depth>=0?.5:.14));
+          wctx.lineWidth=selected?1.5:1;wctx.beginPath();wctx.moveTo(a[0],a[1]);wctx.lineTo(b[0],b[1]);wctx.stroke();
+        }
+      });
+      wctx.save();wctx.setLineDash([3,6]);
+      for(let i=0;i<rendered.length-1;i++)for(let c=0;c<4;c++){
+        const a=rendered[i].bottom[c],b=rendered[i+1].top[c];
+        wctx.strokeStyle='rgba(17,19,24,.14)';wctx.lineWidth=1;wctx.beginPath();wctx.moveTo(a[0],a[1]);wctx.lineTo(b[0],b[1]);wctx.stroke();
+      }
+      wctx.restore();
+      rendered.forEach(({tier,top,bottom})=>{
+        const selected=tier.key===active,points=[...top,...bottom],xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);
+        const maxX=Math.max(...xs),midY=(Math.min(...ys)+Math.max(...ys))/2;
+        const lx=Math.min(W-50,maxX+52),color=selected?'#111318':'#8a94a6';
+        wctx.strokeStyle=hexA('#111318',selected?.5:.2);wctx.lineWidth=1;
+        wctx.beginPath();wctx.moveTo(maxX+5,midY);wctx.lineTo(lx-34,midY);wctx.stroke();
+        label(wctx,tier.label,lx,midY,10,color);
+      });
+    }
+    function hitTest(e){const r=canvas.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;return regions.find(v=>x>=v.minX&&x<=v.maxX&&y>=v.minY&&y<=v.maxY);}
+    canvas.addEventListener('pointermove',e=>{const hit=hitTest(e);hovering=Boolean(hit);canvas.style.cursor=hit?'pointer':'default';});
+    canvas.addEventListener('pointerleave',()=>{hovering=false;});
+    canvas.addEventListener('click',e=>{const hit=hitTest(e);if(hit)setActive(hit.key);});
+    function loop(t){const dt=last?Math.min(40,t-last):16;last=t;if(!motionReduced&&!hovering)angle+=dt*.00011;draw(t);requestAnimationFrame(loop);}requestAnimationFrame(loop);
+  })();
+
+  /* ---------- 最终 CTA：三级等轴黑线台阶 ---------- */
+  (function initSteps(){
+    const canvas=document.getElementById('stepsCanvas');
+    if(!canvas)return;
+    const box=canvas.parentElement,sctx=canvas.getContext('2d');
+    let W,H;
+    const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function resize(){const dpr=devicePixelRatio||1;W=box.clientWidth;H=box.clientHeight;canvas.width=W*dpr;canvas.height=H*dpr;sctx.setTransform(dpr,0,0,dpr,0,0);}
+    window.addEventListener('resize',resize);resize();
+    function iso(p,cx,cy,scale){return [cx+(p.x-p.z)*scale*.9,cy+p.z*scale*.22-p.y*scale];}
+    function poly(points,fill,stroke,width=1.2){
+      sctx.beginPath();points.forEach((p,i)=>i?sctx.lineTo(p[0],p[1]):sctx.moveTo(p[0],p[1]));sctx.closePath();
+      if(fill){sctx.fillStyle=fill;sctx.fill();}sctx.strokeStyle=stroke;sctx.lineWidth=width;sctx.stroke();
+    }
+    const steps=[
+      {name:'个人',sub:'自然语言入口',x:-1.9,y:-.35},
+      {name:'团队',sub:'共享系统能力',x:0,y:.12},
+      {name:'企业',sub:'沉淀群体智能',x:1.9,y:.59}
+    ];
+    function drawStep(step,cx,cy,scale){
+      const w=1.45,d=1.05,base=-1.05,x=step.x,y=step.y;
+      const top=[{x:x-w/2,y,z:-d/2},{x:x+w/2,y,z:-d/2},{x:x+w/2,y,z:d/2},{x:x-w/2,y,z:d/2}].map(p=>iso(p,cx,cy,scale));
+      const front=[top[2],top[3],iso({x:x-w/2,y:base,z:d/2},cx,cy,scale),iso({x:x+w/2,y:base,z:d/2},cx,cy,scale)];
+      const side=[top[1],top[2],iso({x:x+w/2,y:base,z:d/2},cx,cy,scale),iso({x:x+w/2,y:base,z:-d/2},cx,cy,scale)];
+      poly(front,'rgba(247,248,251,.75)','rgba(17,19,24,.62)');
+      poly(side,'rgba(239,241,246,.6)','rgba(17,19,24,.5)');
+      poly(top,'rgba(255,255,255,.88)','rgba(17,19,24,.9)',1.35);
+      const center=iso({x,y:y+.02,z:0},cx,cy,scale);
+      label(sctx,step.name,center[0],center[1]-3,14,'#111318');
+      label(sctx,step.sub,center[0],center[1]+17,10,'#7b8494');
+      return iso({x,y:y+.08,z:0},cx,cy,scale);
+    }
+    function quad(a,b,c,t){const u=1-t;return [u*u*a[0]+2*u*t*b[0]+t*t*c[0],u*u*a[1]+2*u*t*b[1]+t*t*c[1]];}
+    function jumpArrow(a,b){
+      const start=[a[0]+30,a[1]-12],end=[b[0]-30,b[1]-12],control=[(start[0]+end[0])/2,(start[1]+end[1])/2-50];
+      sctx.strokeStyle='rgba(255,255,255,.42)';sctx.lineWidth=1.2;sctx.beginPath();sctx.moveTo(start[0],start[1]);sctx.quadraticCurveTo(control[0],control[1],end[0],end[1]);sctx.stroke();
+      const angle=Math.atan2(end[1]-control[1],end[0]-control[0]),size=7;
+      sctx.beginPath();sctx.moveTo(end[0],end[1]);sctx.lineTo(end[0]-Math.cos(angle-.55)*size,end[1]-Math.sin(angle-.55)*size);sctx.moveTo(end[0],end[1]);sctx.lineTo(end[0]-Math.cos(angle+.55)*size,end[1]-Math.sin(angle+.55)*size);sctx.stroke();
+    }
+    function glow(x,y,r,alpha){
+      const g=sctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(168,200,250,${alpha})`);g.addColorStop(.45,`rgba(211,198,248,${alpha*.7})`);g.addColorStop(.75,`rgba(243,212,236,${alpha*.35})`);g.addColorStop(1,'rgba(255,255,255,0)');
+      sctx.fillStyle=g;sctx.beginPath();sctx.arc(x,y,r,0,Math.PI*2);sctx.fill();
+    }
+    function draw(now){
+      sctx.clearRect(0,0,W,H);
+      const cx=W/2,cy=H*.48,scale=Math.min(W,H)*.25;
+      const centers=steps.map(s=>drawStep(s,cx,cy,scale));
+      jumpArrow(centers[0],centers[1]);
+      jumpArrow(centers[1],centers[2]);
+      // 企业顶部柔光
+      const end=centers[2],cycle=reduced?1:(now%7000)/7000;
+      const arrival=reduced?1:Math.max(0,(cycle-.78)/.22);
+      glow(end[0],end[1]-35,scale*.75,.12+arrival*.22);
+      // 光点分两段跃迁，中间用抛物线
+      let pos;
+      if(cycle<.42){const t=cycle/.42;pos=quad(centers[0],[(centers[0][0]+centers[1][0])/2,(centers[0][1]+centers[1][1])/2-50],centers[1],t);}
+      else if(cycle<.84){const t=(cycle-.42)/.42;pos=quad(centers[1],[(centers[1][0]+centers[2][0])/2,(centers[1][1]+centers[2][1])/2-50],centers[2],t);}
+      else pos=centers[2];
+      const fade=reduced?1:Math.min(1,cycle*10,(1-cycle)*10);
+      glow(pos[0],pos[1]-8,22,.32*fade);
+      sctx.fillStyle=`rgba(124,58,237,${.9*fade})`;sctx.beginPath();sctx.arc(pos[0],pos[1]-8,3.4,0,Math.PI*2);sctx.fill();
+      // 终点星线
+      sctx.strokeStyle=`rgba(255,255,255,${.6*arrival})`;sctx.lineWidth=1.2;
+      const sy=end[1]-37;sctx.beginPath();sctx.moveTo(end[0]-8,sy);sctx.lineTo(end[0]+8,sy);sctx.moveTo(end[0],sy-8);sctx.lineTo(end[0],sy+8);sctx.stroke();
+    }
+    function loop(t){draw(t);requestAnimationFrame(loop);}requestAnimationFrame(loop);
+  })();
+})();
+</script>
+</body>
+</html>
