@@ -1,9 +1,0 @@
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/500.css';
-import '@fontsource/inter/600.css';
-import '@fontsource/inter/700.css';
-import '@fontsource/inter/800.css';
-import './styles/base.css';
-import './styles/header-footer.css';
-import './styles/ai-agent-page.css';
-import './components/ai-agent-page.js';
