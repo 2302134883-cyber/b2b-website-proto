@@ -12,7 +12,7 @@ export default {
       'menu.about.charity': '公益', 'menu.about.team': '团队', 'menu.about.locations': '地点', 'menu.about.awards': '奖项',
       'menu.about.company': '公司介绍', 'menu.about.certifications': '安全认证',
       'menu.tech.stack': '技术栈', 'menu.tech.data': '数据同源',
-      'hero1.title': 'B2B数智化',
+      'hero1.title': 'B2B 数字化平台',
       'hero1.desc': '从渠道订货到履约协同，一套系统跑通 B2B 生意。',
       'hero2.title': 'AI智能体',
       'hero2.desc': '客服、询报价、工单，让 AI 先替你跑一遍业务流程。',
