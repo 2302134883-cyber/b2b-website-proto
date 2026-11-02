@@ -97,11 +97,12 @@
         <a class="site-nav-trigger" id="m-tech" href="#arch" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-panel-tech" data-nav-section="tech">
           <span data-i18n="nav.tech">技术架构</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
         </a>
-        <div class="site-nav-panel site-nav-panel--tech" id="nav-panel-tech" role="menu" aria-label="技术架构">
-          <div class="site-nav-panel-grid site-nav-panel-grid--3">
-            <a class="site-nav-card" href="#arch" data-header-target="#arch"><span class="site-nav-card-title"><span data-i18n="arch.title">整体架构</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="arch.sub">中台化 B2B 系统 · 角色视角</span></a>
-            <a class="site-nav-card" href="#techRing" data-header-target="#techRing"><span class="site-nav-card-title"><span data-i18n="menu.tech.stack">技术栈</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="tech.core.d">一体化数智化底座</span></a>
-            <a class="site-nav-card" href="#dataSource" data-header-target="#dataSource" data-tech-capability="data"><span class="site-nav-card-title"><span data-i18n="menu.tech.data">数据同源</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="ds.sub">一次改价，同一秒生效</span></a>
+        <div class="site-nav-panel site-nav-panel--tech" id="nav-panel-tech" role="menu" aria-label="Technology">
+          <div class="site-nav-panel-grid site-nav-panel-grid--2">
+            <a class="site-nav-card" href="/tech/"><span class="site-nav-card-title"><span data-i18n="nav.tech.arch">架构与技术栈</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="nav.tech.arch.d">分层架构、微服务拆分与中间件选型</span></a>
+            <a class="site-nav-card" href="/tech/reliability.html"><span class="site-nav-card-title"><span data-i18n="nav.tech.rel">可靠性与可观测性</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="nav.tech.rel.d">一致性、高可用与全链路监控</span></a>
+            <a class="site-nav-card" href="/tech/security.html"><span class="site-nav-card-title"><span data-i18n="nav.tech.sec">安全与合规</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="nav.tech.sec.d">认证鉴权、数据安全与审计</span></a>
+            <a class="site-nav-card" href="/tech/deployment.html"><span class="site-nav-card-title"><span data-i18n="nav.tech.ops">部署与运维</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="site-nav-card-desc" data-i18n="nav.tech.ops.d">容器化交付、多环境与持续集成</span></a>
           </div>
         </div>
       </div>
@@ -196,9 +197,10 @@
       <details class="site-mobile-group">
         <summary><span data-i18n="nav.tech">技术架构</span><svg class="site-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
         <div class="site-mobile-sublinks">
-          <a href="#arch" data-mobile-link data-i18n="arch.title">整体架构</a>
-          <a href="#techRing" data-mobile-link data-i18n="menu.tech.stack">技术栈</a>
-          <a href="#dataSource" data-mobile-link data-i18n="menu.tech.data">数据同源</a>
+          <a href="/tech/" data-mobile-link data-i18n="nav.tech.arch">架构与技术栈</a>
+          <a href="/tech/reliability.html" data-mobile-link data-i18n="nav.tech.rel">可靠性与可观测性</a>
+          <a href="/tech/security.html" data-mobile-link data-i18n="nav.tech.sec">安全与合规</a>
+          <a href="/tech/deployment.html" data-mobile-link data-i18n="nav.tech.ops">部署与运维</a>
         </div>
       </details>
       <details class="site-mobile-group">
@@ -977,10 +979,11 @@
         <a href="#aiAgent" data-ai-scene="3" data-i18n="ag.scene.3">工单场景</a>
       </section>
       <section class="site-footer-column">
-        <h2 class="site-footer-title" data-i18n="nav.tech">技术架构</h2>
-        <a href="#arch" data-i18n="arch.title">整体架构</a>
-        <a href="#techRing" data-i18n="menu.tech.stack">技术栈</a>
-        <a href="#dataSource" data-tech-capability="data" data-i18n="menu.tech.data">数据同源</a>
+        <h2 class="site-footer-title" data-i18n="nav.tech">Technology</h2>
+        <a href="/tech/" data-i18n="nav.tech.arch">架构与技术栈</a>
+        <a href="/tech/reliability.html" data-i18n="nav.tech.rel">可靠性与可观测性</a>
+        <a href="/tech/security.html" data-i18n="nav.tech.sec">安全与合规</a>
+        <a href="/tech/deployment.html" data-i18n="nav.tech.ops">部署与运维</a>
       </section>
       <section class="site-footer-column">
         <h2 class="site-footer-title" data-i18n="footer.about">关于与支持</h2>

@@ -8,6 +8,7 @@
 import businessModeDicts from './business-modes.js';
 import techCapabilityDicts from './tech-capabilities.js';
 import aboutCompanyDicts from './about-company.js';
+import techSectionDicts from './tech-section.js';
 import zhCN from './locales/zh-CN.js';
 import en from './locales/en.js';
 import ja from './locales/ja.js';
@@ -41,6 +42,18 @@ import ru from './locales/ru.js';
   Object.keys(aboutCompanyDicts).forEach((lang) => {
     if (DICT[lang]) Object.assign(DICT[lang], aboutCompanyDicts[lang]);
   });
+  Object.keys(techSectionDicts).forEach((lang) => {
+    if (DICT[lang]) Object.assign(DICT[lang], techSectionDicts[lang]);
+  });
+
+  /* Technology 栏目只维护 zh-CN 与 en；其余语言缺词时回退 en，再回退 zh-CN。
+   * 这样新增技术文案不必同步翻译 8 份，缺失词条也不会露出中文原文。 */
+  Object.keys(DICT).forEach((lang) => {
+    if (lang === 'en') return;
+    Object.keys(DICT.en).forEach((key) => {
+      if (DICT[lang][key] == null) DICT[lang][key] = DICT.en[key];
+    });
+  });
 
   window.__I18N_DICTS = DICT;
   const STORAGE_KEY = 'site-lang';
@@ -51,7 +64,7 @@ import ru from './locales/ru.js';
     current = lang;
     const t = DICT[lang];
     document.documentElement.lang = lang;
-    if (t['meta.title']) document.title = t['meta.title'];
+    if (t['meta.title'] && !document.documentElement.dataset.keepTitle) document.title = t['meta.title'];
     document.querySelectorAll('[data-i18n]').forEach((el) => {
       const v = t[el.getAttribute('data-i18n')];
       if (v != null) el.textContent = v;
@@ -77,7 +90,9 @@ import ru from './locales/ru.js';
   window.__i18nT = (key) => {
     const lang = document.documentElement.lang || 'zh-CN';
     const t = DICT[lang] || DICT['zh-CN'];
-    return t[key] != null ? t[key] : (DICT['zh-CN'][key] != null ? DICT['zh-CN'][key] : undefined);
+    if (t[key] != null) return t[key];
+    if (DICT.en && DICT.en[key] != null) return DICT.en[key];
+    return DICT['zh-CN'][key] != null ? DICT['zh-CN'][key] : undefined;
   };
 
   function detect() {

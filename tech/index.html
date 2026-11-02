@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-tech-page="architecture" data-keep-title="true">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architecture &amp; Stack · ShopeX B2B</title>
+<meta name="description" content="ShopeX B2B architecture: a domain-split distributed microservices system with decoupled traffic entry, service governance, middleware and data layers.">
+<link rel="icon" type="image/png" href="/assets/logo-shopex.png">
+</head>
+<body>
+
+<div id="site-header"></div>
+<div id="tech-subnav"></div>
+
+<!-- 共享 orb 渐变（与主站一致，页面内所有 title-orb / hero orb 复用） -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><radialGradient id="orbNode" cx="38%" cy="32%" r="75%">
+    <stop offset="0%" stop-color="#93b8f8"/><stop offset="45%" stop-color="#c4b5f5"/>
+    <stop offset="78%" stop-color="#f0c9e8"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+  </radialGradient></defs>
+</svg>
+
+<main id="main-content" class="tp-page">
+
+  <!-- ============ 页头（白底） ============ -->
+  <div class="tp-band tp-band--white tp-band--hero">
+    <div class="tp-wrap">
+      <nav class="tp-crumb" aria-label="Breadcrumb">
+        <a href="/" data-i18n="tech.crumb.home">首页</a><span class="tp-crumb-sep">/</span>
+        <a href="/tech/" data-i18n="nav.tech">Technology</a><span class="tp-crumb-sep">/</span>
+        <span data-i18n="nav.tech.arch">架构与技术栈</span>
+      </nav>
+
+      <header class="tp-hero tp-reveal">
+        <div class="tp-hero-copy">
+          <p class="tp-hero-eyebrow">ARCHITECTURE &amp; STACK</p>
+          <h1 data-i18n="t1.hero.title">架构与技术栈</h1>
+          <p class="tp-hero-lead" data-i18n="t1.hero.lead">
+            一套按业务域拆分的分布式微服务架构，支撑渠道订货、履约、结算与客户经营的全链路交易。流量入口、服务治理、中间件与数据层逐层解耦，每一层都可以独立演进。
+          </p>
+        </div>
+        <aside class="tp-hero-side">
+          <svg class="tp-hero-orb orb orb-slow" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+            <circle cx="100" cy="100" r="98" fill="url(#orbNode)"/>
+          </svg>
+          <ul class="tp-hero-chips">
+            <li data-i18n="t1.hero.chip.1">云原生微服务</li>
+            <li data-i18n="t1.hero.chip.2">按业务域拆分</li>
+            <li data-i18n="t1.hero.chip.3">Java 17 · Spring Boot 3</li>
+            <li data-i18n="t1.hero.chip.4">Nacos · RocketMQ · XXL-Job</li>
+          </ul>
+        </aside>
+      </header>
+    </div>
+  </div>
+
+  <!-- ============ 01 架构全景（灰底） ============ -->
+  <div class="tp-band tp-band--gray">
+    <div class="tp-wrap">
+      <section class="tp-section" id="panorama">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <span class="tp-sec-num" aria-hidden="true">01</span>
+          <h2 data-i18n="t1.sec1.title">架构全景</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t1.sec1.lead">
+          以终端访问为起点，向下串联流量入口、服务注册与治理、中间件与数据存储，再到持续交付。四层之间只通过标准接口协作，任一层的变更不会牵动其余各层。
+        </p>
+
+        <div class="tp-arch tp-reveal">
+          <span class="tp-arch-spine" aria-hidden="true"><i></i></span>
+
+          <div class="tp-arch-layer">
+            <div class="tp-arch-name">
+              <b data-i18n="t1.layer.1">终端层</b>
+              <span data-i18n="t1.layer.1.cap">同一套后端驱动多端接入</span>
+            </div>
+            <div class="tp-arch-nodes">
+              <span class="tp-arch-node">PC</span>
+              <span class="tp-arch-node">Android</span>
+              <span class="tp-arch-node">iOS</span>
+              <span class="tp-arch-node">H5</span>
+              <span class="tp-arch-node">Mini Program</span>
+            </div>
+          </div>
+
+          <div class="tp-arch-layer">
+            <div class="tp-arch-name">
+              <b data-i18n="t1.layer.2">流量与服务入口</b>
+              <span data-i18n="t1.layer.2.cap">统一入口、鉴权与限流熔断</span>
+            </div>
+            <div class="tp-arch-nodes">
+              <span class="tp-arch-node">Nginx Cluster</span>
+              <span class="tp-arch-node tp-arch-node--key">Gateway Cluster</span>
+            </div>
+          </div>
+
+          <div class="tp-arch-layer">
+            <div class="tp-arch-name">
+              <b data-i18n="t1.layer.3">注册与中间件</b>
+              <span data-i18n="t1.layer.3.cap">服务发现、异步解耦与流控</span>
+            </div>
+            <div class="tp-arch-nodes">
+              <span class="tp-arch-node tp-arch-node--key">Nacos</span>
+              <span class="tp-arch-node">RocketMQ</span>
+              <span class="tp-arch-node">XXL-Job</span>
+            </div>
+          </div>
+
+          <div class="tp-arch-layer">
+            <div class="tp-arch-name">
+              <b data-i18n="t1.layer.4">存储与 DevOps</b>
+              <span data-i18n="t1.layer.4.cap">数据承载与环境交付</span>
+            </div>
+            <div class="tp-arch-nodes">
+              <span class="tp-arch-node">MySQL</span>
+              <span class="tp-arch-node">Redis</span>
+              <span class="tp-arch-node">Elasticsearch</span>
+              <span class="tp-arch-node">OSS</span>
+              <span class="tp-arch-node">Docker</span>
+              <span class="tp-arch-node">Nginx</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 02 微服务与 BFF（白底） ============ -->
+  <div class="tp-band tp-band--white">
+    <div class="tp-wrap">
+      <section class="tp-section" id="microservices">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <span class="tp-sec-num" aria-hidden="true">02</span>
+          <h2 data-i18n="t1.sec2.title">微服务与 BFF</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t1.sec2.lead">
+          业务能力按领域拆成独立服务，每个服务可单独部署与扩容。面向不同终端的差异由 BFF 层吸收，业务服务不需要为每个端写一套接口。
+        </p>
+
+        <div class="tp-msflow tp-reveal">
+          <div class="tp-msflow-row is-open">
+            <div class="tp-msflow-head">
+              <span class="tp-msflow-idx" aria-hidden="true">01</span>
+              <h3 data-i18n="t1.ms.2.title">BFF 双端接入</h3>
+            </div>
+            <div class="tp-msflow-body">
+              <div class="tp-msflow-chips">
+                <span class="tp-arch-node tp-arch-node--key">bff-web-base</span>
+                <span class="tp-arch-node tp-arch-node--key">bff-manager-base</span>
+                <span class="tp-arch-node">Mobile</span>
+                <span class="tp-arch-node">PC</span>
+                <span class="tp-arch-node">Supplier</span>
+                <span class="tp-arch-node">Platform</span>
+              </div>
+              <p class="tp-msflow-note" data-i18n="t1.ms.2.body">
+                Web 管理端与管理后台各有专属 BFF，再加上移动端、PC 端、供应商端与平台端的接入层，终端差异在这里收敛。
+              </p>
+            </div>
+          </div>
+
+          <div class="tp-msflow-row">
+            <div class="tp-msflow-head">
+              <span class="tp-msflow-idx" aria-hidden="true">02</span>
+              <h3 data-i18n="t1.ms.1.title">业务域拆分</h3>
+            </div>
+            <div class="tp-msflow-body">
+              <div class="tp-msflow-chips">
+                <span class="tp-arch-node">Product</span>
+                <span class="tp-arch-node">Payment</span>
+                <span class="tp-arch-node">Order</span>
+                <span class="tp-arch-node">Marketing</span>
+                <span class="tp-arch-node">Membership</span>
+                <span class="tp-arch-node">Accounting</span>
+                <span class="tp-arch-node">System enablement</span>
+                <span class="tp-arch-node">Product search</span>
+              </div>
+              <p class="tp-msflow-note" data-i18n="t1.ms.1.body">
+                商品、支付、订单、营销、会员、账务、系统赋能与商品搜索各自成为独立服务，按领域独立演进。
+              </p>
+            </div>
+          </div>
+
+          <div class="tp-msflow-row">
+            <div class="tp-msflow-head">
+              <span class="tp-msflow-idx" aria-hidden="true">03</span>
+              <h3 data-i18n="t1.ms.3.title">公共服务沉淀</h3>
+            </div>
+            <div class="tp-msflow-body">
+              <div class="tp-msflow-chips">
+                <span class="tp-arch-node">service-common</span>
+                <span class="tp-arch-node">Config center</span>
+                <span class="tp-arch-node">Messaging &amp; notification</span>
+                <span class="tp-arch-node">Automated deployment</span>
+              </div>
+              <p class="tp-msflow-note" data-i18n="t1.ms.3.body">
+                公共能力统一收在 service-common，配合配置中心、消息通知与自动化部署，避免各业务域重复建设。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 03 中间件与数据层（灰底） ============ -->
+  <div class="tp-band tp-band--gray">
+    <div class="tp-wrap">
+      <section class="tp-section" id="middleware">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <span class="tp-sec-num" aria-hidden="true">03</span>
+          <h2 data-i18n="t1.sec3.title">中间件与数据层</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t1.sec3.lead">
+          选型不做堆砌：每一件中间件都对应一个明确的工程问题，而不是"别人都在用"。
+        </p>
+
+        <div class="tp-table-wrap tp-reveal">
+          <table class="tp-table">
+            <thead>
+              <tr>
+                <th scope="col" data-i18n="t1.th.component">组件</th>
+                <th scope="col" data-i18n="t1.th.problem">在本平台承担的工程问题</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tp-cell-name">Nacos<em>Registry &amp; Config</em></td>
+                <td data-i18n="t1.mw.nacos">服务注册发现与配置管理，多环境命名空间隔离，配置在线热更新，无需重启服务。</td>
+              </tr>
+              <tr>
+                <td class="tp-cell-name">MySQL<em>Relational Storage</em></td>
+                <td data-i18n="t1.mw.mysql">业务数据落库：按业务域隔离，统一审计字段与逻辑删除，资金与库存类表以乐观锁版本控制。</td>
+              </tr>
+              <tr>
+                <td class="tp-cell-name">Redis<em>Cache &amp; Concurrency</em></td>
+                <td data-i18n="t1.mw.redis">缓存与并发控制：热点数据缓存提升读性能，分布式锁守护库存与订单临界区，幂等键防重复提交。</td>
+              </tr>
+              <tr>
+                <td class="tp-cell-name">Elasticsearch<em>Search Engine</em></td>
+                <td data-i18n="t1.mw.es">商品全文检索：五类词库与字段级权重，多维聚合筛选，本地消息表异步同步，零停机索引重建。</td>
+              </tr>
+              <tr>
+                <td class="tp-cell-name">RocketMQ<em>Messaging</em></td>
+                <td data-i18n="t1.mw.rocketmq">异步消息：领域事件异步分发、削峰填谷，消费侧幂等，失败自动重试进入死信队列兜底。</td>
+              </tr>
+              <tr>
+                <td class="tp-cell-name">XXL-Job<em>Scheduling</em></td>
+                <td data-i18n="t1.mw.scheduler">分布式调度：订单自动取消与收货、资金对账、资质预警扫描统一编排，支持失败重试与任务分片。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 04 关键指标（白底） ============ -->
+  <div class="tp-band tp-band--white">
+    <div class="tp-wrap">
+      <section class="tp-section" id="figures">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <span class="tp-sec-num" aria-hidden="true">04</span>
+          <h2 data-i18n="t1.sec4.title">关键技术指标</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t1.sec4.lead">以下数字对应真实交付的模块，不是估算值。</p>
+
+        <div class="tp-stats tp-reveal">
+          <div class="tp-stat"><b data-value="5">5</b><span data-i18n="t1.kpi.1">核心业务域</span></div>
+          <div class="tp-stat"><b data-value="4">4</b><span data-i18n="t1.kpi.2">层技术分层</span></div>
+          <div class="tp-stat"><b data-value="5">5</b><span data-i18n="t1.kpi.3">终端形态同源交付</span></div>
+          <div class="tp-stat"><b data-value="6">6</b><span data-i18n="t1.kpi.4">核心中间件组件</span></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 05 继续了解（灰底） ============ -->
+  <div class="tp-band tp-band--gray">
+    <div class="tp-wrap">
+      <section class="tp-section" id="more">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <span class="tp-sec-num" aria-hidden="true">05</span>
+          <h2 data-i18n="t1.sec5.title">继续了解</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t1.sec5.lead">技术评审里最常被追问的三个问题，各自对应一页。</p>
+
+        <div class="tp-entries tp-reveal">
+          <a class="tp-entry" href="/tech/reliability.html">
+            <span class="tp-entry-top"><strong data-i18n="nav.tech.rel">可靠性与可观测性</strong>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            <p data-i18n="nav.tech.rel.d">一致性、高可用与全链路监控</p>
+          </a>
+          <a class="tp-entry" href="/tech/security.html">
+            <span class="tp-entry-top"><strong data-i18n="nav.tech.sec">安全与合规</strong>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            <p data-i18n="nav.tech.sec.d">认证鉴权、数据安全与审计</p>
+          </a>
+          <a class="tp-entry" href="/tech/deployment.html">
+            <span class="tp-entry-top"><strong data-i18n="nav.tech.ops">部署与运维</strong>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            <p data-i18n="nav.tech.ops.d">容器化交付、多环境与持续集成</p>
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 收尾 CTA（白底） ============ -->
+  <div class="tp-band tp-band--white">
+    <div class="tp-wrap">
+      <div class="tp-cta">
+        <div class="tp-cta-card tp-reveal">
+          <svg class="tp-cta-orb orb orb-slow" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+            <circle cx="100" cy="100" r="98" fill="url(#orbNode)"/>
+          </svg>
+          <div class="tp-cta-copy">
+            <h2 data-i18n="t1.cta.title">需要完整的技术架构说明？</h2>
+            <p data-i18n="t1.cta.body">可按您的部署环境与集成范围，提供组件清单、接口清单与部署拓扑。</p>
+          </div>
+          <button class="tp-cta-btn" type="button" data-tech-cta>
+            <span data-i18n="t1.cta.btn">获取技术架构说明</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div id="site-footer"></div>
+<script type="module" src="/src/pages/tech-page.js"></script>
+</body>
+</html>
