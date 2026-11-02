@@ -1,5 +1,6 @@
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
+import { fileURLToPath, URL } from 'node:url';
 
 /* 多页面入口：主站 + 技术架构子页面
  * 新增技术子页面时，把文件路径加进 build.rolldownOptions.input 与
@@ -27,7 +28,11 @@ export default defineConfig({
   build: {
     target: 'es2022',
     rolldownOptions: {
-      input: pages,
+      input: {
+        ...pages,
+        'hotel-procurement': resolve(__dirname, 'hotel-procurement.html'),
+        'medical-device': resolve(__dirname, 'medical-device.html'),
+      },
       output: {
         codeSplitting: {
           groups: [

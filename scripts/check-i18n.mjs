@@ -5,6 +5,8 @@ import businessModeDicts from '../src/i18n/business-modes.js';
 import techCapabilityDicts from '../src/i18n/tech-capabilities.js';
 import aboutCompanyDicts from '../src/i18n/about-company.js';
 import techSectionDicts from '../src/i18n/tech-section.js';
+import hotelProcurementDicts from '../src/i18n/hotel-procurement.js';
+import medicalDeviceDicts from '../src/i18n/medical-device.js';
 import zhCN from '../src/i18n/locales/zh-CN.js';
 import en from '../src/i18n/locales/en.js';
 import ja from '../src/i18n/locales/ja.js';
@@ -24,6 +26,8 @@ const dictionaries = Object.fromEntries(
     ...techCapabilityDicts[lang],
     ...aboutCompanyDicts[lang],
     ...(techSectionDicts[lang] || {}),
+    ...(hotelProcurementDicts[lang] || {}),
+    ...(medicalDeviceDicts[lang] || {}),
   }]),
 );
 
@@ -67,6 +71,8 @@ const techPages = fs.existsSync(pagesDir)
 
 const sourceFiles = [
   path.join(root, 'index.html'),
+  path.join(root, 'hotel-procurement.html'),
+  path.join(root, 'medical-device.html'),
   ...techPages,
   ...collectSourceFiles(path.join(root, 'src')),
 ];
