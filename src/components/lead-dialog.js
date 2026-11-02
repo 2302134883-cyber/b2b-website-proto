@@ -25,8 +25,8 @@
     console.log('[lead]', {
       mode: window.__selectedBusinessMode || null,
       services: [...document.querySelectorAll('#q-services md-filter-chip')].filter((c) => c.selected).map((c) => c.getAttribute('data-i18n-label')),
-      industry: leadIndustry || document.getElementById('q-industry').value,
-      size: document.getElementById('q-size').value,
+      industry: leadIndustry || document.getElementById('q-industry')?.value || '',
+      size: document.getElementById('q-size')?.value || '',
       email: v,
     });
     formEl.style.display = 'none'; doneEl.style.display = '';
@@ -47,7 +47,7 @@
 
     button.addEventListener('click', () => openLead());
   });
-  document.getElementById('cta-plan').addEventListener('click', () => openLead());
+  document.getElementById('cta-plan')?.addEventListener('click', () => openLead());
   document.querySelectorAll('[data-lead-industry]').forEach((button) => {
     button.addEventListener('click', () => openLead(button.getAttribute('data-lead-industry')));
   });

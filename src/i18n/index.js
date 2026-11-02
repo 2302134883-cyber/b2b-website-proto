@@ -8,6 +8,8 @@
 import businessModeDicts from './business-modes.js';
 import techCapabilityDicts from './tech-capabilities.js';
 import aboutCompanyDicts from './about-company.js';
+import hotelProcurementDicts from './hotel-procurement.js';
+import medicalDeviceDicts from './medical-device.js';
 import zhCN from './locales/zh-CN.js';
 import en from './locales/en.js';
 import ja from './locales/ja.js';
@@ -41,6 +43,12 @@ import ru from './locales/ru.js';
   Object.keys(aboutCompanyDicts).forEach((lang) => {
     if (DICT[lang]) Object.assign(DICT[lang], aboutCompanyDicts[lang]);
   });
+  Object.keys(hotelProcurementDicts).forEach((lang) => {
+    if (DICT[lang]) Object.assign(DICT[lang], hotelProcurementDicts[lang]);
+  });
+  Object.keys(medicalDeviceDicts).forEach((lang) => {
+    if (DICT[lang]) Object.assign(DICT[lang], medicalDeviceDicts[lang]);
+  });
 
   window.__I18N_DICTS = DICT;
   const STORAGE_KEY = 'site-lang';
@@ -51,7 +59,8 @@ import ru from './locales/ru.js';
     current = lang;
     const t = DICT[lang];
     document.documentElement.lang = lang;
-    if (t['meta.title']) document.title = t['meta.title'];
+    const titleKey = document.documentElement.getAttribute('data-i18n-title') || 'meta.title';
+    if (t[titleKey]) document.title = t[titleKey];
     document.querySelectorAll('[data-i18n]').forEach((el) => {
       const v = t[el.getAttribute('data-i18n')];
       if (v != null) el.textContent = v;
