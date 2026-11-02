@@ -4,6 +4,8 @@ import { fileURLToPath } from 'node:url';
 import businessModeDicts from '../src/i18n/business-modes.js';
 import techCapabilityDicts from '../src/i18n/tech-capabilities.js';
 import aboutCompanyDicts from '../src/i18n/about-company.js';
+import hotelProcurementDicts from '../src/i18n/hotel-procurement.js';
+import medicalDeviceDicts from '../src/i18n/medical-device.js';
 import zhCN from '../src/i18n/locales/zh-CN.js';
 import en from '../src/i18n/locales/en.js';
 import ja from '../src/i18n/locales/ja.js';
@@ -17,7 +19,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const baseDicts = { 'zh-CN': zhCN, en, ja, ko, es, fr, de, ru };
 const languages = Object.keys(baseDicts);
 const dictionaries = Object.fromEntries(
-  languages.map((lang) => [lang, { ...baseDicts[lang], ...businessModeDicts[lang], ...techCapabilityDicts[lang], ...aboutCompanyDicts[lang] }]),
+  languages.map((lang) => [lang, { ...baseDicts[lang], ...businessModeDicts[lang], ...techCapabilityDicts[lang], ...aboutCompanyDicts[lang], ...hotelProcurementDicts[lang], ...medicalDeviceDicts[lang] }]),
 );
 const errors = [];
 const referenceKeys = Object.keys(dictionaries['zh-CN']).sort();
@@ -42,7 +44,7 @@ function collectSourceFiles(directory) {
   });
 }
 
-const sourceFiles = [path.join(root, 'index.html'), ...collectSourceFiles(path.join(root, 'src'))];
+const sourceFiles = [path.join(root, 'index.html'), path.join(root, 'hotel-procurement.html'), path.join(root, 'medical-device.html'), ...collectSourceFiles(path.join(root, 'src'))];
 const usedKeys = new Set();
 const attributePattern = /data-i18n(?:-html|-label|-aria)?\s*=\s*["'`]([a-z0-9._-]+)["'\`]/gi;
 for (const file of sourceFiles) {

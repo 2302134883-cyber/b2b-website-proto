@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
   server: {
@@ -14,6 +15,11 @@ export default defineConfig({
   build: {
     target: 'es2022',
     rolldownOptions: {
+      input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        'hotel-procurement': fileURLToPath(new URL('./hotel-procurement.html', import.meta.url)),
+        'medical-device': fileURLToPath(new URL('./medical-device.html', import.meta.url)),
+      },
       output: {
         codeSplitting: {
           groups: [
