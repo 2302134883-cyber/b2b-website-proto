@@ -1,5 +1,18 @@
+import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import { fileURLToPath, URL } from 'node:url';
+
+/* 多页面入口：主站 + 技术架构子页面
+ * 新增技术子页面时，把文件路径加进 build.rolldownOptions.input 与
+ * src/layout/chrome.js 的 TECH_PAGES（导航/页脚/子导航会自动同步）。
+ */
+const pages = {
+  main: resolve(__dirname, 'index.html'),
+  'tech-architecture': resolve(__dirname, 'tech/index.html'),
+  'tech-reliability': resolve(__dirname, 'tech/reliability.html'),
+  'tech-security': resolve(__dirname, 'tech/security.html'),
+  'tech-deployment': resolve(__dirname, 'tech/deployment.html'),
+};
 
 export default defineConfig({
   server: {
@@ -16,9 +29,9 @@ export default defineConfig({
     target: 'es2022',
     rolldownOptions: {
       input: {
-        main: fileURLToPath(new URL('./index.html', import.meta.url)),
-        'hotel-procurement': fileURLToPath(new URL('./hotel-procurement.html', import.meta.url)),
-        'medical-device': fileURLToPath(new URL('./medical-device.html', import.meta.url)),
+        ...pages,
+        'hotel-procurement': resolve(__dirname, 'hotel-procurement.html'),
+        'medical-device': resolve(__dirname, 'medical-device.html'),
       },
       output: {
         codeSplitting: {

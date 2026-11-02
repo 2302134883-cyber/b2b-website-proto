@@ -73,6 +73,8 @@
     color: var(--sub); font-size: 12px; line-height: 1.5; cursor: default;
   }
   .site-nav-panel--cases { width: 640px; }
+  /* Technology 下拉：4 个子页面使用 2×2 网格，需要单独定宽 */
+  .site-nav-panel--tech { width: 520px; }
   .site-nav-panel--ai { width: 480px; }
   .site-nav-panel--tech { width: 560px; }
   .site-nav-panel--about { width: 560px; }
