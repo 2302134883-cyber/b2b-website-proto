@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-tech-page="deployment" data-keep-title="true">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deployment &amp; Operations · ShopeX B2B</title>
+<meta name="description" content="Containerized delivery, a four-environment system, two delivery models and smooth evolution — platform multi-tenant operations or fully private customer deployment.">
+<link rel="icon" type="image/png" href="/b2b-website-proto/assets/logo-shopex.png">
+  <script type="module" crossorigin src="/b2b-website-proto/assets/section-tones-CcRYyl0r.js"></script>
+  <script type="module" crossorigin src="/b2b-website-proto/assets/site-header-Bore-pWh.js"></script>
+  <script type="module" crossorigin src="/b2b-website-proto/assets/preload-helper-C-zyIwqN.js"></script>
+  <script type="module" crossorigin src="/b2b-website-proto/assets/tech-page-D1pQaesL.js"></script>
+  <link rel="stylesheet" crossorigin href="/b2b-website-proto/assets/section-tones-BH2py0JQ.css">
+  <link rel="stylesheet" crossorigin href="/b2b-website-proto/assets/tech-page-zKGPb8aw.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+<div id="tech-subnav"></div>
+
+<!-- 共享 orb 渐变 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><radialGradient id="orbNode" cx="38%" cy="32%" r="75%">
+    <stop offset="0%" stop-color="#93b8f8"/><stop offset="45%" stop-color="#c4b5f5"/>
+    <stop offset="78%" stop-color="#f0c9e8"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+  </radialGradient></defs>
+</svg>
+
+<main id="main-content" class="tp-page">
+
+  <!-- ============ 页头（居中） ============ -->
+  <div class="tp-band tp-band--white os-hero">
+    <div class="tp-wrap">
+      <div class="os-hero-inner tp-reveal">
+        <p class="os-eyebrow">DEPLOYMENT &amp; OPERATIONS</p>
+        <h1 data-i18n="nav.tech.ops">部署与运维</h1>
+        <p class="os-lead" data-i18n="t4.hero.lead">
+          以容器化交付、多环境管理和运行监测支撑系统部署与维护，支持平台统一运营与客户独立部署，并通过配置管理和服务按需扩展，适应业务变化。
+        </p>
+        <ul class="tp-hero-chips tp-hero-chips--center">
+          <li data-i18n="t4.hero.chip.1">容器化交付</li>
+          <li data-i18n="t4.hero.chip.2">多环境管理</li>
+          <li data-i18n="t4.hero.chip.3">运行监测</li>
+          <li data-i18n="t4.hero.chip.4">按需扩展</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 01 部署拓扑（灰底） ============ -->
+  <div class="tp-band tp-band--gray">
+    <div class="tp-wrap">
+      <section class="tp-section" id="topology">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <span class="tp-sec-num" aria-hidden="true">01</span>
+          <h2 data-i18n="t4.def.title">部署拓扑</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t4.def.lead">
+          用户终端通过 Nginx 访问应用服务。后端微服务以独立容器镜像部署，结合数据存储、消息、服务注册与配置管理等组件，共同支撑业务运行。
+        </p>
+
+        <div class="deployment-topology tp-reveal" data-deployment-topology>
+          <div class="dp-bar dp-bar--light">
+            <strong data-dp-text="clientTitle">用户终端</strong>
+            <small data-dp-text="clientSub">PC / 移动</small>
+          </div>
+
+          <div class="dp-link" aria-hidden="true"></div>
+
+          <div class="dp-bar dp-bar--accent">
+            <strong data-dp-text="nginxTitle">Nginx 反向代理 / 静态资源托管</strong>
+            <small data-dp-text="nginxSub">HTTPS 卸载 · AI 助手同域接入 · 长连接支持</small>
+          </div>
+
+          <div class="dp-link" aria-hidden="true"></div>
+
+          <div class="dp-bar dp-bar--light">
+            <strong data-dp-text="svcTitle">容器化微服务集群（每服务独立镜像 · 健康检查自愈）</strong>
+            <small data-dp-text="svcSub">网关 · 认证 · 系统 · 商品 · 交易 · 营销 · 基础设施 · 监控 · AI 宿主</small>
+          </div>
+
+          <div class="dp-link" aria-hidden="true"></div>
+
+          <div class="dp-bar dp-bar--light">
+            <strong data-dp-text="dataTitle">数据与中间件层</strong>
+            <small data-dp-text="dataSub">MySQL · Redis · Elasticsearch · RocketMQ · Nacos · XXL-Job · 对象存储</small>
+          </div>
+
+          <p class="dp-note" data-dp-text="note">典型部署示意。实际组件布局、资源配置与部署边界根据项目要求确定。</p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 02 部署与运营方式（白底） ============ -->
+  <div class="tp-band tp-band--white">
+    <div class="tp-wrap">
+      <section class="tp-section" id="models">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <span class="tp-sec-num" aria-hidden="true">02</span>
+          <h2 data-i18n="t4.s1.title">部署与运营方式</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t4.s1.lead">
+          支持平台统一运营与客户独立部署，根据项目的业务组织、运行环境和管理要求确定部署与运营安排。
+        </p>
+
+        <div class="tp-grid-2 tp-reveal">
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t4.s1.c1.name">平台统一运营</b><em>Centralized Platform Operations</em></div>
+            <p class="tp-mw-line" data-i18n="t4.s1.c1.d">支持多租户数据隔离，由平台方统一管理系统运行与版本升级，为入驻商家和企业用户提供业务服务。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t4.s1.c1.t1">多租户隔离</li>
+              <li data-i18n="t4.s1.c1.t2">统一运营</li>
+              <li data-i18n="t4.s1.c1.t3">统一升级</li>
+            </ul>
+          </div>
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t4.s1.c2.name">客户独立部署</b><em>Dedicated Customer Deployment</em></div>
+            <p class="tp-mw-line" data-i18n="t4.s1.c2.d">根据项目要求配置客户独立运行环境，支持独立域名与品牌配置，部署范围、数据管理及运维责任按项目约定确定。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t4.s1.c2.t1">独立环境</li>
+              <li data-i18n="t4.s1.c2.t2">独立域名</li>
+              <li data-i18n="t4.s1.c2.t3">品牌配置</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 03 交付与运行管理（灰底） ============ -->
+  <div class="tp-band tp-band--gray">
+    <div class="tp-wrap">
+      <section class="tp-section" id="runtime">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <span class="tp-sec-num" aria-hidden="true">03</span>
+          <h2 data-i18n="t4.s2.title">交付与运行管理</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t4.s2.lead">
+          通过容器化构建、环境与配置管理、健康监测等工程措施，支持系统交付、运行维护与日常调整。
+        </p>
+
+        <div class="tp-grid-4 tp-reveal">
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t4.s2.c1.name">容器化交付</b><em>Containerized Delivery</em></div>
+            <p class="tp-mw-line" data-i18n="t4.s2.c1.d">各微服务以独立镜像构建，采用精简运行时基础镜像，并对内存等运行参数进行标准化配置，提升交付与运行环境的一致性。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t4.s2.c1.t1">独立镜像</li>
+              <li data-i18n="t4.s2.c1.t2">精简运行时</li>
+              <li data-i18n="t4.s2.c1.t3">参数标准化</li>
+            </ul>
+          </div>
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t4.s2.c2.name">多环境管理</b><em>Environment Management</em></div>
+            <p class="tp-mw-line" data-i18n="t4.s2.c2.d">面向开发、预发布、生产及客户独立部署等环境，通过配置中心命名空间区分配置，并结合环境变量切换运行配置。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t4.s2.c2.t1">环境配置</li>
+              <li data-i18n="t4.s2.c2.t2">命名空间隔离</li>
+              <li data-i18n="t4.s2.c2.t3">环境变量</li>
+            </ul>
+          </div>
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t4.s2.c3.name">运行监测与维护</b><em>Runtime Monitoring &amp; Maintenance</em></div>
+            <p class="tp-mw-line" data-i18n="t4.s2.c3.d">通过健康监控中心查看服务实例状态，结合容器健康检查识别异常。支持在线调整日志级别，并通过指标端点对接采集体系，为运行排查提供依据。重启与恢复行为由运行环境及策略配置确定。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t4.s2.c3.t1">实例状态</li>
+              <li data-i18n="t4.s2.c3.t2">健康检查</li>
+              <li data-i18n="t4.s2.c3.t3">日志与指标</li>
+            </ul>
+          </div>
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t4.s2.c4.name">配置热更新</b><em>Dynamic Configuration Updates</em></div>
+            <p class="tp-mw-line" data-i18n="t4.s2.c4.d">支持对适用的前端部署配置进行覆盖调整，并使后端业务开关与规则引擎配置在线生效。可动态调整的配置与需要重新构建、发布的代码变更分别管理。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t4.s2.c4.t1">部署配置</li>
+              <li data-i18n="t4.s2.c4.t2">业务开关</li>
+              <li data-i18n="t4.s2.c4.t3">规则配置</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 04 按需扩展与演进（白底） ============ -->
+  <div class="tp-band tp-band--white">
+    <div class="tp-wrap">
+      <section class="tp-section" id="scaling">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <span class="tp-sec-num" aria-hidden="true">04</span>
+          <h2 data-i18n="t4.s3.title">按需扩展与演进</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t4.s3.lead">
+          结合业务规模、服务负载与功能变化，对服务资源、前端工程及运行配置进行针对性调整，支持系统持续演进。
+        </p>
+
+        <div class="tp-mw-grid tp-reveal">
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t4.s3.c1.name">微服务按需扩容</b><em>Service-Level Scaling</em></div>
+            <p class="tp-mw-line" data-i18n="t4.s3.c1.d">根据不同微服务的负载情况调整实例与资源配置，并结合数据库、缓存等依赖组件的承载能力，确定扩容方案。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t4.s3.c1.t1">服务级扩容</li>
+              <li data-i18n="t4.s3.c1.t2">资源调整</li>
+              <li data-i18n="t4.s3.c1.t3">容量评估</li>
+            </ul>
+          </div>
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t4.s3.c2.name">前端工程独立维护</b><em>Independent Frontend Maintenance</em></div>
+            <p class="tp-mw-line" data-i18n="t4.s3.c2.d">采购门户、移动商城、管理工作台与助手前端采用独立工程组织，支持根据各端需求分别开发、构建与更新；涉及共享接口的变更进行兼容性协调。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t4.s3.c2.t1">独立工程</li>
+              <li data-i18n="t4.s3.c2.t2">按端更新</li>
+              <li data-i18n="t4.s3.c2.t3">接口兼容</li>
+            </ul>
+          </div>
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t4.s3.c3.name">配置与功能演进</b><em>Configuration &amp; Feature Evolution</em></div>
+            <p class="tp-mw-line" data-i18n="t4.s3.c3.d">在支持动态配置的范围内，通过配置中心、业务开关及规则配置调整系统行为；涉及功能代码或接口的变化，结合相关依赖进行开发、验证与发布。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t4.s3.c3.t1">动态配置</li>
+              <li data-i18n="t4.s3.c3.t2">功能迭代</li>
+              <li data-i18n="t4.s3.c3.t3">变更验证</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 继续了解（灰底） ============ -->
+  <div class="tp-band tp-band--gray">
+    <div class="tp-wrap">
+      <section class="tp-section" id="more">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <h2 data-i18n="t1.more.title">继续了解</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t1.more.lead">针对常见的技术架构疑问，可在以下专题页面进一步了解。</p>
+
+        <div class="tp-entries tp-reveal">
+          <a class="tp-entry" href="/tech/">
+            <span class="tp-entry-top"><strong data-i18n="nav.tech.arch">架构与技术栈</strong>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            <p data-i18n="nav.tech.arch.d">分层架构、微服务拆分与中间件选型</p>
+          </a>
+          <a class="tp-entry" href="/tech/security.html">
+            <span class="tp-entry-top"><strong data-i18n="nav.tech.sec">安全与合规</strong>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            <p data-i18n="nav.tech.sec.d">认证鉴权、数据安全与审计</p>
+          </a>
+          <a class="tp-entry" href="/tech/reliability.html">
+            <span class="tp-entry-top"><strong data-i18n="nav.tech.rel">可靠性与可观测性</strong>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            <p data-i18n="nav.tech.rel.d">一致性、高可用与全链路监控</p>
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 收尾 CTA ============ -->
+  <div class="tp-band tp-band--white">
+    <div class="tp-wrap">
+      <div class="tp-cta">
+        <div class="tp-cta-card tp-reveal">
+          <svg class="tp-cta-orb orb orb-slow" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+            <circle cx="100" cy="100" r="98" fill="url(#orbNode)"/>
+          </svg>
+          <div class="tp-cta-copy">
+            <h2 data-i18n="t4.cta.title">为您的项目规划部署与运维方案</h2>
+            <p data-i18n="t4.cta.body">结合现有基础设施、系统集成及运营要求，与技术团队讨论部署环境、资源配置和维护范围。</p>
+          </div>
+          <button class="tp-cta-btn" type="button" data-tech-cta>
+            <span data-i18n="t4.cta.btn">讨论部署方案</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div id="site-footer"></div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+# robots.txt — ShopeX B2B 数智化解决方案官网
+# TODO(域名确定后)：解除并填写下面的 Sitemap 行，同时在 public/ 增加 sitemap.xml
+# Sitemap: https://<域名>/sitemap.xml
+
+User-agent: *
+Allow: /
+
+# 欢迎 AI / 生成式引擎爬虫（GEO）
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-tech-page="reliability" data-keep-title="true">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reliability &amp; Observability · ShopeX B2B</title>
+<meta name="description" content="A three-layer defense for high-concurrency trade: consistency mechanisms, transaction and compensation, reconciliation and alerting — with end-to-end observability.">
+<link rel="icon" type="image/png" href="/b2b-website-proto/assets/logo-shopex.png">
+  <script type="module" crossorigin src="/b2b-website-proto/assets/section-tones-CcRYyl0r.js"></script>
+  <script type="module" crossorigin src="/b2b-website-proto/assets/site-header-Bore-pWh.js"></script>
+  <script type="module" crossorigin src="/b2b-website-proto/assets/preload-helper-C-zyIwqN.js"></script>
+  <script type="module" crossorigin src="/b2b-website-proto/assets/tech-page-D1pQaesL.js"></script>
+  <link rel="stylesheet" crossorigin href="/b2b-website-proto/assets/section-tones-BH2py0JQ.css">
+  <link rel="stylesheet" crossorigin href="/b2b-website-proto/assets/tech-page-zKGPb8aw.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+<div id="tech-subnav"></div>
+
+<!-- 共享 orb 渐变（与主站一致，页面内所有 title-orb / hero orb 复用） -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><radialGradient id="orbNode" cx="38%" cy="32%" r="75%">
+    <stop offset="0%" stop-color="#93b8f8"/><stop offset="45%" stop-color="#c4b5f5"/>
+    <stop offset="78%" stop-color="#f0c9e8"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+  </radialGradient></defs>
+</svg>
+
+<main id="main-content" class="tp-page">
+
+  <!-- ============ 页头（白底） ============ -->
+  <div class="tp-band tp-band--white os-hero">
+    <div class="tp-wrap">
+      <div class="os-hero-inner tp-reveal">
+        <p class="os-eyebrow">RELIABILITY &amp; OBSERVABILITY</p>
+        <h1 data-i18n="nav.tech.rel">可靠性与可观测性</h1>
+        <p class="os-lead" data-i18n="t2.hero.lead">
+          通过并发控制、事务协调、失败补偿与对账机制，降低重复处理和数据不一致风险；结合健康监测、日志、指标与链路追踪，支持运行状态分析与故障定位。
+        </p>
+        <ul class="tp-hero-chips tp-hero-chips--center">
+          <li data-i18n="t2.hero.chip.1">并发与幂等</li>
+          <li data-i18n="t2.hero.chip.2">事务与补偿</li>
+          <li data-i18n="t2.hero.chip.3">对账与差异处理</li>
+          <li data-i18n="t2.hero.chip.4">监测与追踪</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 01 可靠性三层防线（灰底） ============ -->
+  <div class="tp-band tp-band--gray">
+    <div class="tp-wrap">
+      <section class="tp-section" id="defense">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <span class="tp-sec-num" aria-hidden="true">01</span>
+          <h2 data-i18n="t2.def.title">可靠性三层防线</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t2.def.lead">
+          从请求处理前的并发与重复控制，到执行过程中的事务协调与失败补偿，再到处理后的对账与差异识别，形成相互补充的可靠性机制。可观测性贯穿各阶段，为状态分析与问题定位提供依据。
+        </p>
+
+        <div class="tp-chain tp-reveal">
+          <div class="tp-chain-stages">
+            <div class="tp-chain-stage">
+              <span class="tp-chain-dot" aria-hidden="true"></span>
+              <div class="tp-chain-card">
+                <b data-i18n="t2.def.1.name">保护</b>
+                <p data-i18n="t2.def.1.d">通过并发控制与幂等机制，降低重复请求和并发修改引发的业务错误。</p>
+                <ul class="tp-chain-tags">
+                  <li data-i18n="t2.def.1.n1">乐观锁</li>
+                  <li data-i18n="t2.def.1.n2">分布式锁</li>
+                  <li data-i18n="t2.def.1.n3">幂等控制</li>
+                </ul>
+              </div>
+            </div>
+            <div class="tp-chain-stage">
+              <span class="tp-chain-dot" aria-hidden="true"></span>
+              <div class="tp-chain-card">
+                <b data-i18n="t2.def.2.name">处理</b>
+                <p data-i18n="t2.def.2.d">在跨服务处理过程中协调事务，并对失败操作进行记录、重试或补偿。</p>
+                <ul class="tp-chain-tags">
+                  <li data-i18n="t2.def.2.n1">分布式事务</li>
+                  <li data-i18n="t2.def.2.n2">失败重试</li>
+                  <li data-i18n="t2.def.2.n3">补偿任务</li>
+                </ul>
+              </div>
+            </div>
+            <div class="tp-chain-stage">
+              <span class="tp-chain-dot" aria-hidden="true"></span>
+              <div class="tp-chain-card">
+                <b data-i18n="t2.def.3.name">核对</b>
+                <p data-i18n="t2.def.3.d">通过定时对账识别交易记录之间的差异，为后续核查与处置提供依据。</p>
+                <ul class="tp-chain-tags">
+                  <li data-i18n="t2.def.3.n1">定时对账</li>
+                  <li data-i18n="t2.def.3.n2">差异识别</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="tp-chain-links" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="tp-chain-observe">
+            <span class="tp-chain-observe-label" data-i18n="t2.def.obslabel">贯穿各阶段</span>
+            <span class="tp-chain-obs" data-i18n="t2.def.obs1">健康监测</span>
+            <span class="tp-chain-obs" data-i18n="t2.def.obs2">日志与指标</span>
+            <span class="tp-chain-obs" data-i18n="t2.def.obs3">链路追踪</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 02 一致性保护（白底） ============ -->
+  <div class="tp-band tp-band--white">
+    <div class="tp-wrap">
+      <section class="tp-section" id="prevent">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <span class="tp-sec-num" aria-hidden="true">02</span>
+          <h2 data-i18n="t2.s1.title">一致性保护</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t2.s1.lead">
+          通过并发更新控制、幂等机制与库存操作保护，降低重复请求和并发修改引发的数据不一致风险。
+        </p>
+
+        <div class="tp-grid-4 tp-reveal">
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t2.s1.c1.name">并发更新控制</b><em>Concurrent Update Controls</em></div>
+            <p class="tp-mw-line" data-i18n="t2.s1.c1.d">对资金、库存等关键数据做乐观锁版本校验，并以分布式锁协调互斥操作，控制并发修改冲突。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t2.s1.c1.t1">乐观锁</li>
+              <li data-i18n="t2.s1.c1.t2">版本校验</li>
+              <li data-i18n="t2.s1.c1.t3">分布式锁</li>
+            </ul>
+          </div>
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t2.s1.c2.name">幂等防重</b><em>Idempotency</em></div>
+            <p class="tp-mw-line" data-i18n="t2.s1.c2.d">以幂等标识与状态校验应对重复提交、网络重试与重复消息，避免同一操作重复产生结果。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t2.s1.c2.t1">请求幂等</li>
+              <li data-i18n="t2.s1.c2.t2">重复提交控制</li>
+              <li data-i18n="t2.s1.c2.t3">消费幂等</li>
+            </ul>
+          </div>
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t2.s1.c3.name">库存一致性保护</b><em>Inventory Consistency</em></div>
+            <p class="tp-mw-line" data-i18n="t2.s1.c3.d">库存锁定、释放与扣减均采用并发控制与原子操作，并结合失败重试，降低并发交易中的处理异常。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t2.s1.c3.t1">库存锁定</li>
+              <li data-i18n="t2.s1.c3.t2">原子操作</li>
+              <li data-i18n="t2.s1.c3.t3">失败重试</li>
+            </ul>
+          </div>
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t2.s1.c4.name">检索最终一致性</b><em>Search Index Consistency</em></div>
+            <p class="tp-mw-line" data-i18n="t2.s1.c4.d">以本地消息表异步同步搜索索引，结合幂等与乱序处理，推动检索与业务数据最终一致。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t2.s1.c4.t1">本地消息表</li>
+              <li data-i18n="t2.s1.c4.t2">异步同步</li>
+              <li data-i18n="t2.s1.c4.t3">幂等与乱序处理</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 03 事务协调与失败处理（灰底） ============ -->
+  <div class="tp-band tp-band--gray">
+    <div class="tp-wrap">
+      <section class="tp-section" id="fallback">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <span class="tp-sec-num" aria-hidden="true">03</span>
+          <h2 data-i18n="t2.s2.title">事务协调与失败处理</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t2.s2.lead">
+          通过分布式事务、异步消息、补偿任务与统一调度，协调跨服务业务处理，并对执行失败进行记录、重试与后续处置。
+        </p>
+
+        <div class="tp-mw-grid tp-reveal">
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t2.s2.c1.name">分布式事务</b><em>Distributed Transactions</em></div>
+            <p class="tp-mw-line" data-i18n="t2.s2.c1.d">协调库存锁定、优惠券锁定与订单落库等关联操作，保障事务范围内的执行一致性。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t2.s2.c1.t1">库存锁定</li>
+              <li data-i18n="t2.s2.c1.t2">优惠券锁定</li>
+              <li data-i18n="t2.s2.c1.t3">订单落库</li>
+            </ul>
+          </div>
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t2.s2.c2.name">异步消息处理</b><em>Asynchronous Messaging</em></div>
+            <p class="tp-mw-line" data-i18n="t2.s2.c2.d">以 RocketMQ 分发订单与支付等业务事件，解耦生产与消费；结合消费幂等、失败重试与死信队列，减少重复处理并兜底异常消息。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t2.s2.c2.t1">业务事件</li>
+              <li data-i18n="t2.s2.c2.t2">消费幂等</li>
+              <li data-i18n="t2.s2.c2.t3">失败重试</li>
+              <li data-i18n="t2.s2.c2.t4">死信队列</li>
+            </ul>
+          </div>
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t2.s2.c3.name">补偿与异常处置</b><em>Compensation &amp; Exception Handling</em></div>
+            <p class="tp-mw-line" data-i18n="t2.s2.c3.d">以补偿任务表记录失败操作并按策略重试补偿，超限后转人工处置，避免遗漏。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t2.s2.c3.t1">补偿任务表</li>
+              <li data-i18n="t2.s2.c3.t2">重试策略</li>
+              <li data-i18n="t2.s2.c3.t3">人工处置</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 04 对账与差异识别（白底） ============ -->
+  <div class="tp-band tp-band--white">
+    <div class="tp-wrap">
+      <section class="tp-section" id="reconcile">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <span class="tp-sec-num" aria-hidden="true">04</span>
+          <h2 data-i18n="t2.s3.title">对账与差异识别</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t2.s3.lead">
+          通过定时对账核对相关业务记录与处理结果，识别交易处理后遗留的差异，为进一步核查与异常处置提供依据。
+        </p>
+
+        <div class="tp-grid-4 tp-reveal">
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t2.s3.c1.name">五路交易对账</b><em>Five Reconciliation Processes</em></div>
+            <p class="tp-mw-line" data-i18n="t2.s3.c1.d">对退款、提现、分账、退券与银行对账单定时核对，检查记录一致性，发现需进一步核查的差异。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t2.s3.c1.t1">退款</li>
+              <li data-i18n="t2.s3.c1.t2">提现</li>
+              <li data-i18n="t2.s3.c1.t3">分账</li>
+              <li data-i18n="t2.s3.c1.t4">退券</li>
+              <li data-i18n="t2.s3.c1.t5">银行对账</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 05 可观测性（灰底） ============ -->
+  <div class="tp-band tp-band--gray">
+    <div class="tp-wrap">
+      <section class="tp-section" id="observability">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <span class="tp-sec-num" aria-hidden="true">05</span>
+          <h2 data-i18n="t2.s4.title">可观测性</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t2.s4.lead">
+          结合健康监测、日志、指标与链路追踪，了解服务运行状态，关联请求处理过程，为异常分析和故障定位提供依据。
+        </p>
+
+        <div class="tp-mw-grid tp-reveal">
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t2.s4.c1.name">服务健康监测</b><em>Service Health Monitoring</em></div>
+            <p class="tp-mw-line" data-i18n="t2.s4.c1.d">通过健康监控中心查看实例状态，结合健康检查识别异常，支撑排查与恢复处置。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t2.s4.c1.t1">实例状态</li>
+              <li data-i18n="t2.s4.c1.t2">健康检查</li>
+              <li data-i18n="t2.s4.c1.t3">异常识别</li>
+            </ul>
+          </div>
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t2.s4.c2.name">日志与指标</b><em>Logs &amp; Metrics</em></div>
+            <p class="tp-mw-line" data-i18n="t2.s4.c2.d">日志支持在线调整级别，指标端点对接采集与监测体系，辅助分析服务状态与异常变化。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t2.s4.c2.t1">运行日志</li>
+              <li data-i18n="t2.s4.c2.t2">动态日志级别</li>
+              <li data-i18n="t2.s4.c2.t3">指标采集</li>
+            </ul>
+          </div>
+          <div class="tp-mw-card">
+            <div class="tp-mw-head"><b data-i18n="t2.s4.c3.name">链路追踪</b><em>Distributed Tracing</em></div>
+            <p class="tp-mw-line" data-i18n="t2.s4.c3.d">以 TraceId 关联请求在各服务中的处理记录，沿调用链定位异常位置与上下文，辅助跨服务排查。</p>
+            <ul class="tp-mw-tags">
+              <li data-i18n="t2.s4.c3.t1">TraceId</li>
+              <li data-i18n="t2.s4.c3.t2">跨服务关联</li>
+              <li data-i18n="t2.s4.c3.t3">调用链分析</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 继续了解（灰底） ============ -->
+  <div class="tp-band tp-band--gray">
+    <div class="tp-wrap">
+      <section class="tp-section" id="more">
+        <div class="tp-sec-head tp-reveal">
+          <span class="title-orb" aria-hidden="true"><svg class="orb orb-slow" viewBox="0 0 200 200" focusable="false"><circle cx="100" cy="100" r="98" fill="url(#orbNode)"/></svg></span>
+          <h2 data-i18n="t1.more.title">继续了解</h2>
+        </div>
+        <p class="tp-section-lead tp-reveal" data-i18n="t1.more.lead">针对常见的技术架构疑问，可在以下专题页面进一步了解。</p>
+
+        <div class="tp-entries tp-reveal">
+          <a class="tp-entry" href="/tech/">
+            <span class="tp-entry-top"><strong data-i18n="nav.tech.arch">架构与技术栈</strong>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            <p data-i18n="nav.tech.arch.d">分层架构、微服务拆分与中间件选型</p>
+          </a>
+          <a class="tp-entry" href="/tech/security.html">
+            <span class="tp-entry-top"><strong data-i18n="nav.tech.sec">安全与合规</strong>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            <p data-i18n="nav.tech.sec.d">认证鉴权、数据安全与审计</p>
+          </a>
+          <a class="tp-entry" href="/tech/deployment.html">
+            <span class="tp-entry-top"><strong data-i18n="nav.tech.ops">部署与运维</strong>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            <p data-i18n="nav.tech.ops.d">容器化交付、多环境与持续集成</p>
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ============ 收尾 CTA（白底） ============ -->
+  <div class="tp-band tp-band--white">
+    <div class="tp-wrap">
+      <div class="tp-cta">
+        <div class="tp-cta-card tp-reveal">
+          <svg class="tp-cta-orb orb orb-slow" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+            <circle cx="100" cy="100" r="98" fill="url(#orbNode)"/>
+          </svg>
+          <div class="tp-cta-copy">
+            <h2 data-i18n="t2.cta.title">需要进一步评估系统运行保障？</h2>
+            <p data-i18n="t2.cta.body">与技术团队讨论您的交易规模、一致性要求及监测需求，了解适用的可靠性机制与可观测能力。</p>
+          </div>
+          <button class="tp-cta-btn" type="button" data-tech-cta>
+            <span data-i18n="t2.cta.btn">咨询运行保障方案</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div id="site-footer"></div>
+</body>
+</html>

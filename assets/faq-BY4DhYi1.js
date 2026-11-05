@@ -1,0 +1,1 @@
+(function(){var e=document.getElementById(`faqList`);e&&e.querySelectorAll(`.qa-q`).forEach(function(e){e.addEventListener(`click`,function(){var t=e.parentElement.classList.toggle(`open`);e.setAttribute(`aria-expanded`,t?`true`:`false`)})})})();
