@@ -1,9 +1,9 @@
-function e(e=``){let t=e!==``,n=`
+var e=`/b2b-website-proto/`.replace(/\/+$/,``);function t(t=``){let n=t!==``,r=`
 <a class="site-skip-link" href="#main-content" data-i18n="nav.skip">跳到主要内容</a>
 <header class="site-header" id="siteHeader">
   <div class="site-header-inner">
     <a class="site-brand" href="/" aria-label="ShopeX">
-      <img src="/assets/logo-shopex.png" alt="ShopeX" onerror="this.outerHTML='<span class=&quot;site-brand-fallback&quot;>ShopeX</span>'">
+      <img src="${e}/assets/logo-shopex.png" alt="ShopeX" onerror="this.outerHTML='<span class=&quot;site-brand-fallback&quot;>ShopeX</span>'">
     </a>
         <nav class="site-desktop-nav" aria-label="导航菜单" data-i18n-aria="nav.menu">
       <div class="site-nav-item">
@@ -14,13 +14,13 @@ function e(e=``){let t=e!==``,n=`
           <a class="site-nav-panel-head" data-page-pending><span data-i18n="menu.product.1">B2B（DMS）产品总览</span><svg class="site-nav-panel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="site-nav-group">
             <p class="site-nav-group-title" data-i18n="menu.product.features">产品功能</p>
-            <a class="site-nav-panel-link" data-page-pending data-i18n="menu.product.feature.1">商品与供给</a>
-            <a class="site-nav-panel-link" data-page-pending data-i18n="menu.product.feature.2">定价与交易</a>
-            <a class="site-nav-panel-link" data-page-pending data-i18n="menu.product.feature.3">库存与履约</a>
-            <a class="site-nav-panel-link" data-page-pending data-i18n="menu.product.feature.4">资金与财务</a>
-            <a class="site-nav-panel-link" data-page-pending data-i18n="menu.product.feature.5">客户与渠道</a>
-            <a class="site-nav-panel-link" data-page-pending data-i18n="menu.product.feature.6">营销与增长</a>
-            <a class="site-nav-panel-link" data-page-pending data-i18n="menu.product.feature.7">合规与准入</a>
+            <a class="site-nav-panel-link" href="/product/supply.html" data-i18n="menu.product.feature.1">商品与供给</a>
+            <a class="site-nav-panel-link" href="/product/pricing.html" data-i18n="menu.product.feature.2">定价与交易</a>
+            <a class="site-nav-panel-link" href="/product/fulfillment.html" data-i18n="menu.product.feature.3">库存与履约</a>
+            <a class="site-nav-panel-link" href="/product/finance.html" data-i18n="menu.product.feature.4">资金与财务</a>
+            <a class="site-nav-panel-link" href="/product/customer.html" data-i18n="menu.product.feature.5">客户与渠道</a>
+            <a class="site-nav-panel-link" href="/product/marketing.html" data-i18n="menu.product.feature.6">营销与增长</a>
+            <a class="site-nav-panel-link" href="/product/compliance.html" data-i18n="menu.product.feature.7">合规与准入</a>
           </div>
         </div>
       </div>
@@ -134,13 +134,13 @@ function e(e=``){let t=e!==``,n=`
         <div class="site-mobile-sublinks">
           <a data-page-pending data-mobile-link data-i18n="menu.product.1">B2B（DMS）产品总览</a>
           <p class="site-mobile-indmore-title" data-i18n="menu.product.features">产品功能</p>
-          <a data-page-pending data-mobile-link data-i18n="menu.product.feature.1">商品与供给</a>
-          <a data-page-pending data-mobile-link data-i18n="menu.product.feature.2">定价与交易</a>
-          <a data-page-pending data-mobile-link data-i18n="menu.product.feature.3">库存与履约</a>
-          <a data-page-pending data-mobile-link data-i18n="menu.product.feature.4">资金与财务</a>
-          <a data-page-pending data-mobile-link data-i18n="menu.product.feature.5">客户与渠道</a>
-          <a data-page-pending data-mobile-link data-i18n="menu.product.feature.6">营销与增长</a>
-          <a data-page-pending data-mobile-link data-i18n="menu.product.feature.7">合规与准入</a>
+          <a href="/product/supply.html" data-mobile-link data-i18n="menu.product.feature.1">商品与供给</a>
+          <a href="/product/pricing.html" data-mobile-link data-i18n="menu.product.feature.2">定价与交易</a>
+          <a href="/product/fulfillment.html" data-mobile-link data-i18n="menu.product.feature.3">库存与履约</a>
+          <a href="/product/finance.html" data-mobile-link data-i18n="menu.product.feature.4">资金与财务</a>
+          <a href="/product/customer.html" data-mobile-link data-i18n="menu.product.feature.5">客户与渠道</a>
+          <a href="/product/marketing.html" data-mobile-link data-i18n="menu.product.feature.6">营销与增长</a>
+          <a href="/product/compliance.html" data-mobile-link data-i18n="menu.product.feature.7">合规与准入</a>
         </div>
       </details>
       <details class="site-mobile-group">
@@ -201,4 +201,4 @@ function e(e=``){let t=e!==``,n=`
     </div>
   </nav>
 </header>
-`;return e&&(n=n.replace(/href="#(?!main-content")/g,`href="${e}#`)),t&&(n=n.replace(/ data-header-target="[^"]*"/g,``)),n}export{e as t};
+`;return t&&(r=r.replace(/href="#(?!main-content")/g,`href="${t}#`)),n&&(r=r.replace(/ data-header-target="[^"]*"/g,``)),r}export{t};
